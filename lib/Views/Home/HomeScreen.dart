@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:inventory_management/Utility/CommandMethod.dart';
+import 'package:inventory_management/Views/Inventory/Inventory.dart';
 import 'package:inventory_management/Views/Users/Userlist.dart';
+import 'package:inventory_management/Views/Users/CreateUser.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -45,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         icon: Icons.pending_actions,
                         text: 'Users',
                         onTap: () {
+                          Get.to(() => HomeScreen());
                           // Navigator.of(context).pop();
                           // Navigator.pushNamed(context, pageRoutes.landscape);
                         }),
@@ -52,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         icon: Icons.cloud_done_rounded,
                         text: 'Inventory',
                         onTap: () {
-                          Navigator.of(context).pop();
+                          Get.to(() => Inventory());
 
                           // _permissionStatus?
                           // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
@@ -88,18 +91,9 @@ class _HomeScreenState extends State<HomeScreen> {
               actions: <Widget>[
                 ElevatedButton(
                     onPressed: () {
-                      // Get.to(() => Createuser());
+                      Get.to(() => Createuser());
                     },
                     child: Text("Create User")),
-                IconButton(
-                  icon: Icon(Icons.create_new_folder),
-                  onPressed: () {
-                    // Get.to(()=> Createtrip());
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) => SelectCategory())
-                    // );
-                  },
-                )
               ],
               title: Text('Agour'),
             ),

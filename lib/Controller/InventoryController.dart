@@ -71,12 +71,8 @@ class InventoryController extends GetxController {
       isLoading(true);
       var res = await RequestCall.fetchstatuslist();
       if (res != null) {
-        status.Datum dd = new status.Datum();
-        dd.status = 0;
-        dd.statusName = "Status";
-        dd.id = 0;
-        inventorystatuslist.add(dd);
         inventorystatuslist.assignAll(res);
+        print("rrst" + inventorystatuslist.toString());
         if (inventorystatuslist.length > 0) {
           Fluttertoast.showToast(msg: "status Retrieve Successfully");
         } else {

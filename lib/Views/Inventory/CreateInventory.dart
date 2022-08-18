@@ -29,18 +29,21 @@ class _CreateInventoryState extends State<CreateInventory> {
   @override
   void initState() {
     userController.fetchstatuslist();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // executes after build
+    });
     super.initState();
   }
 
-  getstatuslist() {
-    userController.inventorystatuslist.map((element) {
-      setState(() {
-        statuslist.add(element.statusName);
-        statusIDlist.add(element.id.toString());
-      });
-    });
-    // return statuslist;
-  }
+  // getstatuslist() {
+  //   userController.inventorystatuslist.map((element) {
+  //     setState(() {
+  //       statuslist.add(element.statusName);
+  //       statusIDlist.add(element.id.toString());
+  //     });
+  //   });
+  //   // return statuslist;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -146,6 +149,7 @@ class _CreateInventoryState extends State<CreateInventory> {
                   Container(
                     height: 20,
                   ),
+
                   DecoratedBox(
                     decoration: BoxDecoration(
                         color: AppColors.offWhite,
@@ -159,16 +163,18 @@ class _CreateInventoryState extends State<CreateInventory> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 70.0, right: 70.0),
                       child: DropdownButton<String>(
+                        hint: Text("ddd"),
                         items:
                             userController.inventorystatuslist.map((element) {
-                          return DropdownMenuItem(
-                              child: Text(element.statusName),
-                              value: element.id.toString());
+                          print("object" + element.statusName);
+                          return DropdownMenuItem<String>(
+                            child: Text("element.statusName"),
+                          );
                         }).toList(),
-                        onChanged: ((value) => setState(() {
-                              status_id = value;
-                            })),
-                        value: status_id,
+                        // onChanged: ((value) => setState(() {
+                        //       status_id = value;
+                        //     })),
+                        // value: status_id,
                       ),
                     ),
                   ),

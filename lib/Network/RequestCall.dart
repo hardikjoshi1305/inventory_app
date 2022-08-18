@@ -144,8 +144,11 @@ class RequestCall {
   static Future<List<inventory.Datum>> fetchinventorylist() async {
     var response =
         await client.get(BASEURL + 'inventorylist', headers: authHeader);
+    print(authHeader.toString());
     if (response.statusCode == 200) {
       var json = response.body;
+      print("reds" + json.toString());
+
       var castsResp = inventory.inventorylistResponseFromJson(json);
       return castsResp.data;
     } else {

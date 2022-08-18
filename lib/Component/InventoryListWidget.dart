@@ -7,7 +7,7 @@ class InventoryListWidget extends StatelessWidget {
   final Datum UserModel;
   // final String? categoryTitle;
 
-  InventoryListWidget({ this.UserModel});
+  InventoryListWidget({this.UserModel});
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +15,10 @@ class InventoryListWidget extends StatelessWidget {
       children: [
         Container(
           width: 100,
+          height: 40,
           alignment: AlignmentDirectional.center,
           decoration: new BoxDecoration(
-            color: AppColors.darkBlue,
-            borderRadius:
-            new BorderRadius.all(const Radius.circular(10.0)),
+            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
             boxShadow: <BoxShadow>[
               BoxShadow(
                 color: AppColors.offWhite,
@@ -30,19 +29,17 @@ class InventoryListWidget extends StatelessWidget {
           ),
           padding: const EdgeInsets.all(12.0),
           child: Text(
-            "ID",
+            this.UserModel.id.toString(),
             style: TextStyle(
-                fontWeight: FontWeight.w400,
-                color: AppColors.offWhite),
+                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
           ),
         ),
         Container(
-          width: 100,
+          width: 120,
+          height: 40,
           alignment: AlignmentDirectional.center,
           decoration: new BoxDecoration(
-            color: AppColors.darkBlue,
-            borderRadius:
-            new BorderRadius.all(const Radius.circular(10.0)),
+            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
             boxShadow: <BoxShadow>[
               BoxShadow(
                 color: AppColors.offWhite,
@@ -53,19 +50,17 @@ class InventoryListWidget extends StatelessWidget {
           ),
           padding: const EdgeInsets.all(12.0),
           child: Text(
-            "UserName",
+            this.UserModel.code,
             style: TextStyle(
-                fontWeight: FontWeight.w400,
-                color: AppColors.offWhite),
+                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
           ),
         ),
         Container(
           width: 200,
+          height: 40,
           alignment: AlignmentDirectional.center,
           decoration: new BoxDecoration(
-            color: AppColors.darkBlue,
-            borderRadius:
-            new BorderRadius.all(const Radius.circular(10.0)),
+            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
             boxShadow: <BoxShadow>[
               BoxShadow(
                 color: AppColors.offWhite,
@@ -76,19 +71,17 @@ class InventoryListWidget extends StatelessWidget {
           ),
           padding: const EdgeInsets.all(12.0),
           child: Text(
-            "MobileNumber",
+            this.UserModel.name,
             style: TextStyle(
-                fontWeight: FontWeight.w400,
-                color: AppColors.offWhite),
+                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
           ),
         ),
         Container(
           width: 200,
+          height: 40,
           alignment: AlignmentDirectional.center,
           decoration: new BoxDecoration(
-            color: AppColors.darkBlue,
-            borderRadius:
-            new BorderRadius.all(const Radius.circular(10.0)),
+            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
             boxShadow: <BoxShadow>[
               BoxShadow(
                 color: AppColors.offWhite,
@@ -99,18 +92,19 @@ class InventoryListWidget extends StatelessWidget {
           ),
           padding: const EdgeInsets.all(12.0),
           child: Text(
-            "Email",
+            this.UserModel.serialNo,
             style: TextStyle(
               fontWeight: FontWeight.w400,
-              color: AppColors.offWhite,
+              color: AppColors.darkBlue,
             ),
           ),
         ),
         Container(
+          width: 100,
+          height: 40,
+          alignment: AlignmentDirectional.center,
           decoration: new BoxDecoration(
-            color: AppColors.darkBlue,
-            borderRadius:
-            new BorderRadius.all(const Radius.circular(10.0)),
+            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
             boxShadow: <BoxShadow>[
               BoxShadow(
                 color: AppColors.offWhite,
@@ -121,17 +115,17 @@ class InventoryListWidget extends StatelessWidget {
           ),
           padding: const EdgeInsets.all(12.0),
           child: Text(
-            "City",
+            this.UserModel.pxNo,
             style: TextStyle(
-                fontWeight: FontWeight.w400,
-                color: AppColors.offWhite),
+                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
           ),
         ),
         Container(
+          width: 100,
+          height: 40,
+          alignment: AlignmentDirectional.center,
           decoration: new BoxDecoration(
-            color: AppColors.darkBlue,
-            borderRadius:
-            new BorderRadius.all(const Radius.circular(10.0)),
+            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
             boxShadow: <BoxShadow>[
               BoxShadow(
                 color: AppColors.offWhite,
@@ -142,10 +136,93 @@ class InventoryListWidget extends StatelessWidget {
           ),
           padding: const EdgeInsets.all(12.0),
           child: Text(
-            "Wallet Balance",
+            this.UserModel.machine,
             style: TextStyle(
-                fontWeight: FontWeight.w400,
-                color: AppColors.offWhite),
+                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
+          ),
+        ),
+        Container(
+          width: 100,
+          height: 40,
+          alignment: AlignmentDirectional.center,
+          decoration: new BoxDecoration(
+            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: AppColors.offWhite,
+                offset: Offset(1.0, 6.0),
+                blurRadius: 0.001,
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.all(12.0),
+          child: Text(
+            this.UserModel.location,
+            style: TextStyle(
+                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
+          ),
+        ),
+        Container(
+          width: 100,
+          height: 40,
+          alignment: AlignmentDirectional.center,
+          decoration: new BoxDecoration(
+            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: AppColors.offWhite,
+                offset: Offset(1.0, 6.0),
+                blurRadius: 0.001,
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.all(12.0),
+          child: Text(
+            this.UserModel.remark,
+            style: TextStyle(
+                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
+          ),
+        ),
+        Container(
+          width: 100,
+          height: 40,
+          alignment: AlignmentDirectional.center,
+          decoration: new BoxDecoration(
+            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: AppColors.offWhite,
+                offset: Offset(1.0, 6.0),
+                blurRadius: 0.001,
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.all(12.0),
+          child: Text(
+            this.UserModel.statusId,
+            style: TextStyle(
+                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
+          ),
+        ),
+        Container(
+          width: 120,
+          height: 40,
+          alignment: AlignmentDirectional.center,
+          decoration: new BoxDecoration(
+            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: AppColors.offWhite,
+                offset: Offset(1.0, 6.0),
+                blurRadius: 0.001,
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.all(12.0),
+          child: Text(
+            this.UserModel.createdAt.toString(),
+            style: TextStyle(
+                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
           ),
         ),
       ],

@@ -13,34 +13,39 @@ class CreateInventory extends StatefulWidget {
 }
 
 class _CreateInventoryState extends State<CreateInventory> {
-  String name, email, password, status, city, wallet_amount, photo,phone =" ";
+  String code,
+      name,
+      serial_no,
+      px_no,
+      machine,
+      location,
+      remark,
+      status_id = " ";
 
   InventoryController userController = Get.put(InventoryController());
 
   @override
   Widget build(BuildContext context) {
-    return    Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: Text("Create Inventory"),
         ),
-        body:
-        SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Container(
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(
                 children: [
-
                   Container(
                     height: 20,
                   ),
                   TextField(
                     keyboardType: TextInputType.text,
-                    onChanged: (value) => name = value,
+                    onChanged: (value) => code = value,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'User Name',
-                      prefixIcon: Icon(Icons.person),
+                      labelText: 'Code',
+                      prefixIcon: Icon(Icons.code),
                     ),
                   ),
                   Container(
@@ -48,13 +53,14 @@ class _CreateInventoryState extends State<CreateInventory> {
                   ),
                   Container(
                     child: TextField(
-                      keyboardType: TextInputType.phone,
-                      onChanged: (value){phone=value;},
+                      keyboardType: TextInputType.text,
+                      onChanged: (value) {
+                        name = value;
+                      },
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        prefix: Text('+91'),
-                        prefixIcon: Icon(Icons.phone_android),
-                        labelText: 'Mobile Number',
+                        prefixIcon: Icon(Icons.assignment),
+                        labelText: 'Name',
                       ),
                     ),
                   ),
@@ -62,12 +68,12 @@ class _CreateInventoryState extends State<CreateInventory> {
                     height: 20,
                   ),
                   TextField(
-                    keyboardType: TextInputType.emailAddress,
-                    onChanged: (value) => email = value,
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) => serial_no = value,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Email',
-                      prefixIcon: Icon(Icons.email),
+                      labelText: 'Serial Number',
+                      prefixIcon: Icon(Icons.numbers),
                     ),
                   ),
                   Container(
@@ -76,11 +82,11 @@ class _CreateInventoryState extends State<CreateInventory> {
                   TextField(
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
-                    onChanged: (value) => password = value,
+                    onChanged: (value) => px_no = value,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Password',
-                      prefixIcon: Icon(Icons.lock),
+                      labelText: 'Px Number',
+                      prefixIcon: Icon(Icons.point_of_sale),
                     ),
                   ),
                   Container(
@@ -88,11 +94,11 @@ class _CreateInventoryState extends State<CreateInventory> {
                   ),
                   TextField(
                     keyboardType: TextInputType.visiblePassword,
-                    onChanged: (value) => city = value,
+                    onChanged: (value) => machine = value,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'City',
-                      prefixIcon: Icon(Icons.location_on),
+                      labelText: 'Machine',
+                      prefixIcon: Icon(Icons.production_quantity_limits),
                     ),
                   ),
                   Container(
@@ -100,44 +106,41 @@ class _CreateInventoryState extends State<CreateInventory> {
                   ),
                   TextField(
                     keyboardType: TextInputType.number,
-                    onChanged: (value) => wallet_amount = value,
+                    onChanged: (value) => location = value,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Wallet Amount',
-                      prefixIcon: Icon(Icons.wallet),
+                      labelText: 'Location',
+                      prefixIcon: Icon(Icons.location_history),
                     ),
                   ),
                   Container(
                     height: 20,
                   ),
-                  ElevatedButton(
-                      onPressed: () async {
-                        // 1. Pick an image file
-                        final filePicked = await FilePicker.platform.pickFiles();
-                        if (filePicked != null) {
-                          final file = filePicked.files.single; // PlatformFile
-                          final mimeType = lookupMimeType(file.name) ?? '';
+                  TextField(
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) => remark = value,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Remark',
+                      prefixIcon: Icon(Icons.message),
+                    ),
+                  ),
+                  Container(
+                    height: 20,
+                  ),
+                  TextField(
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) => status_id = value,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Status',
+                      prefixIcon: Icon(Icons.location_history),
+                    ),
+                  ),
+                  Container(
+                    height: 20,
+                  ),
 
-                          /// 2. Get presigned data somewhere
-                          // const url = 'https://s3.amazonaws.com/......';
-                          // final fields = {
-                          //   'bucket': '...',
-                          //   'X-Amz-Algorithm': 'AWS4-HMAC-SHA256',
-                          //   'X-Amz-Credential': '...',
-                          //   'X-Amz-Date': '...',
-                          //   'Policy': '...',
-                          //   'X-Amz-Signature': '...',
-                          //   'x-amz-meta-userid': '...',
-                          //   'Content-Type': mimeType,
-                          //   'file': dio.MultipartFile.fromBytes(file.bytes ?? []),
-                          // };
-
-                          /// 3. Send file to AWS s3
-                          // final formData = dio.FormData.fromMap(fields);
-                          // await dio.Dio().post(url, data: formData);
-                        }
-                      },
-                      child: Text("Upload Image")),
                   // TextField(
                   //   keyboardType: TextInputType.text,
                   //   onChanged: (value) => photo = value,
@@ -158,12 +161,11 @@ class _CreateInventoryState extends State<CreateInventory> {
                           child: const Text('Create'),
                           onPressed: () {
                             print('pressed');
-                            if (validatetourdetail(name, email, password, status,
-                                city, wallet_amount)) {
-
-                              // userController.createuser(name:name.toString(),email: email.toString(), phone: phone.toString(),password:password.toString(), status:status.toString(),
-                              //     city:city.toString(), wallet_amount:wallet_amount.toString(),photo: photo.toString());
-                            }
+                            // if (validatetourdetail(name, email, password,
+                            //     status, city, wallet_amount)) {
+                            // userController.createuser(name:name.toString(),email: email.toString(), phone: phone.toString(),password:password.toString(), status:status.toString(),
+                            //     city:city.toString(), wallet_amount:wallet_amount.toString(),photo: photo.toString());
+                            // }
                           },
                         )),
                   ),
@@ -171,9 +173,7 @@ class _CreateInventoryState extends State<CreateInventory> {
               ),
             ),
           ),
-        )
-
-    );
+        ));
   }
 
   bool validatetourdetail(name, email, password, status, city, wallet_amount) {

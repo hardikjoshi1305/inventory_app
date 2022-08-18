@@ -242,9 +242,19 @@ class _UserlistState extends State<Userlist> {
                     ),
                   ],
                 ),
-                ...userController.userlist.map((element) {
-                  return UserListWidget(UserModel: element);
-                }).toList()
+                Obx(() {
+                  if (userController.isLoading.value) {
+                    return Container(child: CircularProgressIndicator());
+                  } else
+                    return Column(
+                      children: [
+                        ...userController.userlist.map((element) {
+                          print("userlist" + element.name);
+                          return UserListWidget(UserModel: element);
+                        }).toList()
+                      ],
+                    );
+                }),
 
                 // ListView.builder(
                 //     primary: false,

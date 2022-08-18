@@ -8,6 +8,8 @@ import 'package:inventory_management/Model/InventorylistResponse.dart'
     as inventory;
 import 'package:inventory_management/Model/LoginResponse.dart';
 import 'package:inventory_management/Model/UserlistResponse.dart' as user;
+import 'package:inventory_management/Model/InventoryStatusResponse.dart'
+    as status;
 import 'package:inventory_management/Model/casts.dart';
 import 'package:inventory_management/Utility/CONSTANT.dart';
 import 'package:inventory_management/Utility/SharedPreferenceHelper.dart';
@@ -150,6 +152,21 @@ class RequestCall {
       print("reds" + json.toString());
 
       var castsResp = inventory.inventorylistResponseFromJson(json);
+      return castsResp.data;
+    } else {
+      return null;
+    }
+  }
+
+  static Future<List<status.Datum>> fetchstatuslist() async {
+    var response =
+        await client.get(BASEURL + 'inventorystatus', headers: authHeader);
+    print(authHeader.toString());
+    if (response.statusCode == 200) {
+      var json = response.body;
+      print("reds" + json.toString());
+
+      var castsResp = status.inventoryStatusResponseFromJson(json);
       return castsResp.data;
     } else {
       return null;

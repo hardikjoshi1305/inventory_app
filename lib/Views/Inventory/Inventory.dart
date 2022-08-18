@@ -329,9 +329,19 @@ class _InventoryState extends State<Inventory> {
                       ),
                     ],
                   ),
-                  ...inventoryController.inventorylist.map((element) {
-                    return InventoryListWidget(UserModel: element);
-                  }).toList()
+                  Obx(() {
+                    if (inventoryController.isLoading.value) {
+                      return Container(child: CircularProgressIndicator());
+                    } else
+                      return Column(
+                        children: [
+                          ...inventoryController.inventorylist.map((element) {
+                            print("userlist" + element.name);
+                            return InventoryListWidget(UserModel: element);
+                          }).toList()
+                        ],
+                      );
+                  }),
                   // ListView.builder(
                   //     shrinkWrap: true,
                   //     padding: EdgeInsets.only(bottom: 16),

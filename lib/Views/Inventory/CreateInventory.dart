@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:inventory_management/Controller/InventoryController.dart';
+import 'package:inventory_management/Utility/app_colors.dart';
 import 'package:mime/mime.dart';
 
 class CreateInventory extends StatefulWidget {
@@ -21,8 +22,25 @@ class _CreateInventoryState extends State<CreateInventory> {
       location,
       remark,
       status_id = " ";
-
+  List<String> statuslist = new List();
+  List<String> statusIDlist = new List();
   InventoryController userController = Get.put(InventoryController());
+
+  @override
+  void initState() {
+    userController.fetchstatuslist();
+    super.initState();
+  }
+
+  getstatuslist() {
+    userController.inventorystatuslist.map((element) {
+      setState(() {
+        statuslist.add(element.statusName);
+        statusIDlist.add(element.id.toString());
+      });
+    });
+    // return statuslist;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,15 +146,42 @@ class _CreateInventoryState extends State<CreateInventory> {
                   Container(
                     height: 20,
                   ),
-                  TextField(
-                    keyboardType: TextInputType.number,
-                    onChanged: (value) => status_id = value,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Status',
-                      prefixIcon: Icon(Icons.location_history),
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                        color: AppColors.offWhite,
+                        border: Border.all(color: Colors.black38, width: 1),
+                        borderRadius: BorderRadius.circular(
+                            10), //border raiuds of dropdown button
+                        boxShadow: <BoxShadow>[
+                          //apply shadow on Dropdown button
+                          // /blur radius of shadow
+                        ]),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 70.0, right: 70.0),
+                      child: DropdownButton<String>(
+                        items:
+                            userController.inventorystatuslist.map((element) {
+                          return DropdownMenuItem(
+                              child: Text(element.statusName),
+                              value: element.id.toString());
+                        }).toList(),
+                        onChanged: ((value) => setState(() {
+                              status_id = value;
+                            })),
+                        value: status_id,
+                      ),
                     ),
                   ),
+
+                  // TextField(
+                  //   keyboardType: TextInputType.number,
+                  //   onChanged: (value) => status_id = value,
+                  //   decoration: const InputDecoration(
+                  //     border: OutlineInputBorder(),
+                  //     labelText: 'Status',
+                  //     prefixIcon: Icon(Icons.location_history),
+                  //   ),
+                  // ),
                   Container(
                     height: 20,
                   ),

@@ -25,8 +25,8 @@ class _UserlistState extends State<Userlist> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
+    return Container(
+      child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,

@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         }),
                     createDrawerBodyItem(
                         icon: Icons.cloud_done_rounded,
-                        text: 'Inventory Managment',
+                        text: 'Inventory',
                         onTap: () {
                           Navigator.of(context).pop();
 

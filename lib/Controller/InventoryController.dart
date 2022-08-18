@@ -16,25 +16,23 @@ class InventoryController extends GetxController {
   var inventorystatuslist = List<status.Datum>().obs;
 
   void createinventory(
-      {String name,
-      String email,
-      String phone,
-      String password,
-      String status,
-      String city,
-      String wallet_amount,
-      String photo}) async {
+      {String code,
+      String name,
+      String serial_no,
+      String px_no,
+      String machine,
+      String location,
+      String remark}) async {
     try {
       isLoading(true);
-      var res = await RequestCall.createuser(
+      var res = await RequestCall.createInventory(
+          code:code,
           name: name,
-          email: email,
-          phone: phone,
-          password: password,
-          status: status,
-          city: city,
-          wallet_amount: wallet_amount,
-          photo: photo);
+          serial_no: serial_no,
+          px_no: px_no,
+          machine: machine,
+          location: location,
+          remark: remark);
       if (res != null) {
         login.value = res;
         if (login.value.succes) {

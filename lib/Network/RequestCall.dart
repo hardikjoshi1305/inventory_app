@@ -15,9 +15,12 @@ import 'package:inventory_management/Utility/CONSTANT.dart';
 import 'package:inventory_management/Utility/SharedPreferenceHelper.dart';
 import 'package:inventory_management/Views/Users/CreateUser.dart';
 
+import '../Model/AddInventoryResponse.dart';
+
 class RequestCall {
   static var client = http.Client();
-  static var BASEURL = "http://192.168.0.8/inventorymanagement/api/";
+  // static var BASEURL = "http://192.168.0.8/inventorymanagement/api/";
+  static var BASEURL = "http://pankrutiinfotech.com/inventory_app/api/";
   static var apiKey = "a92f28e11a27e8e5938a2020be68ba9c";
   static var authHeader;
 
@@ -131,6 +134,64 @@ class RequestCall {
 //       return null;
 //     }
   }
+
+  static Future createInventory(
+      {String code,
+        String name,
+        String serial_no,
+        String px_no,
+        String machine,
+        String location,
+        String remark}) async {
+    final headers = authHeader;
+    final body = jsonEncode({
+      "code":code,
+      "name":name,
+      "serial_no":serial_no,
+      "px_no":px_no,
+      "machine":machine,
+      "location":location,
+      "remark":remark,
+      "status_id":"1"
+    });
+
+    var response =
+    await client.post(BASEURL + 'createinventory', headers: headers, body: body);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var castsResp = addInventorylResponseFromJson(json);
+      return castsResp;
+    } else {
+      return null;
+    }
+    // http.MultipartFile f1 = http.MultipartFile.fromString("code", code);
+    // http.MultipartFile f2 = http.MultipartFile.fromString("name", name);
+    // http.MultipartFile f3 =
+    // http.MultipartFile.fromString("serial_no", serial_no);
+    // http.MultipartFile f4 = http.MultipartFile.fromString("px_no", px_no);
+    // http.MultipartFile f5 = http.MultipartFile.fromString("machine", machine);
+    // http.MultipartFile f6 = http.MultipartFile.fromString("location", location);
+    // http.MultipartFile f7 =
+    // http.MultipartFile.fromString("remark", remark);
+    // http.MultipartFile f8 = http.MultipartFile.fromString("photo", photo);
+
+
+
+    // http.Response.fromStream(response).then((value) {
+    //
+    // });
+
+//     // var responseString = await response.stream.bytesToString();
+// // print("respnse"+responseString);
+//     if (response.statusCode == 200) {
+//       // print("respnse" + responseString);
+//
+//       });
+//     } else {
+//       return null;
+//     }
+  }
+
 
   static Future<List<user.Datum>> fetchuserlist() async {
     var response = await client.get(BASEURL + 'userlist', headers: authHeader);

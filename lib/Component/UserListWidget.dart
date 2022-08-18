@@ -10,8 +10,7 @@ class UserListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
+    return Row(
         children: [
           Container(
             width: 100,
@@ -138,8 +137,7 @@ class UserListWidget extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
+      );
     // Card(
     //   elevation: 7,
     //   margin: EdgeInsets.only(top: 16, left: 16, right: 16),

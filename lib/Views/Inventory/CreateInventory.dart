@@ -3,17 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:inventory_management/Controller/InventoryController.dart';
+import 'package:inventory_management/Model/InventorylistResponse.dart';
 import 'package:inventory_management/Utility/app_colors.dart';
 import 'package:mime/mime.dart';
 
 class CreateInventory extends StatefulWidget {
+
   const CreateInventory({Key key}) : super(key: key);
+
 
   @override
   State<CreateInventory> createState() => _CreateInventoryState();
 }
 
 class _CreateInventoryState extends State<CreateInventory> {
+
   String code,
       name,
       serial_no,
@@ -25,6 +29,7 @@ class _CreateInventoryState extends State<CreateInventory> {
   List<String> statuslist = new List();
   List<String> statusIDlist = new List();
   InventoryController userController = Get.put(InventoryController());
+  Datum usermodel = Get.arguments as Datum ;
 
   @override
   void initState() {
@@ -34,6 +39,15 @@ class _CreateInventoryState extends State<CreateInventory> {
     });
     super.initState();
   }
+  TextEditingController te_code = TextEditingController();
+  TextEditingController te_name = TextEditingController();
+  TextEditingController te_srno = TextEditingController();
+  TextEditingController te_pxn = TextEditingController();
+  TextEditingController te_machine = TextEditingController();
+  TextEditingController te_location = TextEditingController();
+  TextEditingController te_Remark = TextEditingController();
+
+
 
   // getstatuslist() {
   //   userController.inventorystatuslist.map((element) {
@@ -61,6 +75,7 @@ class _CreateInventoryState extends State<CreateInventory> {
                     height: 20,
                   ),
                   TextField(
+                    controller:te_code..text= this.usermodel!=null?usermodel.code:"",
                     keyboardType: TextInputType.text,
                     onChanged: (value) => code = value,
                     decoration: const InputDecoration(
@@ -74,6 +89,7 @@ class _CreateInventoryState extends State<CreateInventory> {
                   ),
                   Container(
                     child: TextField(
+                     controller:te_name..text= this.usermodel!=null?usermodel.name:"",
                       keyboardType: TextInputType.text,
                       onChanged: (value) {
                         name = value;
@@ -89,6 +105,7 @@ class _CreateInventoryState extends State<CreateInventory> {
                     height: 20,
                   ),
                   TextField(
+                controller:te_srno..text= this.usermodel!=null?usermodel.serialNo:"",
                     keyboardType: TextInputType.number,
                     onChanged: (value) => serial_no = value,
                     decoration: const InputDecoration(
@@ -101,8 +118,8 @@ class _CreateInventoryState extends State<CreateInventory> {
                     height: 20,
                   ),
                   TextField(
+                    controller:te_pxn..text= this.usermodel!=null?usermodel.pxNo:"",
                     keyboardType: TextInputType.visiblePassword,
-                    obscureText: true,
                     onChanged: (value) => px_no = value,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -114,6 +131,7 @@ class _CreateInventoryState extends State<CreateInventory> {
                     height: 20,
                   ),
                   TextField(
+                  controller:te_machine..text= this.usermodel!=null?usermodel.machine:"",
                     keyboardType: TextInputType.visiblePassword,
                     onChanged: (value) => machine = value,
                     decoration: const InputDecoration(
@@ -126,6 +144,7 @@ class _CreateInventoryState extends State<CreateInventory> {
                     height: 20,
                   ),
                   TextField(
+                    controller:te_location..text= this.usermodel!=null?usermodel.location:"",
                     keyboardType: TextInputType.number,
                     onChanged: (value) => location = value,
                     decoration: const InputDecoration(
@@ -138,6 +157,7 @@ class _CreateInventoryState extends State<CreateInventory> {
                     height: 20,
                   ),
                   TextField(
+                    controller:te_Remark..text= this.usermodel!=null?usermodel.remark:"",
                     keyboardType: TextInputType.number,
                     onChanged: (value) => remark = value,
                     decoration: const InputDecoration(
@@ -212,6 +232,10 @@ class _CreateInventoryState extends State<CreateInventory> {
                           child: const Text('Create'),
                           onPressed: () {
                             print('pressed');
+                            if(Validateinventory(code,name,serial_no,px_no,machine,location,remark)){
+                              userController.createinventory(code:code,name: name,serial_no: serial_no,px_no: px_no,machine: machine,location: location,remark: remark);
+
+                            }
                             // if (validatetourdetail(name, email, password,
                             //     status, city, wallet_amount)) {
                             // userController.createuser(name:name.toString(),email: email.toString(), phone: phone.toString(),password:password.toString(), status:status.toString(),
@@ -227,11 +251,12 @@ class _CreateInventoryState extends State<CreateInventory> {
         ));
   }
 
-  bool validatetourdetail(name, email, password, status, city, wallet_amount) {
-    if (name.toString().isEmpty ||
-        email.toString().isEmpty ||
-        password.toString().isEmpty ||
-        city.toString().isEmpty) {
+  bool Validateinventory(code, name, serial_no, px_no, machine, location,remark) {
+    if (code.toString().isEmpty ||
+    name.toString().isEmpty ||
+        px_no.toString().isEmpty ||
+        machine.toString().isEmpty ||
+        location.toString().isEmpty) {
       Fluttertoast.showToast(msg: "Please fill all the require Details");
       return false;
     } else {

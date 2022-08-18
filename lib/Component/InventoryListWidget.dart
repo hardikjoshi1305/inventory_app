@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/state_manager.dart';
 import 'package:inventory_management/Model/InventorylistResponse.dart';
+import 'package:inventory_management/Views/Inventory/CreateInventory.dart';
 
 import '../Utility/app_colors.dart';
 
@@ -224,6 +227,42 @@ class InventoryListWidget extends StatelessWidget {
             style: TextStyle(
                 fontWeight: FontWeight.w400, color: AppColors.darkBlue),
           ),
+        ),
+        Container(
+            width: 130,
+            height: 40,
+            alignment: AlignmentDirectional.center,
+            decoration: new BoxDecoration(
+              borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: AppColors.offWhite,
+                  offset: Offset(1.0, 6.0),
+                  blurRadius: 0.001,
+                ),
+              ],
+            ),
+            padding: const EdgeInsets.all(1.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: IconButton(
+                    onPressed: () => Get.to(CreateInventory(),arguments: this.UserModel),
+                    icon: Icon(Icons.edit_calendar,
+                        color: AppColors.darkBlue, size: 25),
+                  ),
+                ),
+                Padding(
+                    padding: const EdgeInsets.all(1.0),
+                    child: IconButton(
+                      icon: Icon(Icons.delete,
+                          color: AppColors.darkBlue, size: 25),
+                    )),
+              ],
+            )
         ),
       ],
     );

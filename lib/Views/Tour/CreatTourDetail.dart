@@ -18,7 +18,8 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
       photo,
       daily_remark,
       final_dignose,
-      servicereport;
+      servicereport,
+      img_path;
   var item = Get.arguments as int;
 
   @override
@@ -65,8 +66,9 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
                             try {
                               var image = await ImagePicker.pickImage(
                                   source: ImageSource.gallery);
-                              print("object" + image.toString());
+                              // print("object" + image.toString());
                               print("object" + image.absolute.path);
+                              img_path =image.absolute.path;
                             } catch (exception) {
                               print("object" + exception.toString());
                             }

@@ -5,7 +5,10 @@ import 'package:inventory_management/Component/InventoryListWidget.dart';
 import 'package:inventory_management/Utility/app_colors.dart';
 import 'package:inventory_management/Views/Inventory/CreateInventory.dart';
 
+import '../../Network/RequestCall.dart';
+import '../../Utility/CONSTANT.dart';
 import '../../Utility/CommandMethod.dart';
+import '../../Utility/SharedPreferenceHelper.dart';
 import '../Home/HomeScreen.dart';
 import '../Users/CreateUser.dart';
 
@@ -18,10 +21,15 @@ class Inventory extends StatefulWidget {
 
 class _InventoryState extends State<Inventory> {
   InventoryController inventoryController = Get.put(InventoryController());
+  getauthtoken() async {
+    var token = await SharedPreferenceHelper().getPref(TOKEN);
+    inventoryController.fetchinventorylist(token);
+  }
 
   @override
   void initState() {
-    inventoryController.fetchinventorylist();
+    // getauthtoken();
+    inventoryController.fetchinventorylist("");
     super.initState();
   }
 
@@ -32,19 +40,17 @@ class _InventoryState extends State<Inventory> {
           backgroundColor: Colors.blueGrey[600],
           actions: <Widget>[
             Container(
-              decoration: BoxDecoration(
-                  color: AppColors.darkBlue
-              ),
-              child:ElevatedButton(
-                style:  ElevatedButton.styleFrom(
+              decoration: BoxDecoration(color: AppColors.darkBlue),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
                   primary: Colors.blue,
                 ),
                 onPressed: () {
                   Get.to(() => CreateInventory());
                 },
                 child: Text("Add Inventory",
-                    style: TextStyle(color: Colors.white
-                    )),),
+                    style: TextStyle(color: Colors.white)),
+              ),
             ),
             // IconButton(
             //   icon: Icon(Icons.create_new_folder),
@@ -108,8 +114,7 @@ class _InventoryState extends State<Inventory> {
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: Expanded(
-              child: Container(
+          child: Container(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -342,7 +347,7 @@ class _InventoryState extends State<Inventory> {
                         alignment: AlignmentDirectional.center,
                         decoration: new BoxDecoration(
                           borderRadius:
-                          new BorderRadius.all(const Radius.circular(10.0)),
+                              new BorderRadius.all(const Radius.circular(10.0)),
                           boxShadow: <BoxShadow>[
                             BoxShadow(
                               color: AppColors.darkBlue,
@@ -361,19 +366,23 @@ class _InventoryState extends State<Inventory> {
                       ),
                     ],
                   ),
-                  Obx(() {
-                    if (inventoryController.isLoading.value) {
-                      return Container(child: CircularProgressIndicator());
-                    } else
-                      return Column(
-                        children: [
-                          ...inventoryController.inventorylist.map((element) {
-                            print("userlist" + element.name);
-                            return InventoryListWidget(UserModel: element);
-                          }).toList()
-                        ],
-                      );
-                  }),
+                  Expanded(
+                    child: Obx(() {
+                      return (inventoryController.isLoading.value)
+                          ? Center(child: CircularProgressIndicator())
+                          : Column(
+                              children: [
+                                ...inventoryController.inventorylist
+                                    .map((element) {
+                                  print("userlist" + element.name);
+                                  return InventoryListWidget(
+                                      UserModel: element);
+                                }).toList()
+                              ],
+                            );
+                    }),
+                  ),
+
                   // ListView.builder(
                   //     shrinkWrap: true,
                   //     padding: EdgeInsets.only(bottom: 16),
@@ -386,7 +395,7 @@ class _InventoryState extends State<Inventory> {
                 ],
               ),
             ),
-          )),
+          ),
         ));
   }
 }

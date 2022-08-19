@@ -58,10 +58,12 @@ class UserController extends GetxController {
     try {
       isLoading(true);
       var res = await RequestCall.fetchuserlist();
+      print("userlist" + res.toString());
       if (res != null) {
         userlist.assignAll(res);
         if (userlist.length > 0) {
           Fluttertoast.showToast(msg: "Users Retrieve Successfully");
+          isLoading(false);
         } else {
           Fluttertoast.showToast(msg: "No User Found");
         }

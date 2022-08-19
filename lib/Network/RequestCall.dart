@@ -1,13 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:inventory_management/Model/CreateTourResponse.dart';
 import 'package:inventory_management/Model/CreateUserResponse.dart';
 import 'package:inventory_management/Model/InventorylistResponse.dart'
     as inventory;
 import 'package:inventory_management/Model/LoginResponse.dart';
 import 'package:inventory_management/Model/UserlistResponse.dart' as user;
+import 'package:inventory_management/Model/CreateTourResponse.dart'
+    as createtour;
 import 'package:inventory_management/Model/InventoryStatusResponse.dart'
     as status;
 import 'package:inventory_management/Model/casts.dart';
@@ -60,14 +64,20 @@ class RequestCall {
     }
   }
 
-  static Future<List<Cast>> creatTour(
+  static Future creatTour(
       {String tourname, String problem, String city}) async {
-    var response = await client.get(
-        'https://api.themoviedb.org/3/movie/$tourname/credits?api_key=a92f28e11a27e8e5938a2020be68ba9c');
+    final body = jsonEncode({
+      "name": tourname,
+      "problem": problem,
+      "city": city,
+      "status": "Pending",
+    });
+    var response = await client.post(BASEURL + "createtour",
+        headers: authHeader, body: body);
     if (response.statusCode == 200) {
       var json = response.body;
-      var castsResp = castsFromJson(json);
-      return castsResp.cast;
+      var castsResp = createTourResponseFromJson(json);
+      return castsResp;
     } else {
       return null;
     }
@@ -136,34 +146,61 @@ class RequestCall {
   }
 
   static Future createInventory(
-      {String code,
-        String name,
-        String serial_no,
-        String px_no,
-        String machine,
-        String location,
-        String remark}) async {
+      {String id,
+      String code,
+      String name,
+      String serial_no,
+      String px_no,
+      String machine,
+      String location,
+      String remark}) async {
     final headers = authHeader;
-    final body = jsonEncode({
-      "code":code,
-      "name":name,
-      "serial_no":serial_no,
-      "px_no":px_no,
-      "machine":machine,
-      "location":location,
-      "remark":remark,
-      "status_id":"1"
-    });
+    var body;
+    if (id == "0") {
+      body = jsonEncode({
+        "code": code,
+        "name": name,
+        "serial_no": serial_no,
+        "px_no": px_no,
+        "machine": machine,
+        "location": location,
+        "remark": remark,
+        "status_id": "1"
+      });
 
-    var response =
-    await client.post(BASEURL + 'createinventory', headers: headers, body: body);
-    if (response.statusCode == 200) {
-      var json = response.body;
-      var castsResp = addInventorylResponseFromJson(json);
-      return castsResp;
+      var response = await client.post(BASEURL + 'updateinventory',
+          headers: headers, body: body);
+      if (response.statusCode == 200) {
+        var json = response.body;
+        var castsResp = addInventorylResponseFromJson(json);
+        return castsResp;
+      } else {
+        return null;
+      }
     } else {
-      return null;
+      body = jsonEncode({
+        "id": id,
+        "code": code,
+        "name": name,
+        "serial_no": serial_no,
+        "px_no": px_no,
+        "machine": machine,
+        "location": location,
+        "remark": remark,
+        "status_id": "1"
+      });
+
+      var response = await client.post(BASEURL + 'createinventory',
+          headers: headers, body: body);
+      if (response.statusCode == 200) {
+        var json = response.body;
+        var castsResp = addInventorylResponseFromJson(json);
+        return castsResp;
+      } else {
+        return null;
+      }
     }
+
     // http.MultipartFile f1 = http.MultipartFile.fromString("code", code);
     // http.MultipartFile f2 = http.MultipartFile.fromString("name", name);
     // http.MultipartFile f3 =
@@ -174,8 +211,6 @@ class RequestCall {
     // http.MultipartFile f7 =
     // http.MultipartFile.fromString("remark", remark);
     // http.MultipartFile f8 = http.MultipartFile.fromString("photo", photo);
-
-
 
     // http.Response.fromStream(response).then((value) {
     //
@@ -192,25 +227,35 @@ class RequestCall {
 //     }
   }
 
-
   static Future<List<user.Datum>> fetchuserlist() async {
     var response = await client.get(BASEURL + 'userlist', headers: authHeader);
     if (response.statusCode == 200) {
       var json = response.body;
+      print("object" + json.toString());
+
       var castsResp = user.userlistResponseFromJson(json);
-      return castsResp.data;
+      if (castsResp.succes) {
+        return castsResp.data;
+      } else {
+        Fluttertoast.showToast(
+            msg: castsResp.message, toastLength: Toast.LENGTH_LONG);
+        return null;
+      }
     } else {
       return null;
     }
   }
 
-  static Future<List<inventory.Datum>> fetchinventorylist() async {
-    var response =
-        await client.get(BASEURL + 'inventorylist', headers: authHeader);
-    print(authHeader.toString());
+  static Future<List<inventory.Datum>> fetchinventorylist(token) async {
+    Map<String, String> head = <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': token
+    };
+    print("reds" + token.toString());
+
+    var response = await client.get(BASEURL + 'inventorylist', headers: head);
     if (response.statusCode == 200) {
       var json = response.body;
-      print("reds" + json.toString());
 
       var castsResp = inventory.inventorylistResponseFromJson(json);
       return castsResp.data;
@@ -219,7 +264,9 @@ class RequestCall {
     }
   }
 
-  static Future<List<status.Datum>> fetchstatuslist() async {
+  static Future<List<status.Datum>> fetchstatuslist(token) async {
+    // createAuthHeader(token);
+
     var response =
         await client.get(BASEURL + 'inventorystatus', headers: authHeader);
     print(authHeader.toString());

@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:inventory_management/Component/UserListWidget.dart';
 import 'package:inventory_management/Controller/UserController.dart';
-import 'package:inventory_management/Model/UserlistResponse.dart';
+import 'package:inventory_management/Utility/SharedPreferenceHelper.dart';
+import 'package:inventory_management/Utility/CONSTANT.dart';
 import 'package:inventory_management/Utility/app_colors.dart';
 import 'package:inventory_management/Views/Home/HomeScreen.dart';
 import 'package:inventory_management/Views/Users/CreateUser.dart';
+import 'package:inventory_management/Views/Login/Login.dart';
 
 import '../../Utility/CommandMethod.dart';
 import '../Inventory/Inventory.dart';
@@ -56,6 +58,13 @@ class _UserlistState extends State<Userlist> {
                     // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
                   }),
               Divider(),
+              createDrawerBodyItem(
+                  icon: Icons.logout,
+                  text: 'Logout',
+                  onTap: () {
+                    SharedPreferenceHelper().setPref(TOKEN, "");
+                    Get.to(() => Login());
+                  }),
               // Padding(
               //   padding: const EdgeInsets.only(left: 18.0),
               //   child: Text(
@@ -85,210 +94,200 @@ class _UserlistState extends State<Userlist> {
         backgroundColor: Colors.blueGrey[600],
         actions: <Widget>[
           Container(
-            decoration: BoxDecoration(
-              color: AppColors.darkBlue
+            decoration: BoxDecoration(color: AppColors.darkBlue),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue,
+              ),
+              onPressed: () {
+                Get.to(() => Createuser());
+              },
+              child: Text("Create User", style: TextStyle(color: Colors.white)),
             ),
-            child:ElevatedButton(
-            style:  ElevatedButton.styleFrom(
-                  primary: Colors.blue,
-                 ),
-                onPressed: () {
-                  Get.to(() => Createuser());
-                },
-                child: Text("Create User",
-              style: TextStyle(color: Colors.white
-              )),),
           )
         ],
         title: Text('Agour'),
       ),
       body: SingleChildScrollView(
-
-            scrollDirection: Axis.horizontal,
-            child: Expanded(
-              child:Container(
-                child: Column(
-                  children: [
-                    Row(
+          scrollDirection: Axis.horizontal,
+          child: Obx(() {
+            return userController.isLoading.value
+                ? Center(child: CircularProgressIndicator())
+                : Container(
+                    child: Column(
                       children: [
-                        Container(
-                          width: 100,
-                          alignment: AlignmentDirectional.center,
-                          decoration: BoxDecoration(
-                            color: AppColors.darkBlue,
-                            borderRadius:
-                            BorderRadius.all(const Radius.circular(10.0)),
-                            boxShadow: <BoxShadow>[
-                              BoxShadow(
-                                color: AppColors.offWhite,
-                                offset: Offset(1.0, 6.0),
-                                blurRadius: 0.001,
+                        Row(
+                          children: [
+                            Container(
+                              width: 100,
+                              alignment: AlignmentDirectional.center,
+                              decoration: BoxDecoration(
+                                color: AppColors.darkBlue,
+                                borderRadius: BorderRadius.all(
+                                    const Radius.circular(10.0)),
+                                boxShadow: <BoxShadow>[
+                                  BoxShadow(
+                                    color: AppColors.offWhite,
+                                    offset: Offset(1.0, 6.0),
+                                    blurRadius: 0.001,
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text(
-                            "ID",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.offWhite),
-                          ),
-                        ),
-                        Container(
-                          width: 100,
-                          alignment: AlignmentDirectional.center,
-                          decoration: BoxDecoration(
-                            color: AppColors.darkBlue,
-                            borderRadius:
-                            BorderRadius.all(const Radius.circular(10.0)),
-                            boxShadow: <BoxShadow>[
-                              BoxShadow(
-                                color: AppColors.offWhite,
-                                offset: Offset(1.0, 6.0),
-                                blurRadius: 0.001,
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                "ID",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.offWhite),
                               ),
-                            ],
-                          ),
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text(
-                            "UserName",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.offWhite),
-                          ),
-                        ),
-                        Container(
-                          width: 200,
-                          alignment: AlignmentDirectional.center,
-                          decoration: BoxDecoration(
-                            color: AppColors.darkBlue,
-                            borderRadius:
-                            BorderRadius.all(const Radius.circular(10.0)),
-                            boxShadow: <BoxShadow>[
-                              BoxShadow(
-                                color: AppColors.offWhite,
-                                offset: Offset(1.0, 6.0),
-                                blurRadius: 0.001,
-                              ),
-                            ],
-                          ),
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text(
-                            "Email ID",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.offWhite),
-                          ),
-                        ),
-                        Container(
-                          width: 200,
-                          alignment: AlignmentDirectional.center,
-                          decoration: BoxDecoration(
-                            color: AppColors.darkBlue,
-                            borderRadius:
-                            BorderRadius.all(const Radius.circular(10.0)),
-                            boxShadow: <BoxShadow>[
-                              BoxShadow(
-                                color: AppColors.offWhite,
-                                offset: Offset(1.0, 6.0),
-                                blurRadius: 0.001,
-                              ),
-                            ],
-                          ),
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text(
-                            "Mobile Number",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.offWhite,
                             ),
-                          ),
-                        ),
-                        Container(
-                          width: 100,
-                          alignment: AlignmentDirectional.center,
-                          decoration: BoxDecoration(
-                            color: AppColors.darkBlue,
-                            borderRadius:
-                            BorderRadius.all(const Radius.circular(10.0)),
-                            boxShadow: <BoxShadow>[
-                              BoxShadow(
-                                color: AppColors.offWhite,
-                                offset: Offset(1.0, 6.0),
-                                blurRadius: 0.001,
+                            Container(
+                              width: 100,
+                              alignment: AlignmentDirectional.center,
+                              decoration: BoxDecoration(
+                                color: AppColors.darkBlue,
+                                borderRadius: BorderRadius.all(
+                                    const Radius.circular(10.0)),
+                                boxShadow: <BoxShadow>[
+                                  BoxShadow(
+                                    color: AppColors.offWhite,
+                                    offset: Offset(1.0, 6.0),
+                                    blurRadius: 0.001,
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text(
-                            "City",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.offWhite),
-                          ),
-                        ),
-                        Container(
-                          width: 130,
-                          decoration: BoxDecoration(
-                            color: AppColors.darkBlue,
-                            borderRadius:
-                            BorderRadius.all(const Radius.circular(10.0)),
-                            boxShadow: <BoxShadow>[
-                              BoxShadow(
-                                color: AppColors.offWhite,
-                                offset: Offset(1.0, 6.0),
-                                blurRadius: 0.001,
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                "UserName",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.offWhite),
                               ),
-                            ],
-                          ),
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text(
-                            "Wallet Balance",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.offWhite),
-                          ),
+                            ),
+                            Container(
+                              width: 200,
+                              alignment: AlignmentDirectional.center,
+                              decoration: BoxDecoration(
+                                color: AppColors.darkBlue,
+                                borderRadius: BorderRadius.all(
+                                    const Radius.circular(10.0)),
+                                boxShadow: <BoxShadow>[
+                                  BoxShadow(
+                                    color: AppColors.offWhite,
+                                    offset: Offset(1.0, 6.0),
+                                    blurRadius: 0.001,
+                                  ),
+                                ],
+                              ),
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                "Email ID",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.offWhite),
+                              ),
+                            ),
+                            Container(
+                              width: 200,
+                              alignment: AlignmentDirectional.center,
+                              decoration: BoxDecoration(
+                                color: AppColors.darkBlue,
+                                borderRadius: BorderRadius.all(
+                                    const Radius.circular(10.0)),
+                                boxShadow: <BoxShadow>[
+                                  BoxShadow(
+                                    color: AppColors.offWhite,
+                                    offset: Offset(1.0, 6.0),
+                                    blurRadius: 0.001,
+                                  ),
+                                ],
+                              ),
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                "Mobile Number",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.offWhite,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 100,
+                              alignment: AlignmentDirectional.center,
+                              decoration: BoxDecoration(
+                                color: AppColors.darkBlue,
+                                borderRadius: BorderRadius.all(
+                                    const Radius.circular(10.0)),
+                                boxShadow: <BoxShadow>[
+                                  BoxShadow(
+                                    color: AppColors.offWhite,
+                                    offset: Offset(1.0, 6.0),
+                                    blurRadius: 0.001,
+                                  ),
+                                ],
+                              ),
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                "City",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.offWhite),
+                              ),
+                            ),
+                            Container(
+                              width: 130,
+                              decoration: BoxDecoration(
+                                color: AppColors.darkBlue,
+                                borderRadius: BorderRadius.all(
+                                    const Radius.circular(10.0)),
+                                boxShadow: <BoxShadow>[
+                                  BoxShadow(
+                                    color: AppColors.offWhite,
+                                    offset: Offset(1.0, 6.0),
+                                    blurRadius: 0.001,
+                                  ),
+                                ],
+                              ),
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                "Wallet Balance",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.offWhite),
+                              ),
+                            ),
+                          ],
                         ),
+                        Expanded(
+                          child: Obx(() {
+                            return SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Column(
+                                children: [
+                                  ...userController.userlist.map((element) {
+                                    print("userlist" + element.name);
+                                    return UserListWidget(UserModel: element);
+                                  }).toList()
+                                ],
+                              ),
+                            );
+                          }),
+                        ),
+
+                        // ListView.builder(
+                        //     primary: false,
+                        //     shrinkWrap: true,
+                        //     padding: EdgeInsets.only(bottom: 16),
+                        //     itemCount: 5,
+                        //     itemBuilder: (ctx, index) {
+                        //       var therapy = userController.userlist.elementAt(index);
+                        //       return Text(therapy.name);
+                        //       UserListWidget(UserModel: therapy);
+                        //     }),
                       ],
                     ),
-                    Obx(() {
-                      if (userController.isLoading.value) {
-                        return Container(child: CircularProgressIndicator());
-                      } else {
-                        return SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child:  Column(
-                            children: [
-                              ...userController.userlist.map((element) {
-                                print("userlist" + element.name);
-                                return UserListWidget(UserModel: element);
-                              }).toList()
-                            ],
-                          ),
-                        );
-                      }
-
-
-
-                    }),
-
-                    // ListView.builder(
-                    //     primary: false,
-                    //     shrinkWrap: true,
-                    //     padding: EdgeInsets.only(bottom: 16),
-                    //     itemCount: 5,
-                    //     itemBuilder: (ctx, index) {
-                    //       var therapy = userController.userlist.elementAt(index);
-                    //       return Text(therapy.name);
-                    //       UserListWidget(UserModel: therapy);
-                    //     }),
-                  ],
-                ),
-              )
-
-            )
-
-          ),
+                  );
+          })),
     );
   }
 }

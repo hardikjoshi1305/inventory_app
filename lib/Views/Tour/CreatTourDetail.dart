@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:mime/mime.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CreateTourDetail extends StatefulWidget {
   const CreateTourDetail({Key key}) : super(key: key);
@@ -61,33 +62,42 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
                       ),
                       ElevatedButton(
                           onPressed: () async {
-                            // 1. Pick an image file
-                            final filePicked =
-                                await FilePicker.platform.pickFiles();
-                            if (filePicked != null) {
-                              final file =
-                                  filePicked.files.single; // PlatformFile
-                              final mimeType = lookupMimeType(file.name) ?? '';
-                              print("file" + file.toString());
-
-                              /// 2. Get presigned data somewhere
-                              // const url = 'https://s3.amazonaws.com/......';
-                              // final fields = {
-                              //   'bucket': '...',
-                              //   'X-Amz-Algorithm': 'AWS4-HMAC-SHA256',
-                              //   'X-Amz-Credential': '...',
-                              //   'X-Amz-Date': '...',
-                              //   'Policy': '...',
-                              //   'X-Amz-Signature': '...',
-                              //   'x-amz-meta-userid': '...',
-                              //   'Content-Type': mimeType,
-                              //   'file': dio.MultipartFile.fromBytes(file.bytes ?? []),
-                              // };
-
-                              /// 3. Send file to AWS s3
-                              // final formData = dio.FormData.fromMap(fields);
-                              // await dio.Dio().post(url, data: formData);
+                            try {
+                              var image = await ImagePicker.pickImage(
+                                  source: ImageSource.gallery);
+                              print("object" + image.toString());
+                              print("object" + image.absolute.path);
+                            } catch (exception) {
+                              print("object" + exception.toString());
                             }
+
+                            // 1. Pick an image file
+                            // final filePicked = await FilePicker
+                            //   .platform.pickFiles();
+                            // if (filePicked != null) {
+                            //   final file =
+                            //       filePicked.files.single; // PlatformFile
+                            //   final mimeType = lookupMimeType(file.name) ?? '';
+                            //   print("file" + file.toString());
+                            //
+                            //   /// 2. Get presigned data somewhere
+                            //   // const url = 'https://s3.amazonaws.com/......';
+                            //   // final fields = {
+                            //   //   'bucket': '...',
+                            //   //   'X-Amz-Algorithm': 'AWS4-HMAC-SHA256',
+                            //   //   'X-Amz-Credential': '...',
+                            //   //   'X-Amz-Date': '...',
+                            //   //   'Policy': '...',
+                            //   //   'X-Amz-Signature': '...',
+                            //   //   'x-amz-meta-userid': '...',
+                            //   //   'Content-Type': mimeType,
+                            //   //   'file': dio.MultipartFile.fromBytes(file.bytes ?? []),
+                            //   // };
+                            //
+                            //   /// 3. Send file to AWS s3
+                            //   // final formData = dio.FormData.fromMap(fields);
+                            //   // await dio.Dio().post(url, data: formData);
+                            // }
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

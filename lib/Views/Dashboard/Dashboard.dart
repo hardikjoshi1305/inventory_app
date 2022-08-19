@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inventory_management/Utility/CommandMethod.dart';
@@ -13,7 +15,6 @@ class Dashboard extends StatefulWidget {
   @override
   State<Dashboard> createState() => _DashboardState();
 }
-
 
 class _DashboardState extends State<Dashboard> {
   var _permissionStatus;
@@ -33,15 +34,14 @@ class _DashboardState extends State<Dashboard> {
   // }
   @override
   Widget build(BuildContext context) {
-    return WillPopScope (
+    return WillPopScope(
         onWillPop: _onBackPressed,
         child: Scaffold(
             drawer: Drawer(
               elevation: 4.0,
-              child:Container(
+              child: Container(
                 color: Colors.blueGrey[600],
-                child:
-                ListView(
+                child: ListView(
                   padding: EdgeInsets.zero,
                   children: <Widget>[
                     createDrawerHeader(),
@@ -53,40 +53,38 @@ class _DashboardState extends State<Dashboard> {
                           // Navigator.pushNamed(context, pageRoutes.landscape);
                         }),
                     createDrawerBodyItem(
-                        icon: Icons.cloud_done_rounded, text: 'Completed',
-                        onTap: ()  {   Navigator.of(context).pop();
+                        icon: Icons.cloud_done_rounded,
+                        text: 'Completed',
+                        onTap: () {
+                          Navigator.of(context).pop();
 
                           // _permissionStatus?
                           // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
-                        }
-                    ),
+                        }),
                     Divider(),
                     Padding(
                       padding: const EdgeInsets.only(left: 18.0),
                       child: Text(
                         'Special Access',
-                        style: TextStyle(
-                            color: Colors.grey
-                        ),
+                        style: TextStyle(color: Colors.grey),
                       ),
                     ),
                     createDrawerBodyItem(
-                        icon: Icons.inventory, text: 'Inventory',
-                        onTap: ()  {   Navigator.of(context).pop();
+                        icon: Icons.inventory,
+                        text: 'Inventory',
+                        onTap: () {
+                          Navigator.of(context).pop();
 
-                        // _permissionStatus?
-                        // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
-                        }
-                    ),
+                          // _permissionStatus?
+                          // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
+                        }),
                     ListTile(
                       title: Text('App version 1.0.0'),
                       onTap: () {},
                     ),
                   ],
                 ),
-
               ),
-
             ),
             appBar: AppBar(
               backgroundColor: Colors.blueGrey[600],
@@ -102,7 +100,7 @@ class _DashboardState extends State<Dashboard> {
                 IconButton(
                   icon: Icon(Icons.create_new_folder),
                   onPressed: () {
-                    Get.to(()=> Createtrip());
+                    Get.to(() => Createtrip());
                     // Navigator.push(context,
                     //     MaterialPageRoute(builder: (context) => SelectCategory())
                     // );
@@ -111,39 +109,38 @@ class _DashboardState extends State<Dashboard> {
               ],
               title: Text('Agour'),
             ),
-            body:  Pending()
-        )
-      );
+            body: Pending()));
   }
 
-  Future<bool>  _onBackPressed() async{
-    return
-      await showDialog(
-          context: context,
-          builder: (context) => new AlertDialog(
-            title: new Text('Are you sure?'),
-            content: new Text('Do you want to exit App'),
-            actions: <Widget>[
-              new GestureDetector(
-                onTap: () => Navigator.of(context).pop(false),
-                child: roundedButton("No", const Color(0xFF546E7A),
-                    const Color(0xFFFFFFFF)),
-              ),
-              new GestureDetector(
-                onTap: () => Navigator.of(context).pop(true),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 18.0),
-                  child: roundedButton(" Yes ", const Color(0xFF546E7A),
-                      const Color(0xFFFFFFFF)),
-                ),
-              ),
-            ],
-          )
-      ) ?? false;
+  Future<bool> _onBackPressed() async {
+    return await showDialog(
+            context: context,
+            builder: (context) => new AlertDialog(
+                  title: new Text('Are you sure?'),
+                  content: new Text('Do you want to exit App'),
+                  actions: <Widget>[
+                    new GestureDetector(
+                      onTap: () => Navigator.of(context).pop(false),
+                      child: roundedButton("No", const Color(0xFF546E7A),
+                          const Color(0xFFFFFFFF)),
+                    ),
+                    new GestureDetector(
+                      onTap: () => Navigator.of(context).pop(true),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 18.0),
+                        child: roundedButton(" Yes ", const Color(0xFF546E7A),
+                            const Color(0xFFFFFFFF)),
+                      ),
+                    ),
+                  ],
+                )) ??
+        false;
   }
 
   void _listenForPermissionStatus() async {
-    final status = await Permission.storage.request().isGranted;
+    var permission =
+        Platform.isAndroid ? Permission.storage : Permission.photos;
+    final status = await permission.request().isGranted;
     // setState() triggers build again
     setState(() => _permissionStatus = status);
   }
@@ -173,20 +170,19 @@ Widget createDrawerBodyItem({var icon, var text, var onTap}) {
   return ListTile(
     title: Row(
       children: <Widget>[
-        Icon(icon,color: Colors.white,),
+        Icon(
+          icon,
+          color: Colors.white,
+        ),
         Padding(
           padding: EdgeInsets.only(left: 8.0),
-          child: Text(text,
-            style: TextStyle(
-                color: Colors.white
-            ),),
+          child: Text(
+            text,
+            style: TextStyle(color: Colors.white),
+          ),
         )
       ],
     ),
     onTap: onTap,
   );
 }
-
-
-
-

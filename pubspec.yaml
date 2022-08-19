@@ -34,7 +34,6 @@ dependencies:
   json_annotation: ^3.0.1
   logger: ^0.8.3
   pretty_dio_logger: ^1.1.0
-  dio: ^3.0.8
   fluttertoast: ^8.0.7
   shared_preferences: ^2.0.6
   logging: 1.0.2
@@ -44,9 +43,11 @@ dependencies:
   permission_handler: ^9.2.0
   file_picker: any
   internet_connection_checker: 0.0.1+4
+#  image_picker: any
+  image_picker: any
 
 
-# The following adds the Cupertino Icons font to your application.
+  # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 

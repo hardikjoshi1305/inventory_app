@@ -5,6 +5,8 @@ import 'package:inventory_management/Utility/CONSTANT.dart';
 import 'package:inventory_management/Utility/SharedPreferenceHelper.dart';
 import 'package:inventory_management/Views/Tour/CreatTourDetail.dart';
 
+import '../Tour/TourDetailSubmission.dart';
+
 class Pending extends StatefulWidget {
   const Pending({Key key}) : super(key: key);
 
@@ -39,7 +41,8 @@ class _PendingState extends State<Pending> {
                       return Center(
                           child: GestureDetector(
                               onTap: () {
-                                Get.to(() => CreateTourDetail());
+                                Get.to(() => TourDetailSubmission());
+                                // CreateTourDetail());
                               },
                               child: Column(
                                 children: [

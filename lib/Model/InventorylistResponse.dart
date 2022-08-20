@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-InventorylistResponse inventorylistResponseFromJson(String str) => InventorylistResponse.fromJson(json.decode(str));
+InventorylistResponse inventorylistResponseFromJson(String str) =>
+    InventorylistResponse.fromJson(json.decode(str));
 
-String inventorylistResponseToJson(InventorylistResponse data) => json.encode(data.toJson());
+String inventorylistResponseToJson(InventorylistResponse data) =>
+    json.encode(data.toJson());
 
 class InventorylistResponse {
   InventorylistResponse({
@@ -19,17 +21,18 @@ class InventorylistResponse {
   bool succes;
   String message;
 
-  factory InventorylistResponse.fromJson(Map<String, dynamic> json) => InventorylistResponse(
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-    succes: json["succes"],
-    message: json["message"],
-  );
+  factory InventorylistResponse.fromJson(Map<String, dynamic> json) =>
+      InventorylistResponse(
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+        succes: json["succes"],
+        message: json["message"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
-    "succes": succes,
-    "message": message,
-  };
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "succes": succes,
+        "message": message,
+      };
 }
 
 class Datum {
@@ -43,8 +46,8 @@ class Datum {
     this.location,
     this.remark,
     this.statusId,
-    this.createdAt,
-    this.updatedAt,
+    this.wherefrom,
+    this.price,
   });
 
   int id;
@@ -56,34 +59,34 @@ class Datum {
   String location;
   String remark;
   String statusId;
-  DateTime createdAt;
-  DateTime updatedAt;
+  String wherefrom;
+  int price;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    id: json["id"],
-    code: json["code"],
-    name: json["name"],
-    serialNo: json["serial_no"],
-    pxNo: json["px_no"],
-    machine: json["machine"],
-    location: json["location"],
-    remark: json["remark"],
-    statusId: json["status_id"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-  );
+        id: json["id"],
+        code: json["code"],
+        name: json["name"],
+        serialNo: json["serial_no"],
+        pxNo: json["px_no"],
+        machine: json["machine"],
+        location: json["location"],
+        remark: json["remark"],
+        statusId: json["status_id"],
+        wherefrom: json["wherefrom"],
+        price: json["price"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "code": code,
-    "name": name,
-    "serial_no": serialNo,
-    "px_no": pxNo,
-    "machine": machine,
-    "location": location,
-    "remark": remark,
-    "status_id": statusId,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-  };
+        "id": id,
+        "code": code,
+        "name": name,
+        "serial_no": serialNo,
+        "px_no": pxNo,
+        "machine": machine,
+        "location": location,
+        "remark": remark,
+        "status_id": statusId,
+        "wherefrom": wherefrom,
+        "price": price,
+      };
 }

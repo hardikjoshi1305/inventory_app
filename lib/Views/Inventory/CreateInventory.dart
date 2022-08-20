@@ -25,16 +25,17 @@ class _CreateInventoryState extends State<CreateInventory> {
       machine,
       location,
       remark,
+      wherefrom,
       status_id = " ";
+  var prize;
+  String status_name = "Status";
+  Datum usermodel;
   List<String> statuslist = new List();
   List<String> statusIDlist = new List();
   InventoryController inventoryController = Get.put(InventoryController());
-  Datum usermodel = Get.arguments as Datum;
-  String dropdownvalue = 'Status';
+  RxString dropdownvalue = 'Sold Out'.obs;
+  RxString dropdownid = '0'.obs;
 
-  var items = [
-    'Status',
-  ];
   getauthtoken() async {
     var token = await SharedPreferenceHelper().getPref(TOKEN);
   }
@@ -42,14 +43,25 @@ class _CreateInventoryState extends State<CreateInventory> {
   @override
   void initState() {
     // getauthtoken();
-    inventoryController.fetchstatuslist("");
+    this.status_name == "Status"
+        ? ({
+            usermodel = Get.arguments as Datum,
+            usermodel != null ? id = usermodel.id.toString() : "0",
+            inventoryController.fetchstatuslist("")
+          })
+        : null;
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      print("postfradd");
-      inventoryController.inventorystatuslist
-          .map((element) => items.add(element.statusName));
-      print(items.toString());
-    });
+    // inventoryController.inventorystatuslist == null
+    //     ? print("Status Null")
+    //     : print("status :" +
+    //         inventoryController.inventorystatuslist[0].statusName.toString());
+
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   print("postfradd");
+    //   inventoryController.inventorystatuslist
+    //       .map((element) => items.add(element.statusName));
+    //   print(items.toString());
+    // });
     super.initState();
   }
 
@@ -60,9 +72,11 @@ class _CreateInventoryState extends State<CreateInventory> {
   TextEditingController te_machine = TextEditingController();
   TextEditingController te_location = TextEditingController();
   TextEditingController te_Remark = TextEditingController();
+  TextEditingController te_Wherefrom = TextEditingController();
+  TextEditingController te_Prize = TextEditingController();
 
   // getstatuslist() {
-  //   userController.inventorystatuslist.map((element) {
+  //   inventoryController.inventorystatuslist.map((element) {
   //     setState(() {
   //       statuslist.add(element.statusName);
   //       statusIDlist.add(element.id.toString());
@@ -70,18 +84,34 @@ class _CreateInventoryState extends State<CreateInventory> {
   //   });
   //   // return statuslist;
   // }
+
   Widget setupAlertDialoadContainer() {
     return Container(
       height: 300.0, // Change as per your requirement
       width: 300.0, // Change as per your requirement
       child: ListView.builder(
         shrinkWrap: true,
-        itemCount: inventoryController.inventorystatuslist.length,
+        itemCount: inventoryController.inventorystatuslist.value.length,
         itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            title:
-                Text(inventoryController.inventorystatuslist[index].statusName),
-          );
+          return GestureDetector(
+              child: ListTile(
+                title: Text(
+                    inventoryController.inventorystatuslist[index].statusName),
+              ),
+              onTap: () {
+                setState(() {
+                  status_name =
+                      inventoryController.inventorystatuslist[index].statusName;
+                  status_id = inventoryController.inventorystatuslist[index].id
+                      .toString();
+                });
+
+                Get.back();
+                Fluttertoast.showToast(
+                    msg: "msg : " +
+                        inventoryController
+                            .inventorystatuslist[index].statusName);
+              });
         },
       ),
     );
@@ -89,7 +119,6 @@ class _CreateInventoryState extends State<CreateInventory> {
 
   @override
   Widget build(BuildContext context) {
-    this.usermodel != null ? id = this.usermodel.id.toString() : "0";
     return Scaffold(
       appBar: AppBar(
         title: Text("Create Inventory"),
@@ -152,7 +181,7 @@ class _CreateInventoryState extends State<CreateInventory> {
             TextField(
               controller: te_pxn
                 ..text = this.usermodel != null ? usermodel.pxNo : "",
-              keyboardType: TextInputType.visiblePassword,
+              keyboardType: TextInputType.text,
               onChanged: (value) => px_no = value,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
@@ -166,7 +195,7 @@ class _CreateInventoryState extends State<CreateInventory> {
             TextField(
               controller: te_machine
                 ..text = this.usermodel != null ? usermodel.machine : "",
-              keyboardType: TextInputType.visiblePassword,
+              keyboardType: TextInputType.text,
               onChanged: (value) => machine = value,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
@@ -180,7 +209,7 @@ class _CreateInventoryState extends State<CreateInventory> {
             TextField(
               controller: te_location
                 ..text = this.usermodel != null ? usermodel.location : "",
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.text,
               onChanged: (value) => location = value,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
@@ -194,12 +223,41 @@ class _CreateInventoryState extends State<CreateInventory> {
             TextField(
               controller: te_Remark
                 ..text = this.usermodel != null ? usermodel.remark : "",
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.text,
               onChanged: (value) => remark = value,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Remark',
                 prefixIcon: Icon(Icons.message),
+              ),
+            ),
+            Container(
+              height: 20,
+            ),
+            TextField(
+              controller: te_Wherefrom
+                ..text = this.usermodel != null ? usermodel.wherefrom : "",
+              keyboardType: TextInputType.text,
+              onChanged: (value) => wherefrom = value,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Wherefrom',
+                prefixIcon: Icon(Icons.location_city),
+              ),
+            ),
+            Container(
+              height: 20,
+            ),
+            TextField(
+              controller: te_Prize
+                ..text =
+                    this.usermodel != null ? usermodel.price.toString() : "",
+              keyboardType: TextInputType.number,
+              onChanged: (value) => prize = value,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Price',
+                prefixIcon: Icon(Icons.money),
               ),
             ),
             Container(
@@ -215,33 +273,66 @@ class _CreateInventoryState extends State<CreateInventory> {
                       //apply shadow on Dropdown button
                       // /blur radius of shadow
                     ]),
-                child: ElevatedButton(
-                  child: Text("Status"),
-                  onPressed: (() => showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Status'),
-                          content: setupAlertDialoadContainer(),
-                        );
-                      })),
-                )
+                child:
+                    // ElevatedButton(
+                    //   child: status_name == "Status"
+                    //       ? Text("Status")
+                    //       : Text(status_name),
+                    //   onPressed: (() => showDialog(
+                    //       context: context,
+                    //       builder: (BuildContext context) {
+                    //         return AlertDialog(
+                    //           title: Text("Status"),
+                    //           content: setupAlertDialoadContainer(),
+                    //         );
+                    //       })),
+                    // )
 
-                // Padding(
-                //   padding: const EdgeInsets.only(left: 70.0, right: 70.0),
-                //   child: DropdownButton(
-                //     elevation: 0,
-                //     value: dropdownvalue,
-                //     icon: Icon(Icons.keyboard_arrow_down),
-                //     items: items.map((String items) {
-                //       return DropdownMenuItem(value: items, child: Text(items));
-                //     }).toList(),
-                //     onChanged: (String newValue) {
-                //       setState(() {
-                //         dropdownvalue = newValue;
-                //       });
-                //     },
-                //   ),
+                    Padding(
+                        padding: const EdgeInsets.only(left: 60.0, right: 60.0),
+                        child: Obx(
+                          () => dropdownvalue.value == "Sold Out"
+                              ? DropdownButton(
+                                  elevation: 0,
+                                  value: dropdownvalue.value,
+                                  hint: Text("Status"),
+                                  icon: Icon(Icons.keyboard_arrow_down),
+                                  items: inventoryController.inventorystatuslist
+                                      .map((items) {
+                                    return DropdownMenuItem(
+                                        onTap: () {
+                                          dropdownid.value =
+                                              items.id.toString();
+                                          print("objectkey" + dropdownid.value);
+                                        },
+                                        value: items.statusName,
+                                        child: Text(items.statusName));
+                                  }).toList(),
+                                  onChanged: (newValue) {
+                                    dropdownvalue.value = newValue;
+                                  },
+                                )
+                              : DropdownButton(
+                                  elevation: 0,
+                                  value: dropdownvalue.value,
+                                  hint: Text("Status"),
+                                  icon: Icon(Icons.keyboard_arrow_down),
+                                  items: inventoryController.inventorystatuslist
+                                      .map((items) {
+                                    return DropdownMenuItem(
+                                        onTap: () {
+                                          dropdownid.value =
+                                              items.id.toString();
+                                          print("objectkey" + dropdownid.value);
+                                        },
+                                        value: items.statusName,
+                                        child: Text(items.statusName));
+                                  }).toList(),
+                                  onChanged: (newValue) {
+                                    dropdownvalue.value = newValue;
+                                  },
+                                ),
+                        ))
                 //   // DropdownButton<String>(
                 //   //   items:
                 //   //       userController.inventorystatuslist.map((element) {
@@ -301,8 +392,12 @@ class _CreateInventoryState extends State<CreateInventory> {
                             px_no: px_no,
                             machine: machine,
                             location: location,
-                            remark: remark);
+                            remark: remark,
+                            status_id: dropdownid.value,
+                            wherefrom: wherefrom,
+                            Prize: prize);
                       }
+
                       // if (validatetourdetail(name, email, password,
                       //     status, city, wallet_amount)) {
                       // userController.createuser(name:name.toString(),email: email.toString(), phone: phone.toString(),password:password.toString(), status:status.toString(),

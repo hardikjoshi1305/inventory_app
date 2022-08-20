@@ -23,8 +23,8 @@ import '../Model/AddInventoryResponse.dart';
 
 class RequestCall {
   static var client = http.Client();
-  // static var BASEURL = "http://192.168.0.8/inventorymanagement/api/";
-  static var BASEURL = "http://pankrutiinfotech.com/inventory_app/api/";
+  static var BASEURL = "http://192.168.0.8/inventorymanagement/api/";
+  // static var BASEURL = "http://pankrutiinfotech.com/inventory_app/api/";
   static var apiKey = "a92f28e11a27e8e5938a2020be68ba9c";
   static var authHeader;
 
@@ -38,7 +38,7 @@ class RequestCall {
   static Future fetchloginuser({String email, String password}) async {
     final headers = {HttpHeaders.contentTypeHeader: 'application/json'};
     final body = jsonEncode({
-      'email': email,
+      'userid': email,
       'password': password,
     });
     var response =
@@ -153,7 +153,10 @@ class RequestCall {
       String px_no,
       String machine,
       String location,
-      String remark}) async {
+      String remark,
+      String status_id,
+      String wherefrom,
+      String Prize}) async {
     final headers = authHeader;
     var body;
     if (id == "0") {
@@ -165,7 +168,8 @@ class RequestCall {
         "machine": machine,
         "location": location,
         "remark": remark,
-        "status_id": "1"
+        "wherefrom": wherefrom,
+        "price": int.parse(Prize)
       });
 
       var response = await client.post(BASEURL + 'updateinventory',
@@ -187,13 +191,16 @@ class RequestCall {
         "machine": machine,
         "location": location,
         "remark": remark,
-        "status_id": "1"
+        "status_id": status_id,
+        "wherefrom": wherefrom,
+        "price": int.parse(Prize)
       });
 
       var response = await client.post(BASEURL + 'createinventory',
           headers: headers, body: body);
       if (response.statusCode == 200) {
         var json = response.body;
+        print("Response" + json.toString());
         var castsResp = addInventorylResponseFromJson(json);
         return castsResp;
       } else {
@@ -253,7 +260,8 @@ class RequestCall {
     };
     print("reds" + token.toString());
 
-    var response = await client.get(BASEURL + 'inventorylist', headers: head);
+    var response =
+        await client.get(BASEURL + 'inventorylist', headers: authHeader);
     if (response.statusCode == 200) {
       var json = response.body;
 
@@ -266,10 +274,11 @@ class RequestCall {
 
   static Future<List<status.Datum>> fetchstatuslist(token) async {
     // createAuthHeader(token);
-
-    var response =
-        await client.get(BASEURL + 'inventorystatus', headers: authHeader);
-    print(authHeader.toString());
+    var body = jsonEncode({
+      "type": "1",
+    });
+    var response = await client.post(BASEURL + 'inventorystatus',
+        headers: authHeader, body: body);
     if (response.statusCode == 200) {
       var json = response.body;
       print("reds" + json.toString());

@@ -25,7 +25,10 @@ class InventoryController extends GetxController {
       String px_no,
       String machine,
       String location,
-      String remark}) async {
+      String remark,
+      String status_id,
+      String wherefrom,
+      String Prize}) async {
     try {
       isLoading(true);
       var res = await RequestCall.createInventory(
@@ -36,7 +39,10 @@ class InventoryController extends GetxController {
           px_no: px_no,
           machine: machine,
           location: location,
-          remark: remark);
+          remark: remark,
+          status_id: status_id,
+          wherefrom: wherefrom,
+          Prize: Prize);
       if (res != null) {
         login.value = res;
         if (login.value.succes) {
@@ -70,19 +76,22 @@ class InventoryController extends GetxController {
 
   void fetchstatuslist(String token) async {
     try {
-      isLoading(true);
+      // isLoading(true);
       var res = await RequestCall.fetchstatuslist(token);
       if (res != null) {
         inventorystatuslist.assignAll(res);
-        print("rrst" + inventorystatuslist.toString());
         if (inventorystatuslist.length > 0) {
           Fluttertoast.showToast(msg: "status Retrieve Successfully");
         } else {
           Fluttertoast.showToast(msg: "No Data Found");
         }
+      } else {
+        Fluttertoast.showToast(msg: "No Status Found");
       }
+    } catch (exception) {
+      print("error :" + exception.toString());
     } finally {
-      isLoading(false);
+      // isLoading(false);
     }
   }
 }

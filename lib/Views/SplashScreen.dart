@@ -29,8 +29,7 @@ class _WelcomeSplashScreenState extends State<WelcomeSplashScreen> {
         firstLogin = true;
       });
     } else {
-      SharedPreferenceHelper().getPref(TOKEN);
-      print("Session auth token : ${SharedPreferenceHelper().getPref(TOKEN)}");
+      print("Session auth token : ${loginToken}");
       RequestCall.createAuthHeader(loginToken);
       setState(() {
         firstLogin = false;

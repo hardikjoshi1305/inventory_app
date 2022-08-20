@@ -207,27 +207,27 @@ class InventoryListWidget extends StatelessWidget {
                 fontWeight: FontWeight.w400, color: AppColors.darkBlue),
           ),
         ),
-        Container(
-          width: 120,
-          height: 40,
-          alignment: AlignmentDirectional.center,
-          decoration: new BoxDecoration(
-            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: AppColors.offWhite,
-                offset: Offset(1.0, 6.0),
-                blurRadius: 0.001,
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.all(12.0),
-          child: Text(
-            this.UserModel.createdAt.toString(),
-            style: TextStyle(
-                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
-          ),
-        ),
+        // Container(
+        //   width: 120,
+        //   height: 40,
+        //   alignment: AlignmentDirectional.center,
+        //   decoration: new BoxDecoration(
+        //     borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
+        //     boxShadow: <BoxShadow>[
+        //       BoxShadow(
+        //         color: AppColors.offWhite,
+        //         offset: Offset(1.0, 6.0),
+        //         blurRadius: 0.001,
+        //       ),
+        //     ],
+        //   ),
+        //   padding: const EdgeInsets.all(12.0),
+        //   child: Text(
+        //     this.UserModel.createdAt.toString(),
+        //     style: TextStyle(
+        //         fontWeight: FontWeight.w400, color: AppColors.darkBlue),
+        //   ),
+        // ),
         Container(
             width: 130,
             height: 40,
@@ -250,7 +250,8 @@ class InventoryListWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(1.0),
                   child: IconButton(
-                    onPressed: () => Get.to(CreateInventory(),arguments: this.UserModel),
+                    onPressed: () =>
+                        Get.to(CreateInventory(), arguments: this.UserModel),
                     icon: Icon(Icons.edit_calendar,
                         color: AppColors.darkBlue, size: 25),
                   ),
@@ -262,8 +263,7 @@ class InventoryListWidget extends StatelessWidget {
                           color: AppColors.darkBlue, size: 25),
                     )),
               ],
-            )
-        ),
+            )),
       ],
     );
     // Card(

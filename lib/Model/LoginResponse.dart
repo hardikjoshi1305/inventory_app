@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-LoginResponse loginResponseFromJson(String str) => LoginResponse.fromJson(json.decode(str));
+LoginResponse loginResponseFromJson(String str) =>
+    LoginResponse.fromJson(json.decode(str));
 
 String loginResponseToJson(LoginResponse data) => json.encode(data.toJson());
 
@@ -20,74 +21,58 @@ class LoginResponse {
   String message;
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) => LoginResponse(
-    data: Data.fromJson(json["data"]),
-    succes: json["succes"],
-    message: json["message"],
-  );
+        data: Data.fromJson(json["data"]),
+        succes: json["succes"],
+        message: json["message"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": data.toJson(),
-    "succes": succes,
-    "message": message,
-  };
+        "data": data.toJson(),
+        "succes": succes,
+        "message": message,
+      };
 }
 
 class Data {
   Data({
     this.id,
-    this.name,
-    this.email,
+    this.userid,
+    this.mobile,
     this.apiToken,
-    this.emailVerifiedAt,
     this.type,
-    this.photo,
-    this.status,
-    this.city,
+    this.isActive,
+    this.deviceid,
     this.walletAmount,
-    this.createdAt,
-    this.updatedAt,
   });
 
   int id;
-  String name;
-  String email;
+  String userid;
+  String mobile;
   String apiToken;
-  dynamic emailVerifiedAt;
   String type;
-  dynamic photo;
-  dynamic status;
-  dynamic city;
+  String isActive;
+  dynamic deviceid;
   dynamic walletAmount;
-  DateTime createdAt;
-  DateTime updatedAt;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    id: json["id"],
-    name: json["name"],
-    email: json["email"],
-    apiToken: json["api_token"],
-    emailVerifiedAt: json["email_verified_at"],
-    type: json["type"],
-    photo: json["photo"],
-    status: json["status"],
-    city: json["city"],
-    walletAmount: json["wallet_amount"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-  );
+        id: json["id"],
+        userid: json["userid"],
+        mobile: json["mobile"],
+        apiToken: json["api_token"],
+        type: json["type"],
+        isActive: json["is_active"],
+        deviceid: json["deviceid"],
+        walletAmount: json["wallet_amount"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "email": email,
-    "api_token": apiToken,
-    "email_verified_at": emailVerifiedAt,
-    "type": type,
-    "photo": photo,
-    "status": status,
-    "city": city,
-    "wallet_amount": walletAmount,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-  };
+        "id": id,
+        "userid": userid,
+        "mobile": mobile,
+        "api_token": apiToken,
+        "type": type,
+        "is_active": isActive,
+        "deviceid": deviceid,
+        "wallet_amount": walletAmount,
+      };
 }

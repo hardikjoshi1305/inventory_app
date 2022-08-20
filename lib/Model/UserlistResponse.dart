@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-UserlistResponse userlistResponseFromJson(String str) => UserlistResponse.fromJson(json.decode(str));
+UserlistResponse userlistResponseFromJson(String str) =>
+    UserlistResponse.fromJson(json.decode(str));
 
-String userlistResponseToJson(UserlistResponse data) => json.encode(data.toJson());
+String userlistResponseToJson(UserlistResponse data) =>
+    json.encode(data.toJson());
 
 class UserlistResponse {
   UserlistResponse({
@@ -19,79 +21,60 @@ class UserlistResponse {
   bool succes;
   String message;
 
-  factory UserlistResponse.fromJson(Map<String, dynamic> json) => UserlistResponse(
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-    succes: json["succes"],
-    message: json["message"],
-  );
+  factory UserlistResponse.fromJson(Map<String, dynamic> json) =>
+      UserlistResponse(
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+        succes: json["succes"],
+        message: json["message"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
-    "succes": succes,
-    "message": message,
-  };
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "succes": succes,
+        "message": message,
+      };
 }
 
 class Datum {
   Datum({
     this.id,
-    this.name,
-    this.email,
+    this.userid,
+    this.mobile,
     this.apiToken,
-    this.emailVerifiedAt,
     this.type,
-    this.photo,
-    this.status,
-    this.city,
+    this.isActive,
+    this.deviceid,
     this.walletAmount,
-    this.mobileNumber,
-    this.createdAt,
-    this.updatedAt,
   });
 
   int id;
-  String name;
-  String email;
+  String userid;
+  String mobile;
   String apiToken;
-  dynamic emailVerifiedAt;
   String type;
-  String photo;
-  String status;
-  String city;
+  String isActive;
+  String deviceid;
   String walletAmount;
-  dynamic mobileNumber;
-  DateTime createdAt;
-  DateTime updatedAt;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    id: json["id"],
-    name: json["name"],
-    email: json["email"],
-    apiToken: json["api_token"],
-    emailVerifiedAt: json["email_verified_at"],
-    type: json["type"],
-    photo: json["photo"] == null ? null : json["photo"],
-    status: json["status"],
-    city: json["city"],
-    walletAmount: json["wallet_amount"],
-    mobileNumber: json["mobile_number"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-  );
+        id: json["id"],
+        userid: json["userid"],
+        mobile: json["mobile"],
+        apiToken: json["api_token"],
+        type: json["type"],
+        isActive: json["is_active"],
+        deviceid: json["deviceid"],
+        walletAmount: json["wallet_amount"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "email": email,
-    "api_token": apiToken,
-    "email_verified_at": emailVerifiedAt,
-    "type": type,
-    "photo": photo == null ? null : photo,
-    "status": status,
-    "city": city,
-    "wallet_amount": walletAmount,
-    "mobile_number": mobileNumber,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-  };
+        "id": id,
+        "userid": userid,
+        "mobile": mobile,
+        "api_token": apiToken,
+        "type": type,
+        "is_active": isActive,
+        "deviceid": deviceid,
+        "wallet_amount": walletAmount,
+      };
 }

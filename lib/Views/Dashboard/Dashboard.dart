@@ -39,92 +39,7 @@ class _DashboardState extends State<Dashboard> {
     return WillPopScope(
         onWillPop: _onBackPressed,
         child: Scaffold(
-            drawer: Drawer(
-              elevation: 4.0,
-              child: Container(
-                color: Colors.blueGrey[600],
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  children: <Widget>[
-                    createDrawerHeader(),
-                    createDrawerBodyItem(
-                        icon: Icons.pending_actions,
-                        text: 'Pending',
-                        onTap: () {
-                          // Navigator.of(context).pop();
-                          // Navigator.pushNamed(context, pageRoutes.landscape);
-                        }),
-                    createDrawerBodyItem(
-                        icon: Icons.cloud_done_rounded,
-                        text: 'Completed',
-                        onTap: () {
-                          Navigator.of(context).pop();
-
-                          // _permissionStatus?
-                          // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
-                        }),
-                    createDrawerBodyItem(
-                        icon: Icons.wallet,
-                        text: 'Wallet',
-                        onTap: () {
-                         Get.to(()=>WalletScreen());
-
-                          // _permissionStatus?
-                          // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
-                        }),
-                    Divider(),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 18.0),
-                      child: Text(
-                        'Special Access',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ),
-                    createDrawerBodyItem(
-                        icon: Icons.inventory,
-                        text: 'Inventory',
-                        onTap: () {
-                          Navigator.of(context).pop();
-
-                          // _permissionStatus?
-                          // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
-                        }),
-
-                    ListTile(
-                      title: Text('App version 1.0.0'),
-                      onTap: () {},
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            appBar: AppBar(
-              backgroundColor: Colors.blueGrey[600],
-              actions: <Widget>[
-                // IconButton(
-                //   icon: Icon(Icons.inventory),
-                //   onPressed: () {
-                //     // Navigator.push(context,
-                //     //     MaterialPageRoute(builder: (context) => Whats_MainUi())
-                //     // );
-                //   },
-                // ),
-                Container(
-                  decoration: BoxDecoration(color: AppColors.darkBlue),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.blue,
-                    ),
-                    onPressed: () {
-                      Get.to(() => Createtrip());
-                    },
-                    child: Text("Create Tour", style: TextStyle(color: Colors.white)),
-                  ),
-                )
-              ],
-              title: Text('Agour'),
-            ),
-            body: Pending()));
+            drawer: UserDrawer(), appBar: UserAppBar(), body: Pending()));
   }
 
   Future<bool> _onBackPressed() async {
@@ -160,5 +75,3 @@ class _DashboardState extends State<Dashboard> {
     setState(() => _permissionStatus = status);
   }
 }
-
-

@@ -39,30 +39,22 @@ class Datum {
   Datum({
     this.id,
     this.statusName,
-    this.status,
-    this.createdAt,
-    this.updatedAt,
+    this.isActive,
   });
 
   int id;
   String statusName;
-  int status;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int isActive;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
         statusName: json["status_name"],
-        status: json["status"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        isActive: json["is_active"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "status_name": statusName,
-        "status": status,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "is_active": isActive,
       };
 }

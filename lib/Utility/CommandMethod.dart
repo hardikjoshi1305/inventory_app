@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:inventory_management/Views/Inventory/SendInventory.dart';
 
 import '../Views/Home/HomeScreen.dart';
 import '../Views/Inventory/Inventory.dart';
@@ -175,6 +176,17 @@ Widget AdminDrawer() {
                 // _permissionStatus?
                 // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
               }),
+          createDrawerBodyItem(
+              icon: Icons.send,
+              text: 'Send Inventory',
+              onTap: () {
+                Get.to(() => SendInventory());
+
+                // _permissionStatus?
+                // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
+              }),
+
+
           Divider(),
           createDrawerBodyItem(
               icon: Icons.logout,

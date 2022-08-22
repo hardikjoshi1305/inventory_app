@@ -16,7 +16,9 @@ class WalletScreen extends StatefulWidget {
 class _WalletScreenState extends State<WalletScreen> {
   @override
   void initState() {
-    callapi();
+    // callapi();
+    upcomingController.wallethistorydata();
+
     // upcomingController.pendingitem(iscompleted: "0");
     super.initState();
   }
@@ -71,17 +73,22 @@ class _WalletScreenState extends State<WalletScreen> {
                             width: 10,
                             height: 0,
                           ),
-                          Text(
-                            upcomingController
-                                    .wallethistory[upcomingController
-                                            .wallethistory.length -
-                                        1]
-                                    .walletAmount +
-                                " \u{20B9}",
-                            style: TextStyle(
-                                fontSize: 27,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white),
+                          Obx(
+                            () => upcomingController.wallethistory.length > 0
+                                ? Text(
+                                    "${upcomingController.wallethistory[upcomingController.wallethistory.length - 1].walletBalance} \u{20B9}",
+                                    style: TextStyle(
+                                        fontSize: 27,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white),
+                                  )
+                                : Text(
+                                    "0 \u{20B9}",
+                                    style: TextStyle(
+                                        fontSize: 27,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white),
+                                  ),
                           ),
                         ],
                       )),
@@ -114,17 +121,21 @@ class _WalletScreenState extends State<WalletScreen> {
                               height: 3,
                             ),
                           ),
-                          ListView.builder(
-                              shrinkWrap: true,
-                              padding: EdgeInsets.only(bottom: 16),
-                              itemCount:
-                                  upcomingController.wallethistory.length,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemBuilder: (ctx, index) {
-                                var wallet = upcomingController.wallethistory
-                                    .elementAt(index);
-                                return WalletListWidget(walletmodel: wallet);
-                              })
+                          Obx(() => upcomingController.wallethistory.length > 0
+                              ? ListView.builder(
+                                  shrinkWrap: true,
+                                  padding: EdgeInsets.only(bottom: 16),
+                                  itemCount:
+                                      upcomingController.wallethistory.length,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder: (ctx, index) {
+                                    var wallet = upcomingController
+                                        .wallethistory
+                                        .elementAt(index);
+                                    return WalletListWidget(
+                                        walletmodel: wallet);
+                                  })
+                              : Text("No Data Found"))
                         ],
                       ),
                     )),

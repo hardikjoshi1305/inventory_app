@@ -42,9 +42,9 @@ class Datum {
     this.isActive,
   });
 
-  int id;
+  var id;
   String statusName;
-  int isActive;
+  var isActive;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],

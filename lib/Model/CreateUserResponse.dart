@@ -59,7 +59,7 @@ class Data {
   String mobileNumber;
   DateTime updatedAt;
   DateTime createdAt;
-  int id;
+  var id;
   String apiToken;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(

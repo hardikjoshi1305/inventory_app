@@ -1,7 +1,14 @@
+import 'dart:convert';
+import 'dart:ffi';
+
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:inventory_management/Controller/SearchController.dart';
 import 'package:inventory_management/Utility/CommandMethod.dart';
+import 'package:inventory_management/Model/SearchInventoryResponse.dart';
+import 'package:http/http.dart' as http;
 
 class SendInventory extends StatefulWidget {
   const SendInventory({Key key}) : super(key: key);
@@ -9,9 +16,18 @@ class SendInventory extends StatefulWidget {
   @override
   State<SendInventory> createState() => _SendInventoryState();
 }
+
 var userid;
+var code = "";
 
 class _SendInventoryState extends State<SendInventory> {
+  @override
+  void initState() {
+    // upcomingController.pendingitem(iscompleted: "0");
+    super.initState();
+  }
+
+  SearchController upcomingController = Get.put(SearchController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +35,8 @@ class _SendInventoryState extends State<SendInventory> {
         title: Text("Send Inventory"),
       ),
       drawer: AdminDrawer(),
-      body: Container(
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
         child: Padding(
           padding: EdgeInsets.all(20),
           child: Column(
@@ -45,38 +62,49 @@ class _SendInventoryState extends State<SendInventory> {
               Container(
                 height: 20,
               ),
-              // DropdownSearch<String>(
-              //   mode: Mode.MENU,
-              //   showSearchBox: true,
-              //   isFilteredOnline: true,
-              //   dropDownButton: const Icon(
-              //     Icons.keyboard_arrow_down,
-              //     color: Colors.grey,
-              //     size: 18,
-              //   ),
-              //   dropdownSearchDecoration: Styles.inputDecoration(
-              //     w: w,
-              //     hintText: 'Search Programs',
-              //     icon: CupertinoIcons.doc_text_fill,
-              //     white: true,
-              //   ),
-              //   dropdownBuilder: _customDropDownPrograms,
-              //   popupItemBuilder: _customPopupItemBuilder,
-              //   onChanged: (Class object) {
-              //     setState(() {
-              //       if (object != null) {
-              //
-              //       }
-              //     });
-              //   },
-              //   onFind: (String filter) =>
-              //       getData(filter ?? "", storeId: storeId),
-              //   showClearButton: false,
-              //   clearButtonBuilder: (_) => const Padding(
-              //     padding: EdgeInsets.all(8.0),
-              //     child: Icon(Icons.clear, size: 17, color: Colors.black),
-              //   ),
-              // )
+              DropdownSearch<Datum>(
+                mode: Mode.BOTTOM_SHEET,
+                showSearchBox: true,
+                isFilteredOnline: true,
+                dropDownButton: const Icon(
+                  Icons.keyboard_arrow_down,
+                  color: Colors.grey,
+                  size: 18,
+                ),
+                dropdownSearchDecoration: InputDecoration(
+                  hintText: 'Search Programs',
+                  icon: Icon(Icons.filter_list),
+                ),
+                dropdownBuilder: _customDropDownPrograms,
+                popupItemBuilder: _customPopupItemBuilder,
+                onChanged: (Datum object) {
+                  // upcomingController.searchdata(object.code);
+                  // setState(() {
+                  //   if (object != null) {}
+                  // });
+                },
+                onFind: (String filter) =>
+                    upcomingController.searchdata(filter ?? ""),
+                showClearButton: true,
+                clearButtonBuilder: (_) => const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(Icons.clear, size: 17, color: Colors.black),
+                ),
+              ),
+              // Container(
+              //   height: 20,
+              // ),
+              // Obx(() => upcomingController.issearched.value
+              //     ? ListView(
+              //         scrollDirection: Axis.vertical,
+              //         // children: List.generate(upcomingController.search.length,
+              //         //     (index) => Text(code.toString()))
+              //         children: [
+              //           ...upcomingController.search
+              //               .map((element) => Text(code.toString()))
+              //         ],
+              //       )
+              //     : null),
               Container(
                 height: 20,
               ),
@@ -86,81 +114,80 @@ class _SendInventoryState extends State<SendInventory> {
                   margin: const EdgeInsets.all(5),
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      // callgetinventory(code);
+                    },
                     child: const Text('Submit'),
                   ),
                 ),
               ),
-
             ],
           ),
         ),
-      ) ,
+      ),
     );
   }
 
-//   static Future<List<BootcampDetails>> getData(String filter,
-//       {String storeId = ""}) async {
-//     var response = await http.post(
-//         Uri.parse("https://dummyURl.com"),
-//         body: jsonEncode(<String, dynamic>{
-//         "pageSize": 100,
-//         "pageNumber": 1,
-//         "keywords": "",
-//         "filters": {
-//         "searchText": filter
-//         }),
-//         );
-//
-//         if (response.statusCode == 200) {
-//         List bootcampsJson = jsonDecode(response.body)['result'];
-//         var detailsList = <BootcampDetails>[];
-//         for (Map<String, dynamic> bootcamp in bootcampsJson) {
-//         detailsList.add();
-//         }
-//         returnd detailsList.toList();
-//         } else {
-//         throw Exception("Error ${response.statusCode}");
-//         }
-//         }
-//   Widget _customPopupItemBuilder(
-//       BuildContext context, dynamic item, bool isSelected) {
-//     return Container(
-//       margin: const EdgeInsets.symmetric(horizontal: 8),
-//       decoration: !isSelected
-//           ? null
-//           : BoxDecoration(
-//         border: Border.all(color: Theme.of(context).primaryColor),
-//         borderRadius: BorderRadius.circular(5),
-//         color: Colors.white,
-//       ),
-//       child: ListTile(
-//         title: Text(item.toString(),
-//             style: const TextStyle(
-//               fontSize: 14,
-//               color: Color.fromARGB(255, 102, 100, 100),
-//             )),
-//       ),
-//     );
-//   }
-//   Widget _customDropDownPrograms(BuildContext context, BootcampDetails item) {
-//     return Container(
-//         child: (item == null)
-//             ? const ListTile(
-//           contentPadding: EdgeInsets.all(0),
-//           title: Text("Search Programs",
-//               textAlign: TextAlign.start,
-//               style: TextStyle(
-//                   fontSize: 13,
-//                   color: Color.fromARGB(235, 158, 158, 158))),
-//         )
-//             : ListTile(
-//             contentPadding: const EdgeInsets.all(0),
-//             title: Text(
-//               item.title,
-//               textAlign: TextAlign.left,
-//               overflow: TextOverflow.ellipsis,
-//               style: const TextStyle(fontSize: 13.5, color: Colors.black),
-//             )));
-//   }
- }
+  Widget _customPopupItemBuilder(
+      BuildContext context, Datum item, bool isSelected) {
+    return item == null
+        ? Container(
+            margin: const EdgeInsets.symmetric(horizontal: 8),
+            decoration: !isSelected
+                ? null
+                : BoxDecoration(
+                    border: Border.all(color: Theme.of(context).primaryColor),
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.white,
+                  ),
+            child: const ListTile(
+              title: Text("Search Data",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Color.fromARGB(255, 102, 100, 100),
+                  )),
+            ),
+          )
+        : Container(
+            margin: const EdgeInsets.symmetric(horizontal: 8),
+            decoration: !isSelected
+                ? null
+                : BoxDecoration(
+                    border: Border.all(color: Theme.of(context).primaryColor),
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.white,
+                  ),
+            child: ListTile(
+              title: Text(item.code.toString(),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Color.fromARGB(255, 102, 100, 100),
+                  )),
+            ),
+          );
+  }
+
+  Widget _customDropDownPrograms(
+      BuildContext context, Datum item, String dads) {
+    code = item != null ? item.code : "";
+    // upcomingController.issearched.value = item != null ? true : false;
+    return Container(
+        child: (item == null)
+            ? const ListTile(
+                contentPadding: EdgeInsets.all(0),
+                title: Text("Search Programs",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                        fontSize: 13,
+                        color: Color.fromARGB(235, 158, 158, 158))),
+              )
+            : ListTile(
+                contentPadding: const EdgeInsets.all(0),
+                title: Text(
+                  item.code,
+                  textAlign: TextAlign.left,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 13.5, color: Colors.black),
+                )));
+  }
+}

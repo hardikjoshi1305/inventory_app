@@ -1,17 +1,17 @@
 // To parse this JSON data, do
 //
-//     final tourRemarkResponse = tourRemarkResponseFromJson(jsonString);
+//     final finalDignoseResponse = finalDignoseResponseFromJson(jsonString);
 
 import 'dart:convert';
 
-TourRemarkResponse tourRemarkResponseFromJson(String str) =>
-    TourRemarkResponse.fromJson(json.decode(str));
+FinalDignoseResponse finalDignoseResponseFromJson(String str) =>
+    FinalDignoseResponse.fromJson(json.decode(str));
 
-String tourRemarkResponseToJson(TourRemarkResponse data) =>
+String finalDignoseResponseToJson(FinalDignoseResponse data) =>
     json.encode(data.toJson());
 
-class TourRemarkResponse {
-  TourRemarkResponse({
+class FinalDignoseResponse {
+  FinalDignoseResponse({
     this.data,
     this.succes,
     this.message,
@@ -21,8 +21,8 @@ class TourRemarkResponse {
   bool succes;
   String message;
 
-  factory TourRemarkResponse.fromJson(Map<String, dynamic> json) =>
-      TourRemarkResponse(
+  factory FinalDignoseResponse.fromJson(Map<String, dynamic> json) =>
+      FinalDignoseResponse(
         data: Data.fromJson(json["data"]),
         succes: json["succes"],
         message: json["message"],
@@ -38,23 +38,23 @@ class TourRemarkResponse {
 class Data {
   Data({
     this.tourId,
-    this.dailyremark,
+    this.finaldignose,
     this.id,
   });
 
   var tourId;
-  String dailyremark;
+  String finaldignose;
   var id;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         tourId: json["tour_id"],
-        dailyremark: json["dailyremark"],
+        finaldignose: json["finaldignose"],
         id: json["id"],
       );
 
   Map<String, dynamic> toJson() => {
         "tour_id": tourId,
-        "dailyremark": dailyremark,
+        "finaldignose": finaldignose,
         "id": id,
       };
 }

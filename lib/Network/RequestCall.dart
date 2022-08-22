@@ -7,13 +7,17 @@ import 'package:http/http.dart' as http;
 import 'package:inventory_management/Model/CreateExpenseResponse.dart';
 import 'package:inventory_management/Model/CreateTourResponse.dart';
 import 'package:inventory_management/Model/CreateUserResponse.dart';
+import 'package:inventory_management/Model/FinalDignoseResponse.dart';
 import 'package:inventory_management/Model/InventorylistResponse.dart'
     as inventory;
 import 'package:inventory_management/Model/LoginResponse.dart';
 import 'package:inventory_management/Model/PendingResponse.dart';
+import 'package:inventory_management/Model/ServiceReportResponse.dart';
 import 'package:inventory_management/Model/TourRemarkResponse.dart';
 import 'package:inventory_management/Model/UserlistResponse.dart' as user;
 import 'package:inventory_management/Model/PendingResponse.dart' as pending;
+import 'package:inventory_management/Model/SearchInventoryResponse.dart'
+    as search;
 import 'package:inventory_management/Model/WalletHistoryResponse.dart'
     as wallet;
 import 'package:inventory_management/Model/CreateTourResponse.dart'
@@ -29,8 +33,8 @@ import '../Model/AddInventoryResponse.dart';
 
 class RequestCall {
   static var client = http.Client();
-  static var BASEURL = "http://192.168.0.8/inventorymanagement/api/";
-  // static var BASEURL = "http://pankrutiinfotech.com/inventory_app/api/";
+  // static var BASEURL = "http://192.168.0.8/inventorymanagement/api/";
+  static var BASEURL = "http://pankrutiinfotech.com/inventory_app/api/";
   static var apiKey = "a92f28e11a27e8e5938a2020be68ba9c";
   static var authHeader;
 
@@ -53,6 +57,21 @@ class RequestCall {
       var json = response.body;
       var castsResp = loginResponseFromJson(json);
       return castsResp;
+    } else {
+      return null;
+    }
+  }
+
+  static Future<List<search.Datum>> searchinventory({String query}) async {
+    final body = jsonEncode({
+      'search': query,
+    });
+    var response = await client.post(BASEURL + 'searchinventory',
+        headers: authHeader, body: body);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var castsResp = search.searchInventoryResponseFromJson(json);
+      return castsResp.data;
     } else {
       return null;
     }
@@ -84,6 +103,32 @@ class RequestCall {
       var json = response.body;
       var castsResp = createTourResponseFromJson(json);
       return castsResp;
+    } else {
+      return null;
+    }
+  }
+
+  static Future createservicereport(
+      {String tour_id, String service_report}) async {
+    var req = http.MultipartRequest(
+        "POST", Uri.parse('${BASEURL}createtourservicereport'));
+// print("cretattt$req");
+
+    req.fields.addAll({'tour_id': tour_id});
+    req.files.add(
+        await http.MultipartFile.fromPath('service_report', service_report));
+
+    req.headers.addAll(authHeader);
+
+    var response = await req.send();
+    var json = await http.Response.fromStream(response);
+    if (response.statusCode == 200) {
+      var castsResp = serviceReportResponseFromJson(json.body);
+      if (castsResp.succes) {
+        return castsResp;
+      } else {
+        return null;
+      }
     } else {
       return null;
     }
@@ -129,6 +174,23 @@ class RequestCall {
     if (response.statusCode == 200) {
       var json = response.body;
       var castsResp = tourRemarkResponseFromJson(json);
+      return castsResp;
+    } else {
+      return null;
+    }
+  }
+
+  static Future createdignose({String tour_id, String finaldignose}) async {
+    final body = jsonEncode({
+      "tour_id": tour_id,
+      "finaldignose": finaldignose,
+      // "status": "Pending",
+    });
+    var response = await client.post(BASEURL + "tourfinaldignose",
+        headers: authHeader, body: body);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var castsResp = finalDignoseResponseFromJson(json);
       return castsResp;
     } else {
       return null;
@@ -290,8 +352,6 @@ class RequestCall {
     var response = await client.get(BASEURL + 'userlist', headers: authHeader);
     if (response.statusCode == 200) {
       var json = response.body;
-      print("object" + json.toString());
-
       var castsResp = user.userlistResponseFromJson(json);
       if (castsResp.succes) {
         return castsResp.data;
@@ -306,19 +366,21 @@ class RequestCall {
   }
 
   static Future<List<inventory.Datum>> fetchinventorylist(token) async {
-    Map<String, String> head = <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Authorization': token
-    };
     print("reds" + token.toString());
 
     var response =
         await client.get(BASEURL + 'inventorylist', headers: authHeader);
     if (response.statusCode == 200) {
       var json = response.body;
+      print("dadad" + response.body.toString());
 
       var castsResp = inventory.inventorylistResponseFromJson(json);
-      return castsResp.data;
+      if (castsResp.succes) {
+        return castsResp.data;
+      } else {
+        Fluttertoast.showToast(msg: castsResp.message);
+        return null;
+      }
     } else {
       return null;
     }

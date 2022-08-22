@@ -60,7 +60,7 @@ class Datum {
   String remark;
   String statusId;
   String wherefrom;
-  int price;
+  var price;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],

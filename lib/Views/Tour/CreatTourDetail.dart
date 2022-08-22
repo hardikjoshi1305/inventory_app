@@ -21,7 +21,8 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
       daily_remark,
       final_dignose,
       servicereport,
-      img_path;
+      img_path,
+      reportfile;
   var item = Get.arguments;
 
   @override
@@ -191,18 +192,26 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
                               height: 60,
                             ),
                             SizedBox(
-                              height: 100,
-                              child: TextField(
-                                style:
-                                    TextStyle(height: 3.0, color: Colors.black),
-                                keyboardType: TextInputType.text,
-                                onChanged: (value) => expensename = value,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Service Report',
-                                  prefixIcon: Icon(Icons.comment),
-                                ),
-                              ),
+                              child: ElevatedButton(
+                                  onPressed: () async {
+                                    try {
+                                      var image = await ImagePicker.pickImage(
+                                          source: ImageSource.gallery);
+                                      // print("object" + image.toString());
+                                      print("object" + image.absolute.path);
+                                      reportfile = image.absolute.path;
+                                    } catch (exception) {
+                                      print("object" + exception.toString());
+                                    }
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(Icons.image),
+                                      Text("Upload Service Report")
+                                    ],
+                                  )),
                             ),
                             Expanded(
                               child: Container(),
@@ -213,7 +222,38 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
                                 margin: const EdgeInsets.all(5),
                                 width: double.infinity,
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    if (validation4(reportfile)) {
+                                      tourController.createreportfile(
+                                          tour_id: item[1],
+                                          service_report:
+                                              reportfile.toString());
+                                    }
+
+                                    // Get.dialog(Padding(
+                                    //   padding: const EdgeInsets.all(12.0),
+                                    //   child: Column(
+                                    //     mainAxisAlignment: MainAxisAlignment.center,
+                                    //     crossAxisAlignment: CrossAxisAlignment.center,
+                                    //     children: [
+                                    //       Padding(
+                                    //         padding: const EdgeInsets.all(8.0),
+                                    //         child: ElevatedButton(
+                                    //             onPressed: () {
+                                    //               sharefile()
+                                    //             },
+                                    //             child: Text('Share File')),
+                                    //       ),
+                                    //       Padding(
+                                    //         padding: const EdgeInsets.all(8.0),
+                                    //         child: ElevatedButton(
+                                    //             onPressed: () {},
+                                    //             child: Text('Share Image')),
+                                    //       )
+                                    //     ],
+                                    //   ),
+                                    // ));
+                                  },
                                   child: const Text('Submit'),
                                 ),
                               ),
@@ -247,7 +287,14 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
                                 margin: const EdgeInsets.all(5),
                                 width: double.infinity,
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    if (validation3(final_dignose)) {
+                                      tourController.createdignose(
+                                          tour_id: item[1],
+                                          finaldignose:
+                                              final_dignose.toString());
+                                    }
+                                  },
                                   child: const Text('Submit'),
                                 ),
                               ),
@@ -275,6 +322,24 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
   bool validation2(remark) {
     if (remark.toString().isEmpty) {
       Fluttertoast.showToast(msg: "Please Enter Remark");
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  bool validation3(final_dignose) {
+    if (final_dignose.toString().isEmpty) {
+      Fluttertoast.showToast(msg: "Please Enter Final Dignose");
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  bool validation4(reportfile) {
+    if (reportfile.toString().isEmpty) {
+      Fluttertoast.showToast(msg: "Please Select File.");
       return false;
     } else {
       return true;

@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:inventory_management/Model/CreateExpenseResponse.dart';
 import 'package:inventory_management/Model/CreateTourResponse.dart';
+import 'package:inventory_management/Model/FinalDignoseResponse.dart';
+import 'package:inventory_management/Model/ServiceReportResponse.dart';
 import 'package:inventory_management/Model/TourRemarkResponse.dart';
 import 'package:inventory_management/Model/CreateUserResponse.dart';
 import 'package:inventory_management/Model/casts.dart';
@@ -14,6 +16,8 @@ class TourController extends GetxController {
   var createuserdata = CreateTourResponse().obs;
   var createexpensedata = CreateExpenseResponse().obs;
   var tourremarkdata = TourRemarkResponse().obs;
+  var finaldignosedata = FinalDignoseResponse().obs;
+  var servicereportdata = ServiceReportResponse().obs;
 
   void creattour({String tourname, String problem, String city}) async {
     try {
@@ -81,6 +85,58 @@ class TourController extends GetxController {
           Get.to(() => Dashboard());
         } else {
           Fluttertoast.showToast(msg: tourremarkdata.value.message.toString());
+        }
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  void createdignose({
+    String tour_id,
+    String finaldignose,
+  }) async {
+    try {
+      isLoading(true);
+      var res = await RequestCall.createdignose(
+        tour_id: tour_id,
+        finaldignose: finaldignose,
+      );
+      if (res != null) {
+        finaldignosedata.value = res;
+        if (finaldignosedata.value.succes) {
+          Fluttertoast.showToast(msg: "Success");
+          // Get.to(HomeScreen());
+          Get.to(() => Dashboard());
+        } else {
+          Fluttertoast.showToast(
+              msg: finaldignosedata.value.message.toString());
+        }
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  void createreportfile({
+    String tour_id,
+    String service_report,
+  }) async {
+    try {
+      isLoading(true);
+      var res = await RequestCall.createservicereport(
+        tour_id: tour_id,
+        service_report: service_report,
+      );
+      if (res != null) {
+        servicereportdata.value = res;
+        if (servicereportdata.value.succes) {
+          Fluttertoast.showToast(msg: "Success");
+          // Get.to(HomeScreen());
+          Get.to(() => Dashboard());
+        } else {
+          Fluttertoast.showToast(
+              msg: servicereportdata.value.message.toString());
         }
       }
     } finally {

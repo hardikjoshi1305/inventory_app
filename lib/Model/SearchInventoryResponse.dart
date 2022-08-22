@@ -1,42 +1,43 @@
 // To parse this JSON data, do
 //
-//     final addInventorylResponse = addInventorylResponseFromJson(jsonString);
+//     final searchInventoryResponse = searchInventoryResponseFromJson(jsonString);
 
 import 'dart:convert';
 
-AddInventorylResponse addInventorylResponseFromJson(String str) =>
-    AddInventorylResponse.fromJson(json.decode(str));
+SearchInventoryResponse searchInventoryResponseFromJson(String str) =>
+    SearchInventoryResponse.fromJson(json.decode(str));
 
-String addInventorylResponseToJson(AddInventorylResponse data) =>
+String searchInventoryResponseToJson(SearchInventoryResponse data) =>
     json.encode(data.toJson());
 
-class AddInventorylResponse {
-  AddInventorylResponse({
+class SearchInventoryResponse {
+  SearchInventoryResponse({
     this.data,
     this.succes,
     this.message,
   });
 
-  Data data;
+  List<Datum> data;
   bool succes;
   String message;
 
-  factory AddInventorylResponse.fromJson(Map<String, dynamic> json) =>
-      AddInventorylResponse(
-        data: Data.fromJson(json["data"]),
+  factory SearchInventoryResponse.fromJson(Map<String, dynamic> json) =>
+      SearchInventoryResponse(
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
         succes: json["succes"],
         message: json["message"],
       );
 
   Map<String, dynamic> toJson() => {
-        "data": data.toJson(),
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
         "succes": succes,
         "message": message,
       };
 }
 
-class Data {
-  Data({
+class Datum {
+  Datum({
+    this.id,
     this.code,
     this.name,
     this.serialNo,
@@ -47,9 +48,9 @@ class Data {
     this.statusId,
     this.wherefrom,
     this.price,
-    this.id,
   });
 
+  var id;
   String code;
   String name;
   String serialNo;
@@ -60,9 +61,9 @@ class Data {
   String statusId;
   String wherefrom;
   var price;
-  var id;
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+        id: json["id"],
         code: json["code"],
         name: json["name"],
         serialNo: json["serial_no"],
@@ -73,10 +74,10 @@ class Data {
         statusId: json["status_id"],
         wherefrom: json["wherefrom"],
         price: json["price"],
-        id: json["id"],
       );
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "code": code,
         "name": name,
         "serial_no": serialNo,
@@ -87,6 +88,5 @@ class Data {
         "status_id": statusId,
         "wherefrom": wherefrom,
         "price": price,
-        "id": id,
       };
 }

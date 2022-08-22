@@ -47,8 +47,8 @@ class Data {
   String tourname;
   String errorname;
   String city;
-  int userId;
-  int id;
+  var userId;
+  var id;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         tourname: json["tourname"],

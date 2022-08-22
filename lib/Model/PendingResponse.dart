@@ -46,8 +46,8 @@ class Datum {
     this.createdAt,
   });
 
-  int id;
-  int userId;
+  var id;
+  var userId;
   String tourname;
   String errorname;
   String city;

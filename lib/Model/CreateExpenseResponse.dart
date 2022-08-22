@@ -46,7 +46,7 @@ class Data {
   String tourId;
   String expensesName;
   String amount;
-  int id;
+  var id;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         tourId: json["tour_id"],

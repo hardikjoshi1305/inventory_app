@@ -1,17 +1,17 @@
 // To parse this JSON data, do
 //
-//     final tourRemarkResponse = tourRemarkResponseFromJson(jsonString);
+//     final serviceReportResponse = serviceReportResponseFromJson(jsonString);
 
 import 'dart:convert';
 
-TourRemarkResponse tourRemarkResponseFromJson(String str) =>
-    TourRemarkResponse.fromJson(json.decode(str));
+ServiceReportResponse serviceReportResponseFromJson(String str) =>
+    ServiceReportResponse.fromJson(json.decode(str));
 
-String tourRemarkResponseToJson(TourRemarkResponse data) =>
+String serviceReportResponseToJson(ServiceReportResponse data) =>
     json.encode(data.toJson());
 
-class TourRemarkResponse {
-  TourRemarkResponse({
+class ServiceReportResponse {
+  ServiceReportResponse({
     this.data,
     this.succes,
     this.message,
@@ -21,8 +21,8 @@ class TourRemarkResponse {
   bool succes;
   String message;
 
-  factory TourRemarkResponse.fromJson(Map<String, dynamic> json) =>
-      TourRemarkResponse(
+  factory ServiceReportResponse.fromJson(Map<String, dynamic> json) =>
+      ServiceReportResponse(
         data: Data.fromJson(json["data"]),
         succes: json["succes"],
         message: json["message"],
@@ -38,23 +38,23 @@ class TourRemarkResponse {
 class Data {
   Data({
     this.tourId,
-    this.dailyremark,
+    this.serviceReport,
     this.id,
   });
 
   var tourId;
-  String dailyremark;
+  String serviceReport;
   var id;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         tourId: json["tour_id"],
-        dailyremark: json["dailyremark"],
+        serviceReport: json["service_report"],
         id: json["id"],
       );
 
   Map<String, dynamic> toJson() => {
         "tour_id": tourId,
-        "dailyremark": dailyremark,
+        "service_report": serviceReport,
         "id": id,
       };
 }

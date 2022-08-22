@@ -47,7 +47,7 @@ class Datum {
     this.walletAmount,
   });
 
-  int id;
+  var id;
   String userid;
   String mobile;
   String apiToken;

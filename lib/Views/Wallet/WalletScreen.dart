@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inventory_management/Component/WalletListWidget.dart';
+import 'package:inventory_management/Controller/WalletController.dart';
 import 'package:inventory_management/Views/Dashboard/Dashboard.dart';
 
 import '../../Utility/CommandMethod.dart';
@@ -13,6 +14,20 @@ class WalletScreen extends StatefulWidget {
 }
 
 class _WalletScreenState extends State<WalletScreen> {
+  @override
+  void initState() {
+    callapi();
+    // upcomingController.pendingitem(iscompleted: "0");
+    super.initState();
+  }
+
+  WalletController upcomingController = Get.put(WalletController());
+
+  callapi() async {
+    await Future.delayed(Duration.zero);
+    upcomingController.wallethistorydata();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +72,12 @@ class _WalletScreenState extends State<WalletScreen> {
                             height: 0,
                           ),
                           Text(
-                            "1000 \u{20B9}",
+                            upcomingController
+                                    .wallethistory[upcomingController
+                                            .wallethistory.length -
+                                        1]
+                                    .walletAmount +
+                                " \u{20B9}",
                             style: TextStyle(
                                 fontSize: 27,
                                 fontWeight: FontWeight.w500,
@@ -97,10 +117,13 @@ class _WalletScreenState extends State<WalletScreen> {
                           ListView.builder(
                               shrinkWrap: true,
                               padding: EdgeInsets.only(bottom: 16),
-                              itemCount: 19,
+                              itemCount:
+                                  upcomingController.wallethistory.length,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (ctx, index) {
-                                return WalletListWidget();
+                                var wallet = upcomingController.wallethistory
+                                    .elementAt(index);
+                                return WalletListWidget(walletmodel: wallet);
                               })
                         ],
                       ),

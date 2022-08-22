@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:inventory_management/Model/WalletHistoryResponse.dart';
 
 class WalletListWidget extends StatelessWidget {
-  const WalletListWidget({Key key}) : super(key: key);
+  final Datum walletmodel;
+
+  WalletListWidget({this.walletmodel});
 
   @override
   Widget build(BuildContext context) {
@@ -19,39 +22,53 @@ class WalletListWidget extends StatelessWidget {
               size: 28,
             ),
           ),
-
           Align(
             alignment: AlignmentDirectional.center,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Amount Added",
+                  walletmodel.expensesName == null
+                      ? "-"
+                      : walletmodel.expensesName,
                   style: TextStyle(color: Colors.black, fontSize: 15),
                 ),
                 Container(
                   height: 5,
                 ),
                 Text(
-                  "13 May,2019 01:30 PM",
+                  walletmodel.createdAt.toString() == null
+                      ? "-"
+                      : walletmodel.createdAt.toString(),
+                  // "13 May,2019 01:30 PM",
                   style: TextStyle(color: Colors.grey, fontSize: 15),
                 )
               ],
             ),
           ),
-
           Padding(
-            padding: const EdgeInsets.only(right: 12.0),
-            child: Container(
-              alignment: AlignmentDirectional.centerEnd,
-              color: Colors.green,
-              child:  Text(
-                "500",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-            ),
-          ),
-
+              padding: const EdgeInsets.only(right: 12.0),
+              child: walletmodel.creditAmount == null
+                  ? Container(
+                      alignment: AlignmentDirectional.centerEnd,
+                      color: Colors.red,
+                      child: Text(
+                        walletmodel.debitAmount == null
+                            ? "-"
+                            : walletmodel.debitAmount,
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    )
+                  : Container(
+                      alignment: AlignmentDirectional.centerEnd,
+                      color: Colors.green,
+                      child: Text(
+                        walletmodel.creditAmount == null
+                            ? "-"
+                            : walletmodel.creditAmount,
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    )),
         ],
       ),
     );

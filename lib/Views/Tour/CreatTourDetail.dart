@@ -172,7 +172,13 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
                             margin: const EdgeInsets.all(5),
                             width: double.infinity,
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                if (validation2(remark)) {
+                                  tourController.createremark(
+                                      tour_id: item[1],
+                                      dailyremark: remark.toString());
+                                }
+                              },
                               child: const Text('Submit'),
                             ),
                           ),
@@ -260,6 +266,15 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
       return false;
     } else if (imgpath.toString().isEmpty) {
       Fluttertoast.showToast(msg: "Please Any Select Image");
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  bool validation2(remark) {
+    if (remark.toString().isEmpty) {
+      Fluttertoast.showToast(msg: "Please Enter Remark");
       return false;
     } else {
       return true;

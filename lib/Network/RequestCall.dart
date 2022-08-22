@@ -11,8 +11,11 @@ import 'package:inventory_management/Model/InventorylistResponse.dart'
     as inventory;
 import 'package:inventory_management/Model/LoginResponse.dart';
 import 'package:inventory_management/Model/PendingResponse.dart';
+import 'package:inventory_management/Model/TourRemarkResponse.dart';
 import 'package:inventory_management/Model/UserlistResponse.dart' as user;
 import 'package:inventory_management/Model/PendingResponse.dart' as pending;
+import 'package:inventory_management/Model/WalletHistoryResponse.dart'
+    as wallet;
 import 'package:inventory_management/Model/CreateTourResponse.dart'
     as createtour;
 import 'package:inventory_management/Model/InventoryStatusResponse.dart'
@@ -110,6 +113,23 @@ class RequestCall {
       } else {
         return null;
       }
+    } else {
+      return null;
+    }
+  }
+
+  static Future createremark({String tour_id, String remark}) async {
+    final body = jsonEncode({
+      "tour_id": tour_id,
+      "dailyremark": remark,
+      // "status": "Pending",
+    });
+    var response = await client.post(BASEURL + "tourdailyremark",
+        headers: authHeader, body: body);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var castsResp = tourRemarkResponseFromJson(json);
+      return castsResp;
     } else {
       return null;
     }
@@ -333,6 +353,20 @@ class RequestCall {
       print("reds" + json.toString());
 
       var castsResp = pendingResponseFromJson(json);
+      return castsResp.data;
+    } else {
+      return null;
+    }
+  }
+
+  static Future<List<wallet.Datum>> wallethistory() async {
+    var response =
+        await client.get(BASEURL + 'wallethistory', headers: authHeader);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      print("reds" + json.toString());
+
+      var castsResp = wallet.walletHistoryResponseFromJson(json);
       return castsResp.data;
     } else {
       return null;

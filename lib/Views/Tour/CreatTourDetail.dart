@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:inventory_management/Controller/TourController.dart';
 import 'package:mime/mime.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -20,10 +22,12 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
       final_dignose,
       servicereport,
       img_path;
-  var item = Get.arguments as int;
+  var item = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
+    TourController tourController = Get.put(TourController());
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Trip Details"),
@@ -31,7 +35,7 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
       body: Container(
         child: Padding(
             padding: const EdgeInsets.all(12.0),
-            child: item == 1
+            child: item[0] == 1
                 ? Column(
                     children: [
                       Container(
@@ -68,7 +72,7 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
                                   source: ImageSource.gallery);
                               // print("object" + image.toString());
                               print("object" + image.absolute.path);
-                              img_path =image.absolute.path;
+                              img_path = image.absolute.path;
                             } catch (exception) {
                               print("object" + exception.toString());
                             }
@@ -125,14 +129,22 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
                           margin: const EdgeInsets.all(5),
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              if (validation(expensename, amount, img_path)) {
+                                tourController.createexpense(
+                                    tour_id: item[1],
+                                    expenses_name: expensename,
+                                    amount: amount.toString(),
+                                    photo: img_path.toString());
+                              }
+                            },
                             child: const Text('Submit'),
                           ),
                         ),
                       ),
                     ],
                   )
-                : item == 2
+                : item[0] == 2
                     ? Expanded(
                         child: Column(children: [
                         Container(
@@ -166,7 +178,7 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
                           ),
                         )
                       ]))
-                    : item == 3
+                    : item[0] == 3
                         ? Expanded(
                             child: Column(children: [
                             Container(
@@ -237,5 +249,20 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
                           ]))),
       ),
     );
+  }
+
+  bool validation(expensename, amount, imgpath) {
+    if (expensename.toString().isEmpty) {
+      Fluttertoast.showToast(msg: "Please Enter expense name");
+      return false;
+    } else if (amount.toString().isEmpty) {
+      Fluttertoast.showToast(msg: "Please Enter amount");
+      return false;
+    } else if (imgpath.toString().isEmpty) {
+      Fluttertoast.showToast(msg: "Please Any Select Image");
+      return false;
+    } else {
+      return true;
+    }
   }
 }

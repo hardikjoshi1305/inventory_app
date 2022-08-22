@@ -37,9 +37,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: _onBackPressed,
-        child: Scaffold(
-            drawer: UserDrawer(), appBar: UserAppBar(), body: Pending()));
+        onWillPop: _onBackPressed, child: Scaffold(body: Pending()));
   }
 
   Future<bool> _onBackPressed() async {

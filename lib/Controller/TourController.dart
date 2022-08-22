@@ -1,6 +1,7 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
+import 'package:inventory_management/Model/CreateExpenseResponse.dart';
 import 'package:inventory_management/Model/CreateTourResponse.dart';
 import 'package:inventory_management/Model/CreateUserResponse.dart';
 import 'package:inventory_management/Model/casts.dart';
@@ -10,6 +11,7 @@ import 'package:inventory_management/Views/Dashboard/Dashboard.dart';
 class TourController extends GetxController {
   var isLoading = false.obs;
   var createuserdata = CreateTourResponse().obs;
+  var createexpensedata = CreateExpenseResponse().obs;
 
   void creattour({String tourname, String problem, String city}) async {
     try {
@@ -18,9 +20,41 @@ class TourController extends GetxController {
           tourname: tourname, problem: problem, city: city);
       if (res != null) {
         createuserdata.value = res;
-        Fluttertoast.showToast(msg: "Success");
-        // Get.to(HomeScreen());
-        Get.to(() => Dashboard());
+        if (createuserdata.value.succes) {
+          Fluttertoast.showToast(msg: "Success");
+          // Get.to(HomeScreen());
+          Get.to(() => Dashboard());
+        } else {
+          Fluttertoast.showToast(msg: createuserdata.value.message.toString());
+        }
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  void createexpense(
+      {String tour_id,
+      String expenses_name,
+      String amount,
+      String photo}) async {
+    try {
+      isLoading(true);
+      var res = await RequestCall.creatExpense(
+          tour_id: tour_id,
+          expenses_name: expenses_name,
+          amount: amount,
+          photo: photo);
+      if (res != null) {
+        createexpensedata.value = res;
+        if (createexpensedata.value.succes) {
+          Fluttertoast.showToast(msg: "Success");
+          // Get.to(HomeScreen());
+          Get.to(() => Dashboard());
+        } else {
+          Fluttertoast.showToast(
+              msg: createexpensedata.value.message.toString());
+        }
       }
     } finally {
       isLoading(false);

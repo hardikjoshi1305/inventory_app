@@ -37,44 +37,32 @@ class CreateTourResponse {
 
 class Data {
   Data({
-    this.name,
-    this.problem,
+    this.tourname,
+    this.errorname,
     this.city,
-    this.status,
     this.userId,
-    this.updatedAt,
-    this.createdAt,
     this.id,
   });
 
-  String name;
-  String problem;
+  String tourname;
+  String errorname;
   String city;
-  String status;
   int userId;
-  DateTime updatedAt;
-  DateTime createdAt;
   int id;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        name: json["name"],
-        problem: json["problem"],
+        tourname: json["tourname"],
+        errorname: json["errorname"],
         city: json["city"],
-        status: json["status"],
         userId: json["user_id"],
-        updatedAt: DateTime.parse(json["updated_at"]),
-        createdAt: DateTime.parse(json["created_at"]),
         id: json["id"],
       );
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "problem": problem,
+        "tourname": tourname,
+        "errorname": errorname,
         "city": city,
-        "status": status,
         "user_id": userId,
-        "updated_at": updatedAt.toIso8601String(),
-        "created_at": createdAt.toIso8601String(),
         "id": id,
       };
 }

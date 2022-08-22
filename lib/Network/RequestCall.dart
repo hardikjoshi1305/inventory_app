@@ -4,12 +4,15 @@ import 'dart:io';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:inventory_management/Model/CreateExpenseResponse.dart';
 import 'package:inventory_management/Model/CreateTourResponse.dart';
 import 'package:inventory_management/Model/CreateUserResponse.dart';
 import 'package:inventory_management/Model/InventorylistResponse.dart'
     as inventory;
 import 'package:inventory_management/Model/LoginResponse.dart';
+import 'package:inventory_management/Model/PendingResponse.dart';
 import 'package:inventory_management/Model/UserlistResponse.dart' as user;
+import 'package:inventory_management/Model/PendingResponse.dart' as pending;
 import 'package:inventory_management/Model/CreateTourResponse.dart'
     as createtour;
 import 'package:inventory_management/Model/InventoryStatusResponse.dart'
@@ -67,10 +70,10 @@ class RequestCall {
   static Future creatTour(
       {String tourname, String problem, String city}) async {
     final body = jsonEncode({
-      "name": tourname,
-      "problem": problem,
+      "tourname": tourname,
+      "errorname": problem,
       "city": city,
-      "status": "Pending",
+      // "status": "Pending",
     });
     var response = await client.post(BASEURL + "createtour",
         headers: authHeader, body: body);
@@ -78,6 +81,35 @@ class RequestCall {
       var json = response.body;
       var castsResp = createTourResponseFromJson(json);
       return castsResp;
+    } else {
+      return null;
+    }
+  }
+
+  static Future creatExpense(
+      {String tour_id,
+      String expenses_name,
+      String amount,
+      String photo}) async {
+    var req =
+        http.MultipartRequest("POST", Uri.parse('${BASEURL}createexpense'));
+// print("cretattt$req");
+
+    req.fields.addAll(
+        {'tour_id': tour_id, 'expenses_name': expenses_name, 'amount': amount});
+    req.files.add(await http.MultipartFile.fromPath('photo', photo));
+
+    req.headers.addAll(authHeader);
+
+    var response = await req.send();
+    var json = await http.Response.fromStream(response);
+    if (response.statusCode == 200) {
+      var castsResp = createExpenseResponseFromJson(json.body);
+      if (castsResp.succes) {
+        return castsResp;
+      } else {
+        return null;
+      }
     } else {
       return null;
     }
@@ -290,13 +322,18 @@ class RequestCall {
     }
   }
 
-  static Future<List<Cast>> pendingitems({String userid}) async {
-    var response = await client.get(
-        'https://api.themoviedb.org/3/movie/$userid/credits?api_key=a92f28e11a27e8e5938a2020be68ba9c');
+  static Future<List<pending.Datum>> pendingitems({String iscompleted}) async {
+    var body = jsonEncode({
+      "iscompleted": iscompleted,
+    });
+    var response = await client.post(BASEURL + 'tourlist',
+        headers: authHeader, body: body);
     if (response.statusCode == 200) {
       var json = response.body;
-      var castsResp = castsFromJson(json);
-      return castsResp.cast;
+      print("reds" + json.toString());
+
+      var castsResp = pendingResponseFromJson(json);
+      return castsResp.data;
     } else {
       return null;
     }

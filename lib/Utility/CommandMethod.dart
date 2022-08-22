@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:inventory_management/Views/Dashboard/Dashboard.dart';
 import 'package:inventory_management/Views/Inventory/SendInventory.dart';
+import 'package:inventory_management/Views/Pending/Pending.dart';
 
+import '../Views/Completed Tour/Completed.dart';
 import '../Views/Home/HomeScreen.dart';
 import '../Views/Inventory/Inventory.dart';
 import '../Views/Login/Login.dart';
@@ -11,6 +14,14 @@ import '../Views/Wallet/WalletScreen.dart';
 import 'CONSTANT.dart';
 import 'SharedPreferenceHelper.dart';
 import 'app_colors.dart';
+
+getdateformate(DateTime dateTime) {
+  return dateTime.day.toString() +
+      "-" +
+      dateTime.month.toString() +
+      "-" +
+      dateTime.year.toString();
+}
 
 MaterialColor createMaterialColor(Color color) {
   List strengths = <double>[.05];
@@ -95,6 +106,7 @@ Widget UserDrawer() {
               icon: Icons.pending_actions,
               text: 'Pending',
               onTap: () {
+                Get.to(() => Dashboard());
                 // Navigator.of(context).pop();
                 // Navigator.pushNamed(context, pageRoutes.landscape);
               }),
@@ -102,6 +114,8 @@ Widget UserDrawer() {
               icon: Icons.cloud_done_rounded,
               text: 'Completed',
               onTap: () {
+                Get.to(() => Completed());
+
                 // Navigator.of(context).pop();
 
                 // _permissionStatus?
@@ -185,7 +199,6 @@ Widget AdminDrawer() {
                 // _permissionStatus?
                 // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
               }),
-
 
           Divider(),
           createDrawerBodyItem(

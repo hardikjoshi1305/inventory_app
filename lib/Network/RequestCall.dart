@@ -66,24 +66,15 @@ class RequestCall {
     final body = jsonEncode({
       'search': query,
     });
-    var response = await client.post(BASEURL + 'searchinventory',
-        headers: authHeader, body: body);
+    var response = await client
+        .post(BASEURL + 'searchinventory', headers: authHeader, body: body)
+        .catchError((error) {
+      print("error" + error.toString());
+    });
     if (response.statusCode == 200) {
       var json = response.body;
       var castsResp = search.searchInventoryResponseFromJson(json);
       return castsResp.data;
-    } else {
-      return null;
-    }
-  }
-
-  static Future<List<Cast>> fetchCastOfMovie({int movieID}) async {
-    var response = await client.get(
-        'https://api.themoviedb.org/3/movie/$movieID/credits?api_key=a92f28e11a27e8e5938a2020be68ba9c');
-    if (response.statusCode == 200) {
-      var json = response.body;
-      var castsResp = castsFromJson(json);
-      return castsResp.cast;
     } else {
       return null;
     }
@@ -199,42 +190,44 @@ class RequestCall {
 
   static Future createuser(
       {String name,
-      String email,
       String phone,
       String password,
-      String status,
-      String city,
-      String wallet_amount,
-      String photo}) async {
-    final headers = authHeader;
-    http.MultipartFile f1 = http.MultipartFile.fromString("name", name);
-    http.MultipartFile f2 = http.MultipartFile.fromString("email", email);
-    http.MultipartFile f3 =
-        http.MultipartFile.fromString("mobile_number", phone);
-    http.MultipartFile f4 = http.MultipartFile.fromString("password", password);
-    http.MultipartFile f5 = http.MultipartFile.fromString("status", status);
-    http.MultipartFile f6 = http.MultipartFile.fromString("city", city);
-    http.MultipartFile f7 =
-        http.MultipartFile.fromString("wallet_amount", wallet_amount);
-    http.MultipartFile f8 = http.MultipartFile.fromString("photo", photo);
+      String deviceid,
+      String wallet_amount}) async {
+//     final headers = authHeader;
+//     http.MultipartFile f1 = http.MultipartFile.fromString("userid", name);
+//     http.MultipartFile f3 = http.MultipartFile.fromString("mobile", phone);
+//     http.MultipartFile f4 = http.MultipartFile.fromString("password", password);
+//     http.MultipartFile f6 = http.MultipartFile.fromString("deviceid", deviceid);
+//     http.MultipartFile f7 =
+//         http.MultipartFile.fromString("wallet_amount", wallet_amount);
+//     // http.MultipartFile f8 = http.MultipartFile.fromString("photo", photo);
+//
+//     var req = http.MultipartRequest("POST", Uri.parse('${BASEURL}createuser'));
+// // print("cretattt$req");
+//
+//     req.files.add(f1);
+//     req.files.add(f3);
+//     req.files.add(f4);
+//     req.files.add(f6);
+//     req.files.add(f7);
+//     req.headers.addAll(headers);
+    var body = jsonEncode({
+      "userid": name,
+      "mobile": phone,
+      "password": password,
+      "deviceid": deviceid,
+      "wallet_amount": wallet_amount,
+    });
 
-    var req = http.MultipartRequest("POST", Uri.parse('${BASEURL}createuser'));
-// print("cretattt$req");
+    var response = await client.post(BASEURL + 'createuser',
+        headers: authHeader, body: body);
 
-    req.files.add(f1);
-    req.files.add(f2);
-    req.files.add(f3);
-    req.files.add(f4);
-    req.files.add(f5);
-    req.files.add(f6);
-    req.files.add(f7);
-    req.files.add(f8);
-    req.headers.addAll(headers);
-
-    var response = await req.send();
-    var json = await http.Response.fromStream(response);
+    // var response = await req.send();
+    // var json = await http.Response.fromStream(response);
     if (response.statusCode == 200) {
-      var castsResp = createUserResponseFromJson(json.body);
+      var json = response.body;
+      var castsResp = createUserResponseFromJson(json);
       if (castsResp.succes) {
         return castsResp;
       } else {
@@ -268,7 +261,7 @@ class RequestCall {
       String machine,
       String location,
       String remark,
-      String status_id,
+      // String status_id,
       String wherefrom,
       String Prize}) async {
     final headers = authHeader;
@@ -286,18 +279,23 @@ class RequestCall {
         "price": int.parse(Prize)
       });
 
-      var response = await client.post(BASEURL + 'updateinventory',
+      var response = await client.post(BASEURL + 'createinventory',
           headers: headers, body: body);
       if (response.statusCode == 200) {
         var json = response.body;
         var castsResp = addInventorylResponseFromJson(json);
-        return castsResp;
+        if (castsResp.succes) {
+          return castsResp;
+        } else {
+          Fluttertoast.showToast(msg: castsResp.message);
+          return null;
+        }
       } else {
         return null;
       }
     } else {
       body = jsonEncode({
-        "id": id,
+        "inventory_id": id,
         "code": code,
         "name": name,
         "serial_no": serial_no,
@@ -305,12 +303,12 @@ class RequestCall {
         "machine": machine,
         "location": location,
         "remark": remark,
-        "status_id": status_id,
+        // "status_id": status_id,
         "wherefrom": wherefrom,
         "price": int.parse(Prize)
       });
 
-      var response = await client.post(BASEURL + 'createinventory',
+      var response = await client.post(BASEURL + 'updateinventory',
           headers: headers, body: body);
       if (response.statusCode == 200) {
         var json = response.body;
@@ -349,9 +347,16 @@ class RequestCall {
   }
 
   static Future<List<user.Datum>> fetchuserlist() async {
-    var response = await client.get(BASEURL + 'userlist', headers: authHeader);
+    var response = await client
+        .get(BASEURL + 'userlist', headers: authHeader)
+        .catchError((error) {
+      print("error" + error.toString());
+    });
+    ;
     if (response.statusCode == 200) {
       var json = response.body;
+      print("userlist" + response.body.toString());
+
       var castsResp = user.userlistResponseFromJson(json);
       if (castsResp.succes) {
         return castsResp.data;
@@ -368,8 +373,11 @@ class RequestCall {
   static Future<List<inventory.Datum>> fetchinventorylist(token) async {
     print("reds" + token.toString());
 
-    var response =
-        await client.get(BASEURL + 'inventorylist', headers: authHeader);
+    var response = await client
+        .get(BASEURL + 'inventorylist', headers: authHeader)
+        .catchError((error) {
+      print("error" + error.toString());
+    });
     if (response.statusCode == 200) {
       var json = response.body;
       print("dadad" + response.body.toString());
@@ -386,7 +394,30 @@ class RequestCall {
     }
   }
 
-  static Future<List<status.Datum>> fetchstatuslist(token) async {
+  static Future<List<inventory.Datum>> fetchuserinventorylist() async {
+    var response = await client
+        .get(BASEURL + 'inventorylist', headers: authHeader)
+        .catchError((error) {
+      print("error" + error.toString());
+    });
+    ;
+    if (response.statusCode == 200) {
+      var json = response.body;
+      print("dadad" + response.body.toString());
+
+      var castsResp = inventory.inventorylistResponseFromJson(json);
+      if (castsResp.succes) {
+        return castsResp.data;
+      } else {
+        Fluttertoast.showToast(msg: castsResp.message);
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static Future<List<status.Datum>> fetchstatuslist() async {
     // createAuthHeader(token);
     var body = jsonEncode({
       "type": "1",
@@ -396,7 +427,6 @@ class RequestCall {
     if (response.statusCode == 200) {
       var json = response.body;
       print("reds" + json.toString());
-
       var castsResp = status.inventoryStatusResponseFromJson(json);
       return castsResp.data;
     } else {

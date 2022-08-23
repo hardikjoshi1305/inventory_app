@@ -37,55 +37,35 @@ class CreateUserResponse {
 
 class Data {
   Data({
-    this.name,
-    this.email,
-    this.status,
-    this.city,
+    this.userid,
+    this.mobile,
     this.walletAmount,
-    this.photo,
-    this.mobileNumber,
-    this.updatedAt,
-    this.createdAt,
+    this.deviceid,
     this.id,
     this.apiToken,
   });
 
-  String name;
-  String email;
-  String status;
-  String city;
+  String userid;
+  String mobile;
   String walletAmount;
-  dynamic photo;
-  String mobileNumber;
-  DateTime updatedAt;
-  DateTime createdAt;
+  String deviceid;
   var id;
   String apiToken;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        name: json["name"],
-        email: json["email"],
-        status: json["status"],
-        city: json["city"],
+        userid: json["userid"],
+        mobile: json["mobile"],
         walletAmount: json["wallet_amount"],
-        photo: json["photo"],
-        mobileNumber: json["mobile_number"],
-        updatedAt: DateTime.parse(json["updated_at"]),
-        createdAt: DateTime.parse(json["created_at"]),
+        deviceid: json["deviceid"],
         id: json["id"],
         apiToken: json["api_token"],
       );
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "email": email,
-        "status": status,
-        "city": city,
+        "userid": userid,
+        "mobile": mobile,
         "wallet_amount": walletAmount,
-        "photo": photo,
-        "mobile_number": mobileNumber,
-        "updated_at": updatedAt.toIso8601String(),
-        "created_at": createdAt.toIso8601String(),
+        "deviceid": deviceid,
         "id": id,
         "api_token": apiToken,
       };

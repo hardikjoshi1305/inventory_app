@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
+import 'package:inventory_management/Controller/InventoryController.dart';
 import 'package:inventory_management/Model/InventorylistResponse.dart';
 import 'package:inventory_management/Views/Inventory/CreateInventory.dart';
 
 import '../Utility/app_colors.dart';
+import '../Views/Inventory/ReturnInventory.dart';
 
 class InventoryListWidget extends StatelessWidget {
   final Datum UserModel;
-  // final String? categoryTitle;
+  final String usertype;
 
-  InventoryListWidget({this.UserModel});
+  InventoryListWidget({this.UserModel, this.usertype});
 
   @override
   Widget build(BuildContext context) {
@@ -181,7 +183,7 @@ class InventoryListWidget extends StatelessWidget {
           ),
           padding: const EdgeInsets.all(12.0),
           child: Text(
-            this.UserModel.remark,
+            this.UserModel.remark == null ? "-" : this.UserModel.remark,
             style: TextStyle(
                 fontWeight: FontWeight.w400, color: AppColors.darkBlue),
           ),
@@ -202,7 +204,7 @@ class InventoryListWidget extends StatelessWidget {
           ),
           padding: const EdgeInsets.all(12.0),
           child: Text(
-            this.UserModel.statusId,
+            this.UserModel.statusId != null ? this.UserModel.statusId : "-",
             style: TextStyle(
                 fontWeight: FontWeight.w400, color: AppColors.darkBlue),
           ),
@@ -256,12 +258,18 @@ class InventoryListWidget extends StatelessWidget {
                         color: AppColors.darkBlue, size: 25),
                   ),
                 ),
-                Padding(
-                    padding: const EdgeInsets.all(1.0),
-                    child: IconButton(
-                      icon: Icon(Icons.delete,
-                          color: AppColors.darkBlue, size: 25),
-                    )),
+                usertype != "user"
+                    ? Padding(
+                        padding: const EdgeInsets.all(1.0),
+                        child: IconButton(
+                          onPressed: () {
+                            Get.to(() => ReturnInventory(),
+                                arguments: this.UserModel);
+                          },
+                          icon: Icon(Icons.assignment_return_rounded,
+                              color: AppColors.darkBlue, size: 25),
+                        ))
+                    : Text(''),
               ],
             )),
       ],

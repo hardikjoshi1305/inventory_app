@@ -18,7 +18,6 @@ class CreateInventory extends StatefulWidget {
 
 class _CreateInventoryState extends State<CreateInventory> {
   String code,
-      id,
       name,
       serial_no,
       px_no,
@@ -26,15 +25,16 @@ class _CreateInventoryState extends State<CreateInventory> {
       location,
       remark,
       wherefrom,
-      status_id = " ";
+      status_id;
   var prize;
+  var id = "0";
   String status_name = "Status";
   Datum usermodel;
   List<String> statuslist = new List();
   List<String> statusIDlist = new List();
   InventoryController inventoryController = Get.put(InventoryController());
-  RxString dropdownvalue = 'Sold Out'.obs;
-  RxString dropdownid = '0'.obs;
+  // RxString dropdownvalue = 'Sold Out'.obs;
+  // RxString dropdownid = '0'.obs;
 
   getauthtoken() async {
     var token = await SharedPreferenceHelper().getPref(TOKEN);
@@ -47,7 +47,7 @@ class _CreateInventoryState extends State<CreateInventory> {
         ? ({
             usermodel = Get.arguments as Datum,
             usermodel != null ? id = usermodel.id.toString() : "0",
-            inventoryController.fetchstatuslist("")
+            // inventoryController.fetchstatuslist("")
           })
         : null;
 
@@ -263,91 +263,91 @@ class _CreateInventoryState extends State<CreateInventory> {
             Container(
               height: 20,
             ),
-            DecoratedBox(
-                decoration: BoxDecoration(
-                    color: AppColors.offWhite,
-                    border: Border.all(color: Colors.black38, width: 1),
-                    borderRadius: BorderRadius.circular(
-                        10), //border raiuds of dropdown button
-                    boxShadow: <BoxShadow>[
-                      //apply shadow on Dropdown button
-                      // /blur radius of shadow
-                    ]),
-                child:
-                    // ElevatedButton(
-                    //   child: status_name == "Status"
-                    //       ? Text("Status")
-                    //       : Text(status_name),
-                    //   onPressed: (() => showDialog(
-                    //       context: context,
-                    //       builder: (BuildContext context) {
-                    //         return AlertDialog(
-                    //           title: Text("Status"),
-                    //           content: setupAlertDialoadContainer(),
-                    //         );
-                    //       })),
-                    // )
-
-                    Padding(
-                        padding: const EdgeInsets.only(left: 60.0, right: 60.0),
-                        child: Obx(
-                          () => dropdownvalue.value == "Sold Out"
-                              ? DropdownButton(
-                                  elevation: 0,
-                                  value: dropdownvalue.value,
-                                  hint: Text("Status"),
-                                  icon: Icon(Icons.keyboard_arrow_down),
-                                  items: inventoryController.inventorystatuslist
-                                      .map((items) {
-                                    return DropdownMenuItem(
-                                        onTap: () {
-                                          dropdownid.value =
-                                              items.id.toString();
-                                          print("objectkey" + dropdownid.value);
-                                        },
-                                        value: items.statusName,
-                                        child: Text(items.statusName));
-                                  }).toList(),
-                                  onChanged: (newValue) {
-                                    dropdownvalue.value = newValue;
-                                  },
-                                )
-                              : DropdownButton(
-                                  elevation: 0,
-                                  value: dropdownvalue.value,
-                                  hint: Text("Status"),
-                                  icon: Icon(Icons.keyboard_arrow_down),
-                                  items: inventoryController.inventorystatuslist
-                                      .map((items) {
-                                    return DropdownMenuItem(
-                                        onTap: () {
-                                          dropdownid.value =
-                                              items.id.toString();
-                                          print("objectkey" + dropdownid.value);
-                                        },
-                                        value: items.statusName,
-                                        child: Text(items.statusName));
-                                  }).toList(),
-                                  onChanged: (newValue) {
-                                    dropdownvalue.value = newValue;
-                                  },
-                                ),
-                        ))
-                //   // DropdownButton<String>(
-                //   //   items:
-                //   //       userController.inventorystatuslist.map((element) {
-                //   //     print("object" + element.statusName);
-                //   //     return DropdownMenuItem<String>(
-                //   //       child: Text(element.statusName),
-                //   //     );
-                //   //   }).toList(),
-                //   // onChanged: ((value) => setState(() {
-                //   //       status_id = value;
-                //   //     })),
-                //   // value: status_id,
-                //   // ),
-                // ),
-                ),
+            // DecoratedBox(
+            //     decoration: BoxDecoration(
+            //         color: AppColors.offWhite,
+            //         border: Border.all(color: Colors.black38, width: 1),
+            //         borderRadius: BorderRadius.circular(
+            //             10), //border raiuds of dropdown button
+            //         boxShadow: <BoxShadow>[
+            //           //apply shadow on Dropdown button
+            //           // /blur radius of shadow
+            //         ]),
+            //     child:
+            //         // ElevatedButton(
+            //         //   child: status_name == "Status"
+            //         //       ? Text("Status")
+            //         //       : Text(status_name),
+            //         //   onPressed: (() => showDialog(
+            //         //       context: context,
+            //         //       builder: (BuildContext context) {
+            //         //         return AlertDialog(
+            //         //           title: Text("Status"),
+            //         //           content: setupAlertDialoadContainer(),
+            //         //         );
+            //         //       })),
+            //         // )
+            //
+            //         // Padding(
+            //         //     padding: const EdgeInsets.only(left: 60.0, right: 60.0),
+            //         //     child: Obx(
+            //         //       () => dropdownvalue.value == "Sold Out"
+            //         //           ? DropdownButton(
+            //         //               elevation: 0,
+            //         //               value: dropdownvalue.value,
+            //         //               hint: Text("Status"),
+            //         //               icon: Icon(Icons.keyboard_arrow_down),
+            //         //               items: inventoryController.inventorystatuslist
+            //         //                   .map((items) {
+            //         //                 return DropdownMenuItem(
+            //         //                     onTap: () {
+            //         //                       dropdownid.value =
+            //         //                           items.id.toString();
+            //         //                       print("objectkey" + dropdownid.value);
+            //         //                     },
+            //         //                     value: items.statusName,
+            //         //                     child: Text(items.statusName));
+            //         //               }).toList(),
+            //         //               onChanged: (newValue) {
+            //         //                 dropdownvalue.value = newValue;
+            //         //               },
+            //         //             )
+            //         //           : DropdownButton(
+            //         //               elevation: 0,
+            //         //               value: dropdownvalue.value,
+            //         //               hint: Text("Status"),
+            //         //               icon: Icon(Icons.keyboard_arrow_down),
+            //         //               items: inventoryController.inventorystatuslist
+            //         //                   .map((items) {
+            //         //                 return DropdownMenuItem(
+            //         //                     onTap: () {
+            //         //                       dropdownid.value =
+            //         //                           items.id.toString();
+            //         //                       print("objectkey" + dropdownid.value);
+            //         //                     },
+            //         //                     value: items.statusName,
+            //         //                     child: Text(items.statusName));
+            //         //               }).toList(),
+            //         //               onChanged: (newValue) {
+            //         //                 dropdownvalue.value = newValue;
+            //         //               },
+            //         //             ),
+            //         //     ))
+            //     //   // DropdownButton<String>(
+            //     //   //   items:
+            //     //   //       userController.inventorystatuslist.map((element) {
+            //     //   //     print("object" + element.statusName);
+            //     //   //     return DropdownMenuItem<String>(
+            //     //   //       child: Text(element.statusName),
+            //     //   //     );
+            //     //   //   }).toList(),
+            //     //   // onChanged: ((value) => setState(() {
+            //     //   //       status_id = value;
+            //     //   //     })),
+            //     //   // value: status_id,
+            //     //   // ),
+            //     // ),
+            //     ),
 
             // TextField(
             //   keyboardType: TextInputType.number,
@@ -382,20 +382,26 @@ class _CreateInventoryState extends State<CreateInventory> {
                     child: const Text('Create'),
                     onPressed: () {
                       print('pressed');
-                      if (Validateinventory(code, name, serial_no, px_no,
-                          machine, location, remark)) {
+                      if (Validateinventory(
+                          te_code.value.text,
+                          te_name.value.text,
+                          te_srno.value.text,
+                          te_pxn.value.text,
+                          te_machine.value.text,
+                          te_location.value.text,
+                          te_Remark.value.text)) {
                         inventoryController.createinventory(
                             id: id,
-                            code: code,
-                            name: name,
-                            serial_no: serial_no,
-                            px_no: px_no,
-                            machine: machine,
-                            location: location,
-                            remark: remark,
-                            status_id: dropdownid.value,
-                            wherefrom: wherefrom,
-                            Prize: prize);
+                            code: te_code.value.text,
+                            name: te_name.value.text,
+                            serial_no: te_srno.value.text,
+                            px_no: te_pxn.value.text,
+                            machine: te_machine.value.text,
+                            location: te_location.value.text,
+                            remark: te_Remark.value.text,
+                            // status_id: dropdownid.value,
+                            wherefrom: te_Wherefrom.value.text,
+                            Prize: te_Prize.value.text);
                       }
 
                       // if (validatetourdetail(name, email, password,
@@ -412,13 +418,14 @@ class _CreateInventoryState extends State<CreateInventory> {
     );
   }
 
-  bool Validateinventory(
-      code, name, serial_no, px_no, machine, location, remark) {
-    if (code.toString().isEmpty ||
-        name.toString().isEmpty ||
-        px_no.toString().isEmpty ||
-        machine.toString().isEmpty ||
-        location.toString().isEmpty) {
+  bool Validateinventory(String code, String name, String serial_no,
+      String px_no, String machine, String location, String remark) {
+    if (code.isEmpty ||
+        name.isEmpty ||
+        serial_no.isEmpty ||
+        px_no.isEmpty ||
+        machine.isEmpty ||
+        location.isEmpty) {
       Fluttertoast.showToast(msg: "Please fill all the require Details");
       return false;
     } else {

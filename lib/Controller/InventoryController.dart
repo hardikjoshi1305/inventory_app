@@ -10,11 +10,13 @@ import 'package:inventory_management/Model/InventoryStatusResponse.dart'
 import 'package:inventory_management/Network/RequestCall.dart';
 
 import 'package:inventory_management/Views/Home/HomeScreen.dart';
+import 'package:inventory_management/Views/Inventory/Inventory.dart';
 
 class InventoryController extends GetxController {
   var isLoading = false.obs;
   var login = addinventory.AddInventorylResponse().obs;
   var inventorylist = List<inventory.Datum>().obs;
+  var userinventorylist = List<inventory.Datum>().obs;
   var inventorystatuslist = List<status.Datum>().obs;
 
   void createinventory(
@@ -26,10 +28,11 @@ class InventoryController extends GetxController {
       String machine,
       String location,
       String remark,
-      String status_id,
+      // String status_id,
       String wherefrom,
       String Prize}) async {
     try {
+      print("iddd" + id);
       isLoading(true);
       var res = await RequestCall.createInventory(
           id: id,
@@ -40,14 +43,14 @@ class InventoryController extends GetxController {
           machine: machine,
           location: location,
           remark: remark,
-          status_id: status_id,
+          // status_id: status_id,
           wherefrom: wherefrom,
           Prize: Prize);
       if (res != null) {
         login.value = res;
         if (login.value.succes) {
           Fluttertoast.showToast(msg: "User Created Successfully");
-          Get.to(HomeScreen());
+          Get.to(() => Inventory());
         } else {
           Fluttertoast.showToast(msg: login.value.message);
         }
@@ -74,10 +77,27 @@ class InventoryController extends GetxController {
     }
   }
 
-  void fetchstatuslist(String token) async {
+  void fetchuserinventorylist() async {
+    try {
+      isLoading(true);
+      var res = await RequestCall.fetchuserinventorylist();
+      if (res != null) {
+        userinventorylist.assignAll(res);
+        if (userinventorylist.length > 0) {
+          Fluttertoast.showToast(msg: "inventorylist Retrieve Successfully");
+        } else {
+          Fluttertoast.showToast(msg: "No Data Found");
+        }
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  void fetchstatuslist() async {
     try {
       // isLoading(true);
-      var res = await RequestCall.fetchstatuslist(token);
+      var res = await RequestCall.fetchstatuslist();
       if (res != null) {
         inventorystatuslist.assignAll(res);
         if (inventorystatuslist.length > 0) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:inventory_management/Controller/UserController.dart';
 import 'package:inventory_management/Views/Dashboard/Dashboard.dart';
 import 'package:inventory_management/Views/Inventory/SendInventory.dart';
 import 'package:inventory_management/Views/Pending/Pending.dart';
@@ -7,6 +8,7 @@ import 'package:inventory_management/Views/Pending/Pending.dart';
 import '../Views/Completed Tour/Completed.dart';
 import '../Views/Home/HomeScreen.dart';
 import '../Views/Inventory/Inventory.dart';
+import '../Views/Inventory/UserInventory.dart';
 import '../Views/Login/Login.dart';
 import '../Views/Tour/Createtrip.dart';
 import '../Views/Users/CreateUser.dart';
@@ -55,6 +57,7 @@ Widget AdminAppBar() {
           ),
           onPressed: () {
             Get.to(() => Createuser());
+            Get.delete<UserController>();
           },
           child: Text("Create User", style: TextStyle(color: Colors.white)),
         ),
@@ -142,6 +145,8 @@ Widget UserDrawer() {
               icon: Icons.inventory,
               text: 'Inventory',
               onTap: () {
+                Get.to(() => UserInventory());
+
                 // Navigator.of(context).pop();
 
                 // _permissionStatus?
@@ -298,4 +303,16 @@ Widget roundedButton(String buttonLabel, Color bgColor, Color textColor) {
     ),
   );
   return loginBtn;
+}
+
+Widget nodatafound() {
+  Center(
+    child: Text(
+      'No Data Found',
+      style: TextStyle(
+        fontSize: 19,
+        color: Colors.black,
+      ),
+    ),
+  );
 }

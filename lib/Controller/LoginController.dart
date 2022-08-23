@@ -19,17 +19,22 @@ class LoginController extends GetxController {
           await RequestCall.fetchloginuser(email: email, password: password);
       if (res != null) {
         login.value = res;
-        Fluttertoast.showToast(msg: "Success");
-        SharedPreferenceHelper()
-            .setPref(TOKEN, "Bearer ${login.value.data.apiToken}");
-        SharedPreferenceHelper().setPref(USERTYPE, (login.value.data.type));
-        RequestCall.createAuthHeader("Bearer ${login.value.data.apiToken}");
+        if (login.value.succes) {
+          Fluttertoast.showToast(msg: "Success");
+          SharedPreferenceHelper()
+              .setPref(TOKEN, "Bearer ${login.value.data.apiToken}");
+          SharedPreferenceHelper().setPref(USERTYPE, (login.value.data.type));
+          RequestCall.createAuthHeader("Bearer ${login.value.data.apiToken}");
 
-        if (login.value.data.type == "Admin") {
-          Get.to(() => HomeScreen());
+          if (login.value.data.type == "Admin") {
+            Get.to(() => HomeScreen());
+          } else {
+            Get.to(() => Dashboard());
+          }
         } else {
-          Get.to(() => Dashboard());
+          Fluttertoast.showToast(msg: login.value.message);
         }
+
         // Get.to(HomeScreen());
       }
     } finally {

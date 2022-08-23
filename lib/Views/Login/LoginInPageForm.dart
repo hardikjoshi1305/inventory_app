@@ -69,7 +69,7 @@ class _LoginPageFormState extends State<LoginPageForm> {
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'User ID',
-                      prefixIcon: Icon(Icons.email),
+                      prefixIcon: Icon(Icons.person),
                     ),
                   ),
                 ),
@@ -112,21 +112,24 @@ class _LoginPageFormState extends State<LoginPageForm> {
                         }
                       },
                     )),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const Text('Does not have account?'),
-                    TextButton(
-                      child: const Text(
-                        'Sign Up',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      onPressed: () {
-                        //signup screen
-                      },
-                    )
-                  ],
-                ),
+                // logincontroller.login.value.data != null
+                //     ? Text(logincontroller.login.value.message)
+                //     : null,
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: <Widget>[
+                //     const Text('Does not have account?'),
+                //     TextButton(
+                //       child: const Text(
+                //         'Sign Up',
+                //         style: TextStyle(fontSize: 20),
+                //       ),
+                //       onPressed: () {
+                //         //signup screen
+                //       },
+                //     )
+                //   ],
+                // ),
               ],
             );
           }

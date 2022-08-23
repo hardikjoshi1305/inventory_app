@@ -7,6 +7,9 @@ import 'package:inventory_management/Model/AddInventoryResponse.dart'
     as addinventory;
 import 'package:inventory_management/Model/InventoryStatusResponse.dart'
     as status;
+import 'package:inventory_management/Model/AssignInventoryResponse.dart'
+    as assign;
+
 import 'package:inventory_management/Network/RequestCall.dart';
 
 import 'package:inventory_management/Views/Home/HomeScreen.dart';
@@ -16,7 +19,7 @@ class InventoryController extends GetxController {
   var isLoading = false.obs;
   var login = addinventory.AddInventorylResponse().obs;
   var inventorylist = List<inventory.Datum>().obs;
-  var userinventorylist = List<inventory.Datum>().obs;
+  var userinventorylist = List<assign.Datum>().obs;
   var inventorystatuslist = List<status.Datum>().obs;
 
   void createinventory(

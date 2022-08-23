@@ -20,7 +20,7 @@ class SendInventory extends StatefulWidget {
   State<SendInventory> createState() => _SendInventoryState();
 }
 
-var userid, img_path;
+var userid, img_path, tourname;
 var code = "";
 List<String> allinventory = [];
 List<String> allinventoryimage = [];
@@ -67,8 +67,29 @@ class _SendInventoryState extends State<SendInventory> {
                 Container(
                   height: 20,
                 ),
+                Container(
+                  height: 20,
+                ),
+                Container(
+                  child: TextField(
+                    // controller: te_name
+                    //   ..text = this.usermodel != null ? usermodel.name : "",
+                    keyboardType: TextInputType.text,
+                    onChanged: (value) {
+                      tourname = value;
+                    },
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.tour),
+                      labelText: 'Tour Name',
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 20,
+                ),
                 DropdownSearch<Datum>(
-                  mode: Mode.MENU,
+                  mode: Mode.BOTTOM_SHEET,
                   showSearchBox: true,
                   isFilteredOnline: true,
                   dropDownButton: const Icon(
@@ -88,8 +109,8 @@ class _SendInventoryState extends State<SendInventory> {
                       if (object != null) {
                         print("onchasnged" + object.code);
 
-                        allinventory.add(object.code);
-                        allinventoryimage.add("null");
+                        allinventory.add(object.id.toString());
+                        allinventoryimage.add("");
                       }
                     });
                   },
@@ -171,8 +192,15 @@ class _SendInventoryState extends State<SendInventory> {
                     child: ElevatedButton(
                       onPressed: () {
                         print("allinventorylist  " + allinventory.toString());
-                        print("allinventoryimagelist  " +
-                            allinventoryimage.toString());
+                        // print("allinventoryimagelist  " +)
+                        if (allinventory.length > 0) {
+                          upcomingController.fetchsendpartapi(
+                              userid: userid,
+                              tourname: tourname,
+                              photo: allinventoryimage,
+                              inventory_id: allinventory);
+                        }
+
                         // callgetinventory(code);
                       },
                       child: const Text('Submit'),

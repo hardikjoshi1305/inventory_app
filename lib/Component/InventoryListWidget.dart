@@ -258,18 +258,6 @@ class InventoryListWidget extends StatelessWidget {
                         color: AppColors.darkBlue, size: 25),
                   ),
                 ),
-                usertype != "user"
-                    ? Padding(
-                        padding: const EdgeInsets.all(1.0),
-                        child: IconButton(
-                          onPressed: () {
-                            Get.to(() => ReturnInventory(),
-                                arguments: this.UserModel);
-                          },
-                          icon: Icon(Icons.assignment_return_rounded,
-                              color: AppColors.darkBlue, size: 25),
-                        ))
-                    : Text(''),
               ],
             )),
       ],

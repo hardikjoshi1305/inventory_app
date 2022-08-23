@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:inventory_management/Component/UserInventoryListWidget.dart';
 import 'package:inventory_management/Utility/CommandMethod.dart';
 
 import '../../Component/InventoryListWidget.dart';
@@ -309,7 +310,7 @@ class _UserInventoryState extends State<UserInventory> {
                                                 .userinventorylist
                                                 .map((element) {
                                               print("userlist" + element.name);
-                                              return InventoryListWidget(
+                                              return UserInventoryListWidget(
                                                 UserModel: element,
                                                 usertype: "user",
                                               );

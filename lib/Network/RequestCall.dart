@@ -12,10 +12,13 @@ import 'package:inventory_management/Model/InventorylistResponse.dart'
     as inventory;
 import 'package:inventory_management/Model/LoginResponse.dart';
 import 'package:inventory_management/Model/PendingResponse.dart';
+import 'package:inventory_management/Model/SendPartResponse.dart';
 import 'package:inventory_management/Model/ServiceReportResponse.dart';
 import 'package:inventory_management/Model/TourRemarkResponse.dart';
 import 'package:inventory_management/Model/UserlistResponse.dart' as user;
 import 'package:inventory_management/Model/PendingResponse.dart' as pending;
+import 'package:inventory_management/Model/AssignInventoryResponse.dart'
+    as assign;
 import 'package:inventory_management/Model/SearchInventoryResponse.dart'
     as search;
 import 'package:inventory_management/Model/WalletHistoryResponse.dart'
@@ -55,8 +58,16 @@ class RequestCall {
         await client.post(BASEURL + 'login', headers: headers, body: body);
     if (response.statusCode == 200) {
       var json = response.body;
-      var castsResp = loginResponseFromJson(json);
-      return castsResp;
+      var finaldata = jsonDecode(json);
+      print("res" + finaldata.toString());
+      // return null;
+      if ((finaldata as Map)['succes']) {
+        var castsResp = loginResponseFromJson(json);
+        return castsResp;
+      } else {
+        Fluttertoast.showToast(msg: (finaldata as Map)['message']);
+        return null;
+      }
     } else {
       return null;
     }
@@ -394,9 +405,9 @@ class RequestCall {
     }
   }
 
-  static Future<List<inventory.Datum>> fetchuserinventorylist() async {
+  static Future<List<assign.Datum>> fetchuserinventorylist() async {
     var response = await client
-        .get(BASEURL + 'inventorylist', headers: authHeader)
+        .get(BASEURL + 'getassigninventory', headers: authHeader)
         .catchError((error) {
       print("error" + error.toString());
     });
@@ -405,7 +416,7 @@ class RequestCall {
       var json = response.body;
       print("dadad" + response.body.toString());
 
-      var castsResp = inventory.inventorylistResponseFromJson(json);
+      var castsResp = assign.assignInventoryResponseFromJson(json);
       if (castsResp.succes) {
         return castsResp.data;
       } else {
@@ -460,6 +471,59 @@ class RequestCall {
 
       var castsResp = wallet.walletHistoryResponseFromJson(json);
       return castsResp.data;
+    } else {
+      return null;
+    }
+  }
+
+  static sendpart(
+      {String userid,
+      String tourname,
+      List<String> photo,
+      List<String> inventory_id}) async {
+    var req = http.MultipartRequest("POST", Uri.parse('${BASEURL}sendpart'));
+// print("cretattt$req");
+
+    req.fields.addAll({
+      'userid': userid,
+      'tourname': tourname,
+    });
+
+    inventory_id.map((e) {
+      var index = inventory_id.indexOf(e);
+      return req.fields.addAll({
+        'inventory_id[${index}]': inventory_id[index],
+        'photo[${index}]': photo[index]
+      });
+    }).toList();
+    photo.map((e) async {
+      var index = photo.indexOf(e);
+      if (photo[index] != "") {
+        return req.files.add(
+            await http.MultipartFile.fromPath('photo[${index}]', photo[index]));
+      } else {
+        return req.files.add(await http.MultipartFile.fromPath(
+            'photo[${index}]', '/path/to/file'));
+      }
+    }).toList();
+    // req.files.add(
+    //     await http.MultipartFile.fromPath('photo[]', photo));
+
+    req.headers.addAll(authHeader);
+    print("request filed:  " + req.fields.toString());
+    print(" files length:  " + req.files.length.toString());
+    print("request files:  " + req.files.toString());
+    var response = await req.send();
+    var json = await http.Response.fromStream(response);
+    print("request response :  " + json.body.toString());
+
+    if (response.statusCode == 200) {
+      var castsResp = sendPartResponseFromJson(json.body);
+      if (castsResp.succes) {
+        return castsResp.data;
+      } else {
+        return null;
+      }
     } else {
       return null;
     }

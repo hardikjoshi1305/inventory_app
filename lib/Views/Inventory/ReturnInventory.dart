@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:inventory_management/Controller/InventoryController.dart';
 import 'package:inventory_management/Utility/CommandMethod.dart';
 import 'package:inventory_management/Model/AssignInventoryResponse.dart';
@@ -135,7 +136,17 @@ class _ReturnInventoryState extends State<ReturnInventory> {
                 child: Text('Select Status')),
             Expanded(child: Text('')),
             ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  try {
+                    var image = await ImagePicker.pickImage(
+                        source: ImageSource.gallery);
+                    // print("object" + image.toString());
+                    print("object" + image.absolute.path);
+                    imgpatth = image.absolute.path;
+                  } catch (exception) {
+                    print("object" + exception.toString());
+                  }
+                },
                 child: Text('Upload Image')),
 
 

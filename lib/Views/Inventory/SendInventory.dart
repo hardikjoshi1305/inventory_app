@@ -40,178 +40,183 @@ class _SendInventoryState extends State<SendInventory> {
           title: Text("Send Inventory"),
         ),
         drawer: AdminDrawer(),
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Padding(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              children: [
-                Container(
-                  height: 20,
-                ),
-                Container(
-                  child: TextField(
-                    // controller: te_name
-                    //   ..text = this.usermodel != null ? usermodel.name : "",
-                    keyboardType: TextInputType.text,
-                    onChanged: (value) {
-                      userid = value;
-                    },
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.person),
-                      labelText: 'User ID',
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 20,
-                ),
-                Container(
-                  height: 20,
-                ),
-                Container(
-                  child: TextField(
-                    // controller: te_name
-                    //   ..text = this.usermodel != null ? usermodel.name : "",
-                    keyboardType: TextInputType.text,
-                    onChanged: (value) {
-                      tourname = value;
-                    },
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.tour),
-                      labelText: 'Tour Name',
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 20,
-                ),
-                DropdownSearch<Datum>(
-                  mode: Mode.BOTTOM_SHEET,
-                  showSearchBox: true,
-                  isFilteredOnline: true,
-                  dropDownButton: const Icon(
-                    Icons.keyboard_arrow_down,
-                    color: Colors.grey,
-                    size: 18,
-                  ),
-                  dropdownSearchDecoration: InputDecoration(
-                    hintText: 'Search Programs',
-                    icon: Icon(Icons.filter_list),
-                  ),
-                  dropdownBuilder: _customDropDownPrograms,
-                  popupItemBuilder: _customPopupItemBuilder,
-                  onChanged: (Datum object) {
-                    // upcomingController.searchdata(object.code);
-                    setState(() {
-                      if (object != null) {
-                        print("onchasnged" + object.code);
+        body: Obx(() => upcomingController.isLoading.value ?
+        Container(child: Center(child: CircularProgressIndicator()))
+      : SingleChildScrollView(
+    scrollDirection: Axis.vertical,
+    child: Padding(
+    padding: EdgeInsets.all(20),
+    child: Column(
+    children: [
+    Container(
+    height: 20,
+    ),
+    Container(
+    child: TextField(
+    // controller: te_name
+    //   ..text = this.usermodel != null ? usermodel.name : "",
+    keyboardType: TextInputType.text,
+    onChanged: (value) {
+    userid = value;
+    },
+    decoration: const InputDecoration(
+    border: OutlineInputBorder(),
+    prefixIcon: Icon(Icons.person),
+    labelText: 'User ID',
+    ),
+    ),
+    ),
+    Container(
+    height: 20,
+    ),
+    Container(
+    height: 20,
+    ),
+    Container(
+    child: TextField(
+    // controller: te_name
+    //   ..text = this.usermodel != null ? usermodel.name : "",
+    keyboardType: TextInputType.text,
+    onChanged: (value) {
+    tourname = value;
+    },
+    decoration: const InputDecoration(
+    border: OutlineInputBorder(),
+    prefixIcon: Icon(Icons.tour),
+    labelText: 'Tour Name',
+    ),
+    ),
+    ),
+    Container(
+    height: 20,
+    ),
+    DropdownSearch<Datum>(
+    mode: Mode.BOTTOM_SHEET,
+    showSearchBox: true,
+    isFilteredOnline: true,
+    dropDownButton: const Icon(
+    Icons.keyboard_arrow_down,
+    color: Colors.grey,
+    size: 18,
+    ),
+    dropdownSearchDecoration: InputDecoration(
+    hintText: 'Search Programs',
+    icon: Icon(Icons.filter_list),
+    ),
+    dropdownBuilder: _customDropDownPrograms,
+    popupItemBuilder: _customPopupItemBuilder,
+    onChanged: (Datum object) {
+    // upcomingController.searchdata(object.code);
+    setState(() {
+    if (object != null) {
+    print("onchasnged" + object.code);
 
-                        allinventory.add(object.id.toString());
-                        allinventoryimage.add("");
-                      }
-                    });
-                  },
-                  onFind: (String filter) =>
-                      upcomingController.searchdata(filter ?? ""),
-                  showClearButton: true,
-                  clearButtonBuilder: (_) => const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Icon(Icons.clear, size: 17, color: Colors.black),
-                  ),
-                ),
-                Container(
-                  height: 20,
-                ),
+    allinventory.add(object.id.toString());
+    allinventoryimage.add("");
+    }
+    });
+    },
+    onFind: (String filter) =>
+    upcomingController.searchdata(filter ?? ""),
+    showClearButton: true,
+    clearButtonBuilder: (_) => const Padding(
+    padding: EdgeInsets.all(8.0),
+    child: Icon(Icons.clear, size: 17, color: Colors.black),
+    ),
+    ),
+    Container(
+    height: 20,
+    ),
 
-                ...allinventory.map((element) => Card(
-                  elevation: 7,
-                  margin: EdgeInsets.only(top: 6, left: 6, right: 6),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(
-                              element,
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                var index = allinventory.indexOf(element);
+    ...allinventory.map((element) => Card(
+    elevation: 7,
+    margin: EdgeInsets.only(top: 6, left: 6, right: 6),
+    shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(10),
+    ),
+    child: Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+    Row(
+    mainAxisAlignment: MainAxisAlignment.spaceAround,
+    children: [
+    Text(
+    element,
+    style: TextStyle(fontSize: 18),
+    ),
+    GestureDetector(
+    onTap: () {
+    var index = allinventory.indexOf(element);
 
-                                return choosefile(index);
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: Icon(Icons.image,
-                                    color: AppColors.darkBlue),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                var index = allinventory.indexOf(element);
+    return choosefile(index);
+    },
+    child: Padding(
+    padding: const EdgeInsets.all(2.0),
+    child: Icon(Icons.image,
+    color: AppColors.darkBlue),
+    ),
+    ),
+    GestureDetector(
+    onTap: () {
+    var index = allinventory.indexOf(element);
 
-                                return deleteitem(index);
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: Icon(Icons.clear, color: Colors.red),
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                )),
-                // Obx(() =>
-                // ListView(
-                //   scrollDirection: Axis.vertical,
-                //   // children: List.generate(upcomingController.search.length,
-                //   //     (index) => Text(code.toString()))
-                //   children: [...allinventory.map((element) => Text(element))],
-                // ),
-                //     ),
-                Container(
-                  height: 20,
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    margin: const EdgeInsets.all(5),
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        print("allinventorylist  " + allinventory.toString());
-                        // print("allinventoryimagelist  " +)
-                        if (allinventory.length > 0) {
-                          upcomingController.fetchsendpartapi(
-                              userid: userid,
-                              tourname: tourname,
-                              photo: allinventoryimage,
-                              inventory_id: allinventory);
-                        }
+    return deleteitem(index);
+    },
+    child: Padding(
+    padding: const EdgeInsets.all(2.0),
+    child: Icon(Icons.clear, color: Colors.red),
+    ),
+    )
+    ],
+    ),
+    ],
+    ),
+    ),
+    )),
+    // Obx(() =>
+    // ListView(
+    //   scrollDirection: Axis.vertical,
+    //   // children: List.generate(upcomingController.search.length,
+    //   //     (index) => Text(code.toString()))
+    //   children: [...allinventory.map((element) => Text(element))],
+    // ),
+    //     ),
+    Container(
+    height: 20,
+    ),
+    Align(
+    alignment: Alignment.bottomCenter,
+    child: Container(
+    margin: const EdgeInsets.all(5),
+    width: double.infinity,
+    child: ElevatedButton(
+    onPressed: () {
+    print("allinventorylist  " + allinventory.toString());
+    // print("allinventoryimagelist  " +)
+    if (allinventory.length > 0) {
+    upcomingController.fetchsendpartapi(
+    userid: userid,
+    tourname: tourname,
+    photo: allinventoryimage,
+    inventory_id: allinventory);
+    }
 
-                        // callgetinventory(code);
-                      },
-                      child: const Text('Submit'),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ));
+    // callgetinventory(code);
+    },
+    child: const Text('Submit'),
+    ),
+    ),
+    ),
+    ],
+    ),
+    ),
+    )
+    ),
+    );
   }
+
 
   Widget _customPopupItemBuilder(
       BuildContext context, Datum item, bool isSelected) {

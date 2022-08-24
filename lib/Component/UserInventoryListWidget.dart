@@ -372,7 +372,7 @@ class UserInventoryListWidget extends StatelessWidget {
   }
 
   callacceptapi(String inventoryid) async{
-    InventoryController inventoryController = Get.put(InventoryController());
+    InventoryController inventoryController = Get.find();
 
   await Future.delayed(Duration.zero);
   inventoryController.acceptinventory(inventoryid);

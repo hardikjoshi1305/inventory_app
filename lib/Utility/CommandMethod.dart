@@ -318,13 +318,14 @@ Widget roundedButton(String buttonLabel, Color bgColor, Color textColor) {
 }
 
 Widget nodatafound() {
-  Center(
-    child: Text(
-      'No Data Found',
-      style: TextStyle(
-        fontSize: 19,
-        color: Colors.black,
+
+   return  Center(
+      child: Text(
+        'No Data Found',
+        style: TextStyle(
+          fontSize: 19,
+          color: Colors.black,
+        ),
       ),
-    ),
-  );
+    );
 }

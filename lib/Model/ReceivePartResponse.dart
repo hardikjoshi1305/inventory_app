@@ -15,43 +15,19 @@ class ReceivePartResponse {
     this.message,
   });
 
-  Data data;
+  List<dynamic> data;
   bool succes;
   String message;
 
   factory ReceivePartResponse.fromJson(Map<String, dynamic> json) => ReceivePartResponse(
-    data: Data.fromJson(json["data"]),
+    data: List<dynamic>.from(json["data"].map((x) => x)),
     succes: json["succes"],
     message: json["message"],
   );
 
   Map<String, dynamic> toJson() => {
-    "data": data.toJson(),
+    "data": List<dynamic>.from(data.map((x) => x)),
     "succes": succes,
     "message": message,
-  };
-}
-
-class Data {
-  Data({
-    this.userId,
-    this.photo,
-    this.id,
-  });
-
-  String userId;
-  String photo;
-  int id;
-
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-    userId: json["user_id"],
-    photo: json["photo"],
-    id: json["id"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "user_id": userId,
-    "photo": photo,
-    "id": id,
   };
 }

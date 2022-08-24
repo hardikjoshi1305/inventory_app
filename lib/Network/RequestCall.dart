@@ -528,7 +528,7 @@ class RequestCall {
     if (response.statusCode == 200) {
       var castsResp = sendPartResponseFromJson(json.body);
       if (castsResp.succes) {
-        return castsResp.data;
+        return castsResp;
       } else {
         return null;
       }
@@ -572,12 +572,10 @@ class RequestCall {
       'send_parts_id': userModel.sendPartsId.toString(),
       'status': statusid,
     });
-
-
-
-
-    req.files.add(
-        await http.MultipartFile.fromPath('photo', imgpatth));
+    if(imgpatth.toString() !=""){
+      req.files.add(
+          await http.MultipartFile.fromPath('photo', imgpatth));
+    }
 
     req.headers.addAll(authHeader);
     print("request filed:  " + req.fields.toString());
@@ -590,7 +588,7 @@ class RequestCall {
     if (response.statusCode == 200) {
       var castsResp = receivePartResponseFromJson(json.body);
       if (castsResp.succes) {
-        return castsResp.data;
+        return castsResp;
       } else {
         return null;
       }

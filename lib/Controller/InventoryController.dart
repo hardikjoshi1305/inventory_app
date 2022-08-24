@@ -60,7 +60,7 @@ class InventoryController extends GetxController {
       if (res != null) {
         login.value = res;
         if (login.value.succes) {
-          Fluttertoast.showToast(msg: "User Created Successfully");
+          Fluttertoast.showToast(msg: login.value.message);
           Get.to(() => Inventory());
         } else {
           Fluttertoast.showToast(msg: login.value.message);
@@ -134,8 +134,6 @@ class InventoryController extends GetxController {
         accept.value = res;
         if (accept.value.succes) {
           Fluttertoast.showToast(msg: accept.value.message);
-          Get.delete<InventoryController>();
-
           Get.to(() => UserInventory());
         } else {
           Fluttertoast.showToast(msg: accept.value.message);

@@ -1,5 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
@@ -58,6 +59,9 @@ class _CreateuserState extends State<Createuser> {
                           Container(
                             child: TextField(
                               keyboardType: TextInputType.phone,
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(10),
+                                ],
                               onChanged: (value) {
                                 phone = value;
                               },

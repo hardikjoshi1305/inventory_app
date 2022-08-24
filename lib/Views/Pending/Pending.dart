@@ -49,7 +49,8 @@ class _PendingState extends State<Pending> {
           Expanded(
               child: Obx(() => (upcomingController.isLoading.value)
                   ? Center(child: CircularProgressIndicator())
-                  : Container(
+                  : upcomingController.pending.length > 0?
+              Container(
                       child: ListView(
                           children: List.generate(
                               upcomingController.pending.length, (index) {
@@ -176,7 +177,10 @@ class _PendingState extends State<Pending> {
                                       )),
                                 )));
                       })),
-                    )))
+                    ):
+
+              nodatafound()
+              ))
         ],
       ),
     );

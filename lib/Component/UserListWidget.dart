@@ -130,7 +130,7 @@ class UserListWidget extends StatelessWidget {
           padding: const EdgeInsets.all(12.0),
           child: Text(
             this.UserModel.walletAmount != null
-                ? this.UserModel.walletAmount
+                ? this.UserModel.walletAmount +" \u{20B9}"
                 : "-",
             style: TextStyle(
                 fontWeight: FontWeight.w400, color: AppColors.darkBlue),

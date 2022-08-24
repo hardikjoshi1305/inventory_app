@@ -10,7 +10,7 @@ import '../Views/Home/HomeScreen.dart';
 class SearchController extends GetxController {
   var isLoading = false.obs;
   // var issearched = false.obs;
-  var login = List<send.Datum>().obs;
+  var login = send.SendPartResponse().obs;
   var search = List<Datum>().obs;
 
   Future<List<Datum>> searchdata(String query) async {
@@ -61,7 +61,7 @@ class SearchController extends GetxController {
       print("rdd" + res.toString());
       if (res != null) {
         login.value = res;
-        if (login.value.length > 0) {
+        if (login.value.succes) {
           Fluttertoast.showToast(msg: "Send Successfully");
           Get.to(() => HomeScreen());
         }

@@ -55,7 +55,7 @@ class WalletListWidget extends StatelessWidget {
                       child: Text(
                         walletmodel.debitAmount == null
                             ? "-"
-                            : walletmodel.debitAmount,
+                            : walletmodel.debitAmount+" \u{20B9}",
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     )
@@ -65,7 +65,7 @@ class WalletListWidget extends StatelessWidget {
                       child: Text(
                         walletmodel.creditAmount == null
                             ? "-"
-                            : walletmodel.creditAmount,
+                            : walletmodel.creditAmount+" \u{20B9}",
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     )),

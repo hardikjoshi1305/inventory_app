@@ -49,17 +49,18 @@ class _CompletedState extends State<Completed> {
           Expanded(
               child: Obx(() => (upcomingController.isLoading.value)
                   ? Center(child: CircularProgressIndicator())
-                  : Container(
+                  : upcomingController.pending.length > 0?
+              Container(
                       child: ListView(
                           children: List.generate(
                               upcomingController.pending.length, (index) {
                         return Container(
                             child: GestureDetector(
                                 onTap: () {
-                                  Get.to(() => TourDetailSubmission(),
-                                      arguments: upcomingController
-                                          .pending[index].id
-                                          .toString());
+                                  // Get.to(() => TourDetailSubmission(),
+                                  //     arguments: upcomingController
+                                  //         .pending[index].id
+                                  //         .toString());
                                   // CreateTourDetail());
                                 },
                                 child: Padding(
@@ -180,7 +181,8 @@ class _CompletedState extends State<Completed> {
                                       )),
                                 )));
                       })),
-                    )))
+                    ):nodatafound(),
+              ))
         ],
       ),
     );

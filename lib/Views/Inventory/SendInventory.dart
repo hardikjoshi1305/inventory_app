@@ -127,52 +127,52 @@ class _SendInventoryState extends State<SendInventory> {
                 ),
 
                 ...allinventory.map((element) => Card(
-                      elevation: 7,
-                      margin: EdgeInsets.only(top: 6, left: 6, right: 6),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                  elevation: 7,
+                  margin: EdgeInsets.only(top: 6, left: 6, right: 6),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  element,
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    var index = allinventory.indexOf(element);
-
-                                    return choosefile(index);
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: Icon(Icons.image,
-                                        color: AppColors.darkBlue),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    var index = allinventory.indexOf(element);
-
-                                    return deleteitem(index);
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: Icon(Icons.clear, color: Colors.red),
-                                  ),
-                                )
-                              ],
+                            Text(
+                              element,
+                              style: TextStyle(fontSize: 18),
                             ),
+                            GestureDetector(
+                              onTap: () {
+                                var index = allinventory.indexOf(element);
+
+                                return choosefile(index);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: Icon(Icons.image,
+                                    color: AppColors.darkBlue),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                var index = allinventory.indexOf(element);
+
+                                return deleteitem(index);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: Icon(Icons.clear, color: Colors.red),
+                              ),
+                            )
                           ],
                         ),
-                      ),
-                    )),
+                      ],
+                    ),
+                  ),
+                )),
                 // Obx(() =>
                 // ListView(
                 //   scrollDirection: Axis.vertical,
@@ -217,39 +217,39 @@ class _SendInventoryState extends State<SendInventory> {
       BuildContext context, Datum item, bool isSelected) {
     return item == null
         ? Container(
-            margin: const EdgeInsets.symmetric(horizontal: 8),
-            decoration: !isSelected
-                ? null
-                : BoxDecoration(
-                    border: Border.all(color: Theme.of(context).primaryColor),
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.white,
-                  ),
-            child: const ListTile(
-              title: Text("Search Data",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Color.fromARGB(255, 102, 100, 100),
-                  )),
-            ),
-          )
+      margin: const EdgeInsets.symmetric(horizontal: 8),
+      decoration: !isSelected
+          ? null
+          : BoxDecoration(
+        border: Border.all(color: Theme.of(context).primaryColor),
+        borderRadius: BorderRadius.circular(5),
+        color: Colors.white,
+      ),
+      child: const ListTile(
+        title: Text("Search Data",
+            style: TextStyle(
+              fontSize: 14,
+              color: Color.fromARGB(255, 102, 100, 100),
+            )),
+      ),
+    )
         : Container(
-            margin: const EdgeInsets.symmetric(horizontal: 8),
-            decoration: !isSelected
-                ? null
-                : BoxDecoration(
-                    border: Border.all(color: Theme.of(context).primaryColor),
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.white,
-                  ),
-            child: ListTile(
-              title: Text(item.code.toString(),
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Color.fromARGB(255, 102, 100, 100),
-                  )),
-            ),
-          );
+      margin: const EdgeInsets.symmetric(horizontal: 8),
+      decoration: !isSelected
+          ? null
+          : BoxDecoration(
+        border: Border.all(color: Theme.of(context).primaryColor),
+        borderRadius: BorderRadius.circular(5),
+        color: Colors.white,
+      ),
+      child: ListTile(
+        title: Text(item.code.toString(),
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color.fromARGB(255, 102, 100, 100),
+            )),
+      ),
+    );
   }
 
   Widget _customDropDownPrograms(
@@ -259,21 +259,21 @@ class _SendInventoryState extends State<SendInventory> {
     return Container(
         child: (item == null)
             ? const ListTile(
-                contentPadding: EdgeInsets.all(0),
-                title: Text("Search Programs",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        fontSize: 13,
-                        color: Color.fromARGB(235, 158, 158, 158))),
-              )
+          contentPadding: EdgeInsets.all(0),
+          title: Text("Search Programs",
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                  fontSize: 13,
+                  color: Color.fromARGB(235, 158, 158, 158))),
+        )
             : ListTile(
-                contentPadding: const EdgeInsets.all(0),
-                title: Text(
-                  item.code,
-                  textAlign: TextAlign.left,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 13.5, color: Colors.black),
-                )));
+            contentPadding: const EdgeInsets.all(0),
+            title: Text(
+              item.code,
+              textAlign: TextAlign.left,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontSize: 13.5, color: Colors.black),
+            )));
   }
 
   choosefile(int index) async {

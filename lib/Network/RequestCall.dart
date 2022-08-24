@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:inventory_management/Model/AcceptInventoryResponse.dart';
 import 'package:inventory_management/Model/CreateExpenseResponse.dart';
 import 'package:inventory_management/Model/CreateTourResponse.dart';
 import 'package:inventory_management/Model/CreateUserResponse.dart';
@@ -405,9 +406,13 @@ class RequestCall {
     }
   }
 
-  static Future<List<assign.Datum>> fetchuserinventorylist() async {
+  static Future<List<assign.Datum>> fetchuserinventorylist(status) async {
+    var  body = jsonEncode({
+      "status": status,
+
+    });
     var response = await client
-        .get(BASEURL + 'getassigninventory', headers: authHeader)
+        .post(BASEURL + 'getassigninventory', headers: authHeader,body: body)
         .catchError((error) {
       print("error" + error.toString());
     });
@@ -502,8 +507,10 @@ class RequestCall {
         return req.files.add(
             await http.MultipartFile.fromPath('photo[${index}]', photo[index]));
       } else {
-        return req.files.add(await http.MultipartFile.fromPath(
-            'photo[${index}]', '/path/to/file'));
+        // File myfile = File(null);
+        //
+        // return req.files.add(await http.MultipartFile.fromPath(
+        //     'photo[${index}]',myfile.toString()));
       }
     }).toList();
     // req.files.add(
@@ -527,5 +534,82 @@ class RequestCall {
     } else {
       return null;
     }
+  }
+
+  static acceptinventory(String inventoryid)async {
+  var  body = jsonEncode({
+      "sendid": inventoryid,
+    });
+  print("inventoryid"+inventoryid);
+
+    var response = await client.post(BASEURL + 'acceptinventory',
+        headers: authHeader, body: body);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      print("accept"+response.body.toString());
+      var castsResp = acceptInventoryResponseFromJson(json);
+      if (castsResp.succes) {
+        return castsResp;
+      } else {
+        Fluttertoast.showToast(msg: castsResp.message);
+        return null;
+      }
+    } else {
+      print("acceptfail");
+
+      return null;
+    }
+
+  }
+
+  static receivepart(assign.Datum userModel) async {
+//     var req = http.MultipartRequest("POST", Uri.parse('${BASEURL}sendpart'));
+// // print("cretattt$req");
+//
+//     req.fields.addAll({
+//       'userid': userid,
+//       'tourname': tourname,
+//     });
+//
+//     inventory_id.map((e) {
+//       var index = inventory_id.indexOf(e);
+//       return req.fields.addAll({
+//         'inventory_id[${index}]': inventory_id[index],
+//         'photo[${index}]': photo[index]
+//       });
+//     }).toList();
+//     photo.map((e) async {
+//       var index = photo.indexOf(e);
+//       if (photo[index] != "") {
+//         return req.files.add(
+//             await http.MultipartFile.fromPath('photo[${index}]', photo[index]));
+//       } else {
+//         // File myfile = File(null);
+//         //
+//         // return req.files.add(await http.MultipartFile.fromPath(
+//         //     'photo[${index}]',myfile.toString()));
+//       }
+//     }).toList();
+//     // req.files.add(
+//     //     await http.MultipartFile.fromPath('photo[]', photo));
+//
+//     req.headers.addAll(authHeader);
+//     print("request filed:  " + req.fields.toString());
+//     print(" files length:  " + req.files.length.toString());
+//     print("request files:  " + req.files.toString());
+//     var response = await req.send();
+//     var json = await http.Response.fromStream(response);
+//     print("request response :  " + json.body.toString());
+//
+//     if (response.statusCode == 200) {
+//       var castsResp = sendPartResponseFromJson(json.body);
+//       if (castsResp.succes) {
+//         return castsResp.data;
+//       } else {
+//         return null;
+//       }
+//     } else {
+//       return null;
+//     }
   }
 }

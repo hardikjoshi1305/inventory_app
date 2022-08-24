@@ -10,14 +10,20 @@ import 'package:inventory_management/Model/InventoryStatusResponse.dart'
 import 'package:inventory_management/Model/AssignInventoryResponse.dart'
     as assign;
 
+import 'package:inventory_management/Model/AcceptInventoryResponse.dart'
+as acce;
+
 import 'package:inventory_management/Network/RequestCall.dart';
 
 import 'package:inventory_management/Views/Home/HomeScreen.dart';
 import 'package:inventory_management/Views/Inventory/Inventory.dart';
+import 'package:inventory_management/Views/Inventory/UserCurrentInventory.dart';
+import 'package:inventory_management/Views/Inventory/UserInventory.dart';
 
 class InventoryController extends GetxController {
   var isLoading = false.obs;
   var login = addinventory.AddInventorylResponse().obs;
+  var accept = acce.AcceptInventoryResponse().obs;
   var inventorylist = List<inventory.Datum>().obs;
   var userinventorylist = List<assign.Datum>().obs;
   var inventorystatuslist = List<status.Datum>().obs;
@@ -80,10 +86,10 @@ class InventoryController extends GetxController {
     }
   }
 
-  void fetchuserinventorylist() async {
+  void fetchuserinventorylist(String status) async {
     try {
       isLoading(true);
-      var res = await RequestCall.fetchuserinventorylist();
+      var res = await RequestCall.fetchuserinventorylist(status);
       if (res != null) {
         userinventorylist.assignAll(res);
         if (userinventorylist.length > 0) {
@@ -115,6 +121,50 @@ class InventoryController extends GetxController {
       print("error :" + exception.toString());
     } finally {
       // isLoading(false);
+    }
+  }
+
+  void acceptinventory(String inventoryid) async{
+    try {
+      isLoading(true);
+      var res = await RequestCall.acceptinventory(inventoryid);
+      if (res != null) {
+        accept.value = res;
+        if (accept.value.succes) {
+          Fluttertoast.showToast(msg: accept.value.message);
+          Get.delete<InventoryController>();
+
+          Get.to(() => UserInventory());
+        } else {
+          Fluttertoast.showToast(msg: accept.value.message);
+        }
+      }else{
+        print("acceptfail null");
+
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  void returninventory(assign.Datum userModel) async {
+    try {
+      isLoading(true);
+      var res = await RequestCall.receivepart(userModel);
+      print("rdd" + res.toString());
+      if (res != null) {
+        login.value = res;
+        if (login.value.succes) {
+          Fluttertoast.showToast(msg: "Send Successfully");
+          Get.to(() => UserCurrentInventory());
+        }else {
+          Fluttertoast.showToast(msg: login.value.message);
+        }
+      } else {
+        Fluttertoast.showToast(msg: "Error");
+      }
+    } finally {
+      isLoading(false);
     }
   }
 }

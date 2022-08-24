@@ -73,77 +73,110 @@ class _CompletedState extends State<Completed> {
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.all(17.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                        child: Column(
                                           children: [
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "Tour Name ",
-                                                  style: Pendingitemtextstyle,
+                                            Card(
+                                              color: Colors.green,
+                                              elevation: 7,
+                                              margin: EdgeInsets.only(
+                                                  top: 16, left: 16, right: 16),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(10),
+                                              ),
+                                              child:  Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  width: double.infinity,
+                                                  height: 25,
+                                                  alignment: AlignmentDirectional.center,
+                                                  child: Text("Completed",style: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.white,
+                                                      fontWeight: FontWeight.bold
+                                                  ),),
                                                 ),
-                                                Text("City ",
-                                                    style:
-                                                        Pendingitemtextstyle),
-                                                Text("Problem ",
-                                                    style:
-                                                        Pendingitemtextstyle),
-                                                Text("Date ",
-                                                    style: Pendingitemtextstyle)
-                                              ],
+                                              ),
                                             ),
-                                            Column(
-                                              children: [
-                                                Text("  :  ",
-                                                    style:
-                                                        Pendingitemtextstyle),
-                                                Text("  :  ",
-                                                    style:
-                                                        Pendingitemtextstyle),
-                                                Text("  :  ",
-                                                    style:
-                                                        Pendingitemtextstyle),
-                                                Text("  :  ",
-                                                    style: Pendingitemtextstyle)
-                                              ],
+                                            Container(
+                                              height: 15,
                                             ),
-                                            Column(
+                                            Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                               children: [
-                                                Text(
-                                                    upcomingController
-                                                        .pending[index]
-                                                        .tourname,
-                                                    style:
+                                                Column(
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "Tour Name ",
+                                                      style: Pendingitemtextstyle,
+                                                    ),
+                                                    Text("City ",
+                                                        style:
                                                         Pendingitemtextstyle),
-                                                Text(
-                                                    upcomingController
-                                                        .pending[index].city,
-                                                    style:
+                                                    Text("Problem ",
+                                                        style:
                                                         Pendingitemtextstyle),
-                                                Text(
-                                                    upcomingController
-                                                                .pending[index]
-                                                                .errorname ==
-                                                            null
-                                                        ? "null"
-                                                        : upcomingController
-                                                            .pending[index]
-                                                            .errorname,
-                                                    style:
+                                                    Text("Date ",
+                                                        style: Pendingitemtextstyle)
+                                                  ],
+                                                ),
+                                                Column(
+                                                  children: [
+                                                    Text("  :  ",
+                                                        style:
                                                         Pendingitemtextstyle),
-                                                Text(
-                                                    getdateformate(
+                                                    Text("  :  ",
+                                                        style:
+                                                        Pendingitemtextstyle),
+                                                    Text("  :  ",
+                                                        style:
+                                                        Pendingitemtextstyle),
+                                                    Text("  :  ",
+                                                        style: Pendingitemtextstyle)
+                                                  ],
+                                                ),
+                                                Column(
+                                                  children: [
+                                                    Text(
                                                         upcomingController
                                                             .pending[index]
-                                                            .createdAt),
-                                                    style: Pendingitemtextstyle)
+                                                            .tourname,
+                                                        style:
+                                                        Pendingitemtextstyle),
+                                                    Text(
+                                                        upcomingController
+                                                            .pending[index].city,
+                                                        style:
+                                                        Pendingitemtextstyle),
+                                                    Text(
+                                                        upcomingController
+                                                            .pending[index]
+                                                            .errorname ==
+                                                            null
+                                                            ? "null"
+                                                            : upcomingController
+                                                            .pending[index]
+                                                            .errorname,
+                                                        style:
+                                                        Pendingitemtextstyle),
+                                                    Text(
+                                                        getdateformate(
+                                                            upcomingController
+                                                                .pending[index]
+                                                                .createdAt),
+                                                        style: Pendingitemtextstyle)
+                                                  ],
+                                                ),
                                               ],
                                             ),
                                           ],
-                                        ),
+                                        )
+
+
+
+
                                       )),
                                 )));
                       })),

@@ -4,7 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:inventory_management/Controller/InventoryController.dart';
 import 'package:inventory_management/Utility/CommandMethod.dart';
-import 'package:inventory_management/Model/InventorylistResponse.dart';
+import 'package:inventory_management/Model/AssignInventoryResponse.dart';
 import 'package:inventory_management/Model/InventoryStatusResponse.dart'
     as status;
 
@@ -140,7 +140,9 @@ class _ReturnInventoryState extends State<ReturnInventory> {
                 width: double.infinity,
                 child: ElevatedButton(
                     onPressed: () {
-                      if (checkvalidation(valueselected.toString())) {}
+                      if (checkvalidation(valueselected.toString())) {
+                          inventoryController.returninventory(this.usermodel);
+                      }
                     },
                     child: Text(
                       "Submit",

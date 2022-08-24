@@ -16,8 +16,8 @@ class UserInventory extends StatefulWidget {
 
 InventoryController inventoryController = Get.put(InventoryController());
 apicall() async {
-  Future.delayed(Duration.zero);
-  inventoryController.fetchuserinventorylist();
+ await Future.delayed(Duration.zero);
+  inventoryController.fetchuserinventorylist("0");
 }
 
 class _UserInventoryState extends State<UserInventory> {

@@ -4,6 +4,7 @@ import 'package:get/state_manager.dart';
 import 'package:inventory_management/Controller/InventoryController.dart';
 import 'package:inventory_management/Model/AssignInventoryResponse.dart';
 import 'package:inventory_management/Views/Inventory/CreateInventory.dart';
+import 'package:inventory_management/Views/Inventory/UserInventory.dart';
 
 import '../Utility/app_colors.dart';
 import '../Views/Inventory/ReturnInventory.dart';
@@ -249,25 +250,49 @@ class UserInventoryListWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(1.0),
-                  child: IconButton(
-                    onPressed: () =>
-                        Get.to(CreateInventory(), arguments: this.UserModel),
-                    icon: Icon(Icons.edit_calendar,
-                        color: AppColors.darkBlue, size: 25),
-                  ),
-                ),
-                Padding(
-                    padding: const EdgeInsets.all(1.0),
-                    child: IconButton(
-                      onPressed: () {
-                        Get.to(() => ReturnInventory(),
-                            arguments: this.UserModel);
-                      },
-                      icon: Icon(Icons.assignment_return_rounded,
-                          color: AppColors.darkBlue, size: 25),
-                    )),
+                // Padding(
+                //   padding: const EdgeInsets.all(1.0),
+                //   child: IconButton(
+                //     onPressed: () =>
+                //         Get.to(CreateInventory(), arguments: this.UserModel),
+                //     icon: Icon(Icons.edit_calendar,
+                //         color: AppColors.darkBlue, size: 25),
+                //   ),
+                // ),
+
+               this.UserModel.status =="0"?
+               Align(
+                   alignment: AlignmentDirectional.center,
+                   child: Container(
+                     alignment: AlignmentDirectional.center,
+                     margin: EdgeInsets.all(4),
+                     decoration: BoxDecoration(color: AppColors.darkBlue),
+                     child: ElevatedButton(
+                       style: ElevatedButton.styleFrom(
+                         primary: Colors.blue,
+                       ),
+                       onPressed: () {
+                       callacceptapi(UserModel.sendPartsId.toString());
+                       },
+                       child: Text("Accept", style: TextStyle(color: Colors.white)),
+                     ),
+                   )):
+               Align(
+                   alignment: AlignmentDirectional.center,
+                   child: Container(
+                     alignment: AlignmentDirectional.center,
+                     margin: EdgeInsets.all(4),
+                     decoration: BoxDecoration(color: AppColors.darkBlue),
+                     child: ElevatedButton(
+                       style: ElevatedButton.styleFrom(
+                         primary: Colors.red,
+                       ),
+                       onPressed: () {
+                         callreturnapi(UserModel);
+                       },
+                       child: Text("Return", style: TextStyle(color: Colors.white)),
+                     ),
+                   ))
               ],
             )),
       ],
@@ -345,4 +370,22 @@ class UserInventoryListWidget extends StatelessWidget {
     //     ),
     //   ));
   }
+
+  callacceptapi(String inventoryid) async{
+    InventoryController inventoryController = Get.put(InventoryController());
+
+  await Future.delayed(Duration.zero);
+  inventoryController.acceptinventory(inventoryid);
+  }
+  void callreturnapi(Datum userModel)async {
+Get.to(()=>ReturnInventory(),arguments: userModel);
+
+  }
+  // void callreturnapi(Datum userModel)async {
+  //   InventoryController inventoryController = Get.put(InventoryController());
+  //
+  //   await Future.delayed(Duration.zero);
+  //   inventoryController.returninventory(userModel);
+  //
+  // }
 }

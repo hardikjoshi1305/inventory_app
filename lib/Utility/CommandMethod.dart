@@ -8,6 +8,7 @@ import 'package:inventory_management/Views/Pending/Pending.dart';
 import '../Views/Completed Tour/Completed.dart';
 import '../Views/Home/HomeScreen.dart';
 import '../Views/Inventory/Inventory.dart';
+import '../Views/Inventory/UserCurrentInventory.dart';
 import '../Views/Inventory/UserInventory.dart';
 import '../Views/Login/Login.dart';
 import '../Views/Tour/Createtrip.dart';
@@ -143,9 +144,20 @@ Widget UserDrawer() {
           ),
           createDrawerBodyItem(
               icon: Icons.inventory,
-              text: 'Inventory',
+              text: 'Pending Inventory',
               onTap: () {
                 Get.to(() => UserInventory());
+
+                // Navigator.of(context).pop();
+
+                // _permissionStatus?
+                // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
+              }),
+          createDrawerBodyItem(
+              icon: Icons.inventory,
+              text: 'Current Inventory',
+              onTap: () {
+                Get.to(() => UserCurrentInventory());
 
                 // Navigator.of(context).pop();
 

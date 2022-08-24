@@ -56,11 +56,11 @@ class Datum {
     this.price,
   });
 
-  int id;
-  int sendPartsId;
-  int inventoryId;
-  int status;
-  int userId;
+  var id;
+  var sendPartsId;
+  var inventoryId;
+  var status;
+  var userId;
   String tourName;
   String photo;
   String code;
@@ -72,7 +72,7 @@ class Datum {
   String remark;
   String statusId;
   String wherefrom;
-  int price;
+  var price;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],

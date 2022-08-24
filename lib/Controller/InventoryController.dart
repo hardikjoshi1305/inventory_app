@@ -12,6 +12,7 @@ import 'package:inventory_management/Model/AssignInventoryResponse.dart'
 
 import 'package:inventory_management/Model/AcceptInventoryResponse.dart'
 as acce;
+import 'package:inventory_management/Model/ReceivePartResponse.dart';
 
 import 'package:inventory_management/Network/RequestCall.dart';
 
@@ -23,6 +24,7 @@ import 'package:inventory_management/Views/Inventory/UserInventory.dart';
 class InventoryController extends GetxController {
   var isLoading = false.obs;
   var login = addinventory.AddInventorylResponse().obs;
+  var receive = ReceivePartResponse().obs;
   var accept = acce.AcceptInventoryResponse().obs;
   var inventorylist = List<inventory.Datum>().obs;
   var userinventorylist = List<assign.Datum>().obs;
@@ -147,18 +149,18 @@ class InventoryController extends GetxController {
     }
   }
 
-  void returninventory(assign.Datum userModel) async {
+  void returninventory(assign.Datum userModel, String statusid, String imgpatth) async {
     try {
       isLoading(true);
-      var res = await RequestCall.receivepart(userModel);
+      var res = await RequestCall.receivepart(userModel,statusid,imgpatth);
       print("rdd" + res.toString());
       if (res != null) {
-        login.value = res;
-        if (login.value.succes) {
+        receive.value = res;
+        if (receive.value.succes) {
           Fluttertoast.showToast(msg: "Send Successfully");
           Get.to(() => UserCurrentInventory());
         }else {
-          Fluttertoast.showToast(msg: login.value.message);
+          Fluttertoast.showToast(msg: receive.value.message);
         }
       } else {
         Fluttertoast.showToast(msg: "Error");

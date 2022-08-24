@@ -20,6 +20,7 @@ class _ReturnInventoryState extends State<ReturnInventory> {
   InventoryController inventoryController = Get.find();
   String valueselected = "";
   String statusid = "";
+  String imgpatth = "";
 
   apicall() async {
     await Future.delayed(Duration.zero);
@@ -133,6 +134,11 @@ class _ReturnInventoryState extends State<ReturnInventory> {
                         ]),
                 child: Text('Select Status')),
             Expanded(child: Text('')),
+            ElevatedButton(
+                onPressed: () {},
+                child: Text('Upload Image')),
+
+
             Container(
               width: double.infinity,
               height: 60,
@@ -141,7 +147,7 @@ class _ReturnInventoryState extends State<ReturnInventory> {
                 child: ElevatedButton(
                     onPressed: () {
                       if (checkvalidation(valueselected.toString())) {
-                          inventoryController.returninventory(this.usermodel);
+                          inventoryController.returninventory(this.usermodel,statusid,imgpatth);
                       }
                     },
                     child: Text(

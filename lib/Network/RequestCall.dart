@@ -13,6 +13,7 @@ import 'package:inventory_management/Model/InventorylistResponse.dart'
     as inventory;
 import 'package:inventory_management/Model/LoginResponse.dart';
 import 'package:inventory_management/Model/PendingResponse.dart';
+import 'package:inventory_management/Model/ReceivePartResponse.dart';
 import 'package:inventory_management/Model/SendPartResponse.dart';
 import 'package:inventory_management/Model/ServiceReportResponse.dart';
 import 'package:inventory_management/Model/TourRemarkResponse.dart';
@@ -562,54 +563,39 @@ class RequestCall {
 
   }
 
-  static receivepart(assign.Datum userModel) async {
-//     var req = http.MultipartRequest("POST", Uri.parse('${BASEURL}sendpart'));
-// // print("cretattt$req");
-//
-//     req.fields.addAll({
-//       'userid': userid,
-//       'tourname': tourname,
-//     });
-//
-//     inventory_id.map((e) {
-//       var index = inventory_id.indexOf(e);
-//       return req.fields.addAll({
-//         'inventory_id[${index}]': inventory_id[index],
-//         'photo[${index}]': photo[index]
-//       });
-//     }).toList();
-//     photo.map((e) async {
-//       var index = photo.indexOf(e);
-//       if (photo[index] != "") {
-//         return req.files.add(
-//             await http.MultipartFile.fromPath('photo[${index}]', photo[index]));
-//       } else {
-//         // File myfile = File(null);
-//         //
-//         // return req.files.add(await http.MultipartFile.fromPath(
-//         //     'photo[${index}]',myfile.toString()));
-//       }
-//     }).toList();
-//     // req.files.add(
-//     //     await http.MultipartFile.fromPath('photo[]', photo));
-//
-//     req.headers.addAll(authHeader);
-//     print("request filed:  " + req.fields.toString());
-//     print(" files length:  " + req.files.length.toString());
-//     print("request files:  " + req.files.toString());
-//     var response = await req.send();
-//     var json = await http.Response.fromStream(response);
-//     print("request response :  " + json.body.toString());
-//
-//     if (response.statusCode == 200) {
-//       var castsResp = sendPartResponseFromJson(json.body);
-//       if (castsResp.succes) {
-//         return castsResp.data;
-//       } else {
-//         return null;
-//       }
-//     } else {
-//       return null;
-//     }
+  static receivepart(assign.Datum userModel,String statusid, String imgpatth) async {
+    var req = http.MultipartRequest("POST", Uri.parse('${BASEURL}receivepart'));
+
+    req.fields.addAll({
+      'userid': userModel.userId.toString(),
+      'inventory_id': userModel.inventoryId.toString(),
+      'send_parts_id': userModel.sendPartsId.toString(),
+      'status': statusid,
+    });
+
+
+
+
+    req.files.add(
+        await http.MultipartFile.fromPath('photo', imgpatth));
+
+    req.headers.addAll(authHeader);
+    print("request filed:  " + req.fields.toString());
+    print(" files length:  " + req.files.length.toString());
+    print("request files:  " + req.files.toString());
+    var response = await req.send();
+    var json = await http.Response.fromStream(response);
+    print("request response :  " + json.body.toString());
+
+    if (response.statusCode == 200) {
+      var castsResp = receivePartResponseFromJson(json.body);
+      if (castsResp.succes) {
+        return castsResp.data;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
   }
 }

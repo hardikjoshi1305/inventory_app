@@ -253,7 +253,7 @@ class _InventoryState extends State<Inventory> {
                                       ),
                                     ),
                                     Container(
-                                      width: 100,
+                                      width: 180,
                                       alignment: AlignmentDirectional.center,
                                       decoration: new BoxDecoration(
                                         borderRadius: new BorderRadius.all(

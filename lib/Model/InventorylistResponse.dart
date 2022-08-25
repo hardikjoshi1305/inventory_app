@@ -48,6 +48,7 @@ class Datum {
     this.statusId,
     this.wherefrom,
     this.price,
+    this.status_name,
   });
 
   int id;
@@ -61,6 +62,7 @@ class Datum {
   String statusId;
   String wherefrom;
   var price;
+  var status_name;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
@@ -74,6 +76,7 @@ class Datum {
         statusId: json["status_id"],
         wherefrom: json["wherefrom"],
         price: json["price"],
+        status_name: json["status_name"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -88,5 +91,6 @@ class Datum {
         "status_id": statusId,
         "wherefrom": wherefrom,
         "price": price,
+        "status_name": status_name,
       };
 }

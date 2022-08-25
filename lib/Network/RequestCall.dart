@@ -8,6 +8,7 @@ import 'package:inventory_management/Model/AcceptInventoryResponse.dart';
 import 'package:inventory_management/Model/CreateExpenseResponse.dart';
 import 'package:inventory_management/Model/CreateTourResponse.dart';
 import 'package:inventory_management/Model/CreateUserResponse.dart';
+import 'package:inventory_management/Model/ExpenseListDetailsResponse.dart';
 import 'package:inventory_management/Model/FinalDignoseResponse.dart';
 import 'package:inventory_management/Model/InventorylistResponse.dart'
     as inventory;
@@ -17,6 +18,7 @@ import 'package:inventory_management/Model/ReceivePartResponse.dart';
 import 'package:inventory_management/Model/SendPartResponse.dart';
 import 'package:inventory_management/Model/ServiceReportResponse.dart';
 import 'package:inventory_management/Model/TourRemarkResponse.dart';
+import 'package:inventory_management/Model/UserTourDetailsResponse.dart';
 import 'package:inventory_management/Model/UserlistResponse.dart' as user;
 import 'package:inventory_management/Model/PendingResponse.dart' as pending;
 import 'package:inventory_management/Model/AssignInventoryResponse.dart'
@@ -29,6 +31,9 @@ import 'package:inventory_management/Model/CreateTourResponse.dart'
     as createtour;
 import 'package:inventory_management/Model/InventoryStatusResponse.dart'
     as status;
+import 'package:inventory_management/Model/TourHistoryResponse.dart' as history;
+import 'package:inventory_management/Model/ExpenseListDetailsResponse.dart'
+    as expense;
 import 'package:inventory_management/Model/casts.dart';
 import 'package:inventory_management/Utility/CONSTANT.dart';
 import 'package:inventory_management/Utility/SharedPreferenceHelper.dart';
@@ -408,12 +413,11 @@ class RequestCall {
   }
 
   static Future<List<assign.Datum>> fetchuserinventorylist(status) async {
-    var  body = jsonEncode({
+    var body = jsonEncode({
       "status": status,
-
     });
     var response = await client
-        .post(BASEURL + 'getassigninventory', headers: authHeader,body: body)
+        .post(BASEURL + 'getassigninventory', headers: authHeader, body: body)
         .catchError((error) {
       print("error" + error.toString());
     });
@@ -537,17 +541,17 @@ class RequestCall {
     }
   }
 
-  static acceptinventory(String inventoryid)async {
-  var  body = jsonEncode({
+  static acceptinventory(String inventoryid) async {
+    var body = jsonEncode({
       "sendid": inventoryid,
     });
-  print("inventoryid"+inventoryid);
+    print("inventoryid" + inventoryid);
 
     var response = await client.post(BASEURL + 'acceptinventory',
         headers: authHeader, body: body);
     if (response.statusCode == 200) {
       var json = response.body;
-      print("accept"+response.body.toString());
+      print("accept" + response.body.toString());
       var castsResp = acceptInventoryResponseFromJson(json);
       if (castsResp.succes) {
         return castsResp;
@@ -560,10 +564,10 @@ class RequestCall {
 
       return null;
     }
-
   }
 
-  static receivepart(assign.Datum userModel,String statusid, String imgpatth) async {
+  static receivepart(assign.Datum userModel, String statusid, String imgpatth,
+      String remark) async {
     var req = http.MultipartRequest("POST", Uri.parse('${BASEURL}receivepart'));
 
     req.fields.addAll({
@@ -571,10 +575,10 @@ class RequestCall {
       'inventory_id': userModel.inventoryId.toString(),
       'send_parts_id': userModel.sendPartsId.toString(),
       'status': statusid,
+      'remark': remark,
     });
-    if(imgpatth.toString() !=""){
-      req.files.add(
-          await http.MultipartFile.fromPath('photo', imgpatth));
+    if (imgpatth.toString() != "") {
+      req.files.add(await http.MultipartFile.fromPath('photo', imgpatth));
     }
 
     req.headers.addAll(authHeader);
@@ -590,6 +594,85 @@ class RequestCall {
       if (castsResp.succes) {
         return castsResp;
       } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static fetchinventoryhistory(String code) async {
+    var body = jsonEncode({
+      "code": code,
+    });
+    var response = await client.post(BASEURL + 'inventoryhistory',
+        headers: authHeader, body: body);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      print("reds" + json.toString());
+      var castsResp = status.inventoryStatusResponseFromJson(json);
+      return castsResp.data;
+    } else {
+      return null;
+    }
+  }
+
+  static fetchtourlist(String userid) async {
+    var body = jsonEncode({
+      "user_id": userid,
+    });
+    var response = await client.post(BASEURL + 'tourhistory',
+        headers: authHeader, body: body);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      print("reds" + json.toString());
+      var castsResp = history.tourHistoryResponseFromJson(json);
+      if (castsResp.succes) {
+        return castsResp.data;
+      } else {
+        Fluttertoast.showToast(msg: castsResp.message);
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static usertourdetail(String tourid) async {
+    var body = jsonEncode({
+      "tour_id": tourid,
+    });
+    var response = await client.post(BASEURL + 'tourhistorydetails',
+        headers: authHeader, body: body);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      print("reds" + json.toString());
+      var castsResp = userTourDetailsResponseFromJson(json);
+      if (castsResp.succes) {
+        return castsResp;
+      } else {
+        Fluttertoast.showToast(msg: castsResp.message);
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static Future<List<expense.Datum>> expenselist(String userid) async {
+    var body = jsonEncode({
+      "user_id": userid,
+    });
+    var response = await client.post(BASEURL + 'expenselist',
+        headers: authHeader, body: body);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      print("reds" + json.toString());
+      var castsResp = expenseListDetailsResponseFromJson(json);
+      if (castsResp.succes) {
+        return castsResp.data;
+      } else {
+        Fluttertoast.showToast(msg: castsResp.message);
         return null;
       }
     } else {

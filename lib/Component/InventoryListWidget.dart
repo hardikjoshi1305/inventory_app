@@ -189,7 +189,7 @@ class InventoryListWidget extends StatelessWidget {
           ),
         ),
         Container(
-          width: 100,
+          width: 180,
           height: 40,
           alignment: AlignmentDirectional.center,
           decoration: new BoxDecoration(
@@ -204,9 +204,13 @@ class InventoryListWidget extends StatelessWidget {
           ),
           padding: const EdgeInsets.all(12.0),
           child: Text(
-            this.UserModel.statusId != null ? this.UserModel.statusId : "-",
+            this.UserModel.status_name != null
+                ? this.UserModel.status_name
+                : "-",
             style: TextStyle(
-                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
+                fontWeight: FontWeight.w400,
+                color: AppColors.darkBlue,
+                fontSize: 14),
           ),
         ),
         // Container(

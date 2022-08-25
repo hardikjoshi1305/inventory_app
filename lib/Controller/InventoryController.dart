@@ -11,7 +11,9 @@ import 'package:inventory_management/Model/AssignInventoryResponse.dart'
     as assign;
 
 import 'package:inventory_management/Model/AcceptInventoryResponse.dart'
-as acce;
+    as acce;
+import 'package:inventory_management/Model/AcceptInventoryResponse.dart'
+    as history;
 import 'package:inventory_management/Model/ReceivePartResponse.dart';
 
 import 'package:inventory_management/Network/RequestCall.dart';
@@ -29,6 +31,7 @@ class InventoryController extends GetxController {
   var inventorylist = List<inventory.Datum>().obs;
   var userinventorylist = List<assign.Datum>().obs;
   var inventorystatuslist = List<status.Datum>().obs;
+  var inventoryhistorylist = List<status.Datum>().obs;
 
   void createinventory(
       {String id,
@@ -126,7 +129,7 @@ class InventoryController extends GetxController {
     }
   }
 
-  void acceptinventory(String inventoryid) async{
+  void acceptinventory(String inventoryid) async {
     try {
       isLoading(true);
       var res = await RequestCall.acceptinventory(inventoryid);
@@ -138,26 +141,27 @@ class InventoryController extends GetxController {
         } else {
           Fluttertoast.showToast(msg: accept.value.message);
         }
-      }else{
+      } else {
         print("acceptfail null");
-
       }
     } finally {
       isLoading(false);
     }
   }
 
-  void returninventory(assign.Datum userModel, String statusid, String imgpatth) async {
+  void returninventory(assign.Datum userModel, String statusid, String imgpatth,
+      String remark) async {
     try {
       isLoading(true);
-      var res = await RequestCall.receivepart(userModel,statusid,imgpatth);
+      var res =
+          await RequestCall.receivepart(userModel, statusid, imgpatth, remark);
       print("rdd" + res.toString());
       if (res != null) {
         receive.value = res;
         if (receive.value.succes) {
           Fluttertoast.showToast(msg: "Send Successfully");
           Get.to(() => UserCurrentInventory());
-        }else {
+        } else {
           Fluttertoast.showToast(msg: receive.value.message);
         }
       } else {
@@ -165,6 +169,27 @@ class InventoryController extends GetxController {
       }
     } finally {
       isLoading(false);
+    }
+  }
+
+  void gethistoryapi(String code) async {
+    try {
+      // isLoading(true);
+      var res = await RequestCall.fetchinventoryhistory(code);
+      if (res != null) {
+        inventoryhistorylist.assignAll(res);
+        if (inventoryhistorylist.length > 0) {
+          Fluttertoast.showToast(msg: "status Retrieve Successfully");
+        } else {
+          Fluttertoast.showToast(msg: "No Data Found");
+        }
+      } else {
+        Fluttertoast.showToast(msg: "No Status Found");
+      }
+    } catch (exception) {
+      print("error :" + exception.toString());
+    } finally {
+      // isLoading(false);
     }
   }
 }

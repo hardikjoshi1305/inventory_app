@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:inventory_management/Controller/InventoryController.dart';
 import 'package:inventory_management/Model/AssignInventoryResponse.dart';
+import 'package:inventory_management/Utility/Imagedisplay.dart';
 import 'package:inventory_management/Views/Inventory/CreateInventory.dart';
 import 'package:inventory_management/Views/Inventory/UserInventory.dart';
 
@@ -260,39 +261,91 @@ class UserInventoryListWidget extends StatelessWidget {
                 //   ),
                 // ),
 
-               this.UserModel.status =="0"?
-               Align(
-                   alignment: AlignmentDirectional.center,
-                   child: Container(
-                     alignment: AlignmentDirectional.center,
-                     margin: EdgeInsets.all(4),
-                     decoration: BoxDecoration(color: AppColors.darkBlue),
-                     child: ElevatedButton(
-                       style: ElevatedButton.styleFrom(
-                         primary: Colors.blue,
-                       ),
-                       onPressed: () {
-                       callacceptapi(UserModel.sendPartsId.toString());
-                       },
-                       child: Text("Accept", style: TextStyle(color: Colors.white)),
-                     ),
-                   )):
-               Align(
-                   alignment: AlignmentDirectional.center,
-                   child: Container(
-                     alignment: AlignmentDirectional.center,
-                     margin: EdgeInsets.all(4),
-                     decoration: BoxDecoration(color: AppColors.darkBlue),
-                     child: ElevatedButton(
-                       style: ElevatedButton.styleFrom(
-                         primary: Colors.red,
-                       ),
-                       onPressed: () {
-                         callreturnapi(UserModel);
-                       },
-                       child: Text("Return", style: TextStyle(color: Colors.white)),
-                     ),
-                   ))
+                this.UserModel.status == "0"
+                    ? Align(
+                        alignment: AlignmentDirectional.center,
+                        child: Container(
+                          alignment: AlignmentDirectional.center,
+                          margin: EdgeInsets.all(4),
+                          decoration: BoxDecoration(color: AppColors.darkBlue),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.blue,
+                            ),
+                            onPressed: () {
+                              callacceptapi(UserModel.sendPartsId.toString());
+                            },
+                            child: Text("Accept",
+                                style: TextStyle(color: Colors.white)),
+                          ),
+                        ))
+                    : Align(
+                        alignment: AlignmentDirectional.center,
+                        child: Container(
+                          alignment: AlignmentDirectional.center,
+                          margin: EdgeInsets.all(4),
+                          decoration: BoxDecoration(color: AppColors.darkBlue),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.red,
+                            ),
+                            onPressed: () {
+                              callreturnapi(UserModel);
+                            },
+                            child: Text("Return",
+                                style: TextStyle(color: Colors.white)),
+                          ),
+                        ))
+              ],
+            )),
+        Container(
+            width: 130,
+            height: 40,
+            alignment: AlignmentDirectional.center,
+            decoration: new BoxDecoration(
+              borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: AppColors.offWhite,
+                  offset: Offset(1.0, 6.0),
+                  blurRadius: 0.001,
+                ),
+              ],
+            ),
+            padding: const EdgeInsets.all(1.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Padding(
+                //   padding: const EdgeInsets.all(1.0),
+                //   child: IconButton(
+                //     onPressed: () =>
+                //         Get.to(CreateInventory(), arguments: this.UserModel),
+                //     icon: Icon(Icons.edit_calendar,
+                //         color: AppColors.darkBlue, size: 25),
+                //   ),
+                // ),
+
+                this.UserModel.photo != "" || this.UserModel.photo != null
+                    ? Align(
+                        alignment: AlignmentDirectional.center,
+                        child: Container(
+                          alignment: AlignmentDirectional.center,
+                          margin: EdgeInsets.all(4),
+                          decoration: BoxDecoration(color: AppColors.darkBlue),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.blue,
+                            ),
+                            onPressed: () {
+                              viewimage(UserModel.photo.toString());
+                            },
+                            child: Text("View",
+                                style: TextStyle(color: Colors.white)),
+                          ),
+                        ))
+                    : Container()
               ],
             )),
       ],
@@ -371,15 +424,19 @@ class UserInventoryListWidget extends StatelessWidget {
     //   ));
   }
 
-  callacceptapi(String inventoryid) async{
+  callacceptapi(String inventoryid) async {
     InventoryController inventoryController = Get.find();
 
-  await Future.delayed(Duration.zero);
-  inventoryController.acceptinventory(inventoryid);
+    await Future.delayed(Duration.zero);
+    inventoryController.acceptinventory(inventoryid);
   }
-  void callreturnapi(Datum userModel)async {
-Get.to(()=>ReturnInventory(),arguments: userModel);
 
+  void callreturnapi(Datum userModel) async {
+    Get.to(() => ReturnInventory(), arguments: userModel);
+  }
+
+  void viewimage(String photo) {
+    Get.to(() => Imagedisplay(), arguments: photo);
   }
   // void callreturnapi(Datum userModel)async {
   //   InventoryController inventoryController = Get.put(InventoryController());

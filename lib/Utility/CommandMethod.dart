@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inventory_management/Controller/UserController.dart';
 import 'package:inventory_management/Views/Dashboard/Dashboard.dart';
+import 'package:inventory_management/Views/Inventory/InventoryHistory.dart';
 import 'package:inventory_management/Views/Inventory/SendInventory.dart';
 import 'package:inventory_management/Views/Pending/Pending.dart';
+import 'package:inventory_management/Views/Tour/TourList.dart';
 
 import '../Views/Completed Tour/Completed.dart';
 import '../Views/Home/HomeScreen.dart';
@@ -13,6 +15,7 @@ import '../Views/Inventory/UserInventory.dart';
 import '../Views/Login/Login.dart';
 import '../Views/Tour/Createtrip.dart';
 import '../Views/Users/CreateUser.dart';
+import '../Views/Wallet/ExpenseHistory.dart';
 import '../Views/Wallet/WalletScreen.dart';
 import 'CONSTANT.dart';
 import 'SharedPreferenceHelper.dart';
@@ -216,7 +219,33 @@ Widget AdminDrawer() {
                 // _permissionStatus?
                 // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
               }),
+          createDrawerBodyItem(
+              icon: Icons.history,
+              text: 'Inventory History',
+              onTap: () {
+                Get.to(() => InventoryHistory());
 
+                // _permissionStatus?
+                // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
+              }),
+          createDrawerBodyItem(
+              icon: Icons.history,
+              text: 'Tour History',
+              onTap: () {
+                Get.to(() => TourList());
+
+                // _permissionStatus?
+                // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
+              }),
+          createDrawerBodyItem(
+              icon: Icons.history,
+              text: 'Expense History',
+              onTap: () {
+                Get.to(() => ExpenseHistory());
+
+                // _permissionStatus?
+                // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
+              }),
           Divider(),
           createDrawerBodyItem(
               icon: Icons.logout,
@@ -318,14 +347,13 @@ Widget roundedButton(String buttonLabel, Color bgColor, Color textColor) {
 }
 
 Widget nodatafound() {
-
-   return  Center(
-      child: Text(
-        'No Data Found',
-        style: TextStyle(
-          fontSize: 19,
-          color: Colors.black,
-        ),
+  return Center(
+    child: Text(
+      'No Data Found',
+      style: TextStyle(
+        fontSize: 19,
+        color: Colors.black,
       ),
-    );
+    ),
+  );
 }

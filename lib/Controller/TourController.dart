@@ -4,9 +4,12 @@ import 'package:get/state_manager.dart';
 import 'package:inventory_management/Model/CreateExpenseResponse.dart';
 import 'package:inventory_management/Model/CreateTourResponse.dart';
 import 'package:inventory_management/Model/FinalDignoseResponse.dart';
+import 'package:inventory_management/Model/InventorylistResponse.dart';
 import 'package:inventory_management/Model/ServiceReportResponse.dart';
 import 'package:inventory_management/Model/TourRemarkResponse.dart';
+import 'package:inventory_management/Model/TourHistoryResponse.dart' as history;
 import 'package:inventory_management/Model/CreateUserResponse.dart';
+import 'package:inventory_management/Model/UserTourDetailsResponse.dart';
 import 'package:inventory_management/Model/casts.dart';
 import 'package:inventory_management/Network/RequestCall.dart';
 import 'package:inventory_management/Views/Dashboard/Dashboard.dart';
@@ -14,10 +17,12 @@ import 'package:inventory_management/Views/Dashboard/Dashboard.dart';
 class TourController extends GetxController {
   var isLoading = false.obs;
   var createuserdata = CreateTourResponse().obs;
+  var usertourdetails = UserTourDetailsResponse().obs;
   var createexpensedata = CreateExpenseResponse().obs;
   var tourremarkdata = TourRemarkResponse().obs;
   var finaldignosedata = FinalDignoseResponse().obs;
   var servicereportdata = ServiceReportResponse().obs;
+  var tourhistorydata = List<history.Datum>().obs;
 
   void creattour({String tourname, String problem, String city}) async {
     try {
@@ -32,6 +37,43 @@ class TourController extends GetxController {
           Get.to(() => Dashboard());
         } else {
           Fluttertoast.showToast(msg: createuserdata.value.message.toString());
+        }
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  void usertourdetail(String tourid) async {
+    try {
+      isLoading(true);
+      var res = await RequestCall.usertourdetail(tourid);
+      if (res != null) {
+        usertourdetails.value = res;
+        if (usertourdetails.value.succes) {
+          Fluttertoast.showToast(msg: "Success");
+          // Get.to(HomeScreen());
+          // Get.to(() => Dashboard());
+        } else {
+          Fluttertoast.showToast(msg: usertourdetails.value.message.toString());
+        }
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  void fetchtourlist(String userid) async {
+    try {
+      isLoading(true);
+      var res = await RequestCall.fetchtourlist(userid);
+      if (res != null) {
+        tourhistorydata.assignAll(res);
+        if (tourhistorydata.length > 0) {
+          Fluttertoast.showToast(msg: "Success");
+          isLoading(false);
+        } else {
+          Fluttertoast.showToast(msg: "No Tour Found");
         }
       }
     } finally {

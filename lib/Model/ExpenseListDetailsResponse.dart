@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:get/get.dart';
+
 ExpenseListDetailsResponse expenseListDetailsResponseFromJson(String str) =>
     ExpenseListDetailsResponse.fromJson(json.decode(str));
 
@@ -51,7 +53,7 @@ class Datum {
   String expensesName;
   String amount;
   String photo;
-  String isApproved;
+  var isApproved;
   DateTime createdAt;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(

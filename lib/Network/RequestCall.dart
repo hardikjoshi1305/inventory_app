@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:inventory_management/Model/AcceptInventoryResponse.dart';
+import 'package:inventory_management/Model/AcceptRejectResponse.dart';
 import 'package:inventory_management/Model/CreateExpenseResponse.dart';
 import 'package:inventory_management/Model/CreateTourResponse.dart';
 import 'package:inventory_management/Model/CreateUserResponse.dart';
@@ -669,6 +670,28 @@ class RequestCall {
       var json = response.body;
       print("reds" + json.toString());
       var castsResp = expenseListDetailsResponseFromJson(json);
+      if (castsResp.succes) {
+        return castsResp.data;
+      } else {
+        Fluttertoast.showToast(msg: castsResp.message);
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static acceptreject(String is_approved, String expense_id) async {
+    var body = jsonEncode({
+      "expense_id": expense_id,
+      "is_approved": is_approved,
+    });
+    var response = await client.post(BASEURL + 'accept_reject_expense',
+        headers: authHeader, body: body);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      print("reds" + json.toString());
+      var castsResp = acceptRejectResponseFromJson(json);
       if (castsResp.succes) {
         return castsResp.data;
       } else {

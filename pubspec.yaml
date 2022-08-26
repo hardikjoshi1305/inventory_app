@@ -41,7 +41,6 @@ dependencies:
   get: 4.6.5
   http: any
   permission_handler: ^9.2.0
-  file_picker: any
   internet_connection_checker: 0.0.1+4
 #  image_picker: any
   image_picker: any

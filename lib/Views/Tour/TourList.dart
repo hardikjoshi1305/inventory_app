@@ -28,6 +28,17 @@ class _TourListState extends State<TourList> {
   UserController userController = Get.put(UserController());
   TextEditingController te_userid = TextEditingController();
 
+  apicallusername() async {
+    await Future.delayed(Duration.zero);
+    userController.fetchusernamelist();
+  }
+
+  @override
+  void initState() {
+    apicallusername();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

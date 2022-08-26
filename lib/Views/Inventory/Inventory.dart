@@ -45,10 +45,14 @@ class _InventoryState extends State<Inventory> {
           backgroundColor: Colors.blueGrey[600],
           actions: <Widget>[
             Container(
-              decoration: BoxDecoration(color: AppColors.darkBlue),
+              margin: EdgeInsets.only(right: 20, top: 6, bottom: 6),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.blue,
+                  primary: Colors.blueGrey[300],
+                  elevation: 10,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
                 onPressed: () {
                   Get.to(() => CreateInventory());
@@ -63,294 +67,136 @@ class _InventoryState extends State<Inventory> {
         ),
         drawer: AdminDrawer(),
         body: Container(
-            child: Obx(() => inventoryController.isLoading.value
-                ? Center(child: CircularProgressIndicator())
-                : inventoryController.inventorylist != null
-                    ? SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Container(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 100,
-                                      alignment: AlignmentDirectional.center,
-                                      decoration: new BoxDecoration(
-                                        borderRadius: new BorderRadius.all(
-                                            const Radius.circular(10.0)),
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(
-                                            color: AppColors.darkBlue,
-                                            offset: Offset(1.0, 6.0),
-                                            blurRadius: 0.001,
-                                          ),
-                                        ],
-                                      ),
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Text(
-                                        "ID",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColors.offWhite),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 120,
-                                      alignment: AlignmentDirectional.center,
-                                      decoration: new BoxDecoration(
-                                        borderRadius: new BorderRadius.all(
-                                            const Radius.circular(10.0)),
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(
-                                            color: AppColors.darkBlue,
-                                            offset: Offset(1.0, 6.0),
-                                            blurRadius: 0.001,
-                                          ),
-                                        ],
-                                      ),
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Text(
-                                        "Code",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColors.offWhite),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 200,
-                                      alignment: AlignmentDirectional.center,
-                                      decoration: new BoxDecoration(
-                                        borderRadius: new BorderRadius.all(
-                                            const Radius.circular(10.0)),
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(
-                                            color: AppColors.darkBlue,
-                                            offset: Offset(1.0, 6.0),
-                                            blurRadius: 0.001,
-                                          ),
-                                        ],
-                                      ),
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Text(
-                                        "Name",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColors.offWhite),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 200,
-                                      alignment: AlignmentDirectional.center,
-                                      decoration: new BoxDecoration(
-                                        borderRadius: new BorderRadius.all(
-                                            const Radius.circular(10.0)),
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(
-                                            color: AppColors.darkBlue,
-                                            offset: Offset(1.0, 6.0),
-                                            blurRadius: 0.001,
-                                          ),
-                                        ],
-                                      ),
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Text(
-                                        "Serial No.",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          color: AppColors.offWhite,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 100,
-                                      alignment: AlignmentDirectional.center,
-                                      decoration: new BoxDecoration(
-                                        borderRadius: new BorderRadius.all(
-                                            const Radius.circular(10.0)),
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(
-                                            color: AppColors.darkBlue,
-                                            offset: Offset(1.0, 6.0),
-                                            blurRadius: 0.001,
-                                          ),
-                                        ],
-                                      ),
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Text(
-                                        "Px No.",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColors.offWhite),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 100,
-                                      alignment: AlignmentDirectional.center,
-                                      decoration: new BoxDecoration(
-                                        borderRadius: new BorderRadius.all(
-                                            const Radius.circular(10.0)),
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(
-                                            color: AppColors.darkBlue,
-                                            offset: Offset(1.0, 6.0),
-                                            blurRadius: 0.001,
-                                          ),
-                                        ],
-                                      ),
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Text(
-                                        "Machine",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColors.offWhite),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 100,
-                                      alignment: AlignmentDirectional.center,
-                                      decoration: new BoxDecoration(
-                                        borderRadius: new BorderRadius.all(
-                                            const Radius.circular(10.0)),
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(
-                                            color: AppColors.darkBlue,
-                                            offset: Offset(1.0, 6.0),
-                                            blurRadius: 0.001,
-                                          ),
-                                        ],
-                                      ),
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Text(
-                                        "Location",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColors.offWhite),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 100,
-                                      alignment: AlignmentDirectional.center,
-                                      decoration: new BoxDecoration(
-                                        borderRadius: new BorderRadius.all(
-                                            const Radius.circular(10.0)),
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(
-                                            color: AppColors.darkBlue,
-                                            offset: Offset(1.0, 6.0),
-                                            blurRadius: 0.001,
-                                          ),
-                                        ],
-                                      ),
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Text(
-                                        "Remark",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColors.offWhite),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 180,
-                                      alignment: AlignmentDirectional.center,
-                                      decoration: new BoxDecoration(
-                                        borderRadius: new BorderRadius.all(
-                                            const Radius.circular(10.0)),
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(
-                                            color: AppColors.darkBlue,
-                                            offset: Offset(1.0, 6.0),
-                                            blurRadius: 0.001,
-                                          ),
-                                        ],
-                                      ),
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Text(
-                                        "Status",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColors.offWhite),
-                                      ),
-                                    ),
-                                    // Container(
-                                    //   width: 120,
-                                    //   alignment: AlignmentDirectional.center,
-                                    //   decoration: new BoxDecoration(
-                                    //     borderRadius: new BorderRadius.all(
-                                    //         const Radius.circular(10.0)),
-                                    //     boxShadow: <BoxShadow>[
-                                    //       BoxShadow(
-                                    //         color: AppColors.darkBlue,
-                                    //         offset: Offset(1.0, 6.0),
-                                    //         blurRadius: 0.001,
-                                    //       ),
-                                    //     ],
-                                    //   ),
-                                    //   padding: const EdgeInsets.all(12.0),
-                                    //   child: Text(
-                                    //     "Date",
-                                    //     style: TextStyle(
-                                    //         fontWeight: FontWeight.w400,
-                                    //         color: AppColors.offWhite),
-                                    //   ),
-                                    // ),
-                                    Container(
-                                      width: 130,
-                                      alignment: AlignmentDirectional.center,
-                                      decoration: new BoxDecoration(
-                                        borderRadius: new BorderRadius.all(
-                                            const Radius.circular(10.0)),
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(
-                                            color: AppColors.darkBlue,
-                                            offset: Offset(1.0, 6.0),
-                                            blurRadius: 0.001,
-                                          ),
-                                        ],
-                                      ),
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Text(
-                                        "Action",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColors.offWhite),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Expanded(
-                                  child: Obx(() => (inventoryController
-                                          .isLoading.value)
-                                      ? Center(
-                                          child: CircularProgressIndicator())
-                                      : Column(
-                                          children: [
-                                            ...inventoryController.inventorylist
-                                                .map((element) {
-                                              // print("userlist" + element.name);
-                                              return InventoryListWidget(
-                                                  UserModel: element,
-                                                  usertype: "admin");
-                                            }).toList()
-                                          ],
-                                        )),
-                                ),
+            child: Obx(() => Stack(
+                  fit: StackFit.loose,
+                  alignment: AlignmentDirectional.center,
+                  children: <Widget>[
+                    Opacity(
+                      opacity:
+                          1, // You can reduce this when loading to give different effect
+                      child: AbsorbPointer(
+                        absorbing: inventoryController.isLoading.value,
+                        child: screenbody(),
+                      ),
+                    ),
+                    Opacity(
+                      opacity: inventoryController.isLoading.value ? 1.0 : 0,
+                      child: CircularProgressIndicator(),
+                    ),
+                  ],
+                ))));
+  }
 
-                                // ListView.builder(
-                                //     shrinkWrap: true,
-                                //     padding: EdgeInsets.only(bottom: 16),
-                                //     itemCount: inventoryController.inventorylist.length,
-                                //     itemBuilder: (ctx, index) {
-                                //       var therapy =
-                                //           inventoryController.inventorylist.elementAt(index);
-                                //       return InventoryListWidget(UserModel: therapy);
-                                //     })
+  Widget screenbody() {
+    return inventoryController.inventorylist != null
+        ? SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Container(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        toptitle(100.0, "ID"),
+                        Container(
+                          width: 1,
+                          color: Colors.white,
+                        ),
+                        toptitle(120.0, "Code"),
+                        Container(
+                          width: 1,
+                          color: Colors.white,
+                        ),
+                        toptitle(200.0, "Name"),
+                        Container(
+                          width: 1,
+                          color: Colors.white,
+                        ),
+                        toptitle(200.0, "Serial No."),
+                        Container(
+                          width: 1,
+                          color: Colors.white,
+                        ),
+                        toptitle(100.0, "Px No."),
+                        Container(
+                          width: 1,
+                          color: Colors.white,
+                        ),
+                        toptitle(100.0, "Machine"),
+                        Container(
+                          width: 1,
+                          color: Colors.white,
+                        ),
+                        toptitle(100.0, "Location"),
+                        Container(
+                          width: 1,
+                          color: Colors.white,
+                        ),
+                        toptitle(100.0, "Remark"),
+                        Container(
+                          width: 1,
+                          color: Colors.white,
+                        ),
+                        toptitle(180.0, "Status"),
+                        Container(
+                          width: 1,
+                          color: Colors.white,
+                        ),
+                        toptitle(130.0, "Action"),
+
+                        // Container(
+                        //   width: 120,
+                        //   alignment: AlignmentDirectional.center,
+                        //   decoration: new BoxDecoration(
+                        //     borderRadius: new BorderRadius.all(
+                        //         const Radius.circular(10.0)),
+                        //     boxShadow: <BoxShadow>[
+                        //       BoxShadow(
+                        //         color: AppColors.darkBlue,
+                        //         offset: Offset(1.0, 6.0),
+                        //         blurRadius: 0.001,
+                        //       ),
+                        //     ],
+                        //   ),
+                        //   padding: const EdgeInsets.all(12.0),
+                        //   child: Text(
+                        //     "Date",
+                        //     style: TextStyle(
+                        //         fontWeight: FontWeight.w400,
+                        //         color: AppColors.offWhite),
+                        //   ),
+                        // ),
+                      ],
+                    ),
+                    Expanded(
+                      child: Obx(() => (inventoryController.isLoading.value)
+                          ? Center(child: CircularProgressIndicator())
+                          : Column(
+                              children: [
+                                ...inventoryController.inventorylist
+                                    .map((element) {
+                                  // print("userlist" + element.name);
+                                  return InventoryListWidget(
+                                      UserModel: element, usertype: "admin");
+                                }).toList()
                               ],
-                            ),
-                          ),
-                        ))
-                    : nodatafound())));
+                            )),
+                    ),
+
+                    // ListView.builder(
+                    //     shrinkWrap: true,
+                    //     padding: EdgeInsets.only(bottom: 16),
+                    //     itemCount: inventoryController.inventorylist.length,
+                    //     itemBuilder: (ctx, index) {
+                    //       var therapy =
+                    //           inventoryController.inventorylist.elementAt(index);
+                    //       return InventoryListWidget(UserModel: therapy);
+                    //     })
+                  ],
+                ),
+              ),
+            ))
+        : nodatafound();
   }
 }

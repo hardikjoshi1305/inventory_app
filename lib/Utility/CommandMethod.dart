@@ -51,13 +51,16 @@ MaterialColor createMaterialColor(Color color) {
 
 Widget AdminAppBar() {
   return AppBar(
-    backgroundColor: Colors.blueGrey[600],
     actions: <Widget>[
       Container(
-        decoration: BoxDecoration(color: AppColors.darkBlue),
+        margin: EdgeInsets.only(right: 20, top: 6, bottom: 6),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: Colors.blue,
+            primary: Colors.blueGrey[300],
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
           ),
           onPressed: () {
             Get.to(() => Createuser());
@@ -229,7 +232,7 @@ Widget AdminDrawer() {
                 // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
               }),
           createDrawerBodyItem(
-              icon: Icons.history,
+              icon: Icons.today,
               text: 'Tour History',
               onTap: () {
                 Get.to(() => TourList());
@@ -238,7 +241,7 @@ Widget AdminDrawer() {
                 // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
               }),
           createDrawerBodyItem(
-              icon: Icons.history,
+              icon: Icons.currency_rupee_sharp,
               text: 'Expense History',
               onTap: () {
                 Get.to(() => ExpenseHistory());
@@ -356,4 +359,45 @@ Widget nodatafound() {
       ),
     ),
   );
+}
+
+Widget toptitle(double width, String name) {
+  return Container(
+      width: width,
+      alignment: AlignmentDirectional.center,
+      color: Colors.blueGrey[700],
+      padding: const EdgeInsets.all(12.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            name,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontWeight: FontWeight.w400, color: AppColors.offWhite),
+          ),
+        ],
+      ));
+}
+
+Widget bottomtitle(double width, String name) {
+  return Container(
+      width: width,
+      height: 40,
+      alignment: AlignmentDirectional.center,
+      color: AppColors.offWhite,
+      padding: const EdgeInsets.all(12.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            name,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
+          ),
+        ],
+      ));
 }

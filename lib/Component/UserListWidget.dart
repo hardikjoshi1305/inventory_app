@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_management/Model/UserlistResponse.dart';
 
+import '../Utility/CommandMethod.dart';
 import '../Utility/app_colors.dart';
 
 class UserListWidget extends StatelessWidget {
@@ -12,129 +13,41 @@ class UserListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        bottomtitle(100.0, this.UserModel.id.toString()),
         Container(
-          width: 100,
-          alignment: AlignmentDirectional.center,
-          decoration: new BoxDecoration(
-            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: AppColors.offWhite,
-                offset: Offset(1.0, 6.0),
-                blurRadius: 0.001,
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.all(12.0),
-          child: Text(
-            this.UserModel.id.toString(),
-            style: TextStyle(
-                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
-          ),
+          width: 1,
+          color: Colors.white,
         ),
+        bottomtitle(100.0, this.UserModel.userid),
         Container(
-          width: 100,
-          alignment: AlignmentDirectional.center,
-          decoration: new BoxDecoration(
-            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: AppColors.offWhite,
-                offset: Offset(1.0, 6.0),
-                blurRadius: 0.001,
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.all(12.0),
-          child: Text(
-            this.UserModel.userid,
-            style: TextStyle(
-                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
-          ),
+          width: 1,
+          color: Colors.white,
         ),
+        bottomtitle(200.0, this.UserModel.deviceid),
         Container(
-          width: 200,
-          alignment: AlignmentDirectional.center,
-          decoration: new BoxDecoration(
-            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: AppColors.offWhite,
-                offset: Offset(1.0, 6.0),
-                blurRadius: 0.001,
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.all(12.0),
-          child: Text(
-            this.UserModel.deviceid,
-            style: TextStyle(
-                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
-          ),
+          width: 1,
+          color: Colors.white,
         ),
+        bottomtitle(
+            200.0, this.UserModel.mobile != null ? this.UserModel.mobile : "-"),
         Container(
-          width: 200,
-          alignment: AlignmentDirectional.center,
-          decoration: new BoxDecoration(
-            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: AppColors.offWhite,
-                offset: Offset(1.0, 6.0),
-                blurRadius: 0.001,
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.all(12.0),
-          child: Text(
-            this.UserModel.mobile != null ? this.UserModel.mobile : "-",
-            style: TextStyle(
-              fontWeight: FontWeight.w400,
-              color: AppColors.darkBlue,
-            ),
-          ),
+          width: 1,
+          color: Colors.white,
         ),
+        bottomtitle(100.0,
+            this.UserModel.isActive.toString() == 0 ? "InActive" : "Active"),
         Container(
-          width: 100,
-          alignment: AlignmentDirectional.center,
-          decoration: new BoxDecoration(
-            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: AppColors.offWhite,
-                offset: Offset(1.0, 6.0),
-                blurRadius: 0.001,
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.all(12.0),
-          child: Text(
-            this.UserModel.isActive.toString() == 0 ? "InActive" : "Active",
-            style: TextStyle(
-                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
-          ),
+          width: 1,
+          color: Colors.white,
         ),
-        Container(
-          width: 130,
-          alignment: AlignmentDirectional.center,
-          decoration: new BoxDecoration(
-            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: AppColors.offWhite,
-                offset: Offset(1.0, 6.0),
-                blurRadius: 0.001,
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.all(12.0),
-          child: Text(
+        bottomtitle(
+            130.0,
             this.UserModel.walletAmount != null
-                ? this.UserModel.walletAmount +" \u{20B9}"
-                : "-",
-            style: TextStyle(
-                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
-          ),
+                ? this.UserModel.walletAmount + " \u{20B9}"
+                : "-"),
+        Container(
+          width: 1,
+          color: Colors.white,
         ),
       ],
     );

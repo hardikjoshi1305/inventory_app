@@ -4,9 +4,11 @@ import 'dart:ffi';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:inventory_management/Controller/SearchController.dart';
+import 'package:inventory_management/Controller/UserController.dart';
 import 'package:inventory_management/Utility/CommandMethod.dart';
 import 'package:inventory_management/Model/SearchInventoryResponse.dart';
 import 'package:http/http.dart' as http;
@@ -23,16 +25,25 @@ class SendInventory extends StatefulWidget {
 var userid, img_path, tourname;
 var code = "";
 List<String> allinventory = [];
+List<String> allinventoryname = [];
 List<String> allinventoryimage = [];
 
 class _SendInventoryState extends State<SendInventory> {
   @override
   void initState() {
-    // upcomingController.pendingitem(iscompleted: "0");
+    apicallusername();
     super.initState();
   }
 
   SearchController upcomingController = Get.put(SearchController());
+  UserController userController = Get.put(UserController());
+  TextEditingController te_userid = TextEditingController();
+
+  apicallusername() async {
+    await Future.delayed(Duration.zero);
+    userController.fetchusernamelist();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,184 +51,256 @@ class _SendInventoryState extends State<SendInventory> {
         title: Text("Send Inventory"),
       ),
       drawer: AdminDrawer(),
-      body: Obx(() => upcomingController.isLoading.value
-          ? Container(child: Center(child: CircularProgressIndicator()))
-          : SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Padding(
-                padding: EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    Container(
-                      height: 20,
-                    ),
-                    Container(
-                      child: TextField(
-                        // controller: te_name
-                        //   ..text = this.usermodel != null ? usermodel.name : "",
-                        keyboardType: TextInputType.text,
-                        onChanged: (value) {
-                          userid = value;
-                        },
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.person),
-                          labelText: 'User ID',
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 20,
-                    ),
-                    Container(
-                      height: 20,
-                    ),
-                    Container(
-                      child: TextField(
-                        // controller: te_name
-                        //   ..text = this.usermodel != null ? usermodel.name : "",
-                        keyboardType: TextInputType.text,
-                        onChanged: (value) {
-                          tourname = value;
-                        },
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.tour),
-                          labelText: 'Tour Name',
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 20,
-                    ),
-                    DropdownSearch<Datum>(
-                      mode: Mode.BOTTOM_SHEET,
-                      showSearchBox: true,
-                      isFilteredOnline: true,
-                      dropDownButton: const Icon(
-                        Icons.keyboard_arrow_down,
-                        color: Colors.grey,
-                        size: 18,
-                      ),
-                      dropdownSearchDecoration: InputDecoration(
-                        hintText: 'Search Inventory by Code',
-                        icon: Icon(Icons.filter_list),
-                      ),
-                      dropdownBuilder: _customDropDownPrograms,
-                      popupItemBuilder: _customPopupItemBuilder,
-                      onChanged: (Datum object) {
-                        // upcomingController.searchdata(object.code);
-                        setState(() {
-                          if (object != null) {
-                            print("onchasnged" + object.code);
-
-                            allinventory.add(object.id.toString());
-                            allinventoryimage.add("");
-                          }
-                        });
-                      },
-                      onFind: (String filter) =>
-                          upcomingController.searchdata(filter ?? ""),
-                      showClearButton: true,
-                      clearButtonBuilder: (_) => const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(Icons.clear, size: 17, color: Colors.black),
-                      ),
-                    ),
-                    Container(
-                      height: 20,
-                    ),
-
-                    ...allinventory.map((element) => Card(
-                          elevation: 7,
-                          margin: EdgeInsets.only(top: 6, left: 6, right: 6),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Text(
-                                      element,
-                                      style: TextStyle(fontSize: 18),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        var index =
-                                            allinventory.indexOf(element);
-
-                                        return choosefile(index);
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Icon(Icons.image,
-                                            color: AppColors.darkBlue),
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        var index =
-                                            allinventory.indexOf(element);
-
-                                        return deleteitem(index);
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Icon(Icons.clear,
-                                            color: Colors.red),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        )),
-                    // Obx(() =>
-                    // ListView(
-                    //   scrollDirection: Axis.vertical,
-                    //   // children: List.generate(upcomingController.search.length,
-                    //   //     (index) => Text(code.toString()))
-                    //   children: [...allinventory.map((element) => Text(element))],
-                    // ),
-                    //     ),
-                    Container(
-                      height: 20,
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        margin: const EdgeInsets.all(5),
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            print(
-                                "allinventorylist  " + allinventory.toString());
-                            // print("allinventoryimagelist  " +)
-                            if (allinventory.length > 0) {
-                              upcomingController.fetchsendpartapi(
-                                  userid: userid,
-                                  tourname: tourname,
-                                  photo: allinventoryimage,
-                                  inventory_id: allinventory);
-                            }
-
-                            // callgetinventory(code);
-                          },
-                          child: const Text('Submit'),
-                        ),
-                      ),
-                    ),
-                  ],
+      body: Obx(() => Stack(
+            fit: StackFit.loose,
+            alignment: AlignmentDirectional.center,
+            children: <Widget>[
+              Opacity(
+                opacity:
+                    1, // You can reduce this when loading to give different effect
+                child: AbsorbPointer(
+                  absorbing: upcomingController.isLoading.value,
+                  child: screenbody(),
                 ),
               ),
-            )),
+              Opacity(
+                opacity: upcomingController.isLoading.value ? 1.0 : 0,
+                child: CircularProgressIndicator(),
+              ),
+            ],
+          )),
+    );
+  }
+
+  var showlist = false;
+  var id = "";
+  Widget screenbody() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Padding(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          children: [
+            Container(
+              height: 20,
+            ),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  showlist = !showlist;
+                });
+              },
+              child: Container(
+                child: TextField(
+                  controller: te_userid,
+                  //   ..text = this.usermodel != null ? usermodel.name : "",
+                  keyboardType: TextInputType.text,
+                  enabled: false,
+                  onChanged: (value) {
+                    userid = value;
+                  },
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.person),
+                    labelText: 'User ID',
+                  ),
+                ),
+              ),
+            ),
+            showlist
+                ? Card(
+                    elevation: 7,
+                    margin: EdgeInsets.only(top: 5, left: 5, right: 5),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(7),
+                    ),
+                    child: Container(
+                      height: 200,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                          children: [
+                            ...userController.usernamelist.value
+                                .map((e) => GestureDetector(
+                                      onTap: () {
+                                        te_userid..text = e.userid;
+                                        setState(() {
+                                          showlist = false;
+                                          id = e.id.toString();
+                                        });
+                                      },
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                              width: double.infinity,
+                                              color: Colors.white,
+                                              alignment:
+                                                  AlignmentDirectional.center,
+                                              padding: EdgeInsets.only(
+                                                  top: 15, bottom: 15),
+                                              child: Text(
+                                                e.userid,
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: Colors.black),
+                                              )),
+                                          Divider(
+                                            color: Colors.black,
+                                            height: 1,
+                                          )
+                                        ],
+                                      ),
+                                    ))
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                : Container(),
+            Container(
+              height: 30,
+            ),
+            Container(
+              child: TextField(
+                // controller: te_name
+                //   ..text = this.usermodel != null ? usermodel.name : "",
+                keyboardType: TextInputType.text,
+                onChanged: (value) {
+                  tourname = value;
+                },
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.tour),
+                  labelText: 'Tour Name',
+                ),
+              ),
+            ),
+            Container(
+              height: 20,
+            ),
+            DropdownSearch<Datum>(
+              mode: Mode.BOTTOM_SHEET,
+              showSearchBox: true,
+              isFilteredOnline: true,
+              dropDownButton: const Icon(
+                Icons.keyboard_arrow_down,
+                color: Colors.grey,
+                size: 18,
+              ),
+              dropdownSearchDecoration: InputDecoration(
+                hintText: 'Search Inventory by Code',
+                icon: Icon(Icons.filter_list),
+              ),
+              dropdownBuilder: _customDropDownPrograms,
+              popupItemBuilder: _customPopupItemBuilder,
+              onChanged: (Datum object) {
+                // upcomingController.searchdata(object.code);
+                setState(() {
+                  if (object != null) {
+                    print("onchasnged" + object.code);
+
+                    allinventory.add(object.id.toString());
+                    allinventoryname.add(object.name.toString());
+                    allinventoryimage.add("");
+                  }
+                });
+              },
+              onFind: (String filter) =>
+                  upcomingController.searchdata(filter ?? ""),
+              showClearButton: true,
+              clearButtonBuilder: (_) => const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Icon(Icons.clear, size: 17, color: Colors.black),
+              ),
+            ),
+            Container(
+              height: 20,
+            ),
+
+            ...allinventoryname.map((element) => Card(
+                  elevation: 7,
+                  margin: EdgeInsets.only(top: 6, left: 6, right: 6),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              element,
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                var index = allinventory.indexOf(element);
+
+                                return choosefile(index);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: Icon(Icons.image,
+                                    color: AppColors.darkBlue),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                var index = allinventory.indexOf(element);
+
+                                return deleteitem(index);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: Icon(Icons.clear, color: Colors.red),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                )),
+            // Obx(() =>
+            // ListView(
+            //   scrollDirection: Axis.vertical,
+            //   // children: List.generate(upcomingController.search.length,
+            //   //     (index) => Text(code.toString()))
+            //   children: [...allinventory.map((element) => Text(element))],
+            // ),
+            //     ),
+            Container(
+              height: 20,
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                margin: const EdgeInsets.all(5),
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    print("allinventorylist  " + allinventory.toString());
+                    // print("allinventoryimagelist  " +)
+                    if (checkvalidation(allinventory, id)) {
+                      upcomingController.fetchsendpartapi(
+                          userid: id,
+                          tourname: tourname,
+                          photo: allinventoryimage,
+                          inventory_id: allinventory);
+                    }
+
+                    // callgetinventory(code);
+                  },
+                  child: const Text('Submit'),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -251,7 +334,7 @@ class _SendInventoryState extends State<SendInventory> {
                     color: Colors.white,
                   ),
             child: ListTile(
-              title: Text(item.name.toString(),
+              title: Text(item.code.toString(),
                   style: const TextStyle(
                     fontSize: 14,
                     color: Color.fromARGB(255, 102, 100, 100),
@@ -304,6 +387,18 @@ class _SendInventoryState extends State<SendInventory> {
       });
     } catch (exception) {
       print("object" + exception.toString());
+    }
+  }
+
+  bool checkvalidation(List<String> allinventory, String id) {
+    if (allinventory.length <= 0) {
+      Fluttertoast.showToast(msg: "Select Any Inventory");
+      return false;
+    } else if (id == "") {
+      Fluttertoast.showToast(msg: "Select Any User");
+      return false;
+    } else {
+      return true;
     }
   }
 }

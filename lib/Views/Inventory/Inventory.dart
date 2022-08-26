@@ -84,7 +84,8 @@ class _InventoryState extends State<Inventory> {
                       child: CircularProgressIndicator(),
                     ),
                   ],
-                ))));
+                )
+            )));
   }
 
   Widget screenbody() {
@@ -145,28 +146,6 @@ class _InventoryState extends State<Inventory> {
                         ),
                         toptitle(130.0, "Action"),
 
-                        // Container(
-                        //   width: 120,
-                        //   alignment: AlignmentDirectional.center,
-                        //   decoration: new BoxDecoration(
-                        //     borderRadius: new BorderRadius.all(
-                        //         const Radius.circular(10.0)),
-                        //     boxShadow: <BoxShadow>[
-                        //       BoxShadow(
-                        //         color: AppColors.darkBlue,
-                        //         offset: Offset(1.0, 6.0),
-                        //         blurRadius: 0.001,
-                        //       ),
-                        //     ],
-                        //   ),
-                        //   padding: const EdgeInsets.all(12.0),
-                        //   child: Text(
-                        //     "Date",
-                        //     style: TextStyle(
-                        //         fontWeight: FontWeight.w400,
-                        //         color: AppColors.offWhite),
-                        //   ),
-                        // ),
                       ],
                     ),
                     Expanded(

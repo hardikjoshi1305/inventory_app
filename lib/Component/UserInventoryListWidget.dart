@@ -7,6 +7,7 @@ import 'package:inventory_management/Utility/Imagedisplay.dart';
 import 'package:inventory_management/Views/Inventory/CreateInventory.dart';
 import 'package:inventory_management/Views/Inventory/UserInventory.dart';
 
+import '../Utility/CommandMethod.dart';
 import '../Utility/app_colors.dart';
 import '../Views/Inventory/ReturnInventory.dart';
 
@@ -20,313 +21,117 @@ class UserInventoryListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        bottomtitle(100.0, this.UserModel.id.toString()),
         Container(
-          width: 100,
-          height: 40,
-          alignment: AlignmentDirectional.center,
-          decoration: new BoxDecoration(
-            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: AppColors.offWhite,
-                offset: Offset(1.0, 6.0),
-                blurRadius: 0.001,
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.all(12.0),
-          child: Text(
-            this.UserModel.id.toString(),
-            style: TextStyle(
-                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
-          ),
+          width: 1,
+          color: Colors.white,
+        ),
+        bottomtitle(120.0, this.UserModel.code.toString()),
+        Container(
+          width: 1,
+          color: Colors.white,
+        ),
+        bottomtitle(200.0, this.UserModel.name.toString()),
+        Container(
+          width: 1,
+          color: Colors.white,
+        ),
+        bottomtitle(200.0, this.UserModel.serialNo.toString()),
+        Container(
+          width: 1,
+          color: Colors.white,
+        ),
+        bottomtitle(100.0,  this.UserModel.pxNo.toString()),
+        Container(
+          width: 1,
+          color: Colors.white,
+        ),
+        bottomtitle(100.0,   this.UserModel.machine.toString()),
+        Container(
+          width: 1,
+          color: Colors.white,
+        ),
+        bottomtitle(100.0,  this.UserModel.location.toString()),
+        Container(
+          width: 1,
+          color: Colors.white,
+        ),
+        bottomtitle(100.0,  this.UserModel.remark == null ? "-" : this.UserModel.remark.toString()),
+        Container(
+          width: 1,
+          color: Colors.white,
+        ),
+        bottomtitle(100.0,   this.UserModel.statusId != null ? this.UserModel.statusId : "-"),
+        Container(
+          width: 1,
+          color: Colors.white,
+        ),
+        bottomtitle(100.0,  this.UserModel.remark == null ? "-" : this.UserModel.remark.toString()),
+        Container(
+          width: 1,
+          color: Colors.white,
         ),
         Container(
-          width: 120,
-          height: 40,
+    width: 130,
+    height: 40,
+    alignment: AlignmentDirectional.center,
+    color: AppColors.offWhite,
+    padding: const EdgeInsets.all(12.0),
+    child: Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      this.UserModel.status == "0"
+          ? Align(
           alignment: AlignmentDirectional.center,
-          decoration: new BoxDecoration(
-            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: AppColors.offWhite,
-                offset: Offset(1.0, 6.0),
-                blurRadius: 0.001,
+          child: Container(
+            alignment: AlignmentDirectional.center,
+            margin: EdgeInsets.all(4),
+            decoration: BoxDecoration(color: AppColors.darkBlue),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue,
               ),
-            ],
-          ),
-          padding: const EdgeInsets.all(12.0),
-          child: Text(
-            this.UserModel.code,
-            style: TextStyle(
-                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
-          ),
-        ),
-        Container(
-          width: 200,
-          height: 40,
-          alignment: AlignmentDirectional.center,
-          decoration: new BoxDecoration(
-            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: AppColors.offWhite,
-                offset: Offset(1.0, 6.0),
-                blurRadius: 0.001,
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.all(12.0),
-          child: Text(
-            this.UserModel.name,
-            style: TextStyle(
-                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
-          ),
-        ),
-        Container(
-          width: 200,
-          height: 40,
-          alignment: AlignmentDirectional.center,
-          decoration: new BoxDecoration(
-            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: AppColors.offWhite,
-                offset: Offset(1.0, 6.0),
-                blurRadius: 0.001,
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.all(12.0),
-          child: Text(
-            this.UserModel.serialNo,
-            style: TextStyle(
-              fontWeight: FontWeight.w400,
-              color: AppColors.darkBlue,
+              onPressed: () {
+                callacceptapi(UserModel.sendPartsId.toString());
+              },
+              child: Text("Accept",
+                  style: TextStyle(color: Colors.white)),
             ),
-          ),
-        ),
-        Container(
-          width: 100,
-          height: 40,
+          ))
+          : Align(
           alignment: AlignmentDirectional.center,
-          decoration: new BoxDecoration(
-            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: AppColors.offWhite,
-                offset: Offset(1.0, 6.0),
-                blurRadius: 0.001,
+          child: Container(
+            alignment: AlignmentDirectional.center,
+            margin: EdgeInsets.all(4),
+            decoration: BoxDecoration(color: AppColors.darkBlue),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red,
               ),
-            ],
-          ),
-          padding: const EdgeInsets.all(12.0),
-          child: Text(
-            this.UserModel.pxNo,
-            style: TextStyle(
-                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
-          ),
-        ),
+              onPressed: () {
+                callreturnapi(UserModel);
+              },
+              child: Text("Return",
+                  style: TextStyle(color: Colors.white)),
+            ),
+          )),
+    ],
+    )),
         Container(
-          width: 100,
-          height: 40,
-          alignment: AlignmentDirectional.center,
-          decoration: new BoxDecoration(
-            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: AppColors.offWhite,
-                offset: Offset(1.0, 6.0),
-                blurRadius: 0.001,
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.all(12.0),
-          child: Text(
-            this.UserModel.machine,
-            style: TextStyle(
-                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
-          ),
+          width: 1,
+          color: Colors.white,
         ),
-        Container(
-          width: 100,
-          height: 40,
-          alignment: AlignmentDirectional.center,
-          decoration: new BoxDecoration(
-            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: AppColors.offWhite,
-                offset: Offset(1.0, 6.0),
-                blurRadius: 0.001,
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.all(12.0),
-          child: Text(
-            this.UserModel.location,
-            style: TextStyle(
-                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
-          ),
-        ),
-        Container(
-          width: 100,
-          height: 40,
-          alignment: AlignmentDirectional.center,
-          decoration: new BoxDecoration(
-            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: AppColors.offWhite,
-                offset: Offset(1.0, 6.0),
-                blurRadius: 0.001,
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.all(12.0),
-          child: Text(
-            this.UserModel.remark == null ? "-" : this.UserModel.remark,
-            style: TextStyle(
-                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
-          ),
-        ),
-        Container(
-          width: 100,
-          height: 40,
-          alignment: AlignmentDirectional.center,
-          decoration: new BoxDecoration(
-            borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: AppColors.offWhite,
-                offset: Offset(1.0, 6.0),
-                blurRadius: 0.001,
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.all(12.0),
-          child: Text(
-            this.UserModel.statusId != null ? this.UserModel.statusId : "-",
-            style: TextStyle(
-                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
-          ),
-        ),
-        // Container(
-        //   width: 120,
-        //   height: 40,
-        //   alignment: AlignmentDirectional.center,
-        //   decoration: new BoxDecoration(
-        //     borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
-        //     boxShadow: <BoxShadow>[
-        //       BoxShadow(
-        //         color: AppColors.offWhite,
-        //         offset: Offset(1.0, 6.0),
-        //         blurRadius: 0.001,
-        //       ),
-        //     ],
-        //   ),
-        //   padding: const EdgeInsets.all(12.0),
-        //   child: Text(
-        //     this.UserModel.createdAt.toString(),
-        //     style: TextStyle(
-        //         fontWeight: FontWeight.w400, color: AppColors.darkBlue),
-        //   ),
-        // ),
         Container(
             width: 130,
             height: 40,
             alignment: AlignmentDirectional.center,
-            decoration: new BoxDecoration(
-              borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                  color: AppColors.offWhite,
-                  offset: Offset(1.0, 6.0),
-                  blurRadius: 0.001,
-                ),
-              ],
-            ),
+            color: AppColors.offWhite,
             padding: const EdgeInsets.all(1.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Padding(
-                //   padding: const EdgeInsets.all(1.0),
-                //   child: IconButton(
-                //     onPressed: () =>
-                //         Get.to(CreateInventory(), arguments: this.UserModel),
-                //     icon: Icon(Icons.edit_calendar,
-                //         color: AppColors.darkBlue, size: 25),
-                //   ),
-                // ),
-
-                this.UserModel.status == "0"
-                    ? Align(
-                        alignment: AlignmentDirectional.center,
-                        child: Container(
-                          alignment: AlignmentDirectional.center,
-                          margin: EdgeInsets.all(4),
-                          decoration: BoxDecoration(color: AppColors.darkBlue),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.blue,
-                            ),
-                            onPressed: () {
-                              callacceptapi(UserModel.sendPartsId.toString());
-                            },
-                            child: Text("Accept",
-                                style: TextStyle(color: Colors.white)),
-                          ),
-                        ))
-                    : Align(
-                        alignment: AlignmentDirectional.center,
-                        child: Container(
-                          alignment: AlignmentDirectional.center,
-                          margin: EdgeInsets.all(4),
-                          decoration: BoxDecoration(color: AppColors.darkBlue),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.red,
-                            ),
-                            onPressed: () {
-                              callreturnapi(UserModel);
-                            },
-                            child: Text("Return",
-                                style: TextStyle(color: Colors.white)),
-                          ),
-                        ))
-              ],
-            )),
-        Container(
-            width: 130,
-            height: 40,
-            alignment: AlignmentDirectional.center,
-            decoration: new BoxDecoration(
-              borderRadius: new BorderRadius.all(const Radius.circular(10.0)),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                  color: AppColors.offWhite,
-                  offset: Offset(1.0, 6.0),
-                  blurRadius: 0.001,
-                ),
-              ],
-            ),
-            padding: const EdgeInsets.all(1.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // Padding(
-                //   padding: const EdgeInsets.all(1.0),
-                //   child: IconButton(
-                //     onPressed: () =>
-                //         Get.to(CreateInventory(), arguments: this.UserModel),
-                //     icon: Icon(Icons.edit_calendar,
-                //         color: AppColors.darkBlue, size: 25),
-                //   ),
-                // ),
-
                 this.UserModel.photo != "" || this.UserModel.photo != null
                     ? Align(
                         alignment: AlignmentDirectional.center,
@@ -348,6 +153,10 @@ class UserInventoryListWidget extends StatelessWidget {
                     : Container()
               ],
             )),
+        Container(
+          width: 1,
+          color: Colors.white,
+        ),
       ],
     );
     // Card(

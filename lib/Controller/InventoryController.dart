@@ -32,6 +32,25 @@ class InventoryController extends GetxController {
   var userinventorylist = List<assign.Datum>().obs;
   var inventorystatuslist = List<status.Datum>().obs;
   var inventoryhistorylist = List<status.Datum>().obs;
+  @override
+  void onInit() {
+    print("onInit");
+
+    super.onInit();
+  }
+
+  @override
+  void refresh() {
+    print("refresh");
+
+    super.refresh();
+  }
+
+  @override
+  void onClose() {
+    print("onClose");
+    super.onClose();
+  }
 
   void createinventory(
       {String id,
@@ -129,7 +148,7 @@ class InventoryController extends GetxController {
     }
   }
 
-  void acceptinventory(String inventoryid) async {
+  void acceptinventory(String inventoryid, int position) async {
     try {
       isLoading(true);
       var res = await RequestCall.acceptinventory(inventoryid);
@@ -137,7 +156,8 @@ class InventoryController extends GetxController {
         accept.value = res;
         if (accept.value.succes) {
           Fluttertoast.showToast(msg: accept.value.message);
-          Get.to(() => UserInventory());
+          userinventorylist.removeAt(position);
+          // Get.to(() => UserInventory());
         } else {
           Fluttertoast.showToast(msg: accept.value.message);
         }

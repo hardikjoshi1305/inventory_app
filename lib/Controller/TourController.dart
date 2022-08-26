@@ -4,6 +4,7 @@ import 'package:get/state_manager.dart';
 import 'package:inventory_management/Model/CreateExpenseResponse.dart';
 import 'package:inventory_management/Model/CreateTourResponse.dart';
 import 'package:inventory_management/Model/FinalDignoseResponse.dart';
+import 'package:inventory_management/Model/GetRemarkResponse.dart';
 import 'package:inventory_management/Model/InventorylistResponse.dart';
 import 'package:inventory_management/Model/ServiceReportResponse.dart';
 import 'package:inventory_management/Model/TourRemarkResponse.dart';
@@ -20,9 +21,15 @@ class TourController extends GetxController {
   var usertourdetails = UserTourDetailsResponse().obs;
   var createexpensedata = CreateExpenseResponse().obs;
   var tourremarkdata = TourRemarkResponse().obs;
+  var getremarkdata = GetRemarkResponse().obs;
   var finaldignosedata = FinalDignoseResponse().obs;
   var servicereportdata = ServiceReportResponse().obs;
   var tourhistorydata = List<history.Datum>().obs;
+  @override
+  void onClose() {
+    Get.delete<TourController>();
+    super.onClose();
+  }
 
   void creattour({String tourname, String problem, String city}) async {
     try {
@@ -111,12 +118,14 @@ class TourController extends GetxController {
 
   void createremark({
     String tour_id,
+    String remarkid,
     String dailyremark,
   }) async {
     try {
       isLoading(true);
       var res = await RequestCall.createremark(
         tour_id: tour_id,
+        remarkid: remarkid,
         remark: dailyremark,
       );
       if (res != null) {
@@ -180,6 +189,28 @@ class TourController extends GetxController {
           Fluttertoast.showToast(
               msg: servicereportdata.value.message.toString());
         }
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  void getremark(String tour_id) async {
+    try {
+      isLoading(true);
+      var res = await RequestCall.getdailyremark(
+        tour_id: tour_id,
+      );
+      if (res != null) {
+        getremarkdata.value = res;
+        if (getremarkdata.value.succes) {
+          Fluttertoast.showToast(msg: "Success");
+          // Get.to(HomeScreen());
+        } else {
+          Fluttertoast.showToast(msg: getremarkdata.value.message.toString());
+        }
+      } else {
+        getremarkdata.value = res;
       }
     } finally {
       isLoading(false);

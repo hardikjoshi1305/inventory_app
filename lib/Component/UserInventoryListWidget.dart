@@ -12,7 +12,7 @@ import '../Views/Inventory/ReturnInventory.dart';
 
 class UserInventoryListWidget extends StatelessWidget {
   final Datum UserModel;
-  final String usertype;
+  int usertype;
 
   UserInventoryListWidget({this.UserModel, this.usertype});
 
@@ -426,9 +426,8 @@ class UserInventoryListWidget extends StatelessWidget {
 
   callacceptapi(String inventoryid) async {
     InventoryController inventoryController = Get.find();
-
     await Future.delayed(Duration.zero);
-    inventoryController.acceptinventory(inventoryid);
+    inventoryController.acceptinventory(inventoryid, usertype);
   }
 
   void callreturnapi(Datum userModel) async {
@@ -436,7 +435,8 @@ class UserInventoryListWidget extends StatelessWidget {
   }
 
   void viewimage(String photo) {
-    Get.to(() => Imagedisplay(), arguments: photo);
+    print("photo" + photo);
+    Get.to(() => Imagedisplay(imgurl: photo));
   }
   // void callreturnapi(Datum userModel)async {
   //   InventoryController inventoryController = Get.put(InventoryController());

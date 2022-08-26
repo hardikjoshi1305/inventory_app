@@ -21,6 +21,7 @@ import 'package:inventory_management/Model/ServiceReportResponse.dart';
 import 'package:inventory_management/Model/TourRemarkResponse.dart';
 import 'package:inventory_management/Model/UserTourDetailsResponse.dart';
 import 'package:inventory_management/Model/UserlistResponse.dart' as user;
+import 'package:inventory_management/Model/UserNameList.dart' as name;
 import 'package:inventory_management/Model/PendingResponse.dart' as pending;
 import 'package:inventory_management/Model/AssignInventoryResponse.dart'
     as assign;
@@ -41,6 +42,7 @@ import 'package:inventory_management/Utility/SharedPreferenceHelper.dart';
 import 'package:inventory_management/Views/Users/CreateUser.dart';
 
 import '../Model/AddInventoryResponse.dart';
+import '../Model/GetRemarkResponse.dart';
 
 class RequestCall {
   static var client = http.Client();
@@ -122,7 +124,7 @@ class RequestCall {
       {String tour_id, String service_report}) async {
     var req = http.MultipartRequest(
         "POST", Uri.parse('${BASEURL}createtourservicereport'));
-// print("cretattt$req");
+    print("cretattt$service_report");
 
     req.fields.addAll({'tour_id': tour_id});
     req.files.add(
@@ -134,6 +136,8 @@ class RequestCall {
     var json = await http.Response.fromStream(response);
     if (response.statusCode == 200) {
       var castsResp = serviceReportResponseFromJson(json.body);
+      print("cretattt$json.body");
+
       if (castsResp.succes) {
         return castsResp;
       } else {
@@ -155,7 +159,9 @@ class RequestCall {
 
     req.fields.addAll(
         {'tour_id': tour_id, 'expenses_name': expenses_name, 'amount': amount});
-    req.files.add(await http.MultipartFile.fromPath('photo', photo));
+    if (photo != null && photo != "") {
+      req.files.add(await http.MultipartFile.fromPath('photo', photo));
+    }
 
     req.headers.addAll(authHeader);
 
@@ -173,8 +179,13 @@ class RequestCall {
     }
   }
 
-  static Future createremark({String tour_id, String remark}) async {
+  static Future createremark(
+      {String tour_id, String remarkid, String remark}) async {
+    print("remark" + remark);
+    print("remarkid" + remarkid);
+
     final body = jsonEncode({
+      "id": remarkid,
       "tour_id": tour_id,
       "dailyremark": remark,
       // "status": "Pending",
@@ -183,6 +194,7 @@ class RequestCall {
         headers: authHeader, body: body);
     if (response.statusCode == 200) {
       var json = response.body;
+      print("dadai" + json.toString());
       var castsResp = tourRemarkResponseFromJson(json);
       return castsResp;
     } else {
@@ -377,6 +389,30 @@ class RequestCall {
       print("userlist" + response.body.toString());
 
       var castsResp = user.userlistResponseFromJson(json);
+      if (castsResp.succes) {
+        return castsResp.data;
+      } else {
+        Fluttertoast.showToast(
+            msg: castsResp.message, toastLength: Toast.LENGTH_LONG);
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static Future<List<name.Datum>> fetchusernamelist() async {
+    var response = await client
+        .get(BASEURL + 'users', headers: authHeader)
+        .catchError((error) {
+      print("error" + error.toString());
+    });
+    ;
+    if (response.statusCode == 200) {
+      var json = response.body;
+      print("userlist" + response.body.toString());
+
+      var castsResp = name.userNameResponseFromJson(json);
       if (castsResp.succes) {
         return castsResp.data;
       } else {
@@ -664,8 +700,11 @@ class RequestCall {
     var body = jsonEncode({
       "user_id": userid,
     });
+    print("reds" + userid);
+
     var response = await client.post(BASEURL + 'expenselist',
         headers: authHeader, body: body);
+
     if (response.statusCode == 200) {
       var json = response.body;
       print("reds" + json.toString());
@@ -698,6 +737,34 @@ class RequestCall {
         Fluttertoast.showToast(msg: castsResp.message);
         return null;
       }
+    } else {
+      return null;
+    }
+  }
+
+  static getdailyremark({String tour_id}) async {
+    final body = jsonEncode({
+      "tour_id": tour_id,
+      // "status": "Pending",
+    });
+    var response = await client.post(BASEURL + "dailyremark",
+        headers: authHeader, body: body);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      print("dadai" + json.toString());
+      var finaldata = jsonDecode(json);
+      print("res" + finaldata.toString());
+      // return null;
+      if ((finaldata as Map)['succes']) {
+        var castsResp = getRemarkResponseFromJson(json);
+        return castsResp;
+      } else {
+        // Fluttertoast.showToast(msg: (finaldata as Map)['message']);
+        return null;
+      }
+      var castsResp = getRemarkResponseFromJson(json);
+
+      return castsResp;
     } else {
       return null;
     }

@@ -4,6 +4,7 @@ import 'package:inventory_management/Controller/PendingController.dart';
 import 'package:inventory_management/Utility/CONSTANT.dart';
 import 'package:inventory_management/Utility/SharedPreferenceHelper.dart';
 import 'package:inventory_management/Utility/app_colors.dart';
+import 'package:inventory_management/Views/Inventory/UserCurrentInventory.dart';
 import 'package:inventory_management/Views/Tour/CreatTourDetail.dart';
 
 import '../../Utility/CommandMethod.dart';
@@ -47,25 +48,57 @@ class _PendingState extends State<Pending> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Expanded(
-              child: Obx(() => (upcomingController.isLoading.value)
-                  ? Center(child: CircularProgressIndicator())
-                  : upcomingController.pending.length > 0?
-              Container(
-                      child: ListView(
-                          children: List.generate(
-                              upcomingController.pending.length, (index) {
-                        return Container(
-                            child: GestureDetector(
-                                onTap: () {
-                                  Get.to(() => TourDetailSubmission(),
-                                      arguments: upcomingController
-                                          .pending[index].id
-                                          .toString());
-                                  // CreateTourDetail());
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Card(
+              child: Obx(() => Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: <Widget>[
+                      Opacity(
+                        opacity:
+                            1, // You can reduce this when loading to give different effect
+                        child: AbsorbPointer(
+                          absorbing: upcomingController.isLoading.value,
+                          child: screenbody(),
+                        ),
+                      ),
+                      Opacity(
+                        opacity: upcomingController.isLoading.value ? 1.0 : 0,
+                        child: CircularProgressIndicator(),
+                      ),
+                    ],
+                  )))
+        ],
+      ),
+    );
+  }
+
+  Widget screenbody() {
+    return upcomingController.pending.length > 0
+        ? Container(
+            child: ListView(
+                children:
+                    List.generate(upcomingController.pending.length, (index) {
+              return Container(
+                  child: GestureDetector(
+                      onTap: () {
+                        Get.to(() => TourDetailSubmission(),
+                            arguments: upcomingController.pending[index].id
+                                .toString());
+                        // CreateTourDetail());
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Card(
+                            elevation: 7,
+                            margin:
+                                EdgeInsets.only(top: 16, left: 16, right: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Padding(
+                                padding: const EdgeInsets.all(17.0),
+                                child: Column(
+                                  children: [
+                                    Card(
+                                      color: Colors.orange,
                                       elevation: 7,
                                       margin: EdgeInsets.only(
                                           top: 16, left: 16, right: 16),
@@ -73,116 +106,92 @@ class _PendingState extends State<Pending> {
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: Padding(
-                                        padding: const EdgeInsets.all(17.0),
-                                        child: Column(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          width: double.infinity,
+                                          height: 25,
+                                          alignment:
+                                              AlignmentDirectional.center,
+                                          child: Text(
+                                            "Pending",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 15,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                           Card(
-                                             color: Colors.orange,
-                                             elevation: 7,
-                                             margin: EdgeInsets.only(
-                                                 top: 16, left: 16, right: 16),
-                                             shape: RoundedRectangleBorder(
-                                               borderRadius: BorderRadius.circular(10),
-                                             ),
-                                             child:  Padding(
-                                               padding: const EdgeInsets.all(8.0),
-                                               child: Container(
-                                                 width: double.infinity,
-                                                 height: 25,
-                                                 alignment: AlignmentDirectional.center,
-                                                 child: Text("Pending",style: TextStyle(
-                                                     fontSize: 20,
-                                                     color: Colors.white,
-                                                     fontWeight: FontWeight.bold
-                                                 ),),
-                                               ),
-                                             ),
-                                           ),
-                                            Container(
-                                              height: 15,
+                                            Text(
+                                              "Tour Name ",
+                                              style: Pendingitemtextstyle,
                                             ),
-                                            Row(
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                              children: [
-
-                                                Column(
-                                                  crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                                  children: [
-
-                                                    Text(
-                                                      "Tour Name ",
-                                                      style: Pendingitemtextstyle,
-                                                    ),
-                                                    Text("City ",
-                                                        style:
-                                                        Pendingitemtextstyle),
-                                                    Text("Problem ",
-                                                        style:
-                                                        Pendingitemtextstyle),
-                                                    Text("Date ",
-                                                        style: Pendingitemtextstyle)
-                                                  ],
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    Text("  :  ",
-                                                        style:
-                                                        Pendingitemtextstyle),
-                                                    Text("  :  ",
-                                                        style:
-                                                        Pendingitemtextstyle),
-                                                    Text("  :  ",
-                                                        style:
-                                                        Pendingitemtextstyle),
-                                                    Text("  :  ",
-                                                        style: Pendingitemtextstyle)
-                                                  ],
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    Text(
-                                                        upcomingController
-                                                            .pending[index]
-                                                            .tourname,
-                                                        style:
-                                                        Pendingitemtextstyle),
-                                                    Text(
-                                                        upcomingController
-                                                            .pending[index].city,
-                                                        style:
-                                                        Pendingitemtextstyle),
-                                                    Text(
-                                                        upcomingController
-                                                            .pending[index]
-                                                            .errorname!= null?upcomingController
-                                                            .pending[index]
-                                                            .errorname:"-",
-                                                        style:
-                                                        Pendingitemtextstyle),
-                                                    Text(
-                                                        getdateformate(
-                                                            upcomingController
-                                                                .pending[index]
-                                                                .createdAt),
-                                                        style: Pendingitemtextstyle)
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
+                                            Text("City ",
+                                                style: Pendingitemtextstyle),
+                                            Text("Problem ",
+                                                style: Pendingitemtextstyle),
+                                            Text("Date ",
+                                                style: Pendingitemtextstyle)
                                           ],
-                                        )
-
-                                      )),
-                                )));
-                      })),
-                    ):
-
-              nodatafound()
-              ))
-        ],
-      ),
-    );
+                                        ),
+                                        Column(
+                                          children: [
+                                            Text("  :  ",
+                                                style: Pendingitemtextstyle),
+                                            Text("  :  ",
+                                                style: Pendingitemtextstyle),
+                                            Text("  :  ",
+                                                style: Pendingitemtextstyle),
+                                            Text("  :  ",
+                                                style: Pendingitemtextstyle)
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Text(
+                                                upcomingController
+                                                    .pending[index].tourname,
+                                                style: Pendingitemtextstyle),
+                                            Text(
+                                                upcomingController
+                                                    .pending[index].city,
+                                                style: Pendingitemtextstyle),
+                                            Text(
+                                                upcomingController
+                                                            .pending[index]
+                                                            .errorname !=
+                                                        null
+                                                    ? upcomingController
+                                                        .pending[index]
+                                                        .errorname
+                                                    : "-",
+                                                style: Pendingitemtextstyle),
+                                            Text(
+                                                getdateformate(
+                                                    upcomingController
+                                                        .pending[index]
+                                                        .createdAt),
+                                                style: Pendingitemtextstyle)
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ))),
+                      )));
+            })),
+          )
+        : nodatafound();
   }
 }

@@ -102,7 +102,7 @@ class _UserTourDetailsState extends State<UserTourDetails> {
                           ? ListView.builder(
                               shrinkWrap: true,
                               itemCount: tourController.usertourdetails.value
-                                  .data.dailyremark.length,
+                                  .data.servicereport.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return Card(
                                   elevation: 7,
@@ -129,13 +129,13 @@ class _UserTourDetailsState extends State<UserTourDetails> {
                                         ),
                                       ),
                                       onTap: () {
-                                        Get.to(() => Imagedisplay(),
-                                            arguments: tourController
+                                        Get.to(() => Imagedisplay(
+                                            imgurl: tourController
                                                 .usertourdetails
                                                 .value
                                                 .data
                                                 .servicereport[index]
-                                                .serviceReport);
+                                                .serviceReport));
                                       }),
                                 );
                               },

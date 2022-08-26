@@ -326,19 +326,38 @@ class _UserInventoryState extends State<UserInventory> {
                                           .isLoading.value)
                                       ? Center(
                                           child: CircularProgressIndicator())
-                                      : Column(
-                                          children: [
-                                            ...inventoryController
-                                                .userinventorylist
-                                                .map((element) {
-                                              print("userlist" + element.name);
-                                              return UserInventoryListWidget(
-                                                UserModel: element,
-                                                usertype: "user",
-                                              );
-                                            }).toList()
-                                          ],
-                                        )),
+                                      : inventoryController
+                                                  .userinventorylist.length >
+                                              0
+                                          ? Column(
+                                              children: [
+                                                ...inventoryController
+                                                    .userinventorylist
+                                                    .map((element) {
+                                                  print("userlist" +
+                                                      element.name);
+                                                  return UserInventoryListWidget(
+                                                    UserModel: element,
+                                                    usertype:
+                                                        inventoryController
+                                                            .userinventorylist
+                                                            .indexOf(element),
+                                                  );
+                                                }).toList()
+                                              ],
+                                            )
+                                          : Container(
+                                              padding: EdgeInsets.all(20),
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                'No Data Found',
+                                                textAlign: TextAlign.start,
+                                                style: TextStyle(
+                                                  fontSize: 19,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            )),
                                 ),
 
                                 // ListView.builder(

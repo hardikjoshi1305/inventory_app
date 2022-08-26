@@ -329,7 +329,7 @@ class _InventoryState extends State<Inventory> {
                                           children: [
                                             ...inventoryController.inventorylist
                                                 .map((element) {
-                                              print("userlist" + element.name);
+                                              // print("userlist" + element.name);
                                               return InventoryListWidget(
                                                   UserModel: element,
                                                   usertype: "admin");

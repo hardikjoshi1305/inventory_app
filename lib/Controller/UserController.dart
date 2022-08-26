@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:inventory_management/Model/CreateUserResponse.dart';
 import 'package:inventory_management/Model/UserlistResponse.dart';
+import 'package:inventory_management/Model/UserNameList.dart' as namelist;
 import 'package:inventory_management/Model/casts.dart';
 import 'package:inventory_management/Network/RequestCall.dart';
 import 'package:inventory_management/Utility/CONSTANT.dart';
@@ -16,6 +17,12 @@ class UserController extends GetxController {
   var isLoading = false.obs;
   var login = CreateUserResponse().obs;
   var userlist = List<Datum>().obs;
+  var usernamelist = List<namelist.Datum>().obs;
+  @override
+  void onClose() {
+    Get.delete<UserController>();
+    super.onClose();
+  }
 
   void createuser({
     String name,
@@ -61,6 +68,24 @@ class UserController extends GetxController {
       if (res != null) {
         userlist.assignAll(res);
         if (userlist.length > 0) {
+          Fluttertoast.showToast(msg: "Users Retrieve Successfully");
+          isLoading(false);
+        } else {
+          Fluttertoast.showToast(msg: "No User Found");
+        }
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  void fetchusernamelist() async {
+    try {
+      isLoading(true);
+      var res = await RequestCall.fetchusernamelist();
+      if (res != null) {
+        usernamelist.assignAll(res);
+        if (usernamelist.length > 0) {
           Fluttertoast.showToast(msg: "Users Retrieve Successfully");
           isLoading(false);
         } else {

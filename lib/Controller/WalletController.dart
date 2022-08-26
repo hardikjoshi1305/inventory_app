@@ -47,12 +47,13 @@ class WalletController extends GetxController {
     }
   }
 
-  void acceptreject(String is_approved, String expense_id) async {
+  void acceptreject(String is_approved, String expense_id, int position) async {
     try {
       isLoading(true);
-      var res = await RequestCall.acceptreject(is_approved,expense_id);
+      var res = await RequestCall.acceptreject(is_approved, expense_id);
       if (res != null) {
         Fluttertoast.showToast(msg: "Done");
+        expensehistory.value[position].isApproved = is_approved;
         // Get.to(()=>ExpenseHistory());
         // Get.to(HomeScreen());
       }

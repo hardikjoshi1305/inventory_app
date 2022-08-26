@@ -334,7 +334,9 @@ class _UserCurrentInventoryState extends State<UserCurrentInventory> {
                                               print("userlist" + element.name);
                                               return UserInventoryListWidget(
                                                 UserModel: element,
-                                                usertype: "user",
+                                                usertype: inventoryController
+                                                    .userinventorylist
+                                                    .indexOf(element),
                                               );
                                             }).toList()
                                           ],

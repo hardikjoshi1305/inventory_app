@@ -100,13 +100,18 @@ Widget UserAppBar() {
       //   },
       // ),
       Container(
-        decoration: BoxDecoration(color: AppColors.darkBlue),
+        margin: EdgeInsets.only(right: 20, top: 6, bottom: 6),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: Colors.blue,
+            primary: Colors.blueGrey[300],
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
           ),
           onPressed: () {
             Get.to(() => Createtrip());
+            Get.delete<UserController>();
           },
           child: Text("Create Tour", style: TextStyle(color: Colors.white)),
         ),

@@ -186,7 +186,8 @@ class _ReturnInventoryState extends State<ReturnInventory> {
                                             ],
                                           )
                                         ]),
-                                child: Text('Select Status')),
+                                child: Text('Select Status')
+                            ),
                             // Expanded(child: Text('')),
                             Container(
                               margin: EdgeInsets.only(top: 10),
@@ -200,9 +201,30 @@ class _ReturnInventoryState extends State<ReturnInventory> {
                                       imgpatth = image.absolute.path;
                                     } catch (exception) {
                                       print("object" + exception.toString());
+                                      Fluttertoast.showToast(msg:exception.toString() );
                                     }
                                   },
-                                  child: Text('Upload Image')),
+                                  child: Row(mainAxisAlignment:MainAxisAlignment.center,mainAxisSize: MainAxisSize.min,children: [Icon(Icons.photo),Text('Gallary')],)),
+                            ),
+                            Container(
+                              margin: EdgeInsets.all(6),
+                              child: Text("OR"),
+                            ),
+                            Container(
+                              child: ElevatedButton(
+                                  onPressed: () async {
+                                    try {
+                                      var image = await ImagePicker.pickImage(
+                                          source: ImageSource.camera);
+                                      // print("object" + image.toString());
+                                      print("object" + image.absolute.path);
+                                      imgpatth = image.absolute.path;
+                                    } catch (exception) {
+                                      print("object" + exception.toString());
+                                      Fluttertoast.showToast(msg:exception.toString() );
+                                    }
+                                  },
+                                  child: Row(mainAxisAlignment:MainAxisAlignment.center,mainAxisSize: MainAxisSize.min,children: [Icon(Icons.camera_alt),Text('Camera')],)),
                             ),
 
                             Container(

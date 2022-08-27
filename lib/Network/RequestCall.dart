@@ -775,7 +775,7 @@ class RequestCall {
   static Future<List<adminreturninventory.Datum>>
       fetchadminreturninventorylist() async {
     var response = await client
-        .get(BASEURL + 'inventorylist', headers: authHeader)
+        .get(BASEURL + 'returninventory', headers: authHeader)
         .catchError((error) {
       print("error" + error.toString());
     });

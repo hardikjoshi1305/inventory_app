@@ -41,83 +41,83 @@ class UserInventoryListWidget extends StatelessWidget {
           width: 1,
           color: Colors.white,
         ),
-        bottomtitle(100.0,  this.UserModel.pxNo.toString()),
+        bottomtitle(100.0, this.UserModel.pxNo.toString()),
         Container(
           width: 1,
           color: Colors.white,
         ),
-        bottomtitle(100.0,   this.UserModel.machine.toString()),
+        bottomtitle(100.0, this.UserModel.machine.toString()),
         Container(
           width: 1,
           color: Colors.white,
         ),
-        bottomtitle(100.0,  this.UserModel.location.toString()),
+        bottomtitle(100.0, this.UserModel.location.toString()),
         Container(
           width: 1,
           color: Colors.white,
         ),
-        bottomtitle(100.0,  this.UserModel.remark == null ? "-" : this.UserModel.remark.toString()),
+        bottomtitle(
+            100.0,
+            this.UserModel.remark == null
+                ? "-"
+                : this.UserModel.remark.toString()),
         Container(
           width: 1,
           color: Colors.white,
         ),
-        bottomtitle(100.0,   this.UserModel.statusId != null ? this.UserModel.statusId : "-"),
+        bottomtitle(100.0,
+            this.UserModel.statusId != null ? this.UserModel.statusId : "-"),
         Container(
           width: 1,
           color: Colors.white,
         ),
-        bottomtitle(100.0,  this.UserModel.remark == null ? "-" : this.UserModel.remark.toString()),
         Container(
-          width: 1,
-          color: Colors.white,
-        ),
-        Container(
-    width: 130,
-    height: 40,
-    alignment: AlignmentDirectional.center,
-    color: AppColors.offWhite,
-    padding: const EdgeInsets.all(12.0),
-    child: Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: [
-      this.UserModel.status == "0"
-          ? Align(
-          alignment: AlignmentDirectional.center,
-          child: Container(
+            width: 130,
+            height: 40,
             alignment: AlignmentDirectional.center,
-            margin: EdgeInsets.all(4),
-            decoration: BoxDecoration(color: AppColors.darkBlue),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
-              ),
-              onPressed: () {
-                callacceptapi(UserModel.sendPartsId.toString());
-              },
-              child: Text("Accept",
-                  style: TextStyle(color: Colors.white)),
-            ),
-          ))
-          : Align(
-          alignment: AlignmentDirectional.center,
-          child: Container(
-            alignment: AlignmentDirectional.center,
-            margin: EdgeInsets.all(4),
-            decoration: BoxDecoration(color: AppColors.darkBlue),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.red,
-              ),
-              onPressed: () {
-                callreturnapi(UserModel);
-              },
-              child: Text("Return",
-                  style: TextStyle(color: Colors.white)),
-            ),
-          )),
-    ],
-    )),
+            color: AppColors.offWhite,
+            padding: const EdgeInsets.all(2.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                this.UserModel.status == "0"
+                    ? Align(
+                        alignment: AlignmentDirectional.center,
+                        child: Container(
+                          alignment: AlignmentDirectional.center,
+                          margin: EdgeInsets.all(4),
+                          decoration: BoxDecoration(color: AppColors.darkBlue),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.blue,
+                            ),
+                            onPressed: () {
+                              callacceptapi(UserModel.sendPartsId.toString());
+                            },
+                            child: Text("Accept",
+                                style: TextStyle(color: Colors.white)),
+                          ),
+                        ))
+                    : Align(
+                        alignment: AlignmentDirectional.center,
+                        child: Container(
+                          alignment: AlignmentDirectional.center,
+                          margin: EdgeInsets.all(4),
+                          decoration: BoxDecoration(color: AppColors.darkBlue),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.red,
+                            ),
+                            onPressed: () {
+                              callreturnapi(UserModel);
+                            },
+                            child: Text("Return",
+                                style: TextStyle(color: Colors.white)),
+                          ),
+                        )),
+              ],
+            )),
         Container(
           width: 1,
           color: Colors.white,

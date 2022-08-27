@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_management/Model/WalletHistoryResponse.dart';
+import 'package:inventory_management/Utility/CommandMethod.dart';
 
 class WalletListWidget extends StatelessWidget {
   final Datum walletmodel;
@@ -18,7 +19,7 @@ class WalletListWidget extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Icon(
               Icons.circle,
-              color: Colors.blue,
+              color: Colors.blueGrey,
               size: 28,
             ),
           ),
@@ -39,7 +40,7 @@ class WalletListWidget extends StatelessWidget {
                 Text(
                   walletmodel.createdAt.toString() == null
                       ? "-"
-                      : walletmodel.createdAt.toString(),
+                      : getdateformate2(walletmodel.createdAt),
                   // "13 May,2019 01:30 PM",
                   style: TextStyle(color: Colors.grey, fontSize: 15),
                 )
@@ -51,22 +52,22 @@ class WalletListWidget extends StatelessWidget {
               child: walletmodel.creditAmount == null
                   ? Container(
                       alignment: AlignmentDirectional.centerEnd,
-                      color: Colors.red,
+                      // color: Colors.red,
                       child: Text(
                         walletmodel.debitAmount == null
                             ? "-"
-                            : walletmodel.debitAmount+" \u{20B9}",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                            : walletmodel.debitAmount + " \u{20B9}",
+                        style: TextStyle(color: Colors.red, fontSize: 20),
                       ),
                     )
                   : Container(
                       alignment: AlignmentDirectional.centerEnd,
-                      color: Colors.green,
+                      // color: Colors.green,
                       child: Text(
                         walletmodel.creditAmount == null
                             ? "-"
-                            : walletmodel.creditAmount+" \u{20B9}",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                            : walletmodel.creditAmount + " \u{20B9}",
+                        style: TextStyle(color: Colors.green, fontSize: 20),
                       ),
                     )),
         ],

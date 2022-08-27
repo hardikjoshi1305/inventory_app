@@ -29,6 +29,7 @@ class InventoryController extends GetxController {
   var receive = ReceivePartResponse().obs;
   var accept = acce.AcceptInventoryResponse().obs;
   var inventorylist = List<inventory.Datum>().obs;
+  var adminreturninventorylist = List<inventory.Datum>().obs;
   var userinventorylist = List<assign.Datum>().obs;
   var inventorystatuslist = List<status.Datum>().obs;
   var inventoryhistorylist = List<status.Datum>().obs;
@@ -210,6 +211,23 @@ class InventoryController extends GetxController {
       print("error :" + exception.toString());
     } finally {
       // isLoading(false);
+    }
+  }
+
+  void fetchadminreturninventorylist() async {
+    try {
+      isLoading(true);
+      var res = await RequestCall.fetchadminreturninventorylist();
+      if (res != null) {
+        adminreturninventorylist.assignAll(res);
+        if (adminreturninventorylist.length > 0) {
+          Fluttertoast.showToast(msg: "inventorylist Retrieve Successfully");
+        } else {
+          Fluttertoast.showToast(msg: "No Data Found");
+        }
+      }
+    } finally {
+      isLoading(false);
     }
   }
 }

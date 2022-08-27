@@ -6,6 +6,7 @@ import 'package:inventory_management/Views/Inventory/InventoryHistory.dart';
 import 'package:inventory_management/Views/Inventory/SendInventory.dart';
 import 'package:inventory_management/Views/Pending/Pending.dart';
 import 'package:inventory_management/Views/Tour/TourList.dart';
+// import 'package:intl/intl.dart';
 
 import '../Views/Completed Tour/Completed.dart';
 import '../Views/Home/HomeScreen.dart';
@@ -27,6 +28,18 @@ getdateformate(DateTime dateTime) {
       dateTime.month.toString() +
       "-" +
       dateTime.year.toString();
+}
+
+getdateformate2(DateTime dateTime) {
+  return dateTime.day.toString() +
+      "-" +
+      dateTime.month.toString() +
+      "-" +
+      dateTime.year.toString() +
+      " " +
+      dateTime.hour.toString() +
+      ":" +
+      dateTime.minute.toString();
 }
 
 MaterialColor createMaterialColor(Color color) {
@@ -114,7 +127,7 @@ Widget UserDrawer() {
           createDrawerHeader(),
           createDrawerBodyItem(
               icon: Icons.pending_actions,
-              text: 'Pending',
+              text: 'Pending Tour',
               onTap: () {
                 Get.to(() => Dashboard());
                 // Navigator.of(context).pop();
@@ -122,7 +135,7 @@ Widget UserDrawer() {
               }),
           createDrawerBodyItem(
               icon: Icons.cloud_done_rounded,
-              text: 'Completed',
+              text: 'Completed Tour',
               onTap: () {
                 Get.to(() => Completed());
 
@@ -200,7 +213,7 @@ Widget AdminDrawer() {
               icon: Icons.pending_actions,
               text: 'Users',
               onTap: () {
-                Get.to(() => HomeScreen());
+                Get.offNamed("/HomeScreen");
                 // Navigator.of(context).pop();
                 // Navigator.pushNamed(context, pageRoutes.landscape);
               }),
@@ -208,7 +221,7 @@ Widget AdminDrawer() {
               icon: Icons.cloud_done_rounded,
               text: 'Inventory',
               onTap: () {
-                Get.to(() => Inventory());
+                Get.offNamed("/Inventory");
 
                 // _permissionStatus?
                 // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
@@ -217,7 +230,16 @@ Widget AdminDrawer() {
               icon: Icons.send,
               text: 'Send Inventory',
               onTap: () {
-                Get.to(() => SendInventory());
+                Get.offNamed("/SendInventory");
+
+                // _permissionStatus?
+                // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
+              }),
+          createDrawerBodyItem(
+              icon: Icons.assignment_returned,
+              text: 'Return Inventory',
+              onTap: () {
+                Get.offNamed("/AdminReturnInventory");
 
                 // _permissionStatus?
                 // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
@@ -226,7 +248,7 @@ Widget AdminDrawer() {
               icon: Icons.history,
               text: 'Inventory History',
               onTap: () {
-                Get.to(() => InventoryHistory());
+                Get.offNamed("/InventoryHistory");
 
                 // _permissionStatus?
                 // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
@@ -235,7 +257,7 @@ Widget AdminDrawer() {
               icon: Icons.today,
               text: 'Tour History',
               onTap: () {
-                Get.to(() => TourList());
+                Get.offNamed("/TourList");
 
                 // _permissionStatus?
                 // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
@@ -244,7 +266,7 @@ Widget AdminDrawer() {
               icon: Icons.currency_rupee_sharp,
               text: 'Expense History',
               onTap: () {
-                Get.to(() => ExpenseHistory());
+                Get.offNamed("/ExpenseHistory");
 
                 // _permissionStatus?
                 // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
@@ -385,6 +407,27 @@ Widget bottomtitle(double width, String name) {
   return Container(
       width: width,
       height: 40,
+      alignment: AlignmentDirectional.center,
+      color: AppColors.offWhite,
+      padding: const EdgeInsets.all(12.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            name,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
+          ),
+        ],
+      ));
+}
+
+Widget bottomtitle2(double width, String name, double height) {
+  return Container(
+      width: width,
+      height: height,
       alignment: AlignmentDirectional.center,
       color: AppColors.offWhite,
       padding: const EdgeInsets.all(12.0),

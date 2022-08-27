@@ -72,7 +72,15 @@ class InventoryListWidget extends StatelessWidget {
           width: 1,
           color: Colors.white,
         ),
-
+        bottomtitle(
+            100.0,
+            this.UserModel.price == null
+                ? "-"
+                : this.UserModel.price + " \u{20B9}"),
+        Container(
+          width: 1,
+          color: Colors.white,
+        ),
         // Container(
         //   width: 120,
         //   height: 40,

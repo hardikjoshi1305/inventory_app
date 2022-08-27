@@ -85,11 +85,6 @@ class _UserlistState extends State<Userlist> {
                         width: 1,
                         color: Colors.white,
                       ),
-                      toptitle(200.0, "Device ID"),
-                      Container(
-                        width: 1,
-                        color: Colors.white,
-                      ),
                       toptitle(200.0, "Mobile Number"),
                       Container(
                         width: 1,

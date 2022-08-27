@@ -84,8 +84,7 @@ class _InventoryState extends State<Inventory> {
                       child: CircularProgressIndicator(),
                     ),
                   ],
-                )
-            )));
+                ))));
   }
 
   Widget screenbody() {
@@ -144,8 +143,12 @@ class _InventoryState extends State<Inventory> {
                           width: 1,
                           color: Colors.white,
                         ),
+                        toptitle(100.0, "Price"),
+                        Container(
+                          width: 1,
+                          color: Colors.white,
+                        ),
                         toptitle(130.0, "Action"),
-
                       ],
                     ),
                     Expanded(

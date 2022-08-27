@@ -13,6 +13,19 @@ class SearchController extends GetxController {
   var login = send.SendPartResponse().obs;
   var search = List<Datum>().obs;
 
+  @override
+  void onClose() {
+    Get.delete<SearchController>();
+    print("onClose");
+
+    super.onClose();
+  }
+
+  @override
+  void dispose() {
+    print("dispose");
+  }
+
   Future<List<Datum>> searchdata(String query) async {
     if (query != "") {
       print("query" + query);

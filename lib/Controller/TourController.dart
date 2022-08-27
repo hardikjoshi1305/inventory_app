@@ -209,8 +209,6 @@ class TourController extends GetxController {
         } else {
           Fluttertoast.showToast(msg: getremarkdata.value.message.toString());
         }
-      } else {
-        getremarkdata.value = res;
       }
     } finally {
       isLoading(false);

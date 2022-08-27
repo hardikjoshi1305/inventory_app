@@ -13,6 +13,8 @@ import 'package:inventory_management/Model/ExpenseListDetailsResponse.dart';
 import 'package:inventory_management/Model/FinalDignoseResponse.dart';
 import 'package:inventory_management/Model/InventorylistResponse.dart'
     as inventory;
+import 'package:inventory_management/Model/InventorylistResponse.dart'
+    as adminreturninventory;
 import 'package:inventory_management/Model/LoginResponse.dart';
 import 'package:inventory_management/Model/PendingResponse.dart';
 import 'package:inventory_management/Model/ReceivePartResponse.dart';
@@ -765,6 +767,29 @@ class RequestCall {
       var castsResp = getRemarkResponseFromJson(json);
 
       return castsResp;
+    } else {
+      return null;
+    }
+  }
+
+  static Future<List<adminreturninventory.Datum>>
+      fetchadminreturninventorylist() async {
+    var response = await client
+        .get(BASEURL + 'inventorylist', headers: authHeader)
+        .catchError((error) {
+      print("error" + error.toString());
+    });
+    if (response.statusCode == 200) {
+      var json = response.body;
+      print("dadad" + response.body.toString());
+
+      var castsResp = adminreturninventory.inventorylistResponseFromJson(json);
+      if (castsResp.succes) {
+        return castsResp.data;
+      } else {
+        Fluttertoast.showToast(msg: castsResp.message);
+        return null;
+      }
     } else {
       return null;
     }

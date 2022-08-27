@@ -34,7 +34,10 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
 
   @override
   void dispose() {
+    te_Remark..text = "";
     te_Remark.dispose();
+    remark = "";
+    print("dispose");
     super.dispose();
   }
 
@@ -186,8 +189,8 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
                                         style: TextStyle(
                                             height: 2.0, color: Colors.black),
                                         controller: te_Remark
-                                          ..text = tourController
-                                                      .getremarkdata.value !=
+                                          ..text = tourController.getremarkdata
+                                                      .value.data !=
                                                   null
                                               ? tourController.getremarkdata
                                                   .value.data.dailyremark

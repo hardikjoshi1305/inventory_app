@@ -35,6 +35,15 @@ class _SendInventoryState extends State<SendInventory> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    allinventory.clear();
+    allinventoryname.clear();
+    allinventoryimage.clear();
+    print("dispose");
+    super.dispose();
+  }
+
   SearchController upcomingController = Get.put(SearchController());
   UserController userController = Get.put(UserController());
   TextEditingController te_userid = TextEditingController();
@@ -47,11 +56,12 @@ class _SendInventoryState extends State<SendInventory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Send Inventory"),
-      ),
-      drawer: AdminDrawer(),
-      body: Obx(() => Stack(
+        appBar: AppBar(
+          title: Text("Send Inventory"),
+        ),
+        drawer: AdminDrawer(),
+        body: Obx(
+          () => Stack(
             fit: StackFit.loose,
             alignment: AlignmentDirectional.center,
             children: <Widget>[
@@ -68,8 +78,8 @@ class _SendInventoryState extends State<SendInventory> {
                 child: CircularProgressIndicator(),
               ),
             ],
-          )),
-    );
+          ),
+        ));
   }
 
   var showlist = false;
@@ -178,18 +188,21 @@ class _SendInventoryState extends State<SendInventory> {
             Container(
               height: 20,
             ),
+
             DropdownSearch<Datum>(
-              mode: Mode.BOTTOM_SHEET,
+              mode: Mode.DIALOG,
               showSearchBox: true,
               isFilteredOnline: true,
               dropDownButton: const Icon(
                 Icons.keyboard_arrow_down,
-                color: Colors.grey,
+                color: Colors.black,
                 size: 18,
               ),
+
               dropdownSearchDecoration: InputDecoration(
+                border: OutlineInputBorder(),
                 hintText: 'Search Inventory by Code',
-                icon: Icon(Icons.filter_list),
+                prefixIcon: Icon(Icons.search),
               ),
               dropdownBuilder: _customDropDownPrograms,
               popupItemBuilder: _customPopupItemBuilder,
@@ -205,64 +218,77 @@ class _SendInventoryState extends State<SendInventory> {
                   }
                 });
               },
-              onFind: (String filter) =>
-                  upcomingController.searchdata(filter ?? ""),
+              onFind: (String filter) => upcomingController.searchdata(filter),
               showClearButton: true,
               clearButtonBuilder: (_) => const Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(0.0),
                 child: Icon(Icons.clear, size: 17, color: Colors.black),
               ),
+              // validator: (Datum item) => item == null ? "vvvvvvv" : null,
             ),
+
             Container(
               height: 20,
             ),
+            allinventoryname.length > 0
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      toptitle(130.0, "Machine"),
+                      Container(
+                        width: 1,
+                        color: Colors.white,
+                      ),
+                      toptitle(100.0, "File"),
+                      Container(
+                        width: 1,
+                        color: Colors.white,
+                      ),
+                      toptitle(100.0, "Action"),
+                      Container(
+                        width: 1,
+                        color: Colors.white,
+                      ),
+                    ],
+                  )
+                : Container(),
 
-            ...allinventoryname.map((element) => Card(
-                  elevation: 7,
-                  margin: EdgeInsets.only(top: 6, left: 6, right: 6),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(
-                              element,
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                var index = allinventory.indexOf(element);
-
-                                return choosefile(index);
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: Icon(Icons.image,
-                                    color: AppColors.darkBlue),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                var index = allinventory.indexOf(element);
-
-                                return deleteitem(index);
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: Icon(Icons.clear, color: Colors.red),
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
+            ...allinventoryname.map((element) => Row(
+                  children: [
+                    bottomtitle(130.0, element),
+                    Container(
+                      width: 1,
+                      color: Colors.white,
                     ),
-                  ),
+                    GestureDetector(
+                      onTap: () {
+                        var index = allinventoryname.indexOf(element);
+
+                        return choosefile(index);
+                      },
+                      child: Container(
+                        color: AppColors.offWhite,
+                        height: 40,
+                        width: 100,
+                        padding: const EdgeInsets.all(2.0),
+                        child: Icon(Icons.image, color: AppColors.darkBlue),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        var index = allinventoryname.indexOf(element);
+
+                        return deleteitem(index);
+                      },
+                      child: Container(
+                        width: 100,
+                        height: 40,
+                        color: AppColors.offWhite,
+                        padding: const EdgeInsets.all(5.0),
+                        child: Icon(Icons.clear, color: Colors.red),
+                      ),
+                    )
+                  ],
                 )),
             // Obx(() =>
             // ListView(
@@ -380,10 +406,12 @@ class _SendInventoryState extends State<SendInventory> {
   }
 
   deleteitem(int index) {
+    print("delete" + index.toString());
     try {
       setState(() {
         allinventory.removeAt(index);
         allinventoryimage.removeAt(index);
+        allinventoryname.removeAt(index);
       });
     } catch (exception) {
       print("object" + exception.toString());

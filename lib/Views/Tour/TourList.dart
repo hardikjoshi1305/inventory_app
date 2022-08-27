@@ -45,6 +45,7 @@ class _TourListState extends State<TourList> {
       appBar: AppBar(
         title: Text("Tour History"),
       ),
+      drawer: AdminDrawer(),
       body: Obx(() => Stack(
             fit: StackFit.loose,
             alignment: AlignmentDirectional.center,
@@ -200,20 +201,49 @@ class _TourListState extends State<TourList> {
                       ),
                     ),
                     Obx(() => tourController.tourhistorydata.length > 0
-                        ? ListView.builder(
-                            shrinkWrap: true,
-                            padding: EdgeInsets.only(bottom: 16),
-                            itemCount: tourController.tourhistorydata.length,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (ctx, index) {
-                              var wallet = tourController.tourhistorydata
-                                  .elementAt(index);
-                              return GestureDetector(
-                                onTap: () => Get.to(() => UserTourDetails(),
-                                    arguments: wallet.id.toString()),
-                                child: TourListWidget(tourhistmodel: wallet),
-                              );
-                            })
+                        ? Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                      flex: 1, child: toptitle(100, "tour")),
+                                  Container(
+                                    width: 1,
+                                    color: Colors.white,
+                                  ),
+                                  Expanded(
+                                      flex: 1, child: toptitle(100, "Date")),
+                                  Container(
+                                    width: 1,
+                                    color: Colors.white,
+                                  ),
+                                  Expanded(
+                                      flex: 1, child: toptitle(100, "Status")),
+                                  Container(
+                                    width: 1,
+                                    color: Colors.white,
+                                  ),
+                                ],
+                              ),
+                              ListView.builder(
+                                  shrinkWrap: true,
+                                  padding: EdgeInsets.only(bottom: 16),
+                                  itemCount:
+                                      tourController.tourhistorydata.length,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder: (ctx, index) {
+                                    var wallet = tourController.tourhistorydata
+                                        .elementAt(index);
+                                    return GestureDetector(
+                                      onTap: () => Get.to(
+                                          () => UserTourDetails(),
+                                          arguments: wallet.id.toString()),
+                                      child:
+                                          TourListWidget(tourhistmodel: wallet),
+                                    );
+                                  })
+                            ],
+                          )
                         : Text("No Data Found"))
                   ],
                 ),

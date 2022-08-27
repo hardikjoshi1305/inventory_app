@@ -23,11 +23,6 @@ class UserListWidget extends StatelessWidget {
           width: 1,
           color: Colors.white,
         ),
-        bottomtitle(200.0, this.UserModel.deviceid),
-        Container(
-          width: 1,
-          color: Colors.white,
-        ),
         bottomtitle(
             200.0, this.UserModel.mobile != null ? this.UserModel.mobile : "-"),
         Container(

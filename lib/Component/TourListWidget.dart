@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inventory_management/Model/TourHistoryResponse.dart';
+import 'package:inventory_management/Utility/app_colors.dart';
 
 import '../Utility/CommandMethod.dart';
 
@@ -12,6 +13,76 @@ class TourListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                  flex: 1,
+                  child: bottomtitle2(
+                      100,
+                      tourhistmodel.tourname == null
+                          ? "-"
+                          : tourhistmodel.tourname,
+                      50.0)),
+              Container(
+                width: 1,
+                color: Colors.white,
+              ),
+              Expanded(
+                  flex: 1,
+                  child: bottomtitle2(
+                      100,
+                      tourhistmodel.createdAt.toString() == null
+                          ? "-"
+                          : getdateformate(tourhistmodel.createdAt),
+                      50.0)),
+              Container(
+                width: 1,
+                color: Colors.white,
+              ),
+              Expanded(
+                flex: 1,
+                child: Padding(
+                    padding: const EdgeInsets.only(right: 1.0),
+                    child: tourhistmodel.iscompleted == 0
+                        ? Container(
+                            color: AppColors.offWhite,
+                            height: 50,
+                            padding: EdgeInsets.all(5),
+                            alignment: AlignmentDirectional.center,
+                            child: Text(
+                              "Pending",
+                              style: TextStyle(color: Colors.red, fontSize: 17),
+                            ),
+                          )
+                        : Container(
+                            height: 50,
+                            padding: EdgeInsets.all(5),
+                            color: AppColors.offWhite,
+                            alignment: AlignmentDirectional.center,
+                            child: Text(
+                              "Completed",
+                              style:
+                                  TextStyle(color: Colors.green, fontSize: 17),
+                            ),
+                          )),
+              ),
+              Container(
+                width: 1,
+                color: Colors.white,
+              ),
+            ],
+          ),
+          Divider(
+            color: Colors.white,
+            height: 1,
+          )
+        ],
+      ),
+    );
+
+    Container(
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),

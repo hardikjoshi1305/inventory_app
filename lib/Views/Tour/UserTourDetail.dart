@@ -17,6 +17,11 @@ TourController tourController = Get.put(TourController());
 class _UserTourDetailsState extends State<UserTourDetails> {
   String tourid = Get.arguments as String;
 
+  apicall(String tourid) async {
+    await Future.delayed(Duration.zero);
+    tourController.usertourdetail(tourid);
+  }
+
   @override
   void initState() {
     apicall(tourid);
@@ -202,15 +207,13 @@ class _UserTourDetailsState extends State<UserTourDetails> {
                                 );
                               },
                             )
-                          : nodatafound()
+                          : nodatafound(),
+                      Container(
+                        height: 140,
+                      )
                     ],
                   )),
             )),
     );
-  }
-
-  void apicall(String tourid) async {
-    await Future.delayed(Duration.zero);
-    tourController.usertourdetail(tourid);
   }
 }

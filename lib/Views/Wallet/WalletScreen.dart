@@ -47,7 +47,7 @@ class _WalletScreenState extends State<WalletScreen> {
                 children: [
                   Container(
                       width: double.infinity,
-                      color: Colors.blue,
+                      color: Colors.blueGrey[900],
                       height: 120,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -80,14 +80,14 @@ class _WalletScreenState extends State<WalletScreen> {
                                     style: TextStyle(
                                         fontSize: 27,
                                         fontWeight: FontWeight.w500,
-                                        color: Colors.white),
+                                        color: Colors.green),
                                   )
                                 : Text(
                                     "0 \u{20B9}",
                                     style: TextStyle(
                                         fontSize: 27,
                                         fontWeight: FontWeight.w500,
-                                        color: Colors.white),
+                                        color: Colors.green),
                                   ),
                           ),
                         ],

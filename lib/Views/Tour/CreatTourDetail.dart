@@ -95,43 +95,50 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
                                 } catch (exception) {
                                   print("object" + exception.toString());
                                 }
-
-                                // 1. Pick an image file
-                                // final filePicked = await FilePicker
-                                //   .platform.pickFiles();
-                                // if (filePicked != null) {
-                                //   final file =
-                                //       filePicked.files.single; // PlatformFile
-                                //   final mimeType = lookupMimeType(file.name) ?? '';
-                                //   print("file" + file.toString());
-                                //
-                                //   /// 2. Get presigned data somewhere
-                                //   // const url = 'https://s3.amazonaws.com/......';
-                                //   // final fields = {
-                                //   //   'bucket': '...',
-                                //   //   'X-Amz-Algorithm': 'AWS4-HMAC-SHA256',
-                                //   //   'X-Amz-Credential': '...',
-                                //   //   'X-Amz-Date': '...',
-                                //   //   'Policy': '...',
-                                //   //   'X-Amz-Signature': '...',
-                                //   //   'x-amz-meta-userid': '...',
-                                //   //   'Content-Type': mimeType,
-                                //   //   'file': dio.MultipartFile.fromBytes(file.bytes ?? []),
-                                //   // };
-                                //
-                                //   /// 3. Send file to AWS s3
-                                //   // final formData = dio.FormData.fromMap(fields);
-                                //   // await dio.Dio().post(url, data: formData);
-                                // }
                               },
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Icon(Icons.image),
+                                  Container(
+                                    margin: EdgeInsets.only(right: 7),
+                                    child: Icon(Icons.image),
+                                  ),
                                   Text("Upload Image")
                                 ],
                               )),
+                          Container(
+                            margin: EdgeInsets.only(top: 10, bottom: 10),
+                            child: Text(
+                              "OR",
+                              style: TextStyle(fontSize: 17),
+                            ),
+                          ),
+                          Container(
+                            child: ElevatedButton(
+                                onPressed: () async {
+                                  try {
+                                    var image = await ImagePicker.pickImage(
+                                        source: ImageSource.camera);
+                                    // print("object" + image.toString());
+                                    print("object" + image.absolute.path);
+                                    img_path = image.absolute.path;
+                                  } catch (exception) {
+                                    print("object" + exception.toString());
+                                  }
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(right: 7),
+                                      child: Icon(Icons.camera_alt),
+                                    ),
+                                    Text("Capture")
+                                  ],
+                                )),
+                          ),
                           // TextField(
                           //   keyboardType: TextInputType.text,
                           //   onChanged: (value) => photo = value,

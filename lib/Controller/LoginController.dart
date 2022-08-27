@@ -27,9 +27,9 @@ class LoginController extends GetxController {
           RequestCall.createAuthHeader("Bearer ${login.value.data.apiToken}");
 
           if (login.value.data.type == "Admin") {
-            Get.to(() => HomeScreen());
+            Get.offNamed("/HomeScreen");
           } else {
-            Get.to(() => Dashboard());
+            Get.offNamed("/Dashboard");
           }
         } else {
           Fluttertoast.showToast(msg: login.value.message);

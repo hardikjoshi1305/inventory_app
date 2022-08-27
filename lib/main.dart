@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inventory_management/Network/RequestCall.dart';
 import 'package:inventory_management/Utility/CommandMethod.dart';
+import 'package:inventory_management/Views/Login/Login.dart';
 import 'package:inventory_management/Views/SplashScreen.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
+import 'Views/Dashboard/Dashboard.dart';
 import 'Views/Home/HomeScreen.dart';
 import 'Views/Inventory/AdminReturnInventory.dart';
 import 'Views/Inventory/Inventory.dart';
@@ -42,6 +44,7 @@ class MyApp extends StatelessWidget {
       home: WelcomeSplashScreen(),
       getPages: [
         GetPage(name: "/HomeScreen", page: () => HomeScreen()),
+        GetPage(name: "/Dashboard", page: () => Dashboard()),
         GetPage(name: "/Inventory", page: () => Inventory()),
         GetPage(name: "/SendInventory", page: () => SendInventory()),
         GetPage(name: "/InventoryHistory", page: () => InventoryHistory()),
@@ -49,6 +52,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/ExpenseHistory", page: () => ExpenseHistory()),
         GetPage(
             name: "/AdminReturnInventory", page: () => AdminReturnInventory()),
+        GetPage(name: "/Login", page: () => Login()),
       ],
     );
   }

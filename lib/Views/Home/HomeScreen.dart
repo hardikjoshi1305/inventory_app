@@ -16,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var _permissionStatus;
+  var _permissionCStatus;
 
   @override
   void initState() {
@@ -63,7 +64,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _listenForPermissionStatus() async {
     final status = await Permission.storage.request().isGranted;
+    final statuscamera = await Permission.camera.request().isGranted;
+    ;
     // setState() triggers build again
-    setState(() => _permissionStatus = status);
+    setState(() {
+      _permissionStatus = status;
+      _permissionCStatus = statuscamera;
+    });
   }
 }

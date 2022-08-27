@@ -5,6 +5,7 @@ import 'package:inventory_management/Controller/UserController.dart';
 import 'package:inventory_management/Controller/WalletController.dart';
 
 import '../../Component/ExpenseListWidget.dart';
+import '../../Utility/CommandMethod.dart';
 
 class ExpenseHistory extends StatefulWidget {
   const ExpenseHistory({Key key}) : super(key: key);
@@ -39,6 +40,7 @@ class _ExpenseHistoryState extends State<ExpenseHistory> {
       appBar: AppBar(
         title: Text("Expense History"),
       ),
+      drawer: AdminDrawer(),
       body: Obx(() => Stack(
             fit: StackFit.loose,
             alignment: AlignmentDirectional.center,

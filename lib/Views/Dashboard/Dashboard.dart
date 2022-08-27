@@ -20,6 +20,7 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   var _permissionStatus;
+  var _permissionCStatus;
 
   @override
   void initState() {
@@ -69,7 +70,12 @@ class _DashboardState extends State<Dashboard> {
     var permission =
         Platform.isAndroid ? Permission.storage : Permission.photos;
     final status = await permission.request().isGranted;
+    final statuscamera = await Permission.camera.request().isGranted;
+    ;
     // setState() triggers build again
-    setState(() => _permissionStatus = status);
+    setState(() {
+      _permissionStatus = status;
+      _permissionCStatus = statuscamera;
+    });
   }
 }

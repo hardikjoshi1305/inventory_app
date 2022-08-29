@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -93,11 +94,25 @@ class RequestCall {
         .post(BASEURL + 'searchinventory', headers: authHeader, body: body)
         .catchError((error) {
       print("error" + error.toString());
+      Fluttertoast.showToast(msg: error.toString());
     });
+    print("query" + response.body.toString());
+
     if (response.statusCode == 200) {
       var json = response.body;
-      var castsResp = search.searchInventoryResponseFromJson(json);
-      return castsResp.data;
+      var finaldata = jsonDecode(json);
+
+      if ((finaldata as Map)['succes']) {
+        var castsResp = search.searchInventoryResponseFromJson(json);
+        return castsResp.data;
+      } else {
+        Fluttertoast.showToast(
+            msg: (finaldata as Map)['message'],
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.CENTER,
+            backgroundColor: Colors.red);
+        return null;
+      }
     } else {
       return null;
     }
@@ -111,8 +126,11 @@ class RequestCall {
       "city": city,
       // "status": "Pending",
     });
-    var response = await client.post(BASEURL + "createtour",
-        headers: authHeader, body: body);
+    var response = await client
+        .post(BASEURL + "createtour", headers: authHeader, body: body)
+        .catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
     if (response.statusCode == 200) {
       var json = response.body;
       var castsResp = createTourResponseFromJson(json);
@@ -134,7 +152,9 @@ class RequestCall {
 
     req.headers.addAll(authHeader);
 
-    var response = await req.send();
+    var response = await req.send().catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
     var json = await http.Response.fromStream(response);
     if (response.statusCode == 200) {
       var castsResp = serviceReportResponseFromJson(json.body);
@@ -167,7 +187,9 @@ class RequestCall {
 
     req.headers.addAll(authHeader);
 
-    var response = await req.send();
+    var response = await req.send().catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
     var json = await http.Response.fromStream(response);
     if (response.statusCode == 200) {
       var castsResp = createExpenseResponseFromJson(json.body);
@@ -192,8 +214,11 @@ class RequestCall {
       "dailyremark": remark,
       // "status": "Pending",
     });
-    var response = await client.post(BASEURL + "tourdailyremark",
-        headers: authHeader, body: body);
+    var response = await client
+        .post(BASEURL + "tourdailyremark", headers: authHeader, body: body)
+        .catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
     if (response.statusCode == 200) {
       var json = response.body;
       print("dadai" + json.toString());
@@ -210,8 +235,11 @@ class RequestCall {
       "finaldignose": finaldignose,
       // "status": "Pending",
     });
-    var response = await client.post(BASEURL + "tourfinaldignose",
-        headers: authHeader, body: body);
+    var response = await client
+        .post(BASEURL + "tourfinaldignose", headers: authHeader, body: body)
+        .catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
     if (response.statusCode == 200) {
       var json = response.body;
       var castsResp = finalDignoseResponseFromJson(json);
@@ -253,8 +281,11 @@ class RequestCall {
       "wallet_amount": wallet_amount,
     });
 
-    var response = await client.post(BASEURL + 'createuser',
-        headers: authHeader, body: body);
+    var response = await client
+        .post(BASEURL + 'createuser', headers: authHeader, body: body)
+        .catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
 
     // var response = await req.send();
     // var json = await http.Response.fromStream(response);
@@ -312,8 +343,11 @@ class RequestCall {
         "price": int.parse(Prize)
       });
 
-      var response = await client.post(BASEURL + 'createinventory',
-          headers: headers, body: body);
+      var response = await client
+          .post(BASEURL + 'createinventory', headers: headers, body: body)
+          .catchError((error) {
+        Fluttertoast.showToast(msg: error.toString());
+      });
       if (response.statusCode == 200) {
         var json = response.body;
         var castsResp = addInventorylResponseFromJson(json);
@@ -341,8 +375,11 @@ class RequestCall {
         "price": int.parse(Prize)
       });
 
-      var response = await client.post(BASEURL + 'updateinventory',
-          headers: headers, body: body);
+      var response = await client
+          .post(BASEURL + 'updateinventory', headers: headers, body: body)
+          .catchError((error) {
+        Fluttertoast.showToast(msg: error.toString());
+      });
       if (response.statusCode == 200) {
         var json = response.body;
         print("Response" + json.toString());
@@ -384,6 +421,7 @@ class RequestCall {
         .get(BASEURL + 'userlist', headers: authHeader)
         .catchError((error) {
       print("error" + error.toString());
+      Fluttertoast.showToast(msg: error.toString());
     });
     ;
     if (response.statusCode == 200) {
@@ -408,6 +446,7 @@ class RequestCall {
         .get(BASEURL + 'users', headers: authHeader)
         .catchError((error) {
       print("error" + error.toString());
+      Fluttertoast.showToast(msg: error.toString());
     });
     ;
     if (response.statusCode == 200) {
@@ -434,6 +473,7 @@ class RequestCall {
         .get(BASEURL + 'inventorylist', headers: authHeader)
         .catchError((error) {
       print("error" + error.toString());
+      Fluttertoast.showToast(msg: error.toString());
     });
     if (response.statusCode == 200) {
       var json = response.body;
@@ -459,6 +499,7 @@ class RequestCall {
         .post(BASEURL + 'getassigninventory', headers: authHeader, body: body)
         .catchError((error) {
       print("error" + error.toString());
+      Fluttertoast.showToast(msg: error.toString());
     });
     ;
     if (response.statusCode == 200) {
@@ -482,8 +523,11 @@ class RequestCall {
     var body = jsonEncode({
       "type": "1",
     });
-    var response = await client.post(BASEURL + 'inventorystatus',
-        headers: authHeader, body: body);
+    var response = await client
+        .post(BASEURL + 'inventorystatus', headers: authHeader, body: body)
+        .catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
     if (response.statusCode == 200) {
       var json = response.body;
       print("reds" + json.toString());
@@ -498,8 +542,11 @@ class RequestCall {
     var body = jsonEncode({
       "iscompleted": iscompleted,
     });
-    var response = await client.post(BASEURL + 'tourlist',
-        headers: authHeader, body: body);
+    var response = await client
+        .post(BASEURL + 'tourlist', headers: authHeader, body: body)
+        .catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
     if (response.statusCode == 200) {
       var json = response.body;
       print("reds" + json.toString());
@@ -512,8 +559,11 @@ class RequestCall {
   }
 
   static Future<List<wallet.Datum>> wallethistory() async {
-    var response =
-        await client.get(BASEURL + 'wallethistory', headers: authHeader);
+    var response = await client
+        .get(BASEURL + 'wallethistory', headers: authHeader)
+        .catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
     if (response.statusCode == 200) {
       var json = response.body;
       print("reds" + json.toString());
@@ -564,7 +614,9 @@ class RequestCall {
     print("request filed:  " + req.fields.toString());
     print(" files length:  " + req.files.length.toString());
     print("request files:  " + req.files.toString());
-    var response = await req.send();
+    var response = await req.send().catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
     var json = await http.Response.fromStream(response);
     print("request response :  " + json.body.toString());
 
@@ -586,8 +638,11 @@ class RequestCall {
     });
     print("inventoryid" + inventoryid);
 
-    var response = await client.post(BASEURL + 'acceptinventory',
-        headers: authHeader, body: body);
+    var response = await client
+        .post(BASEURL + 'acceptinventory', headers: authHeader, body: body)
+        .catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
     if (response.statusCode == 200) {
       var json = response.body;
       print("accept" + response.body.toString());
@@ -624,7 +679,9 @@ class RequestCall {
     print("request filed:  " + req.fields.toString());
     print(" files length:  " + req.files.length.toString());
     print("request files:  " + req.files.toString());
-    var response = await req.send();
+    var response = await req.send().catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
     var json = await http.Response.fromStream(response);
     print("request response :  " + json.body.toString());
 
@@ -644,8 +701,11 @@ class RequestCall {
     var body = jsonEncode({
       "code": code,
     });
-    var response = await client.post(BASEURL + 'inventoryhistory',
-        headers: authHeader, body: body);
+    var response = await client
+        .post(BASEURL + 'inventoryhistory', headers: authHeader, body: body)
+        .catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
     if (response.statusCode == 200) {
       var json = response.body;
       print("reds" + json.toString());
@@ -660,8 +720,11 @@ class RequestCall {
     var body = jsonEncode({
       "user_id": userid,
     });
-    var response = await client.post(BASEURL + 'tourhistory',
-        headers: authHeader, body: body);
+    var response = await client
+        .post(BASEURL + 'tourhistory', headers: authHeader, body: body)
+        .catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
     if (response.statusCode == 200) {
       var json = response.body;
       print("reds" + json.toString());
@@ -681,8 +744,11 @@ class RequestCall {
     var body = jsonEncode({
       "tour_id": tourid,
     });
-    var response = await client.post(BASEURL + 'tourhistorydetails',
-        headers: authHeader, body: body);
+    var response = await client
+        .post(BASEURL + 'tourhistorydetails', headers: authHeader, body: body)
+        .catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
     if (response.statusCode == 200) {
       var json = response.body;
       print("reds" + json.toString());
@@ -704,8 +770,11 @@ class RequestCall {
     });
     print("reds" + userid);
 
-    var response = await client.post(BASEURL + 'expenselist',
-        headers: authHeader, body: body);
+    var response = await client
+        .post(BASEURL + 'expenselist', headers: authHeader, body: body)
+        .catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
 
     if (response.statusCode == 200) {
       var json = response.body;
@@ -727,8 +796,12 @@ class RequestCall {
       "expense_id": expense_id,
       "is_approved": is_approved,
     });
-    var response = await client.post(BASEURL + 'accept_reject_expense',
-        headers: authHeader, body: body);
+    var response = await client
+        .post(BASEURL + 'accept_reject_expense',
+            headers: authHeader, body: body)
+        .catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
     if (response.statusCode == 200) {
       var json = response.body;
       print("reds" + json.toString());
@@ -749,8 +822,11 @@ class RequestCall {
       "tour_id": tour_id,
       // "status": "Pending",
     });
-    var response = await client.post(BASEURL + "dailyremark",
-        headers: authHeader, body: body);
+    var response = await client
+        .post(BASEURL + "dailyremark", headers: authHeader, body: body)
+        .catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
     if (response.statusCode == 200) {
       var json = response.body;
       print("dadai" + json.toString());
@@ -778,6 +854,7 @@ class RequestCall {
         .get(BASEURL + 'returninventory', headers: authHeader)
         .catchError((error) {
       print("error" + error.toString());
+      Fluttertoast.showToast(msg: error.toString());
     });
     if (response.statusCode == 200) {
       var json = response.body;

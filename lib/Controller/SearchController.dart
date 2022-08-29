@@ -28,7 +28,6 @@ class SearchController extends GetxController {
 
   Future<List<Datum>> searchdata(String query) async {
     if (query != "") {
-      print("query" + query);
       try {
         isLoading(true);
         var res = await RequestCall.searchinventory(query: query);
@@ -45,7 +44,7 @@ class SearchController extends GetxController {
           // Get.to(HomeScreen());
           // Get.to(HomeScreen());
         } else {
-          return null;
+          return search;
         }
       } finally {
         isLoading(false);

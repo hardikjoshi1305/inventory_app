@@ -28,6 +28,8 @@ class _UserlistState extends State<Userlist> {
     userController.fetchuserlist();
   }
 
+  Future _refreshcall() => Future.delayed(
+      Duration(seconds: 2), () => userController.fetchuserlist());
   @override
   void initState() {
     apicall();
@@ -40,7 +42,7 @@ class _UserlistState extends State<Userlist> {
         drawer: AdminDrawer(),
         appBar: AdminAppBar(),
         body: RefreshIndicator(
-          onRefresh: () => apicall(),
+          onRefresh: _refreshcall,
           child: Container(
               width: double.infinity,
               height: double.infinity,
@@ -68,66 +70,72 @@ class _UserlistState extends State<Userlist> {
   Widget screenbody() {
     return userController.userlist != null
         ? SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Container(
-              padding: EdgeInsets.all(8),
-              child: Column(
-                children: [
-                  Row(
+            scrollDirection: Axis.vertical,
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  padding: EdgeInsets.all(8),
+                  child: Column(
                     children: [
-                      toptitle(100.0, "ID"),
-                      Container(
-                        width: 1,
-                        color: Colors.white,
+                      Row(
+                        children: [
+                          toptitle(100.0, "ID"),
+                          Container(
+                            width: 1,
+                            color: Colors.white,
+                          ),
+                          toptitle(100.0, "User ID"),
+                          Container(
+                            width: 1,
+                            color: Colors.white,
+                          ),
+                          toptitle(200.0, "Mobile Number"),
+                          Container(
+                            width: 1,
+                            color: Colors.white,
+                          ),
+                          toptitle(100.0, "Is Active"),
+                          Container(
+                            width: 1,
+                            color: Colors.white,
+                          ),
+                          toptitle(130.0, "Wallet Balance"),
+                          Container(
+                            width: 1,
+                            color: Colors.white,
+                          ),
+                        ],
                       ),
-                      toptitle(100.0, "User ID"),
-                      Container(
-                        width: 1,
-                        color: Colors.white,
+                      Expanded(
+                        child: Obx(() => SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Column(
+                                children: [
+                                  ...userController.userlist.map((element) {
+                                    return UserListWidget(UserModel: element);
+                                  }).toList()
+                                ],
+                              ),
+                            )),
                       ),
-                      toptitle(200.0, "Mobile Number"),
-                      Container(
-                        width: 1,
-                        color: Colors.white,
-                      ),
-                      toptitle(100.0, "Is Active"),
-                      Container(
-                        width: 1,
-                        color: Colors.white,
-                      ),
-                      toptitle(130.0, "Wallet Balance"),
-                      Container(
-                        width: 1,
-                        color: Colors.white,
-                      ),
+
+                      // ListView.builder(
+                      //     primary: false,
+                      //     shrinkWrap: true,
+                      //     padding: EdgeInsets.only(bottom: 16),
+                      //     itemCount: 5,
+                      //     itemBuilder: (ctx, index) {
+                      //       var therapy = userController.userlist.elementAt(index);
+                      //       return Text(therapy.name);
+                      //       UserListWidget(UserModel: therapy);
+                      //     }),
                     ],
                   ),
-                  Expanded(
-                    child: Obx(() => SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: Column(
-                            children: [
-                              ...userController.userlist.map((element) {
-                                return UserListWidget(UserModel: element);
-                              }).toList()
-                            ],
-                          ),
-                        )),
-                  ),
-
-                  // ListView.builder(
-                  //     primary: false,
-                  //     shrinkWrap: true,
-                  //     padding: EdgeInsets.only(bottom: 16),
-                  //     itemCount: 5,
-                  //     itemBuilder: (ctx, index) {
-                  //       var therapy = userController.userlist.elementAt(index);
-                  //       return Text(therapy.name);
-                  //       UserListWidget(UserModel: therapy);
-                  //     }),
-                ],
-              ),
-            ))
+                )),
+          )
         : nodatafound();
   }
 }

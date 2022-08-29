@@ -195,22 +195,83 @@ class _ExpenseHistoryState extends State<ExpenseHistory> {
                       ),
                     ),
                     Obx(() => walletController.expensehistory.length > 0
-                        ? ListView.builder(
-                            shrinkWrap: true,
-                            padding: EdgeInsets.only(bottom: 16),
-                            itemCount: walletController.expensehistory.length,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (ctx, index) {
-                              var wallet = walletController.expensehistory
-                                  .elementAt(index);
-                              return GestureDetector(
-                                // onTap: () => Get.to(
-                                //     () => UserTourDetails(),
-                                //     arguments: wallet.id.toString()),
-                                child: ExpenseListWidget(
-                                    expenselist: wallet, position: index),
-                              );
-                            })
+                        ? SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            physics: ScrollPhysics(),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    toptitle(120.0, "Action"),
+                                    Container(
+                                      width: 1,
+                                      color: Colors.white,
+                                    ),
+                                    toptitle(100.0, "Tour"),
+                                    Container(
+                                      width: 1,
+                                      color: Colors.white,
+                                    ),
+                                    toptitle(100.0, "Expense"),
+                                    Container(
+                                      width: 1,
+                                      color: Colors.white,
+                                    ),
+                                    toptitle(100.0, "Amount"),
+                                    Container(
+                                      width: 1,
+                                      color: Colors.white,
+                                    ),
+                                    toptitle(100.0, "Date"),
+                                    Container(
+                                      width: 1,
+                                      color: Colors.white,
+                                    ),
+                                    toptitle(100.0, "Image"),
+                                    Container(
+                                      width: 1,
+                                      color: Colors.white,
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    ...walletController.expensehistory
+                                        .map((element) {
+                                      var index = walletController
+                                          .expensehistory
+                                          .indexOf(element);
+                                      var wallet = walletController
+                                          .expensehistory
+                                          .elementAt(index);
+                                      return ExpenseListWidget(
+                                          expenselist: wallet, position: index);
+                                    }).toList(growable: true)
+                                  ],
+                                )
+                                // ListView.builder(
+                                //     shrinkWrap: true,
+                                //     padding: EdgeInsets.only(bottom: 16),
+                                //     itemCount:
+                                //     walletController.expensehistory.length,
+                                //     physics: NeverScrollableScrollPhysics(),
+                                //     itemBuilder: (ctx, index) {
+                                //       var wallet = walletController
+                                //           .expensehistory
+                                //           .elementAt(index);
+                                //       return GestureDetector(
+                                //         // onTap: () => Get.to(
+                                //         //     () => UserTourDetails(),
+                                //         //     arguments: wallet.id.toString()),
+                                //         child: ExpenseListWidget(
+                                //             expenselist: wallet,
+                                //             position: index),
+                                //       );
+                                //     }),
+                              ],
+                            ),
+                          )
                         : Text("No Data Found"))
                   ],
                 ),

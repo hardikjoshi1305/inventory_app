@@ -12,7 +12,6 @@ import '../Views/Inventory/ReturnInventory.dart';
 class InventoryListWidget extends StatelessWidget {
   final Datum UserModel;
   final String usertype;
-
   InventoryListWidget({this.UserModel, this.usertype});
 
   @override

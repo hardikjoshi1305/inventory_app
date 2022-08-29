@@ -211,10 +211,13 @@ class _SendInventoryState extends State<SendInventory> {
                 setState(() {
                   if (object != null) {
                     print("onchasnged" + object.code);
-
-                    allinventory.add(object.id.toString());
-                    allinventoryname.add(object.name.toString());
-                    allinventoryimage.add("");
+                    if (!allinventory.contains(object.id.toString())) {
+                      allinventory.add(object.id.toString());
+                      allinventoryname.add(object.name.toString());
+                      allinventoryimage.add("");
+                    } else {
+                      Fluttertoast.showToast(msg: "Already Selected");
+                    }
                   }
                 });
               },

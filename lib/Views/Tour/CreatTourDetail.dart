@@ -55,137 +55,147 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
                     child: CircularProgressIndicator(),
                   )
                 : item[0] == 1
-                    ? Flex(
-                        direction: Axis.vertical,
-                        children: [
-                          Expanded(
-                            flex: 1,
+                    ? SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Container(
+                            height: MediaQuery.of(context).size.height,
                             child: Column(
                               children: [
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Container(
+                                      height: 20,
+                                    ),
+                                    TextField(
+                                      keyboardType: TextInputType.text,
+                                      onChanged: (value) => expensename = value,
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: 'Expense Name',
+                                        prefixIcon: Icon(Icons.money),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 20,
+                                    ),
+                                    TextField(
+                                      keyboardType: TextInputType.number,
+                                      onChanged: (value) => amount = value,
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: 'Amount',
+                                        prefixIcon:
+                                            Icon(Icons.currency_rupee_outlined),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 20,
+                                    ),
+                                    ElevatedButton(
+                                        onPressed: () async {
+                                          try {
+                                            var image =
+                                                await ImagePicker.pickImage(
+                                                    source:
+                                                        ImageSource.gallery);
+                                            // print("object" + image.toString());
+                                            print(
+                                                "object" + image.absolute.path);
+                                            img_path = image.absolute.path;
+                                          } catch (exception) {
+                                            print("object" +
+                                                exception.toString());
+                                          }
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.only(right: 7),
+                                              child: Icon(Icons.image),
+                                            ),
+                                            Text("Upload Image")
+                                          ],
+                                        )),
+                                    Container(
+                                      margin:
+                                          EdgeInsets.only(top: 10, bottom: 10),
+                                      child: Text(
+                                        "OR",
+                                        style: TextStyle(fontSize: 17),
+                                      ),
+                                    ),
+                                    Container(
+                                      child: ElevatedButton(
+                                          onPressed: () async {
+                                            try {
+                                              var image =
+                                                  await ImagePicker.pickImage(
+                                                      source:
+                                                          ImageSource.camera);
+                                              // print("object" + image.toString());
+                                              print("object" +
+                                                  image.absolute.path);
+                                              img_path = image.absolute.path;
+                                            } catch (exception) {
+                                              print("object" +
+                                                  exception.toString());
+                                            }
+                                          },
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Container(
+                                                margin:
+                                                    EdgeInsets.only(right: 7),
+                                                child: Icon(Icons.camera_alt),
+                                              ),
+                                              Text("Capture")
+                                            ],
+                                          )),
+                                    ),
+                                    // TextField(
+                                    //   keyboardType: TextInputType.text,
+                                    //   onChanged: (value) => photo = value,
+                                    //   onTap:
+                                    //   decoration: const InputDecoration(
+                                    //     border: OutlineInputBorder(),
+                                    //     labelText: 'Photo',
+                                    //     prefixIcon: Icon(Icons.image),
+                                    //   ),
+                                    // ),
+                                  ],
+                                ),
                                 Container(
-                                  height: 20,
-                                ),
-                                TextField(
-                                  keyboardType: TextInputType.text,
-                                  onChanged: (value) => expensename = value,
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    labelText: 'Expense Name',
-                                    prefixIcon: Icon(Icons.money),
-                                  ),
-                                ),
-                                Container(
-                                  height: 20,
-                                ),
-                                TextField(
-                                  keyboardType: TextInputType.number,
-                                  onChanged: (value) => amount = value,
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    labelText: 'Amount',
-                                    prefixIcon:
-                                        Icon(Icons.currency_rupee_outlined),
-                                  ),
-                                ),
-                                Container(
-                                  height: 20,
-                                ),
-                                ElevatedButton(
-                                    onPressed: () async {
-                                      try {
-                                        var image = await ImagePicker.pickImage(
-                                            source: ImageSource.gallery);
-                                        // print("object" + image.toString());
-                                        print("object" + image.absolute.path);
-                                        img_path = image.absolute.path;
-                                      } catch (exception) {
-                                        print("object" + exception.toString());
+                                  height:
+                                      MediaQuery.of(context).size.height / 2 -
+                                          100,
+                                  alignment: AlignmentDirectional.bottomCenter,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      if (validation(expensename, amount)) {
+                                        tourController.createexpense(
+                                            tour_id: item[1],
+                                            expenses_name: expensename,
+                                            amount: amount.toString(),
+                                            photo: img_path.toString());
                                       }
                                     },
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(right: 7),
-                                          child: Icon(Icons.image),
-                                        ),
-                                        Text("Upload Image")
-                                      ],
-                                    )),
-                                Container(
-                                  margin: EdgeInsets.only(top: 10, bottom: 10),
-                                  child: Text(
-                                    "OR",
-                                    style: TextStyle(fontSize: 17),
-                                  ),
-                                ),
-                                Container(
-                                  child: ElevatedButton(
-                                      onPressed: () async {
-                                        try {
-                                          var image =
-                                              await ImagePicker.pickImage(
-                                                  source: ImageSource.camera);
-                                          // print("object" + image.toString());
-                                          print("object" + image.absolute.path);
-                                          img_path = image.absolute.path;
-                                        } catch (exception) {
-                                          print(
-                                              "object" + exception.toString());
-                                        }
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(right: 7),
-                                            child: Icon(Icons.camera_alt),
-                                          ),
-                                          Text("Capture")
-                                        ],
-                                      )),
-                                ),
-                                // TextField(
-                                //   keyboardType: TextInputType.text,
-                                //   onChanged: (value) => photo = value,
-                                //   onTap:
-                                //   decoration: const InputDecoration(
-                                //     border: OutlineInputBorder(),
-                                //     labelText: 'Photo',
-                                //     prefixIcon: Icon(Icons.image),
-                                //   ),
-                                // ),
-                                Expanded(
-                                  flex: 4,
-                                  child: Container(),
-                                ),
-                                Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Container(
-                                    margin: const EdgeInsets.all(5),
-                                    width: double.infinity,
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        if (validation(expensename, amount)) {
-                                          tourController.createexpense(
-                                              tour_id: item[1],
-                                              expenses_name: expensename,
-                                              amount: amount.toString(),
-                                              photo: img_path.toString());
-                                        }
-                                      },
-                                      child: const Text('Submit'),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 40,
+                                      alignment: AlignmentDirectional.center,
+                                      child: Text('Submit'),
                                     ),
                                   ),
                                 ),
                               ],
-                            ),
-                          )
-                        ],
+                            )),
                       )
                     : item[0] == 2
                         ? Flex(

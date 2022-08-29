@@ -134,7 +134,7 @@ Widget UserDrawer() {
               icon: Icons.pending_actions,
               text: 'Pending Tour',
               onTap: () {
-                Get.to(() => Dashboard());
+                Get.to(() => Dashboard(), preventDuplicates: false);
                 // Navigator.of(context).pop();
                 // Navigator.pushNamed(context, pageRoutes.landscape);
               }),
@@ -142,7 +142,7 @@ Widget UserDrawer() {
               icon: Icons.cloud_done_rounded,
               text: 'Completed Tour',
               onTap: () {
-                Get.to(() => Completed());
+                Get.to(() => Completed(), preventDuplicates: false);
 
                 // Navigator.of(context).pop();
 
@@ -153,7 +153,7 @@ Widget UserDrawer() {
               icon: Icons.wallet,
               text: 'Wallet',
               onTap: () {
-                Get.to(() => WalletScreen());
+                Get.to(() => WalletScreen(), preventDuplicates: false);
 
                 // _permissionStatus?
                 // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
@@ -170,7 +170,7 @@ Widget UserDrawer() {
               icon: Icons.inventory,
               text: 'Pending Inventory',
               onTap: () {
-                Get.to(() => UserInventory());
+                Get.to(() => UserInventory(), preventDuplicates: false);
 
                 // Navigator.of(context).pop();
 
@@ -181,7 +181,7 @@ Widget UserDrawer() {
               icon: Icons.inventory,
               text: 'Current Inventory',
               onTap: () {
-                Get.to(() => UserCurrentInventory());
+                Get.to(() => UserCurrentInventory(), preventDuplicates: false);
 
                 // Navigator.of(context).pop();
 
@@ -218,7 +218,7 @@ Widget AdminDrawer() {
               icon: Icons.pending_actions,
               text: 'Users',
               onTap: () {
-                Get.offNamed("/HomeScreen");
+                Get.offNamed("/HomeScreen", preventDuplicates: false);
                 // Navigator.of(context).pop();
                 // Navigator.pushNamed(context, pageRoutes.landscape);
               }),
@@ -226,7 +226,7 @@ Widget AdminDrawer() {
               icon: Icons.cloud_done_rounded,
               text: 'Inventory',
               onTap: () {
-                Get.offNamed("/Inventory");
+                Get.offNamed("/Inventory", preventDuplicates: false);
 
                 // _permissionStatus?
                 // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
@@ -235,7 +235,7 @@ Widget AdminDrawer() {
               icon: Icons.send,
               text: 'Send Inventory',
               onTap: () {
-                Get.offNamed("/SendInventory");
+                Get.offNamed("/SendInventory", preventDuplicates: false);
 
                 // _permissionStatus?
                 // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
@@ -244,7 +244,7 @@ Widget AdminDrawer() {
               icon: Icons.assignment_returned,
               text: 'Return Inventory',
               onTap: () {
-                Get.offNamed("/AdminReturnInventory");
+                Get.offNamed("/AdminReturnInventory", preventDuplicates: false);
 
                 // _permissionStatus?
                 // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
@@ -253,7 +253,7 @@ Widget AdminDrawer() {
               icon: Icons.history,
               text: 'Inventory History',
               onTap: () {
-                Get.offNamed("/InventoryHistory");
+                Get.offNamed("/InventoryHistory", preventDuplicates: false);
 
                 // _permissionStatus?
                 // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
@@ -262,7 +262,7 @@ Widget AdminDrawer() {
               icon: Icons.today,
               text: 'Tour History',
               onTap: () {
-                Get.offNamed("/TourList");
+                Get.offNamed("/TourList", preventDuplicates: false);
 
                 // _permissionStatus?
                 // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
@@ -271,7 +271,7 @@ Widget AdminDrawer() {
               icon: Icons.currency_rupee_sharp,
               text: 'Expense History',
               onTap: () {
-                Get.offNamed("/ExpenseHistory");
+                Get.offNamed("/ExpenseHistory", preventDuplicates: false);
 
                 // _permissionStatus?
                 // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();

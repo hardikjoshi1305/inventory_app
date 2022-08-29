@@ -91,10 +91,30 @@ class ExpenseListWidget extends StatelessWidget {
                       )
                     ],
                   )
-                : Container(
-                    alignment: AlignmentDirectional.center,
-                    child: Text("-"),
-                  )),
+                : expenselist.isApproved == "1"
+                    ? GestureDetector(
+                        child: Container(
+                            alignment: AlignmentDirectional.center,
+                            margin: EdgeInsets.only(right: 10),
+                            padding: EdgeInsets.all(3),
+                            child: Text("Approved",
+                                style: TextStyle(color: Colors.green))),
+                      )
+                    : expenselist.isApproved == "2"
+                        ? GestureDetector(
+                            child: Container(
+                                alignment: AlignmentDirectional.center,
+                                margin: EdgeInsets.only(right: 10),
+                                padding: EdgeInsets.all(3),
+                                child: Text(
+                                  "Rejected",
+                                  style: TextStyle(color: Colors.red),
+                                )),
+                          )
+                        : Container(
+                            alignment: AlignmentDirectional.center,
+                            child: Text("-"),
+                          )),
         bottomtitle(
             100.0, expenselist.tourname == null ? "-" : expenselist.tourname),
         Container(

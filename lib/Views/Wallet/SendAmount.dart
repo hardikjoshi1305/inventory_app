@@ -1,8 +1,3 @@
-import 'dart:convert';
-import 'dart:ffi';
-
-import 'package:dropdown_search/dropdown_search.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -10,10 +5,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:inventory_management/Controller/SearchController.dart';
 import 'package:inventory_management/Controller/UserController.dart';
 import 'package:inventory_management/Utility/CommandMethod.dart';
-import 'package:inventory_management/Model/SearchInventoryResponse.dart';
-import 'package:http/http.dart' as http;
-
-import '../../Utility/app_colors.dart';
 
 class SendAmount extends StatefulWidget {
   const SendAmount({Key key}) : super(key: key);
@@ -150,15 +141,15 @@ class _SendAmountState extends State<SendAmount> {
                                               color: Colors.white,
                                               alignment:
                                                   AlignmentDirectional.center,
-                                              padding: EdgeInsets.only(
+                                              padding: const EdgeInsets.only(
                                                   top: 15, bottom: 15),
                                               child: Text(
                                                 e.userid,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 16,
                                                     color: Colors.black),
                                               )),
-                                          Divider(
+                                          const Divider(
                                             color: Colors.black,
                                             height: 1,
                                           )

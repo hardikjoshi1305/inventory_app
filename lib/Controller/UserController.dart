@@ -24,6 +24,18 @@ class UserController extends GetxController {
     super.onClose();
   }
 
+  @override
+  void onInit() {
+    print("onInit");
+    getauthtoken();
+    super.onInit();
+  }
+
+  Future<String> getauthtoken() async {
+    var loginToken = await SharedPreferenceHelper().getPref(TOKEN);
+    RequestCall.createAuthHeader(loginToken);
+  }
+
   void createuser({
     String name,
     String phone,

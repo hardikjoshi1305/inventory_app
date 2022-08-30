@@ -9,6 +9,9 @@ import 'package:inventory_management/Network/RequestCall.dart';
 import 'package:inventory_management/Views/Home/HomeScreen.dart';
 import 'package:inventory_management/Views/Wallet/ExpenseHistory.dart';
 
+import '../Utility/CONSTANT.dart';
+import '../Utility/SharedPreferenceHelper.dart';
+
 class WalletController extends GetxController {
   var isLoading = false.obs;
   // var login = List<Datum>.empty(growable: true).obs;
@@ -16,6 +19,17 @@ class WalletController extends GetxController {
   var expensehistory = List<ecpense.Datum>().obs;
   var accrej = AcceptRejectResponse().obs;
   var refreshscreen = false.obs;
+  @override
+  void onInit() {
+    print("onInit");
+    getauthtoken();
+    super.onInit();
+  }
+
+  Future<String> getauthtoken() async {
+    var loginToken = await SharedPreferenceHelper().getPref(TOKEN);
+    RequestCall.createAuthHeader(loginToken);
+  }
 
   void wallethistorydata() async {
     try {

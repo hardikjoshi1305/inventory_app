@@ -46,6 +46,7 @@ import 'package:inventory_management/Views/Users/CreateUser.dart';
 
 import '../Model/AddInventoryResponse.dart';
 import '../Model/GetRemarkResponse.dart';
+import '../Model/SendAmountResponse.dart';
 
 class RequestCall {
   static var client = http.Client();
@@ -865,6 +866,42 @@ class RequestCall {
         return castsResp.data;
       } else {
         Fluttertoast.showToast(msg: castsResp.message);
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static sendamount(String id, String amountadd, String img) async {
+    var req =
+        http.MultipartRequest("POST", Uri.parse('${BASEURL}adminsendamt'));
+// print("cretattt$req");
+
+    req.fields.addAll({
+      'userid': id,
+      'amount': amountadd,
+    });
+    if (img != "") {
+      req.files.add(await http.MultipartFile.fromPath('photo', img));
+    }
+    // req.files.add(
+    //     await http.MultipartFile.fromPath('photo[]', photo));
+
+    req.headers.addAll(authHeader);
+    print("request filed:  " + req.fields.toString());
+    print("request files:  " + req.files.toString());
+    var response = await req.send().catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
+    var json = await http.Response.fromStream(response);
+    print("request response :  " + json.body.toString());
+
+    if (response.statusCode == 200) {
+      var castsResp = sendAmountResponseFromJson(json.body);
+      if (castsResp.succes) {
+        return castsResp;
+      } else {
         return null;
       }
     } else {

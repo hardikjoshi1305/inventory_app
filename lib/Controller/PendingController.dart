@@ -5,10 +5,24 @@ import 'package:inventory_management/Model/PendingResponse.dart';
 import 'package:inventory_management/Network/RequestCall.dart';
 import 'package:inventory_management/Views/Home/HomeScreen.dart';
 
+import '../Utility/CONSTANT.dart';
+import '../Utility/SharedPreferenceHelper.dart';
+
 class PendingController extends GetxController {
   var isLoading = false.obs;
   // var login = List<Datum>.empty(growable: true).obs;
   var pending = List<Datum>().obs;
+  @override
+  void onInit() {
+    print("onInit");
+    getauthtoken();
+    super.onInit();
+  }
+
+  Future<String> getauthtoken() async {
+    var loginToken = await SharedPreferenceHelper().getPref(TOKEN);
+    RequestCall.createAuthHeader(loginToken);
+  }
 
   void pendingitem({String iscompleted}) async {
     try {

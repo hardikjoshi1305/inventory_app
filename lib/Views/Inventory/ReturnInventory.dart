@@ -23,6 +23,7 @@ class _ReturnInventoryState extends State<ReturnInventory> {
   String statusid = "";
   String imgpatth = "";
   String remark = "";
+  TextEditingController te_imgpath = TextEditingController();
 
   apicall() async {
     await Future.delayed(Duration.zero);
@@ -33,6 +34,12 @@ class _ReturnInventoryState extends State<ReturnInventory> {
   void initState() {
     apicall();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    te_imgpath.dispose();
+    super.dispose();
   }
 
   @override
@@ -186,9 +193,18 @@ class _ReturnInventoryState extends State<ReturnInventory> {
                                             ],
                                           )
                                         ]),
-                                child: Text('Select Status')
-                            ),
+                                child: Text('Select Status')),
                             // Expanded(child: Text('')),
+
+                            Container(
+                              child: TextField(
+                                enabled: false,
+                                controller: te_imgpath..text,
+                                maxLines: 2,
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 15),
+                              ),
+                            ),
                             Container(
                               margin: EdgeInsets.only(top: 10),
                               child: ElevatedButton(
@@ -199,12 +215,22 @@ class _ReturnInventoryState extends State<ReturnInventory> {
                                       // print("object" + image.toString());
                                       print("object" + image.absolute.path);
                                       imgpatth = image.absolute.path;
+                                      String fff = imgpatth.split("/").last;
+                                      te_imgpath..text = fff;
                                     } catch (exception) {
                                       print("object" + exception.toString());
-                                      Fluttertoast.showToast(msg:exception.toString() );
+                                      Fluttertoast.showToast(
+                                          msg: exception.toString());
                                     }
                                   },
-                                  child: Row(mainAxisAlignment:MainAxisAlignment.center,mainAxisSize: MainAxisSize.min,children: [Icon(Icons.photo),Text('Gallary')],)),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(Icons.photo),
+                                      Text('Gallary')
+                                    ],
+                                  )),
                             ),
                             Container(
                               margin: EdgeInsets.all(6),
@@ -219,12 +245,22 @@ class _ReturnInventoryState extends State<ReturnInventory> {
                                       // print("object" + image.toString());
                                       print("object" + image.absolute.path);
                                       imgpatth = image.absolute.path;
+                                      String fff = imgpatth.split("/").last;
+                                      te_imgpath..text = fff;
                                     } catch (exception) {
                                       print("object" + exception.toString());
-                                      Fluttertoast.showToast(msg:exception.toString() );
+                                      Fluttertoast.showToast(
+                                          msg: exception.toString());
                                     }
                                   },
-                                  child: Row(mainAxisAlignment:MainAxisAlignment.center,mainAxisSize: MainAxisSize.min,children: [Icon(Icons.camera_alt),Text('Camera')],)),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(Icons.camera_alt),
+                                      Text('Camera')
+                                    ],
+                                  )),
                             ),
 
                             Container(

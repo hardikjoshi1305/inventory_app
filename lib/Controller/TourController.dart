@@ -15,6 +15,9 @@ import 'package:inventory_management/Model/casts.dart';
 import 'package:inventory_management/Network/RequestCall.dart';
 import 'package:inventory_management/Views/Dashboard/Dashboard.dart';
 
+import '../Utility/CONSTANT.dart';
+import '../Utility/SharedPreferenceHelper.dart';
+
 class TourController extends GetxController {
   var isLoading = false.obs;
   var createuserdata = CreateTourResponse().obs;
@@ -29,6 +32,18 @@ class TourController extends GetxController {
   void onClose() {
     Get.delete<TourController>();
     super.onClose();
+  }
+
+  @override
+  void onInit() {
+    print("onInit");
+    getauthtoken();
+    super.onInit();
+  }
+
+  Future<String> getauthtoken() async {
+    var loginToken = await SharedPreferenceHelper().getPref(TOKEN);
+    RequestCall.createAuthHeader(loginToken);
   }
 
   void creattour({String tourname, String problem, String city}) async {

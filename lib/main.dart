@@ -15,6 +15,7 @@ import 'Views/Inventory/InventoryHistory.dart';
 import 'Views/Inventory/SendInventory.dart';
 import 'Views/Tour/TourList.dart';
 import 'Views/Wallet/ExpenseHistory.dart';
+import 'Views/Wallet/SendAmount.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/Dashboard", page: () => Dashboard()),
         GetPage(name: "/Inventory", page: () => Inventory()),
         GetPage(name: "/SendInventory", page: () => SendInventory()),
+        GetPage(name: "/SendAmount", page: () => SendAmount()),
         GetPage(name: "/InventoryHistory", page: () => InventoryHistory()),
         GetPage(name: "/TourList", page: () => TourList()),
         GetPage(name: "/ExpenseHistory", page: () => ExpenseHistory()),

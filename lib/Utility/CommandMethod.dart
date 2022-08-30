@@ -241,6 +241,15 @@ Widget AdminDrawer() {
                 // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
               }),
           createDrawerBodyItem(
+              icon: Icons.send,
+              text: 'Send Amount',
+              onTap: () {
+                Get.offNamed("/SendAmount", preventDuplicates: false);
+
+                // _permissionStatus?
+                // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
+              }),
+          createDrawerBodyItem(
               icon: Icons.assignment_returned,
               text: 'Return Inventory',
               onTap: () {

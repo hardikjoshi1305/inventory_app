@@ -45,7 +45,7 @@ class TourListWidget extends StatelessWidget {
                 flex: 1,
                 child: Padding(
                     padding: const EdgeInsets.only(right: 1.0),
-                    child: tourhistmodel.iscompleted == 0
+                    child: tourhistmodel.iscompleted == "0"
                         ? Container(
                             color: AppColors.offWhite,
                             height: 50,

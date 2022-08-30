@@ -39,18 +39,22 @@ class Datum {
   Datum({
     this.id,
     this.userid,
+    this.wallet_amount,
   });
 
   int id;
   String userid;
+  String wallet_amount;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
         userid: json["userid"],
+        wallet_amount: json["wallet_amount"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "userid": userid,
+        "wallet_amount": wallet_amount,
       };
 }

@@ -24,6 +24,9 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
   String img_path = "";
   var item = Get.arguments;
   TextEditingController te_Remark = TextEditingController();
+  TextEditingController te_imgpath = TextEditingController();
+  TextEditingController te_service = TextEditingController();
+
   TourController tourController = Get.put(TourController());
   @override
   void initState() {
@@ -36,6 +39,8 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
   void dispose() {
     te_Remark..text = "";
     te_Remark.dispose();
+    te_imgpath.dispose();
+    te_service.dispose();
     remark = "";
     print("dispose");
     super.dispose();
@@ -92,6 +97,18 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
                                     Container(
                                       height: 20,
                                     ),
+                                    Container(
+                                      child: TextField(
+                                        enabled: false,
+                                        controller: te_imgpath..text,
+                                        maxLines: 2,
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 15),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 10,
+                                    ),
                                     ElevatedButton(
                                         onPressed: () async {
                                           try {
@@ -103,6 +120,9 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
                                             print(
                                                 "object" + image.absolute.path);
                                             img_path = image.absolute.path;
+                                            String fff =
+                                                img_path.split("/").last;
+                                            te_imgpath..text = fff;
                                           } catch (exception) {
                                             print("object" +
                                                 exception.toString());
@@ -140,6 +160,9 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
                                               print("object" +
                                                   image.absolute.path);
                                               img_path = image.absolute.path;
+                                              String fff =
+                                                  img_path.split("/").last;
+                                              te_imgpath..text = fff;
                                             } catch (exception) {
                                               print("object" +
                                                   exception.toString());
@@ -294,6 +317,11 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
                                                       image.absolute.path);
                                                   reportfile =
                                                       image.absolute.path;
+                                                  String jjj = reportfile
+                                                      .toString()
+                                                      .split("/")
+                                                      .last;
+                                                  te_service..text = jjj;
                                                 } catch (exception) {
                                                   print("object" +
                                                       exception.toString());
@@ -308,6 +336,17 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
                                                   Text("Upload Service Report")
                                                 ],
                                               )),
+                                        ),
+                                        Container(
+                                          margin: EdgeInsets.all(10),
+                                          child: TextField(
+                                            enabled: false,
+                                            controller: te_service..text,
+                                            maxLines: 2,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 15),
+                                          ),
                                         ),
                                         Expanded(
                                           child: Container(),

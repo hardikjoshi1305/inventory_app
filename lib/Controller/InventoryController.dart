@@ -23,6 +23,9 @@ import 'package:inventory_management/Views/Inventory/Inventory.dart';
 import 'package:inventory_management/Views/Inventory/UserCurrentInventory.dart';
 import 'package:inventory_management/Views/Inventory/UserInventory.dart';
 
+import '../Utility/CONSTANT.dart';
+import '../Utility/SharedPreferenceHelper.dart';
+
 class InventoryController extends GetxController {
   var isLoading = false.obs;
   var login = addinventory.AddInventorylResponse().obs;
@@ -36,7 +39,7 @@ class InventoryController extends GetxController {
   @override
   void onInit() {
     print("onInit");
-
+    getauthtoken();
     super.onInit();
   }
 
@@ -229,5 +232,10 @@ class InventoryController extends GetxController {
     } finally {
       isLoading(false);
     }
+  }
+
+  Future<String> getauthtoken() async {
+    var loginToken = await SharedPreferenceHelper().getPref(TOKEN);
+    RequestCall.createAuthHeader(loginToken);
   }
 }

@@ -16,8 +16,8 @@ class WalletScreen extends StatefulWidget {
 class _WalletScreenState extends State<WalletScreen> {
   @override
   void initState() {
-    // callapi();
-    upcomingController.wallethistorydata();
+    callapi();
+    // upcomingController.wallethistorydata();
 
     // upcomingController.pendingitem(iscompleted: "0");
     super.initState();
@@ -76,7 +76,7 @@ class _WalletScreenState extends State<WalletScreen> {
                           Obx(
                             () => upcomingController.wallethistory.length > 0
                                 ? Text(
-                                    "${upcomingController.wallethistory[upcomingController.wallethistory.length - 1].walletBalance} \u{20B9}",
+                                    "${upcomingController.wallethistory[0].walletBalance} \u{20B9}",
                                     style: TextStyle(
                                         fontSize: 27,
                                         fontWeight: FontWeight.w500,
@@ -122,19 +122,87 @@ class _WalletScreenState extends State<WalletScreen> {
                             ),
                           ),
                           Obx(() => upcomingController.wallethistory.length > 0
-                              ? ListView.builder(
-                                  shrinkWrap: true,
-                                  padding: EdgeInsets.only(bottom: 16),
-                                  itemCount:
-                                      upcomingController.wallethistory.length,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemBuilder: (ctx, index) {
-                                    var wallet = upcomingController
-                                        .wallethistory
-                                        .elementAt(index);
-                                    return WalletListWidget(
-                                        walletmodel: wallet);
-                                  })
+                              ? SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  physics: AlwaysScrollableScrollPhysics(),
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.vertical,
+                                    physics: AlwaysScrollableScrollPhysics(),
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height,
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              toptitle(120.0, "Credit"),
+                                              Container(
+                                                width: 1,
+                                                color: Colors.white,
+                                              ),
+                                              toptitle(120.0, "Debit"),
+                                              Container(
+                                                width: 1,
+                                                color: Colors.white,
+                                              ),
+                                              toptitle(150.0, "Detail"),
+                                              Container(
+                                                width: 1,
+                                                color: Colors.white,
+                                              ),
+                                              toptitle(150.0, "Status"),
+                                              Container(
+                                                width: 1,
+                                                color: Colors.white,
+                                              ),
+                                              toptitle(160.0, "Date"),
+                                              Container(
+                                                width: 1,
+                                                color: Colors.white,
+                                              ),
+                                              toptitle(100.0, "Image"),
+                                              Container(
+                                                width: 1,
+                                                color: Colors.white,
+                                              ),
+                                            ],
+                                          ),
+
+                                          Column(
+                                            children: [
+                                              ...upcomingController
+                                                  .wallethistory
+                                                  .map((element) {
+                                                var index = upcomingController
+                                                    .wallethistory
+                                                    .indexOf(element);
+                                                var wallet = upcomingController
+                                                    .wallethistory
+                                                    .elementAt(index);
+                                                return WalletListWidget(
+                                                    walletmodel: wallet);
+                                              }).toList()
+                                            ],
+                                          )
+                                          // ListView.builder(
+                                          //     shrinkWrap: true,
+                                          //     padding:
+                                          //         EdgeInsets.only(bottom: 16),
+                                          //     itemCount: upcomingController
+                                          //         .wallethistory.length,
+                                          //     physics:
+                                          //         NeverScrollableScrollPhysics(),
+                                          //     itemBuilder: (ctx, index) {
+                                          //       var wallet = upcomingController
+                                          //           .wallethistory
+                                          //           .elementAt(index);
+                                          //       return WalletListWidget(
+                                          //           walletmodel: wallet);
+                                          //     })
+                                        ],
+                                      ),
+                                    ),
+                                  ))
                               : Text("No Data Found"))
                         ],
                       ),

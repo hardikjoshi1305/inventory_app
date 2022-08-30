@@ -47,6 +47,8 @@ class Datum {
     this.expensesName,
     this.amount,
     this.tourname,
+    this.photo,
+    this.is_approved,
   });
 
   var id;
@@ -59,6 +61,8 @@ class Datum {
   String expensesName;
   String amount;
   String tourname;
+  var photo;
+  var is_approved;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
@@ -73,6 +77,8 @@ class Datum {
             json["expenses_name"] == null ? null : json["expenses_name"],
         amount: json["amount"] == null ? null : json["amount"],
         tourname: json["tourname"] == null ? null : json["tourname"],
+        photo: json["photo"] == null ? null : json["photo"],
+        is_approved: json["is_approved"] == null ? null : json["is_approved"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -86,5 +92,7 @@ class Datum {
         "expenses_name": expensesName == null ? null : expensesName,
         "amount": amount == null ? null : amount,
         "tourname": tourname == null ? null : tourname,
+        "photo": photo == null ? null : photo,
+        "is_approved": is_approved == null ? null : is_approved,
       };
 }

@@ -6,7 +6,7 @@ class SharedPreferenceHelper {
   String fcmToken = "";
   SharedPreferenceHelper._privateConstructor();
   static final SharedPreferenceHelper _instance =
-  SharedPreferenceHelper._privateConstructor();
+      SharedPreferenceHelper._privateConstructor();
 
   factory SharedPreferenceHelper() {
     return _instance;
@@ -23,21 +23,21 @@ class SharedPreferenceHelper {
     return sharedPreference.getString(Prefname);
   }
 
- //  void setAuthToken(String authToken) async {
- //    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
- //    sharedPreferences.setString(sharedPrefID, authToken);
- //    // print(await getAuthToken() + "Token added to shared preferences");
- //  }
- //
- // static Future<String> getAuthToken() async {
- //    SharedPreferences sharedPreference = await SharedPreferences.getInstance();
- //    return sharedPreference.getString(sharedPrefID);
- //  }
+  //  void setAuthToken(String authToken) async {
+  //    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  //    sharedPreferences.setString(sharedPrefID, authToken);
+  //    // print(await getAuthToken() + "Token added to shared preferences");
+  //  }
+  //
+  // static Future<String> getAuthToken() async {
+  //    SharedPreferences sharedPreference = await SharedPreferences.getInstance();
+  //    return sharedPreference.getString(sharedPrefID);
+  //  }
 
-  void logout() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.remove(sharedPrefID);
-  }
+  // void logout() async {
+  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  //   sharedPreferences.remove(sharedPrefID);
+  // }
 
   // String getSessionId() {
   //   return authorizationToken;

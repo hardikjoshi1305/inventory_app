@@ -22,10 +22,6 @@ class Inventory extends StatefulWidget {
 
 class _InventoryState extends State<Inventory> {
   InventoryController inventoryController = Get.put(InventoryController());
-  getauthtoken() async {
-    var token = await SharedPreferenceHelper().getPref(TOKEN);
-    // inventoryController.fetchinventorylist(token);
-  }
 
   apicall() async {
     await Future.delayed(Duration.zero);

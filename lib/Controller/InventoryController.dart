@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
@@ -234,7 +236,7 @@ class InventoryController extends GetxController {
     }
   }
 
-  Future<String> getauthtoken() async {
+  getauthtoken() async {
     var loginToken = await SharedPreferenceHelper().getPref(TOKEN);
     RequestCall.createAuthHeader(loginToken);
   }

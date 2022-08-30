@@ -19,7 +19,7 @@ class PendingController extends GetxController {
     super.onInit();
   }
 
-  Future<String> getauthtoken() async {
+  getauthtoken() async {
     var loginToken = await SharedPreferenceHelper().getPref(TOKEN);
     RequestCall.createAuthHeader(loginToken);
   }

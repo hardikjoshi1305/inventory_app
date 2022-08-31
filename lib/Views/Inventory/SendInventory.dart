@@ -189,64 +189,116 @@ class _SendInventoryState extends State<SendInventory> {
               height: 20,
             ),
 
-            DropdownSearch<Datum>(
-              mode: Mode.DIALOG,
-              showSearchBox: true,
-              isFilteredOnline: true,
-              dropDownButton: const Icon(
-                Icons.keyboard_arrow_down,
-                color: Colors.black,
-                size: 18,
-              ),
-
-              dropdownSearchDecoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Search Inventory by Code',
-                prefixIcon: Icon(Icons.search),
-              ),
-              dropdownBuilder: _customDropDownPrograms,
-              popupItemBuilder: _customPopupItemBuilder,
-              onChanged: (Datum object) {
-                // upcomingController.searchdata(object.code);
-                setState(() {
-                  if (object != null) {
-                    print("onchasnged" + object.code);
-                    if (!allinventory.contains(object.id.toString())) {
-                      allinventory.add(object.id.toString());
-                      allinventoryname.add(object.name.toString());
-                      allinventoryimage.add("");
-                    } else {
-                      Fluttertoast.showToast(msg: "Already Selected");
-                    }
-                  }
-                });
-              },
-              onFind: (String filter) => upcomingController.searchdata(filter),
-              showClearButton: true,
-              clearButtonBuilder: (_) => const Padding(
-                padding: EdgeInsets.all(0.0),
-                child: Icon(Icons.clear, size: 17, color: Colors.black),
-              ),
-              // validator: (Datum item) => item == null ? "vvvvvvv" : null,
-            ),
-
+            // DropdownSearch<Datum>(
+            //   mode: Mode.DIALOG,
+            //   showSearchBox: true,
+            //   isFilteredOnline: true,
+            //   dropDownButton: const Icon(
+            //     Icons.keyboard_arrow_down,
+            //     color: Colors.black,
+            //     size: 18,
+            //   ),
+            //
+            //   dropdownSearchDecoration: InputDecoration(
+            //     border: OutlineInputBorder(),
+            //     hintText: 'Search Inventory by Code or Name',
+            //     prefixIcon: Icon(Icons.search),
+            //   ),
+            //   dropdownBuilder: _customDropDownPrograms,
+            //   popupItemBuilder: _customPopupItemBuilder,
+            //   emptyBuilder: (context, searchEntry) => Center(
+            //       child:
+            //           Text('No data', style: TextStyle(color: Colors.black))),
+            //
+            //   onChanged: (Datum object) {
+            //     // upcomingController.searchdata(object.code);
+            //     setState(() {
+            //       if (object != null) {
+            //         print("onchasnged" + object.code);
+            //         if (!allinventory.contains(object.id.toString())) {
+            //           allinventory.add(object.id.toString());
+            //           allinventoryname.add(object.name.toString());
+            //           allinventoryimage.add("");
+            //         } else {
+            //           Fluttertoast.showToast(msg: "Already Selected");
+            //         }
+            //       }
+            //     });
+            //   },
+            //   onFind: (String filter) => upcomingController.searchdata(filter),
+            //   showClearButton: true,
+            //   clearButtonBuilder: (_) => const Padding(
+            //     padding: EdgeInsets.all(0.0),
+            //     child: Icon(Icons.clear, size: 17, color: Colors.black),
+            //   ),
+            //   // validator: (Datum item) => item == null ? "vvvvvvv" : null,
+            // ),
             Container(
-              height: 20,
+              child: TextField(
+                // controller: te_name
+                //   ..text = this.usermodel != null ? usermodel.name : "",
+                keyboardType: TextInputType.text,
+                onChanged: (value) {
+                  upcomingController.searchdata(value);
+                },
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.search),
+                  labelText: 'Search Inventory by Code',
+                ),
+              ),
             ),
+            upcomingController.search.length > 0
+                ? Column(
+                    children: [
+                      ...upcomingController.search
+                          .map((element) => GestureDetector(
+                                onTap: () {
+                                  upcomingController.search.clear();
+
+                                  setState(() {
+                                    if (!allinventory
+                                        .contains(element.id.toString())) {
+                                      allinventory.add(element.id.toString());
+                                      allinventoryname
+                                          .add(element.name.toString());
+                                      allinventoryimage.add("");
+                                    } else {
+                                      Fluttertoast.showToast(
+                                          msg: "Already Selected");
+                                    }
+                                  });
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    bottomtitle(110.0, "C :" + element.code),
+                                    bottomtitle(110.0, "N :" + element.name),
+                                    bottomtitle(
+                                        110.0, "L :" + element.location),
+                                  ],
+                                ),
+                              ))
+                          .toList()
+                    ],
+                  )
+                : Container(
+                    height: 20,
+                  ),
             allinventoryname.length > 0
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      toptitle(130.0, "Machine"),
+                      toptitle(130.0, "Part Name"),
                       Container(
                         width: 1,
                         color: Colors.white,
                       ),
-                      toptitle(100.0, "File"),
-                      Container(
-                        width: 1,
-                        color: Colors.white,
-                      ),
+                      // toptitle(100.0, "File"),
+                      // Container(
+                      //   width: 1,
+                      //   color: Colors.white,
+                      // ),
                       toptitle(100.0, "Action"),
                       Container(
                         width: 1,
@@ -257,26 +309,27 @@ class _SendInventoryState extends State<SendInventory> {
                 : Container(),
 
             ...allinventoryname.map((element) => Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     bottomtitle(130.0, element),
                     Container(
                       width: 1,
                       color: Colors.white,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        var index = allinventoryname.indexOf(element);
-
-                        return choosefile(index);
-                      },
-                      child: Container(
-                        color: AppColors.offWhite,
-                        height: 40,
-                        width: 100,
-                        padding: const EdgeInsets.all(2.0),
-                        child: Icon(Icons.image, color: AppColors.darkBlue),
-                      ),
-                    ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     var index = allinventoryname.indexOf(element);
+                    //
+                    //     return choosefile(index);
+                    //   },
+                    //   child: Container(
+                    //     color: AppColors.offWhite,
+                    //     height: 40,
+                    //     width: 100,
+                    //     padding: const EdgeInsets.all(2.0),
+                    //     child: Icon(Icons.image, color: AppColors.darkBlue),
+                    //   ),
+                    // ),
                     GestureDetector(
                       onTap: () {
                         var index = allinventoryname.indexOf(element);
@@ -320,7 +373,6 @@ class _SendInventoryState extends State<SendInventory> {
                           photo: allinventoryimage,
                           inventory_id: allinventory);
                     }
-
                     // callgetinventory(code);
                   },
                   child: const Text('Submit'),
@@ -362,14 +414,50 @@ class _SendInventoryState extends State<SendInventory> {
                     borderRadius: BorderRadius.circular(5),
                     color: Colors.white,
                   ),
-            child: ListTile(
-              title: Text(item.code.toString(),
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Color.fromARGB(255, 102, 100, 100),
-                  )),
-            ),
-          );
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        padding: EdgeInsets.all(5),
+                        child: Text(item.code.toString(),
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Color.fromARGB(255, 102, 100, 100),
+                            ))),
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        padding: EdgeInsets.all(5),
+                        child: Text(item.name.toString(),
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Color.fromARGB(255, 102, 100, 100),
+                            ))),
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        padding: EdgeInsets.all(5),
+                        child: Text(item.location.toString(),
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Color.fromARGB(255, 102, 100, 100),
+                            ))),
+                  ],
+                ),
+                Divider(
+                  color: Colors.black,
+                  height: 2,
+                )
+              ],
+            )
+            // ListTile(
+            //   title: Text(item.code.toString(),
+            //       style: const TextStyle(
+            //         fontSize: 14,
+            //         color: Color.fromARGB(255, 102, 100, 100),
+            //       )),
+            // ),
+            );
   }
 
   Widget _customDropDownPrograms(

@@ -43,33 +43,19 @@ class _DashboardBodyState extends State<DashboardBody> {
     return Scaffold(
       drawer: UserDrawer(),
       appBar: AppBar(
-    backgroundColor: Colors.blueGrey[600],
-    actions: <Widget>[
-      // IconButton(
-      //   icon: Icon(Icons.inventory),
-      //   onPressed: () {
-      //     // Navigator.push(context,
-      //     //     MaterialPageRoute(builder: (context) => Whats_MainUi())
-      //     // );
-      //   },
-      // ),
-      Container(
-        margin: EdgeInsets.only(right: 20, top: 6, bottom: 6),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: Colors.blueGrey[300],
-            elevation: 10,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-          
-          child: Text("Wallet Balance : 5000", style: TextStyle(color: Colors.white)),
-        ),
-      )
-    ],
-    title: Text('Argon Medical'),
-  );,
+        backgroundColor: Colors.blueGrey[600],
+        actions: <Widget>[
+          // IconButton(
+          //   icon: Icon(Icons.inventory),
+          //   onPressed: () {
+          //     // Navigator.push(context,
+          //     //     MaterialPageRoute(builder: (context) => Whats_MainUi())
+          //     // );
+          //   },
+          // ),
+        ],
+        title: Text('Argon Medical'),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
@@ -100,139 +86,179 @@ class _DashboardBodyState extends State<DashboardBody> {
   Widget screenbody() {
     return Column(
       children: [
-upcomingController.pending.length > 0
-        ? Container(
-            child: ListView(
-                children:
-                    List.generate(upcomingController.pending.length, (index) {
-              return Container(
-                  child: GestureDetector(
-                      onTap: () {
-                        Get.to(() => TourDetailSubmission(),
-                            arguments: upcomingController.pending[index].id
-                                .toString());
-                        // CreateTourDetail());
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Card(
-                            elevation: 7,
-                            margin:
-                                EdgeInsets.only(top: 16, left: 16, right: 16),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Padding(
-                                padding: const EdgeInsets.all(17.0),
-                                child: Column(
-                                  children: [
-                                    Card(
-                                      color: Colors.orange,
-                                      elevation: 7,
-                                      margin: EdgeInsets.only(
-                                          top: 16, left: 16, right: 16),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          width: double.infinity,
-                                          height: 25,
-                                          alignment:
-                                              AlignmentDirectional.center,
-                                          child: Text(
-                                            "Pending",
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold),
+        Container(
+            alignment: AlignmentDirectional.topEnd,
+            margin: EdgeInsets.only(right: 20, top: 6, bottom: 12),
+            child: Container(
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.green),
+                ),
+                child: Text("Wallet Balance : 5000",
+                    style: TextStyle(color: Colors.white)),
+              ),
+            )),
+        upcomingController.pending.length > 0
+            ? Container(
+                height: 400,
+                child: ListView(
+                    children: List.generate(upcomingController.pending.length,
+                        (index) {
+                  return Container(
+                      child: GestureDetector(
+                          onTap: () {
+                            Get.to(() => TourDetailSubmission(),
+                                arguments: upcomingController.pending[index].id
+                                    .toString());
+                            // CreateTourDetail());
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Card(
+                                elevation: 7,
+                                margin: EdgeInsets.only(
+                                    top: 16, left: 16, right: 16),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(17.0),
+                                    child: Column(
+                                      children: [
+                                        Card(
+                                          color: Colors.orange,
+                                          elevation: 7,
+                                          margin: EdgeInsets.only(
+                                              top: 16, left: 16, right: 16),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Container(
+                                              width: double.infinity,
+                                              height: 25,
+                                              alignment:
+                                                  AlignmentDirectional.center,
+                                              child: Text(
+                                                "Pending",
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 15,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                        Container(
+                                          height: 15,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
-                                            Text(
-                                              "Tour Name ",
-                                              style: Pendingitemtextstyle,
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "Tour Name ",
+                                                  style: Pendingitemtextstyle,
+                                                ),
+                                                Text("City ",
+                                                    style:
+                                                        Pendingitemtextstyle),
+                                                Text("Problem ",
+                                                    style:
+                                                        Pendingitemtextstyle),
+                                                Text("Date ",
+                                                    style:
+                                                        Pendingitemtextstyle),
+                                                Text("Total Expense ",
+                                                    style: Pendingitemtextstyle)
+                                              ],
                                             ),
-                                            Text("City ",
-                                                style: Pendingitemtextstyle),
-                                            Text("Problem ",
-                                                style: Pendingitemtextstyle),
-                                            Text("Date ",
-                                                style: Pendingitemtextstyle)
-                                          ],
-                                        ),
-                                        Column(
-                                          children: [
-                                            Text("  :  ",
-                                                style: Pendingitemtextstyle),
-                                            Text("  :  ",
-                                                style: Pendingitemtextstyle),
-                                            Text("  :  ",
-                                                style: Pendingitemtextstyle),
-                                            Text("  :  ",
-                                                style: Pendingitemtextstyle)
-                                          ],
-                                        ),
-                                        Column(
-                                          children: [
-                                            Text(
-                                                upcomingController
-                                                    .pending[index].tourname,
-                                                style: Pendingitemtextstyle),
-                                            Text(
-                                                upcomingController
-                                                    .pending[index].city,
-                                                style: Pendingitemtextstyle),
-                                            Text(
-                                                upcomingController
-                                                            .pending[index]
-                                                            .errorname !=
-                                                        null
-                                                    ? upcomingController
-                                                        .pending[index]
-                                                        .errorname
-                                                    : "-",
-                                                style: Pendingitemtextstyle),
-                                            Text(
-                                                getdateformate(
+                                            Column(
+                                              children: [
+                                                Text("  :  ",
+                                                    style:
+                                                        Pendingitemtextstyle),
+                                                Text("  :  ",
+                                                    style:
+                                                        Pendingitemtextstyle),
+                                                Text("  :  ",
+                                                    style:
+                                                        Pendingitemtextstyle),
+                                                Text("  :  ",
+                                                    style:
+                                                        Pendingitemtextstyle),
+                                                Text("  :  ",
+                                                    style: Pendingitemtextstyle)
+                                              ],
+                                            ),
+                                            Column(
+                                              children: [
+                                                Text(
                                                     upcomingController
                                                         .pending[index]
-                                                        .createdAt),
-                                                style: Pendingitemtextstyle)
+                                                        .tourname,
+                                                    style:
+                                                        Pendingitemtextstyle),
+                                                Text(
+                                                    upcomingController
+                                                        .pending[index].city,
+                                                    style:
+                                                        Pendingitemtextstyle),
+                                                Text(
+                                                    upcomingController
+                                                                .pending[index]
+                                                                .errorname !=
+                                                            null
+                                                        ? upcomingController
+                                                            .pending[index]
+                                                            .errorname
+                                                        : "-",
+                                                    style:
+                                                        Pendingitemtextstyle),
+                                                Text(
+                                                    getdateformate(
+                                                        upcomingController
+                                                            .pending[index]
+                                                            .createdAt),
+                                                    style:
+                                                        Pendingitemtextstyle),
+                                                Text("5000",
+                                                    style: Pendingitemtextstyle)
+                                              ],
+                                            ),
                                           ],
                                         ),
                                       ],
-                                    ),
-                                  ],
-                                ))),
-                      )));
-            })),
-          )
-        : nodatafound(),
+                                    ))),
+                          )));
+                })),
+              )
+            : Container(
+                height: 400,
+                child: nodatafound(),
+              ),
         Container(
-          margin: EdgeInsets.only(top: 20,left: 8,right: 8),
-          child: Text("You Have 5 Parts"),
+          margin: EdgeInsets.only(top: 20, left: 8, right: 8),
+          child: Text(
+            "You Have 5 Parts",
+            style: TextStyle(color: Colors.black, fontSize: 15),
+          ),
         ),
         Container(
-          margin: EdgeInsets.only(top: 20,left: 8,right: 8),
-          child: Text("5000 rs credited to your wallet send by admin", style: TextStyle(color: Colors.green),),
+          margin: EdgeInsets.only(top: 20, left: 8, right: 8),
+          child: Text(
+            "5000 rs credited to your wallet send by admin",
+            style: TextStyle(color: Colors.green, fontSize: 15),
+          ),
         )
       ],
     );
-    
-     
   }
 }

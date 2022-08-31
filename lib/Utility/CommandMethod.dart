@@ -176,7 +176,7 @@ Widget UserDrawer() {
           ),
           createDrawerBodyItem(
               icon: Icons.inventory,
-              text: 'Pending Inventory',
+              text: 'All Inventory',
               onTap: () {
                 Get.to(() => UserInventory(), preventDuplicates: false);
 
@@ -187,7 +187,7 @@ Widget UserDrawer() {
               }),
           createDrawerBodyItem(
               icon: Icons.inventory,
-              text: 'Current Inventory',
+              text: 'My Parts',
               onTap: () {
                 Get.to(() => UserCurrentInventory(), preventDuplicates: false);
 

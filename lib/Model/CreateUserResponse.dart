@@ -41,6 +41,7 @@ class Data {
     this.mobile,
     this.walletAmount,
     this.deviceid,
+    this.is_visible,
     this.id,
     this.apiToken,
   });
@@ -49,6 +50,7 @@ class Data {
   String mobile;
   String walletAmount;
   String deviceid;
+  String is_visible;
   var id;
   String apiToken;
 
@@ -57,6 +59,7 @@ class Data {
         mobile: json["mobile"],
         walletAmount: json["wallet_amount"],
         deviceid: json["deviceid"],
+        is_visible: json["is_visible"],
         id: json["id"],
         apiToken: json["api_token"],
       );
@@ -66,6 +69,7 @@ class Data {
         "mobile": mobile,
         "wallet_amount": walletAmount,
         "deviceid": deviceid,
+        "is_visible": is_visible,
         "id": id,
         "api_token": apiToken,
       };

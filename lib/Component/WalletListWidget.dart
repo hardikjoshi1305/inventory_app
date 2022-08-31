@@ -83,7 +83,9 @@ class WalletListWidget extends StatelessWidget {
                   ? "Approved"
                   : walletmodel.is_approved == "1"
                       ? "Approved"
-                      : "Rejected"),
+                      : walletmodel.is_approved == "0"
+                          ? "Pending"
+                          : "Rejected"),
           Container(
             width: 1,
             color: Colors.white,

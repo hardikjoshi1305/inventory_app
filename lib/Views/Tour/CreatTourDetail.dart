@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:inventory_management/Controller/TourController.dart';
+import 'package:inventory_management/Views/Tour/AddDailyRemark.dart';
+import 'package:inventory_management/Views/Tour/AddExpense.dart';
+import 'package:inventory_management/Views/Tour/AddServiceReport.dart';
 import 'package:mime/mime.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -13,38 +16,10 @@ class CreateTourDetail extends StatefulWidget {
 }
 
 class _CreateTourDetailState extends State<CreateTourDetail> {
-  var expensename,
-      amount,
-      remark,
-      photo,
-      daily_remark,
-      final_dignose,
-      servicereport,
-      reportfile;
-  String img_path = "";
+  var photo, final_dignose;
   var item = Get.arguments;
-  TextEditingController te_Remark = TextEditingController();
-  TextEditingController te_imgpath = TextEditingController();
-  TextEditingController te_service = TextEditingController();
 
   TourController tourController = Get.put(TourController());
-  @override
-  void initState() {
-    getdailyremark();
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    te_Remark..text = "";
-    te_Remark.dispose();
-    te_imgpath.dispose();
-    te_service.dispose();
-    remark = "";
-    print("dispose");
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,343 +35,12 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
                     child: CircularProgressIndicator(),
                   )
                 : item[0] == 1
-                    ? SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Container(
-                            height: MediaQuery.of(context).size.height,
-                            child: Column(
-                              children: [
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Container(
-                                      height: 20,
-                                    ),
-                                    TextField(
-                                      keyboardType: TextInputType.text,
-                                      onChanged: (value) => expensename = value,
-                                      decoration: const InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        labelText: 'Expense Name',
-                                        prefixIcon: Icon(Icons.money),
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 20,
-                                    ),
-                                    TextField(
-                                      keyboardType: TextInputType.number,
-                                      onChanged: (value) => amount = value,
-                                      decoration: const InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        labelText: 'Amount',
-                                        prefixIcon:
-                                            Icon(Icons.currency_rupee_outlined),
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 20,
-                                    ),
-                                    Container(
-                                      child: TextField(
-                                        enabled: false,
-                                        controller: te_imgpath..text,
-                                        maxLines: 2,
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 15),
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 10,
-                                    ),
-                                    ElevatedButton(
-                                        onPressed: () async {
-                                          try {
-                                            var image =
-                                                await ImagePicker.pickImage(
-                                                    source:
-                                                        ImageSource.gallery);
-                                            // print("object" + image.toString());
-                                            print(
-                                                "object" + image.absolute.path);
-                                            img_path = image.absolute.path;
-                                            String fff =
-                                                img_path.split("/").last;
-                                            te_imgpath..text = fff;
-                                          } catch (exception) {
-                                            print("object" +
-                                                exception.toString());
-                                          }
-                                        },
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Container(
-                                              margin: EdgeInsets.only(right: 7),
-                                              child: Icon(Icons.image),
-                                            ),
-                                            Text("Upload Image")
-                                          ],
-                                        )),
-                                    Container(
-                                      margin:
-                                          EdgeInsets.only(top: 10, bottom: 10),
-                                      child: Text(
-                                        "OR",
-                                        style: TextStyle(fontSize: 17),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: ElevatedButton(
-                                          onPressed: () async {
-                                            try {
-                                              var image =
-                                                  await ImagePicker.pickImage(
-                                                      source:
-                                                          ImageSource.camera);
-                                              // print("object" + image.toString());
-                                              print("object" +
-                                                  image.absolute.path);
-                                              img_path = image.absolute.path;
-                                              String fff =
-                                                  img_path.split("/").last;
-                                              te_imgpath..text = fff;
-                                            } catch (exception) {
-                                              print("object" +
-                                                  exception.toString());
-                                            }
-                                          },
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Container(
-                                                margin:
-                                                    EdgeInsets.only(right: 7),
-                                                child: Icon(Icons.camera_alt),
-                                              ),
-                                              Text("Capture")
-                                            ],
-                                          )),
-                                    ),
-                                    // TextField(
-                                    //   keyboardType: TextInputType.text,
-                                    //   onChanged: (value) => photo = value,
-                                    //   onTap:
-                                    //   decoration: const InputDecoration(
-                                    //     border: OutlineInputBorder(),
-                                    //     labelText: 'Photo',
-                                    //     prefixIcon: Icon(Icons.image),
-                                    //   ),
-                                    // ),
-                                  ],
-                                ),
-                                Container(
-                                  height:
-                                      MediaQuery.of(context).size.height / 2 -
-                                          100,
-                                  alignment: AlignmentDirectional.bottomCenter,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      if (validation(expensename, amount)) {
-                                        tourController.createexpense(
-                                            tour_id: item[1],
-                                            expenses_name: expensename,
-                                            amount: amount.toString(),
-                                            photo: img_path.toString());
-                                      }
-                                    },
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 40,
-                                      alignment: AlignmentDirectional.center,
-                                      child: Text('Submit'),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )),
-                      )
+                    ? AddExpense(itemid: item[1])
                     : item[0] == 2
-                        ? Flex(
-                            direction: Axis.vertical,
-                            children: [
-                              Expanded(
-                                  flex: 1,
-                                  child: Column(children: [
-                                    Container(
-                                      height: 30,
-                                      margin: EdgeInsets.all(10),
-                                      child: Text(
-                                        "Enter Daily Remark",
-                                        style: TextStyle(
-                                            fontSize: 19, color: Colors.black),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 3,
-                                      child: TextField(
-                                        maxLines: 20,
-                                        style: TextStyle(
-                                            height: 2.0, color: Colors.black),
-                                        controller: te_Remark
-                                          ..text = tourController.getremarkdata
-                                                      .value.data !=
-                                                  null
-                                              ? tourController.getremarkdata
-                                                  .value.data.dailyremark
-                                              : "",
-                                        keyboardType: TextInputType.text,
-                                        onChanged: (value) => remark = value,
-                                        decoration: const InputDecoration(
-                                          border: OutlineInputBorder(),
-
-                                          // prefixIcon: Icon(Icons.comment),
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Container(),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Container(
-                                        margin: const EdgeInsets.all(5),
-                                        width: double.infinity,
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            if (validation2(remark)) {
-                                              tourController.createremark(
-                                                  tour_id: item[1],
-                                                  remarkid: tourController
-                                                              .getremarkdata
-                                                              .value
-                                                              .data !=
-                                                          null
-                                                      ? tourController
-                                                          .getremarkdata
-                                                          .value
-                                                          .data
-                                                          .id
-                                                          .toString()
-                                                      : "",
-                                                  dailyremark:
-                                                      remark.toString());
-                                            }
-                                          },
-                                          child: const Text('Submit'),
-                                        ),
-                                      ),
-                                    )
-                                  ]))
-                            ],
-                          )
+                        ? AddDailyRemark(itemid: item[1])
                         : item[0] == 3
-                            ? Flex(
-                                direction: Axis.vertical,
-                                children: [
-                                  Expanded(
-                                      flex: 1,
-                                      child: Column(children: [
-                                        Container(
-                                          height: 60,
-                                        ),
-                                        SizedBox(
-                                          child: ElevatedButton(
-                                              onPressed: () async {
-                                                try {
-                                                  var image = await ImagePicker
-                                                      .pickImage(
-                                                          source: ImageSource
-                                                              .gallery);
-                                                  // print("object" + image.toString());
-                                                  print("object" +
-                                                      image.absolute.path);
-                                                  reportfile =
-                                                      image.absolute.path;
-                                                  String jjj = reportfile
-                                                      .toString()
-                                                      .split("/")
-                                                      .last;
-                                                  te_service..text = jjj;
-                                                } catch (exception) {
-                                                  print("object" +
-                                                      exception.toString());
-                                                }
-                                              },
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Icon(Icons.image),
-                                                  Text("Upload Service Report")
-                                                ],
-                                              )),
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.all(10),
-                                          child: TextField(
-                                            enabled: false,
-                                            controller: te_service..text,
-                                            maxLines: 2,
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 15),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Container(),
-                                        ),
-                                        Align(
-                                          alignment: Alignment.bottomCenter,
-                                          child: Container(
-                                            margin: const EdgeInsets.all(5),
-                                            width: double.infinity,
-                                            child: ElevatedButton(
-                                              onPressed: () {
-                                                if (validation4(reportfile)) {
-                                                  tourController
-                                                      .createreportfile(
-                                                          tour_id: item[1],
-                                                          service_report:
-                                                              reportfile
-                                                                  .toString());
-                                                }
-
-                                                // Get.dialog(Padding(
-                                                //   padding: const EdgeInsets.all(12.0),
-                                                //   child: Column(
-                                                //     mainAxisAlignment: MainAxisAlignment.center,
-                                                //     crossAxisAlignment: CrossAxisAlignment.center,
-                                                //     children: [
-                                                //       Padding(
-                                                //         padding: const EdgeInsets.all(8.0),
-                                                //         child: ElevatedButton(
-                                                //             onPressed: () {
-                                                //               sharefile()
-                                                //             },
-                                                //             child: Text('Share File')),
-                                                //       ),
-                                                //       Padding(
-                                                //         padding: const EdgeInsets.all(8.0),
-                                                //         child: ElevatedButton(
-                                                //             onPressed: () {},
-                                                //             child: Text('Share Image')),
-                                                //       )
-                                                //     ],
-                                                //   ),
-                                                // ));
-                                              },
-                                              child: const Text('Submit'),
-                                            ),
-                                          ),
-                                        )
-                                      ]))
-                                ],
+                            ? AddServiceReport(
+                                itemid: item[1],
                               )
                             : Flex(
                                 direction: Axis.vertical,
@@ -461,23 +105,6 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
     );
   }
 
-  bool validation(expensename, amount) {
-    if (expensename.toString().isEmpty) {
-      Fluttertoast.showToast(msg: "Please Enter expense name");
-      return false;
-    } else if (amount.toString().isEmpty) {
-      Fluttertoast.showToast(msg: "Please Enter amount");
-      return false;
-    }
-    // else if (imgpath.toString().isEmpty) {
-    //   Fluttertoast.showToast(msg: "Please Any Select Image");
-    //   return false;
-    // }
-    else {
-      return true;
-    }
-  }
-
   bool validation2(remark) {
     if (remark.toString().isEmpty) {
       Fluttertoast.showToast(msg: "Please Enter Remark");
@@ -493,22 +120,6 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
       return false;
     } else {
       return true;
-    }
-  }
-
-  bool validation4(reportfile) {
-    if (reportfile.toString().isEmpty) {
-      Fluttertoast.showToast(msg: "Please Select File.");
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  void getdailyremark() async {
-    if (item[0] == 2) {
-      await Future.delayed(Duration.zero);
-      tourController.getremark(item[1]);
     }
   }
 }

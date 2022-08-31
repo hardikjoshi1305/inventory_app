@@ -142,11 +142,15 @@ class _PendingState extends State<Pending> {
                                             Text("Problem ",
                                                 style: Pendingitemtextstyle),
                                             Text("Date ",
+                                                style: Pendingitemtextstyle),
+                                            Text("Total Expense ",
                                                 style: Pendingitemtextstyle)
                                           ],
                                         ),
                                         Column(
                                           children: [
+                                            Text("  :  ",
+                                                style: Pendingitemtextstyle),
                                             Text("  :  ",
                                                 style: Pendingitemtextstyle),
                                             Text("  :  ",
@@ -182,6 +186,8 @@ class _PendingState extends State<Pending> {
                                                     upcomingController
                                                         .pending[index]
                                                         .createdAt),
+                                                style: Pendingitemtextstyle),
+                                            Text("5000",
                                                 style: Pendingitemtextstyle)
                                           ],
                                         ),

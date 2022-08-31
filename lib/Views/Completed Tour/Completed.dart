@@ -5,6 +5,7 @@ import 'package:inventory_management/Utility/CONSTANT.dart';
 import 'package:inventory_management/Utility/SharedPreferenceHelper.dart';
 import 'package:inventory_management/Utility/app_colors.dart';
 import 'package:inventory_management/Views/Tour/CreatTourDetail.dart';
+import 'package:inventory_management/Views/Tour/UserTourDetail.dart';
 
 import '../../Utility/CommandMethod.dart';
 import '../../Utility/TextStyle.dart';
@@ -81,11 +82,9 @@ class _CompletedState extends State<Completed> {
               return Container(
                   child: GestureDetector(
                       onTap: () {
-                        // Get.to(() => TourDetailSubmission(),
-                        //     arguments: upcomingController
-                        //         .pending[index].id
-                        //         .toString());
-                        // CreateTourDetail());
+                        Get.to(() => UserTourDetails(),
+                            arguments: upcomingController.pending[index].id
+                                .toString());
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
@@ -145,11 +144,15 @@ class _CompletedState extends State<Completed> {
                                             Text("Problem ",
                                                 style: Pendingitemtextstyle),
                                             Text("Date ",
+                                                style: Pendingitemtextstyle),
+                                            Text("Total Expense ",
                                                 style: Pendingitemtextstyle)
                                           ],
                                         ),
                                         Column(
                                           children: [
+                                            Text("  :  ",
+                                                style: Pendingitemtextstyle),
                                             Text("  :  ",
                                                 style: Pendingitemtextstyle),
                                             Text("  :  ",
@@ -185,6 +188,8 @@ class _CompletedState extends State<Completed> {
                                                     upcomingController
                                                         .pending[index]
                                                         .createdAt),
+                                                style: Pendingitemtextstyle),
+                                            Text("5000",
                                                 style: Pendingitemtextstyle)
                                           ],
                                         ),

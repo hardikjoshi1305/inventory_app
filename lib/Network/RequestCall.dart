@@ -255,7 +255,8 @@ class RequestCall {
       String phone,
       String password,
       String deviceid,
-      String wallet_amount}) async {
+      String wallet_amount,
+      String isvisibleid}) async {
 //     final headers = authHeader;
 //     http.MultipartFile f1 = http.MultipartFile.fromString("userid", name);
 //     http.MultipartFile f3 = http.MultipartFile.fromString("mobile", phone);
@@ -280,6 +281,7 @@ class RequestCall {
       "password": password,
       "deviceid": deviceid,
       "wallet_amount": wallet_amount,
+      "is_visible": isvisibleid,
     });
 
     var response = await client
@@ -502,7 +504,6 @@ class RequestCall {
       print("error" + error.toString());
       Fluttertoast.showToast(msg: error.toString());
     });
-    ;
     if (response.statusCode == 200) {
       var json = response.body;
       print("dadad" + response.body.toString());

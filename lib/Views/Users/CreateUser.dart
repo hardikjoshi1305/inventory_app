@@ -22,6 +22,8 @@ class _CreateuserState extends State<Createuser> {
       photo,
       wallet_amount,
       phone = " ";
+  var isvisible = false;
+  var isvisibleid = "0";
 
   UserController userController = Get.put(UserController());
 
@@ -132,6 +134,23 @@ class _CreateuserState extends State<Createuser> {
                                 Container(
                                   height: 20,
                                 ),
+                                CheckboxListTile(
+                                  title: Text("Inventory visible to user ?"),
+                                  value: isvisible,
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      isvisible = newValue;
+                                      isvisibleid = newValue ? "1" : "0";
+                                      print(
+                                          "isvisible" + isvisibleid.toString());
+                                    });
+                                  },
+                                  controlAffinity: ListTileControlAffinity
+                                      .trailing, //  <-- leading Checkbox
+                                ),
+                                Container(
+                                  height: 20,
+                                ),
                                 // ElevatedButton(
                                 //     onPressed: () async {
                                 //       // 1. Pick an image file
@@ -186,7 +205,8 @@ class _CreateuserState extends State<Createuser> {
                                               phone,
                                               password,
                                               deviceid,
-                                              wallet_amount)) {
+                                              wallet_amount,
+                                              isvisibleid)) {
                                             userController.createuser(
                                               name: name.toString(),
                                               phone: phone.toString(),
@@ -194,6 +214,8 @@ class _CreateuserState extends State<Createuser> {
                                               deviceid: deviceid.toString(),
                                               wallet_amount:
                                                   wallet_amount.toString(),
+                                              isvisibleid:
+                                                  isvisibleid.toString(),
                                               // photo: photo.toString()
                                             );
                                           }
@@ -216,7 +238,8 @@ class _CreateuserState extends State<Createuser> {
         ));
   }
 
-  bool validatetourdetail(name, phone, password, deviceid, wallet_amount) {
+  bool validatetourdetail(
+      name, phone, password, deviceid, wallet_amount, String isvisibleid) {
     if (name.toString().isEmpty ||
         phone.toString().isEmpty ||
         password.toString().isEmpty) {

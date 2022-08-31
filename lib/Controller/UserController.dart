@@ -42,6 +42,7 @@ class UserController extends GetxController {
     String password,
     String deviceid,
     String wallet_amount,
+    String isvisibleid,
     // String photo
   }) async {
     try {
@@ -52,6 +53,7 @@ class UserController extends GetxController {
         password: password,
         deviceid: deviceid,
         wallet_amount: wallet_amount,
+        isvisibleid: isvisibleid,
         // photo: photo
       );
       print("rdd" + res.toString());

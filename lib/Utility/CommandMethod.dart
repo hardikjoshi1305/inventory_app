@@ -131,10 +131,18 @@ Widget UserDrawer() {
         children: <Widget>[
           createDrawerHeader(),
           createDrawerBodyItem(
+              icon: Icons.dashboard,
+              text: 'Dashboard',
+              onTap: () {
+                Get.to(() => Dashboard(), preventDuplicates: false);
+                // Navigator.of(context).pop();
+                // Navigator.pushNamed(context, pageRoutes.landscape);
+              }),
+          createDrawerBodyItem(
               icon: Icons.pending_actions,
               text: 'Pending Tour',
               onTap: () {
-                Get.to(() => Dashboard(), preventDuplicates: false);
+                Get.to(() => Pending(), preventDuplicates: false);
                 // Navigator.of(context).pop();
                 // Navigator.pushNamed(context, pageRoutes.landscape);
               }),

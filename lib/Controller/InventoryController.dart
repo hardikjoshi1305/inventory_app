@@ -1,30 +1,19 @@
 import 'dart:ffi';
-
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
-import 'package:inventory_management/Model/InventorylistResponse.dart'
-    as inventory;
-import 'package:inventory_management/Model/AddInventoryResponse.dart'
-    as addinventory;
-import 'package:inventory_management/Model/InventoryStatusResponse.dart'
-    as status;
-import 'package:inventory_management/Model/AssignInventoryResponse.dart'
-    as assign;
-
-import 'package:inventory_management/Model/AcceptInventoryResponse.dart'
-    as acce;
-import 'package:inventory_management/Model/AcceptInventoryResponse.dart'
-    as history;
+import 'package:inventory_management/Model/InventorylistResponse.dart' as inventory;
+import 'package:inventory_management/Model/AddInventoryResponse.dart' as addinventory;
+import 'package:inventory_management/Model/InventoryStatusResponse.dart' as status;
+import 'package:inventory_management/Model/AssignInventoryResponse.dart' as assign;
+import 'package:inventory_management/Model/AcceptInventoryResponse.dart' as acce;
+import 'package:inventory_management/Model/AcceptInventoryResponse.dart' as history;
 import 'package:inventory_management/Model/ReceivePartResponse.dart';
-
 import 'package:inventory_management/Network/RequestCall.dart';
-
 import 'package:inventory_management/Views/Home/HomeScreen.dart';
 import 'package:inventory_management/Views/Inventory/Inventory.dart';
 import 'package:inventory_management/Views/Inventory/UserCurrentInventory.dart';
 import 'package:inventory_management/Views/Inventory/UserInventory.dart';
-
 import '../Utility/CONSTANT.dart';
 import '../Utility/SharedPreferenceHelper.dart';
 
@@ -48,7 +37,6 @@ class InventoryController extends GetxController {
   @override
   void refresh() {
     print("refresh");
-
     super.refresh();
   }
 

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inventory_management/Utility/CommandMethod.dart';
+import 'package:inventory_management/Views/Dashboard/DashboardBody.dart';
 import 'package:inventory_management/Views/Pending/Pending.dart';
 import 'package:inventory_management/Views/Tour/Createtrip.dart';
 import 'package:inventory_management/Views/Wallet/WalletScreen.dart';
@@ -38,7 +39,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: _onBackPressed, child: Scaffold(body: Pending()));
+        onWillPop: _onBackPressed, child: Scaffold(body: DashboardBody()));
   }
 
   Future<bool> _onBackPressed() async {

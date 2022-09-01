@@ -61,6 +61,21 @@ class WalletController extends GetxController {
     }
   }
 
+  void addexpenselist(String userid, String tourid) async {
+    try {
+      isLoading(true);
+      var res = await RequestCall.addexpenselist(userid, tourid);
+      if (res != null) {
+        expensehistory.assignAll(res);
+        Fluttertoast.showToast(msg: "Data Fetch Successfully");
+        // Get.to(HomeScreen());
+        // Get.to(HomeScreen());
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
+
   void acceptreject(String is_approved, String expense_id, int position) async {
     try {
       isLoading(true);

@@ -2,12 +2,22 @@ import 'dart:ffi';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
-import 'package:inventory_management/Model/InventorylistResponse.dart' as inventory;
-import 'package:inventory_management/Model/AddInventoryResponse.dart' as addinventory;
-import 'package:inventory_management/Model/InventoryStatusResponse.dart' as status;
-import 'package:inventory_management/Model/AssignInventoryResponse.dart' as assign;
-import 'package:inventory_management/Model/AcceptInventoryResponse.dart' as acce;
-import 'package:inventory_management/Model/AcceptInventoryResponse.dart' as history;
+import 'package:inventory_management/Model/InventorylistResponse.dart'
+    as inventory;
+import 'package:inventory_management/Model/AdminReturnInventoryResponse.dart'
+    as adminreturninventory;
+import 'package:inventory_management/Model/AddInventoryResponse.dart'
+    as addinventory;
+import 'package:inventory_management/Model/InventoryStatusResponse.dart'
+    as status;
+import 'package:inventory_management/Model/InventoryHistoryResponse.dart'
+    as inventoryhistory;
+import 'package:inventory_management/Model/AssignInventoryResponse.dart'
+    as assign;
+import 'package:inventory_management/Model/AcceptInventoryResponse.dart'
+    as acce;
+import 'package:inventory_management/Model/AcceptInventoryResponse.dart'
+    as history;
 import 'package:inventory_management/Model/ReceivePartResponse.dart';
 import 'package:inventory_management/Network/RequestCall.dart';
 import 'package:inventory_management/Views/Home/HomeScreen.dart';
@@ -23,10 +33,10 @@ class InventoryController extends GetxController {
   var receive = ReceivePartResponse().obs;
   var accept = acce.AcceptInventoryResponse().obs;
   var inventorylist = List<inventory.Datum>().obs;
-  var adminreturninventorylist = List<inventory.Datum>().obs;
+  var adminreturninventorylist = List<adminreturninventory.Datum>().obs;
   var userinventorylist = List<assign.Datum>().obs;
   var inventorystatuslist = List<status.Datum>().obs;
-  var inventoryhistorylist = List<status.Datum>().obs;
+  var inventoryhistorylist = List<inventoryhistory.Datum>().obs;
   @override
   void onInit() {
     print("onInit");
@@ -57,22 +67,27 @@ class InventoryController extends GetxController {
       String remark,
       // String status_id,
       String wherefrom,
-      String Prize}) async {
+      String Prize,
+      String statusdeatils,
+      String history}) async {
     try {
       print("iddd" + id);
       isLoading(true);
       var res = await RequestCall.createInventory(
-          id: id,
-          code: code,
-          name: name,
-          serial_no: serial_no,
-          px_no: px_no,
-          machine: machine,
-          location: location,
-          remark: remark,
-          // status_id: status_id,
-          wherefrom: wherefrom,
-          Prize: Prize);
+        id: id,
+        code: code,
+        name: name,
+        serial_no: serial_no,
+        px_no: px_no,
+        machine: machine,
+        location: location,
+        remark: remark,
+        // status_id: status_id,
+        wherefrom: wherefrom,
+        Prize: Prize,
+        statusdeatils: statusdeatils,
+        history: history,
+      );
       if (res != null) {
         login.value = res;
         if (login.value.succes) {
@@ -186,12 +201,12 @@ class InventoryController extends GetxController {
     }
   }
 
-  void gethistoryapi(String code) async {
+  void gethistoryapi(String id) async {
     try {
       // isLoading(true);
-      var res = await RequestCall.fetchinventoryhistory(code);
+      var res = await RequestCall.fetchinventoryhistory(id);
       if (res != null) {
-        inventoryhistorylist.assignAll(res);
+        inventoryhistorylist.value = res;
         if (inventoryhistorylist.length > 0) {
           Fluttertoast.showToast(msg: "status Retrieve Successfully");
         } else {
@@ -227,5 +242,33 @@ class InventoryController extends GetxController {
   getauthtoken() async {
     var loginToken = await SharedPreferenceHelper().getPref(TOKEN);
     RequestCall.createAuthHeader(loginToken);
+  }
+
+  Future<List<inventory.Datum>> searchdata(String query) async {
+    if (query != "") {
+      try {
+        isLoading(true);
+        var res = await RequestCall.searchinventorymain(query: query);
+        if (res != null) {
+          inventorylist.clear();
+          inventorylist.assignAll(res);
+          Fluttertoast.showToast(msg: "Data Fetch Successfully");
+          var detailsList = <inventory.Datum>[];
+          for (inventory.Datum bootcamp in inventorylist) {
+            detailsList.add(bootcamp);
+          }
+          return detailsList.toList();
+          return inventorylist;
+          // Get.to(HomeScreen());
+          // Get.to(HomeScreen());
+        } else {
+          return inventorylist;
+        }
+      } finally {
+        isLoading(false);
+      }
+    } else {
+      return inventorylist;
+    }
   }
 }

@@ -7,6 +7,8 @@ import 'package:inventory_management/Views/Users/Userlist.dart';
 import 'package:inventory_management/Views/Users/CreateUser.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../Dashboard/AdminDashboard.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key key}) : super(key: key);
 
@@ -34,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: _onBackPressed, child: Scaffold(body: Userlist()));
+        onWillPop: _onBackPressed, child: Scaffold(body: AdminDashboard()));
   }
 
   Future<bool> _onBackPressed() async {

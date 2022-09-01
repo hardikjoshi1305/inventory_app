@@ -57,7 +57,10 @@ class InventoryListWidget extends StatelessWidget {
           color: Colors.white,
         ),
         bottomtitle(
-            100.0, this.UserModel.remark == null ? "-" : this.UserModel.remark),
+            100.0,
+            this.UserModel.statusdetail == null
+                ? "-"
+                : this.UserModel.statusdetail),
         Container(
           width: 1,
           color: Colors.white,
@@ -75,7 +78,7 @@ class InventoryListWidget extends StatelessWidget {
             100.0,
             this.UserModel.price == null
                 ? "-"
-                : this.UserModel.price + " \u{20B9}"),
+                : this.UserModel.price.toString() + " \u{20B9}"),
         Container(
           width: 1,
           color: Colors.white,

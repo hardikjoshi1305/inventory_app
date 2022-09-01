@@ -72,7 +72,6 @@ class _ExpenseHistoryState extends State<ExpenseHistory> {
             Container(
               height: 20,
             ),
-
             Container(
               child: GestureDetector(
                 onTap: () {

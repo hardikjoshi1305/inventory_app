@@ -1,9 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../Controller/TourController.dart';
+import '../../Utility/CONSTANT.dart';
+import '../../Utility/CommandMethod.dart';
+import '../../Utility/Imagedisplay.dart';
+import '../../Utility/SharedPreferenceHelper.dart';
 
 class AddServiceReport extends StatefulWidget {
   final String itemid;
@@ -22,6 +27,12 @@ class _AddServiceReportState extends State<AddServiceReport> {
   void dispose() {
     te_service.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    getservicereportlist();
+    super.initState();
   }
 
   @override
@@ -101,8 +112,57 @@ class _AddServiceReportState extends State<AddServiceReport> {
             child: const Text('Submit'),
           ),
         ),
-      )
+      ),
+      Container(
+        height: 20,
+      ),
+      Container(
+        padding: EdgeInsets.all(10),
+        child: Text(
+          "Service Report",
+          style: TextStyle(color: Colors.black, fontSize: 18),
+        ),
+      ),
+      Divider(
+        color: Colors.black,
+      ),
+      tourController.adreportlist.value.length > 0
+          ? ListView.builder(
+              shrinkWrap: true,
+              itemCount: tourController.adreportlist.value.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Card(
+                  elevation: 7,
+                  margin: EdgeInsets.only(top: 5, left: 5, right: 5),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(7),
+                  ),
+                  child: GestureDetector(
+                      child: Container(
+                        padding: EdgeInsets.all(0),
+                        child: ListTile(
+                          title: Text(
+                            tourController.adreportlist[index].serviceReport,
+                            style: TextStyle(color: CupertinoColors.activeBlue),
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        Get.to(() => Imagedisplay(
+                            imgurl: tourController
+                                .adreportlist[index].serviceReport));
+                      }),
+                );
+              },
+            )
+          : nodatafound(),
     ]));
+  }
+
+  void getservicereportlist() async {
+    await Future.delayed(Duration.zero);
+    String userid = await SharedPreferenceHelper().getPref(Userid);
+    tourController.addservicereportlist(userid, widget.itemid);
   }
 }
 

@@ -17,7 +17,6 @@ import '../Users/CreateUser.dart';
 
 class Inventory extends StatefulWidget {
   const Inventory({Key key}) : super(key: key);
-
   @override
   State<Inventory> createState() => _InventoryState();
 }
@@ -94,6 +93,9 @@ class _InventoryState extends State<Inventory> {
     );
   }
 
+  final ScrollController _horizontal = ScrollController(),
+      _vertical = ScrollController();
+
   var searchinventory;
   Widget screenbody() {
     return SingleChildScrollView(
@@ -105,8 +107,11 @@ class _InventoryState extends State<Inventory> {
               keyboardType: TextInputType.visiblePassword,
               onChanged: (value) async {
                 searchinventory = value;
-                await upcomingController.searchdata(value);
-                await inventoryController.inventorylist.clear();
+                if (value != "") {
+                  await inventoryController.searchdata(value);
+                } else {
+                  apicall();
+                }
               },
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
@@ -118,219 +123,123 @@ class _InventoryState extends State<Inventory> {
           inventoryController.inventorylist != null
               ? Stack(
                   children: [
-                    SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        physics: const AlwaysScrollableScrollPhysics(),
+                    Scrollbar(
+                        isAlwaysShown: true,
+                        controller: _vertical,
                         child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          physics: AlwaysScrollableScrollPhysics(),
-                          child: Container(
-                            height: MediaQuery.of(context).size.height,
-                            child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Stack(
-                                  children: [
-                                    Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            toptitle(100.0, "ID"),
-                                            Container(
-                                              width: 1,
-                                              color: Colors.white,
-                                            ),
-                                            toptitle(120.0, "Code"),
-                                            Container(
-                                              width: 1,
-                                              color: Colors.white,
-                                            ),
-                                            toptitle(200.0, "Name"),
-                                            Container(
-                                              width: 1,
-                                              color: Colors.white,
-                                            ),
-                                            toptitle(200.0, "Serial No."),
-                                            Container(
-                                              width: 1,
-                                              color: Colors.white,
-                                            ),
-                                            toptitle(100.0, "Px No."),
-                                            Container(
-                                              width: 1,
-                                              color: Colors.white,
-                                            ),
-                                            toptitle(100.0, "Machine"),
-                                            Container(
-                                              width: 1,
-                                              color: Colors.white,
-                                            ),
-                                            toptitle(100.0, "Location"),
-                                            Container(
-                                              width: 1,
-                                              color: Colors.white,
-                                            ),
-                                            toptitle(100.0, "Remark"),
-                                            Container(
-                                              width: 1,
-                                              color: Colors.white,
-                                            ),
-                                            toptitle(180.0, "Status"),
-                                            Container(
-                                              width: 1,
-                                              color: Colors.white,
-                                            ),
-                                            toptitle(100.0, "Price"),
-                                            Container(
-                                              width: 1,
-                                              color: Colors.white,
-                                            ),
-                                            toptitle(130.0, "Action"),
-                                          ],
-                                        ),
-                                        Expanded(
-                                          child: Obx(() => (inventoryController
-                                                  .isLoading.value)
-                                              ? Center(
-                                                  child:
-                                                      CircularProgressIndicator())
-                                              : Column(
-                                                  children: [
-                                                    ...inventoryController
-                                                        .inventorylist
-                                                        .map((element) {
-                                                      // print("userlist" + element.name);
-                                                      return InventoryListWidget(
-                                                          UserModel: element,
-                                                          usertype: "admin");
-                                                    }).toList()
-                                                  ],
-                                                )),
-                                        ),
+                            scrollDirection: Axis.vertical,
+                            controller: _vertical,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            child: Scrollbar(
+                              isAlwaysShown: true,
+                              controller: _horizontal,
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                controller: _horizontal,
+                                physics: AlwaysScrollableScrollPhysics(),
+                                child: Container(
+                                  height: MediaQuery.of(context).size.height,
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Stack(
+                                        children: [
+                                          Column(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  toptitle(100.0, "ID"),
+                                                  Container(
+                                                    width: 1,
+                                                    color: Colors.white,
+                                                  ),
+                                                  toptitle(120.0, "Code"),
+                                                  Container(
+                                                    width: 1,
+                                                    color: Colors.white,
+                                                  ),
+                                                  toptitle(200.0, "Name"),
+                                                  Container(
+                                                    width: 1,
+                                                    color: Colors.white,
+                                                  ),
+                                                  toptitle(200.0, "Serial No."),
+                                                  Container(
+                                                    width: 1,
+                                                    color: Colors.white,
+                                                  ),
+                                                  toptitle(100.0, "Px No."),
+                                                  Container(
+                                                    width: 1,
+                                                    color: Colors.white,
+                                                  ),
+                                                  toptitle(100.0, "Machine"),
+                                                  Container(
+                                                    width: 1,
+                                                    color: Colors.white,
+                                                  ),
+                                                  toptitle(100.0, "Location"),
+                                                  Container(
+                                                    width: 1,
+                                                    color: Colors.white,
+                                                  ),
+                                                  toptitle(100.0, "Status"),
+                                                  Container(
+                                                    width: 1,
+                                                    color: Colors.white,
+                                                  ),
+                                                  toptitle(180.0, "Remark"),
+                                                  Container(
+                                                    width: 1,
+                                                    color: Colors.white,
+                                                  ),
+                                                  toptitle(100.0, "Price"),
+                                                  Container(
+                                                    width: 1,
+                                                    color: Colors.white,
+                                                  ),
+                                                  toptitle(130.0, "Action"),
+                                                ],
+                                              ),
+                                              Expanded(
+                                                child: Obx(() =>
+                                                    (inventoryController
+                                                            .isLoading.value)
+                                                        ? Center(
+                                                            child:
+                                                                CircularProgressIndicator())
+                                                        : Column(
+                                                            children: [
+                                                              ...inventoryController
+                                                                  .inventorylist
+                                                                  .map(
+                                                                      (element) {
+                                                                // print("userlist" + element.name);
+                                                                return InventoryListWidget(
+                                                                    UserModel:
+                                                                        element,
+                                                                    usertype:
+                                                                        "admin");
+                                                              }).toList()
+                                                            ],
+                                                          )),
+                                              ),
 
-                                        // ListView.builder(
-                                        //     shrinkWrap: true,
-                                        //     padding: EdgeInsets.only(bottom: 16),
-                                        //     itemCount: inventoryController.inventorylist.length,
-                                        //     itemBuilder: (ctx, index) {
-                                        //       var therapy =
-                                        //           inventoryController.inventorylist.elementAt(index);
-                                        //       return InventoryListWidget(UserModel: therapy);
-                                        //     })
-                                      ],
-                                    )
-                                  ],
-                                )),
-                          ),
-                        ))
-                  ],
-                )
-              : nodatafound(),
-          upcomingController.search != null
-              ? Stack(
-                  children: [
-                    SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          physics: AlwaysScrollableScrollPhysics(),
-                          child: Container(
-                            height: MediaQuery.of(context).size.height,
-                            child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Stack(
-                                  children: [
-                                    Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            toptitle(100.0, "ID"),
-                                            Container(
-                                              width: 1,
-                                              color: Colors.white,
-                                            ),
-                                            toptitle(120.0, "Code"),
-                                            Container(
-                                              width: 1,
-                                              color: Colors.white,
-                                            ),
-                                            toptitle(200.0, "Name"),
-                                            Container(
-                                              width: 1,
-                                              color: Colors.white,
-                                            ),
-                                            toptitle(200.0, "Serial No."),
-                                            Container(
-                                              width: 1,
-                                              color: Colors.white,
-                                            ),
-                                            toptitle(100.0, "Px No."),
-                                            Container(
-                                              width: 1,
-                                              color: Colors.white,
-                                            ),
-                                            toptitle(100.0, "Machine"),
-                                            Container(
-                                              width: 1,
-                                              color: Colors.white,
-                                            ),
-                                            toptitle(100.0, "Location"),
-                                            Container(
-                                              width: 1,
-                                              color: Colors.white,
-                                            ),
-                                            toptitle(100.0, "Remark"),
-                                            Container(
-                                              width: 1,
-                                              color: Colors.white,
-                                            ),
-                                            toptitle(180.0, "Status"),
-                                            Container(
-                                              width: 1,
-                                              color: Colors.white,
-                                            ),
-                                            toptitle(100.0, "Price"),
-                                            Container(
-                                              width: 1,
-                                              color: Colors.white,
-                                            ),
-                                            toptitle(130.0, "Action"),
-                                          ],
-                                        ),
-                                        Expanded(
-                                          child: Obx(() => (upcomingController
-                                                  .isLoading.value)
-                                              ? Center(
-                                                  child:
-                                                      CircularProgressIndicator())
-                                              : Column(
-                                                  children: [
-                                                    ...upcomingController.search
-                                                        .map((element) {
-                                                      // print("userlist" + element.name);
-                                                      return InventorySearchListWidget(
-                                                          UserModel: element,
-                                                          usertype: "admin");
-                                                    }).toList()
-                                                  ],
-                                                )),
-                                        ),
-
-                                        // ListView.builder(
-                                        //     shrinkWrap: true,
-                                        //     padding: EdgeInsets.only(bottom: 16),
-                                        //     itemCount: inventoryController.inventorylist.length,
-                                        //     itemBuilder: (ctx, index) {
-                                        //       var therapy =
-                                        //           inventoryController.inventorylist.elementAt(index);
-                                        //       return InventoryListWidget(UserModel: therapy);
-                                        //     })
-                                      ],
-                                    )
-                                  ],
-                                )),
-                          ),
-                        ))
+                                              // ListView.builder(
+                                              //     shrinkWrap: true,
+                                              //     padding: EdgeInsets.only(bottom: 16),
+                                              //     itemCount: inventoryController.inventorylist.length,
+                                              //     itemBuilder: (ctx, index) {
+                                              //       var therapy =
+                                              //           inventoryController.inventorylist.elementAt(index);
+                                              //       return InventoryListWidget(UserModel: therapy);
+                                              //     })
+                                            ],
+                                          )
+                                        ],
+                                      )),
+                                ),
+                              ),
+                            )))
                   ],
                 )
               : nodatafound()

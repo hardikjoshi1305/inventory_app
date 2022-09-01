@@ -36,37 +36,37 @@ class UserInventoryListWidget extends StatelessWidget {
           width: 1,
           color: Colors.white,
         ),
-        bottomtitle(200.0, this.UserModel.serialNo.toString()),
-        Container(
-          width: 1,
-          color: Colors.white,
-        ),
-        bottomtitle(100.0, this.UserModel.pxNo.toString()),
-        Container(
-          width: 1,
-          color: Colors.white,
-        ),
+        // bottomtitle(200.0, this.UserModel.serialNo.toString()),
+        // Container(
+        //   width: 1,
+        //   color: Colors.white,
+        // ),
+        // bottomtitle(100.0, this.UserModel.pxNo.toString()),
+        // Container(
+        //   width: 1,
+        //   color: Colors.white,
+        // ),
         bottomtitle(100.0, this.UserModel.machine.toString()),
         Container(
           width: 1,
           color: Colors.white,
         ),
         bottomtitle(100.0, this.UserModel.location.toString()),
-        Container(
-          width: 1,
-          color: Colors.white,
-        ),
-        bottomtitle(
-            100.0,
-            this.UserModel.remark == null
-                ? "-"
-                : this.UserModel.remark.toString()),
-        Container(
-          width: 1,
-          color: Colors.white,
-        ),
-        bottomtitle(100.0,
-            this.UserModel.statusId != null ? this.UserModel.statusId : "-"),
+        // Container(
+        //   width: 1,
+        //   color: Colors.white,
+        // ),
+        // bottomtitle(
+        //     100.0,
+        //     this.UserModel.remark == null
+        //         ? "-"
+        //         : this.UserModel.remark.toString()),
+        // Container(
+        //   width: 1,
+        //   color: Colors.white,
+        // ),
+        // bottomtitle(100.0,
+        //     this.UserModel.statusId != null ? this.UserModel.statusId : "-"),
         Container(
           width: 1,
           color: Colors.white,
@@ -118,45 +118,45 @@ class UserInventoryListWidget extends StatelessWidget {
                         )),
               ],
             )),
-        Container(
-          width: 1,
-          color: Colors.white,
-        ),
-        Container(
-            width: 130,
-            height: 40,
-            alignment: AlignmentDirectional.center,
-            color: AppColors.offWhite,
-            padding: const EdgeInsets.all(1.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                this.UserModel.photo != "" || this.UserModel.photo != null
-                    ? Align(
-                        alignment: AlignmentDirectional.center,
-                        child: Container(
-                          alignment: AlignmentDirectional.center,
-                          margin: EdgeInsets.all(4),
-                          decoration: BoxDecoration(color: AppColors.darkBlue),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.blue,
-                            ),
-                            onPressed: () {
-                              viewimage(UserModel.photo.toString());
-                            },
-                            child: Text("View",
-                                style: TextStyle(color: Colors.white)),
-                          ),
-                        ))
-                    : Container()
-              ],
-            )),
-        Container(
-          width: 1,
-          color: Colors.white,
-        ),
+        // Container(
+        //   width: 1,
+        //   color: Colors.white,
+        // ),
+        // Container(
+        //     width: 130,
+        //     height: 40,
+        //     alignment: AlignmentDirectional.center,
+        //     color: AppColors.offWhite,
+        //     padding: const EdgeInsets.all(1.0),
+        //     child: Row(
+        //       mainAxisAlignment: MainAxisAlignment.center,
+        //       crossAxisAlignment: CrossAxisAlignment.center,
+        //       children: [
+        //         this.UserModel.photo != "" || this.UserModel.photo != null
+        //             ? Align(
+        //                 alignment: AlignmentDirectional.center,
+        //                 child: Container(
+        //                   alignment: AlignmentDirectional.center,
+        //                   margin: EdgeInsets.all(4),
+        //                   decoration: BoxDecoration(color: AppColors.darkBlue),
+        //                   child: ElevatedButton(
+        //                     style: ElevatedButton.styleFrom(
+        //                       primary: Colors.blue,
+        //                     ),
+        //                     onPressed: () {
+        //                       viewimage(UserModel.photo.toString());
+        //                     },
+        //                     child: Text("View",
+        //                         style: TextStyle(color: Colors.white)),
+        //                   ),
+        //                 ))
+        //             : Container()
+        //       ],
+        //     )),
+        // Container(
+        //   width: 1,
+        //   color: Colors.white,
+        // ),
       ],
     );
     // Card(

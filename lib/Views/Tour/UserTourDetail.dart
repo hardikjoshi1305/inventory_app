@@ -2,8 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inventory_management/Controller/TourController.dart';
+import 'package:inventory_management/Controller/WalletController.dart';
 import 'package:inventory_management/Utility/CommandMethod.dart';
 import 'package:inventory_management/Utility/Imagedisplay.dart';
+
+import '../../Component/ExpenseListWidget.dart';
+import '../../Utility/CONSTANT.dart';
+import '../../Utility/SharedPreferenceHelper.dart';
 
 class UserTourDetails extends StatefulWidget {
   const UserTourDetails({Key key}) : super(key: key);
@@ -13,6 +18,7 @@ class UserTourDetails extends StatefulWidget {
 }
 
 TourController tourController = Get.put(TourController());
+WalletController walletController = Get.put(WalletController());
 
 class _UserTourDetailsState extends State<UserTourDetails> {
   String tourid = Get.arguments as String;
@@ -20,6 +26,9 @@ class _UserTourDetailsState extends State<UserTourDetails> {
   apicall(String tourid) async {
     await Future.delayed(Duration.zero);
     tourController.usertourdetail(tourid);
+    String userid = await SharedPreferenceHelper().getPref(Userid);
+
+    walletController.addexpenselist(userid, tourid);
   }
 
   @override
@@ -56,6 +65,7 @@ class _UserTourDetailsState extends State<UserTourDetails> {
                       tourController.usertourdetails.value.data != null
                           ? ListView.builder(
                               shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
                               itemCount: tourController.usertourdetails.value
                                   .data.dailyremark.length,
                               itemBuilder: (BuildContext context, int index) {
@@ -106,6 +116,7 @@ class _UserTourDetailsState extends State<UserTourDetails> {
                       tourController.usertourdetails.value.data != null
                           ? ListView.builder(
                               shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
                               itemCount: tourController.usertourdetails.value
                                   .data.servicereport.length,
                               itemBuilder: (BuildContext context, int index) {
@@ -162,6 +173,7 @@ class _UserTourDetailsState extends State<UserTourDetails> {
                       tourController.usertourdetails.value.data != null
                           ? ListView.builder(
                               shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
                               itemCount: tourController.usertourdetails.value
                                   .data.finaldignose.length,
                               itemBuilder: (BuildContext context, int index) {
@@ -209,8 +221,123 @@ class _UserTourDetailsState extends State<UserTourDetails> {
                             )
                           : nodatafound(),
                       Container(
-                        height: 140,
-                      )
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: Container(
+                            child: Container(
+                          child: Column(
+                            children: [
+                              Divider(
+                                color: Colors.black,
+                                height: 3,
+                              ),
+                              Container(
+                                height: 10,
+                                width: 0,
+                              ),
+                              Container(
+                                alignment: AlignmentDirectional.topStart,
+                                child: Text(
+                                  "    Expense History",
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 16),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: Divider(
+                                  color: Colors.grey,
+                                  height: 3,
+                                ),
+                              ),
+                              Obx(() => walletController.expensehistory.length >
+                                      0
+                                  ? SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      physics: ScrollPhysics(),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              toptitle(120.0, "Action"),
+                                              Container(
+                                                width: 1,
+                                                color: Colors.white,
+                                              ),
+                                              toptitle(100.0, "Tour"),
+                                              Container(
+                                                width: 1,
+                                                color: Colors.white,
+                                              ),
+                                              toptitle(100.0, "Expense"),
+                                              Container(
+                                                width: 1,
+                                                color: Colors.white,
+                                              ),
+                                              toptitle(100.0, "Amount"),
+                                              Container(
+                                                width: 1,
+                                                color: Colors.white,
+                                              ),
+                                              toptitle(100.0, "Date"),
+                                              Container(
+                                                width: 1,
+                                                color: Colors.white,
+                                              ),
+                                              toptitle(100.0, "Image"),
+                                              Container(
+                                                width: 1,
+                                                color: Colors.white,
+                                              ),
+                                            ],
+                                          ),
+                                          Column(
+                                            children: [
+                                              ...walletController.expensehistory
+                                                  .map((element) {
+                                                var index = walletController
+                                                    .expensehistory
+                                                    .indexOf(element);
+                                                var wallet = walletController
+                                                    .expensehistory
+                                                    .elementAt(index);
+                                                return ExpenseListWidget(
+                                                    expenselist: wallet,
+                                                    position: index);
+                                              }).toList(growable: true)
+                                            ],
+                                          ),
+
+                                          // ListView.builder(
+                                          //     shrinkWrap: true,
+                                          //     padding: EdgeInsets.only(bottom: 16),
+                                          //     itemCount:
+                                          //     walletController.expensehistory.length,
+                                          //     physics: NeverScrollableScrollPhysics(),
+                                          //     itemBuilder: (ctx, index) {
+                                          //       var wallet = walletController
+                                          //           .expensehistory
+                                          //           .elementAt(index);
+                                          //       return GestureDetector(
+                                          //         // onTap: () => Get.to(
+                                          //         //     () => UserTourDetails(),
+                                          //         //     arguments: wallet.id.toString()),
+                                          //         child: ExpenseListWidget(
+                                          //             expenselist: wallet,
+                                          //             position: index),
+                                          //       );
+                                          //     }),
+                                        ],
+                                      ),
+                                    )
+                                  : Text("No Data Found"))
+                            ],
+                          ),
+                        )),
+                      ),
                     ],
                   )),
             )),

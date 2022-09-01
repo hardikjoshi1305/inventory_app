@@ -314,7 +314,7 @@ class _ReturnInventoryState extends State<ReturnInventory> {
   }
 
   bool checkvalidation(String value, String remark) {
-    if (value == null) {
+    if (value == "") {
       Fluttertoast.showToast(
           msg: "Please Select Status of Inventory",
           toastLength: Toast.LENGTH_LONG);

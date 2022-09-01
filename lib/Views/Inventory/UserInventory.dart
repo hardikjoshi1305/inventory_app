@@ -4,6 +4,7 @@ import 'package:inventory_management/Component/UserInventoryListWidget.dart';
 import 'package:inventory_management/Utility/CommandMethod.dart';
 
 import '../../Component/InventoryListWidget.dart';
+import '../../Component/UserAllInventoryListWidget.dart';
 import '../../Controller/InventoryController.dart';
 import '../../Utility/app_colors.dart';
 
@@ -15,9 +16,10 @@ class UserInventory extends StatefulWidget {
 }
 
 InventoryController inventoryController = Get.put(InventoryController());
+
 apicall() async {
   await Future.delayed(Duration.zero);
-  inventoryController.fetchuserinventorylist("0");
+  inventoryController.fetchinventorylist("");
 }
 
 class _UserInventoryState extends State<UserInventory> {
@@ -38,13 +40,13 @@ class _UserInventoryState extends State<UserInventory> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blueGrey[600],
-          title: Text('Pending Inventory'),
+          title: Text('All Inventory'),
         ),
         drawer: UserDrawer(),
         body: Container(
             child: Obx(() => inventoryController.isLoading.value
                 ? Center(child: CircularProgressIndicator())
-                : inventoryController.userinventorylist != null
+                : inventoryController.inventorylist != null
                     ? SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Container(
@@ -84,32 +86,31 @@ class _UserInventoryState extends State<UserInventory> {
                                       width: 1,
                                       color: Colors.white,
                                     ),
-                                    toptitle(100.0, "Location"),
-                                    Container(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
-                                    toptitle(100.0, "Remark"),
-                                    Container(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
-                                    toptitle(100.0, "Status"),
-                                    Container(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
-                                    toptitle(130.0, "Action"),
-                                    Container(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
-                                    toptitle(130.0, "Photo"),
-                                    Container(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
-
+                                    // toptitle(100.0, "Location"),
+                                    // Container(
+                                    //   width: 1,
+                                    //   color: Colors.white,
+                                    // ),
+                                    // toptitle(100.0, "Remark"),
+                                    // Container(
+                                    //   width: 1,
+                                    //   color: Colors.white,
+                                    // ),
+                                    // toptitle(100.0, "Status"),
+                                    // Container(
+                                    //   width: 1,
+                                    //   color: Colors.white,
+                                    // ),
+                                    // toptitle(130.0, "Action"),
+                                    // Container(
+                                    //   width: 1,
+                                    //   color: Colors.white,
+                                    // ),
+                                    // toptitle(130.0, "Photo"),
+                                    // Container(
+                                    //   width: 1,
+                                    //   color: Colors.white,
+                                    // ),
                                   ],
                                 ),
                                 Expanded(
@@ -118,21 +119,18 @@ class _UserInventoryState extends State<UserInventory> {
                                       ? Center(
                                           child: CircularProgressIndicator())
                                       : inventoryController
-                                                  .userinventorylist.length >
+                                                  .inventorylist.length >
                                               0
                                           ? Column(
                                               children: [
                                                 ...inventoryController
-                                                    .userinventorylist
+                                                    .inventorylist
                                                     .map((element) {
                                                   print("userlist" +
                                                       element.name);
-                                                  return UserInventoryListWidget(
+                                                  return UserAllInventoryListWidget(
                                                     UserModel: element,
-                                                    usertype:
-                                                        inventoryController
-                                                            .userinventorylist
-                                                            .indexOf(element),
+                                                    usertype: "user",
                                                   );
                                                 }).toList()
                                               ],
@@ -148,8 +146,7 @@ class _UserInventoryState extends State<UserInventory> {
                                                   color: Colors.black,
                                                 ),
                                               ),
-                                            )
-                                  ),
+                                            )),
                                 ),
 
                                 // ListView.builder(

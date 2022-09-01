@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:inventory_management/Controller/WalletController.dart';
 
 import '../../Controller/TourController.dart';
+import '../../Utility/CONSTANT.dart';
 import '../../Utility/CommandMethod.dart';
+import '../../Utility/SharedPreferenceHelper.dart';
 
 class AddDailyRemark extends StatefulWidget {
   final String itemid;
@@ -22,7 +25,6 @@ class _AddDailyRemarkState extends State<AddDailyRemark> {
   @override
   void initState() {
     getdailyremark();
-
     super.initState();
   }
 
@@ -89,7 +91,7 @@ class _AddDailyRemarkState extends State<AddDailyRemark> {
             Divider(
               color: Colors.black,
             ),
-            tourController.usertourdetails.value.data != null
+            tourController.addailyremarklist.length > 0
                 ? ListView.builder(
                     shrinkWrap: true,
                     itemCount: tourController
@@ -105,14 +107,10 @@ class _AddDailyRemarkState extends State<AddDailyRemark> {
                             child: Container(
                               padding: EdgeInsets.all(0),
                               child: ListTile(
-                                title: Text(tourController.usertourdetails.value
-                                    .data.dailyremark[index].dailyremark),
+                                title: Text(tourController.addailyremarklist
+                                    .value[index].dailyremark),
                                 subtitle: Text(getdateformate(tourController
-                                    .usertourdetails
-                                    .value
-                                    .data
-                                    .dailyremark[index]
-                                    .createdAt)),
+                                    .addailyremarklist.value[index].createdAt)),
                               ),
                             ),
                             onTap: () {}),
@@ -142,7 +140,10 @@ class _AddDailyRemarkState extends State<AddDailyRemark> {
     super.dispose();
   }
 
-  void getdailyremark() {
+  void getdailyremark() async {
+    await Future.delayed(Duration.zero);
     tourController.getremark(widget.itemid);
+    String userid = await SharedPreferenceHelper().getPref(Userid);
+    tourController.adddailyremark(userid, widget.itemid);
   }
 }

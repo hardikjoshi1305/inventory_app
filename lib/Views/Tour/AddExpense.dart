@@ -3,6 +3,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:inventory_management/Controller/WalletController.dart';
+import 'package:inventory_management/Utility/CONSTANT.dart';
+import 'package:inventory_management/Utility/SharedPreferenceHelper.dart';
 
 import '../../Component/ExpenseListWidget.dart';
 import '../../Controller/TourController.dart';
@@ -29,9 +31,14 @@ class _AddExpenseState extends State<AddExpense> {
     super.dispose();
   }
 
+  addexpenselist() async {
+    String userid = await SharedPreferenceHelper().getPref(Userid);
+    walletController.addexpenselist(userid, widget.itemid);
+  }
+
   @override
   void initState() {
-    walletController.expenselist("17");
+    addexpenselist();
     super.initState();
   }
 
@@ -61,7 +68,7 @@ class _AddExpenseState extends State<AddExpense> {
                 height: 20,
               ),
               TextField(
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.text,
                 onChanged: (value) => amount = value,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),

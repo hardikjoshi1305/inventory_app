@@ -189,7 +189,12 @@ class _CompletedState extends State<Completed> {
                                                         .pending[index]
                                                         .createdAt),
                                                 style: Pendingitemtextstyle),
-                                            Text("5000",
+                                            Text(
+                                                upcomingController
+                                                        .pending[index]
+                                                        .totalcount
+                                                        .toString() +
+                                                    " \u{20B9}",
                                                 style: Pendingitemtextstyle)
                                           ],
                                         ),

@@ -5,6 +5,7 @@ import 'package:inventory_management/Component/InventoryListWidget.dart';
 import 'package:inventory_management/Utility/app_colors.dart';
 import 'package:inventory_management/Views/Inventory/CreateInventory.dart';
 
+import '../../Component/ReturnInvnetoryListWidget.dart';
 import '../../Network/RequestCall.dart';
 import '../../Utility/CONSTANT.dart';
 import '../../Utility/CommandMethod.dart';
@@ -93,6 +94,11 @@ class _AdminReturnInventoryState extends State<AdminReturnInventory> {
                           width: 1,
                           color: Colors.white,
                         ),
+                        toptitle(200.0, "User ID"),
+                        Container(
+                          width: 1,
+                          color: Colors.white,
+                        ),
                         toptitle(200.0, "Serial No."),
                         Container(
                           width: 1,
@@ -139,7 +145,7 @@ class _AdminReturnInventoryState extends State<AdminReturnInventory> {
                                 ...inventoryController.adminreturninventorylist
                                     .map((element) {
                                   // print("userlist" + element.name);
-                                  return InventoryListWidget(
+                                  return ReturnInventoryListWidget(
                                       UserModel: element, usertype: "admin");
                                 }).toList()
                               ],

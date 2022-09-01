@@ -25,8 +25,8 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   void initState() {
-    super.initState();
     _listenForPermissionStatus();
+    super.initState();
   }
 
   // int _selectedIndex = 0;

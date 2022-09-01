@@ -4,6 +4,7 @@ import 'package:inventory_management/Network/RequestCall.dart';
 import 'package:inventory_management/Utility/CommandMethod.dart';
 import 'package:inventory_management/Views/Login/Login.dart';
 import 'package:inventory_management/Views/SplashScreen.dart';
+import 'package:inventory_management/Views/Users/Userlist.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
       home: WelcomeSplashScreen(),
       getPages: [
         GetPage(name: "/HomeScreen", page: () => HomeScreen()),
+        GetPage(name: "/Userlist", page: () => Userlist()),
         GetPage(name: "/Dashboard", page: () => Dashboard()),
         GetPage(name: "/Inventory", page: () => Inventory()),
         GetPage(name: "/SendInventory", page: () => SendInventory()),

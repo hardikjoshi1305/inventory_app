@@ -9,6 +9,10 @@ import 'package:inventory_management/Model/InventorylistResponse.dart';
 import 'package:inventory_management/Model/ServiceReportResponse.dart';
 import 'package:inventory_management/Model/TourRemarkResponse.dart';
 import 'package:inventory_management/Model/TourHistoryResponse.dart' as history;
+import 'package:inventory_management/Model/AddDailyRemarkListResponse.dart'
+    as dailyremarklist;
+import 'package:inventory_management/Model/AddServiceReportResponse.dart'
+    as reportlist;
 import 'package:inventory_management/Model/CreateUserResponse.dart';
 import 'package:inventory_management/Model/UserTourDetailsResponse.dart';
 import 'package:inventory_management/Model/casts.dart';
@@ -28,6 +32,8 @@ class TourController extends GetxController {
   var finaldignosedata = FinalDignoseResponse().obs;
   var servicereportdata = ServiceReportResponse().obs;
   var tourhistorydata = List<history.Datum>().obs;
+  var addailyremarklist = List<dailyremarklist.Datum>().obs;
+  var adreportlist = List<reportlist.Datum>().obs;
   @override
   void onClose() {
     Get.delete<TourController>();
@@ -110,6 +116,9 @@ class TourController extends GetxController {
       String photo}) async {
     try {
       isLoading(true);
+      print("tour_id" + tour_id);
+      print("expenses_name" + expenses_name);
+      print("amount" + amount);
       var res = await RequestCall.creatExpense(
           tour_id: tour_id,
           expenses_name: expenses_name,
@@ -219,6 +228,42 @@ class TourController extends GetxController {
       if (res != null) {
         getremarkdata.value = res;
         if (getremarkdata.value.succes) {
+          Fluttertoast.showToast(msg: "Success");
+          // Get.to(HomeScreen());
+        } else {
+          Fluttertoast.showToast(msg: getremarkdata.value.message.toString());
+        }
+      }
+    } finally {
+      // isLoading(false);
+    }
+  }
+
+  void adddailyremark(String userid, String itemid) async {
+    try {
+      // isLoading(true);
+      var res = await RequestCall.adddailyremark(userid, itemid);
+      if (res != null) {
+        addailyremarklist.value = res;
+        if (addailyremarklist.length > 0) {
+          Fluttertoast.showToast(msg: "Success");
+          // Get.to(HomeScreen());
+        } else {
+          Fluttertoast.showToast(msg: getremarkdata.value.message.toString());
+        }
+      }
+    } finally {
+      // isLoading(false);
+    }
+  }
+
+  void addservicereportlist(String userid, String itemid) async {
+    try {
+      // isLoading(true);
+      var res = await RequestCall.addservicereportlist(userid, itemid);
+      if (res != null) {
+        adreportlist.value = res;
+        if (adreportlist.length > 0) {
           Fluttertoast.showToast(msg: "Success");
           // Get.to(HomeScreen());
         } else {

@@ -10,11 +10,13 @@ import 'package:inventory_management/Model/AcceptRejectResponse.dart';
 import 'package:inventory_management/Model/CreateExpenseResponse.dart';
 import 'package:inventory_management/Model/CreateTourResponse.dart';
 import 'package:inventory_management/Model/CreateUserResponse.dart';
+import 'package:inventory_management/Model/DashboardAdminResponse.dart';
+import 'package:inventory_management/Model/DashboardResponse.dart';
 import 'package:inventory_management/Model/ExpenseListDetailsResponse.dart';
 import 'package:inventory_management/Model/FinalDignoseResponse.dart';
 import 'package:inventory_management/Model/InventorylistResponse.dart'
     as inventory;
-import 'package:inventory_management/Model/InventorylistResponse.dart'
+import 'package:inventory_management/Model/AdminReturnInventoryResponse.dart'
     as adminreturninventory;
 import 'package:inventory_management/Model/LoginResponse.dart';
 import 'package:inventory_management/Model/PendingResponse.dart';
@@ -37,6 +39,12 @@ import 'package:inventory_management/Model/CreateTourResponse.dart'
 import 'package:inventory_management/Model/InventoryStatusResponse.dart'
     as status;
 import 'package:inventory_management/Model/TourHistoryResponse.dart' as history;
+import 'package:inventory_management/Model/InventoryHistoryResponse.dart'
+    as inventoryhistory;
+import 'package:inventory_management/Model/AddDailyRemarkListResponse.dart'
+    as dailyremarklist;
+import 'package:inventory_management/Model/AddServiceReportResponse.dart'
+    as reportlist;
 import 'package:inventory_management/Model/ExpenseListDetailsResponse.dart'
     as expense;
 import 'package:inventory_management/Model/casts.dart';
@@ -50,8 +58,8 @@ import '../Model/SendAmountResponse.dart';
 
 class RequestCall {
   static var client = http.Client();
-  // static var BASEURL = "http://192.168.0.8/inventorymanagement/api/";
-  static var BASEURL = "http://pankrutiinfotech.com/inventory_app/api/";
+  static var BASEURL = "http://192.168.0.8/inventorymanagement/api/";
+  // static var BASEURL = "http://pankrutiinfotech.com/inventory_app/api/";
   static var apiKey = "a92f28e11a27e8e5938a2020be68ba9c";
   static var authHeader;
 
@@ -105,6 +113,39 @@ class RequestCall {
 
       if ((finaldata as Map)['succes']) {
         var castsResp = search.searchInventoryResponseFromJson(json);
+        return castsResp.data;
+      } else {
+        Fluttertoast.showToast(
+            msg: (finaldata as Map)['message'],
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.CENTER,
+            backgroundColor: Colors.red);
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static Future<List<inventory.Datum>> searchinventorymain(
+      {String query}) async {
+    final body = jsonEncode({
+      'search': query,
+    });
+    var response = await client
+        .post(BASEURL + 'searchinventory', headers: authHeader, body: body)
+        .catchError((error) {
+      print("error" + error.toString());
+      Fluttertoast.showToast(msg: error.toString());
+    });
+    print("query" + response.body.toString());
+
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var finaldata = jsonDecode(json);
+
+      if ((finaldata as Map)['succes']) {
+        var castsResp = inventory.inventorylistResponseFromJson(json);
         return castsResp.data;
       } else {
         Fluttertoast.showToast(
@@ -330,7 +371,9 @@ class RequestCall {
       String remark,
       // String status_id,
       String wherefrom,
-      String Prize}) async {
+      String Prize,
+      String statusdeatils,
+      String history}) async {
     final headers = authHeader;
     var body;
     if (id == "0") {
@@ -343,7 +386,9 @@ class RequestCall {
         "location": location,
         "remark": remark,
         "wherefrom": wherefrom,
-        "price": int.parse(Prize)
+        "price": (Prize),
+        "statusdeatils": statusdeatils,
+        // "history": history,
       });
 
       var response = await client
@@ -351,13 +396,20 @@ class RequestCall {
           .catchError((error) {
         Fluttertoast.showToast(msg: error.toString());
       });
+      print("res" + response.toString());
+
       if (response.statusCode == 200) {
         var json = response.body;
-        var castsResp = addInventorylResponseFromJson(json);
-        if (castsResp.succes) {
+        print("res" + json.toString());
+
+        var finaldata = jsonDecode(json);
+        print("res" + finaldata.toString());
+        // return null;
+        if ((finaldata as Map)['succes']) {
+          var castsResp = addInventorylResponseFromJson(json);
           return castsResp;
         } else {
-          Fluttertoast.showToast(msg: castsResp.message);
+          Fluttertoast.showToast(msg: (finaldata as Map)['message']);
           return null;
         }
       } else {
@@ -375,7 +427,9 @@ class RequestCall {
         "remark": remark,
         // "status_id": status_id,
         "wherefrom": wherefrom,
-        "price": int.parse(Prize)
+        "price": (Prize),
+        "statusdeatils": statusdeatils,
+        "history": history,
       });
 
       var response = await client
@@ -699,19 +753,21 @@ class RequestCall {
     }
   }
 
-  static fetchinventoryhistory(String code) async {
+  static fetchinventoryhistory(String id) async {
     var body = jsonEncode({
-      "code": code,
+      "id": id,
     });
     var response = await client
         .post(BASEURL + 'inventoryhistory', headers: authHeader, body: body)
         .catchError((error) {
       Fluttertoast.showToast(msg: error.toString());
     });
+    print("reds" + response.toString());
+
     if (response.statusCode == 200) {
       var json = response.body;
       print("reds" + json.toString());
-      var castsResp = status.inventoryStatusResponseFromJson(json);
+      var castsResp = inventoryhistory.inventoryHistoryResponseFromJson(json);
       return castsResp.data;
     } else {
       return null;
@@ -862,7 +918,8 @@ class RequestCall {
       var json = response.body;
       print("dadad" + response.body.toString());
 
-      var castsResp = adminreturninventory.inventorylistResponseFromJson(json);
+      var castsResp =
+          adminreturninventory.admininventorylistResponseFromJson(json);
       if (castsResp.succes) {
         return castsResp.data;
       } else {
@@ -905,6 +962,146 @@ class RequestCall {
       } else {
         return null;
       }
+    } else {
+      return null;
+    }
+  }
+
+  static Future<List<expense.Datum>> addexpenselist(
+      String userid, String tourid) async {
+    var body = jsonEncode({
+      "user_id": userid,
+      "tour_id": tourid,
+    });
+    print("user_id" + userid);
+    print("tour_id" + tourid);
+
+    var response = await client
+        .post(BASEURL + 'userexpenselist', headers: authHeader, body: body)
+        .catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
+
+    if (response.statusCode == 200) {
+      var json = response.body;
+      print("reds" + json.toString());
+      var castsResp = expenseListDetailsResponseFromJson(json);
+      if (castsResp.succes) {
+        return castsResp.data;
+      } else {
+        Fluttertoast.showToast(msg: castsResp.message);
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static Future<List<dailyremarklist.Datum>> adddailyremark(
+      String userid, String itemid) async {
+    var body = jsonEncode({
+      "user_id": userid,
+      "tour_id": itemid,
+    });
+    print("reds" + userid);
+
+    var response = await client
+        .post(BASEURL + 'usertourdailyremark', headers: authHeader, body: body)
+        .catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
+
+    if (response.statusCode == 200) {
+      var json = response.body;
+      print("reds" + json.toString());
+      var castsResp = dailyremarklist.addDailyRemarkListResponseFromJson(json);
+      if (castsResp.succes) {
+        return castsResp.data;
+      } else {
+        Fluttertoast.showToast(msg: castsResp.message);
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static Future<List<reportlist.Datum>> addservicereportlist(
+      String userid, String itemid) async {
+    var body = jsonEncode({
+      "user_id": userid,
+      "tour_id": itemid,
+    });
+    print("reds" + userid);
+
+    var response = await client
+        .post(BASEURL + 'usertourdailyremark', headers: authHeader, body: body)
+        .catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
+
+    if (response.statusCode == 200) {
+      var json = response.body;
+      print("reds" + json.toString());
+      var castsResp = reportlist.addServiceReportResponseFromJson(json);
+      if (castsResp.succes) {
+        return castsResp.data;
+      } else {
+        Fluttertoast.showToast(msg: castsResp.message);
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static dashboardapi() async {
+    var response = await client
+        .get(BASEURL + "dashboard", headers: authHeader)
+        .catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
+
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var finaldata = jsonDecode(json);
+      // return null;
+      if ((finaldata as Map)['succes']) {
+        var castsResp = dashboardResponseFromJson(json);
+        return castsResp;
+      } else {
+        // Fluttertoast.showToast(msg: (finaldata as Map)['message']);
+        return null;
+      }
+      var castsResp = getRemarkResponseFromJson(json);
+
+      return castsResp;
+    } else {
+      return null;
+    }
+  }
+
+  static admindashboardapi() async {
+    var response = await client
+        .get(BASEURL + "dashboard", headers: authHeader)
+        .catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
+
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var finaldata = jsonDecode(json);
+      // return null;
+      if ((finaldata as Map)['succes']) {
+        var castsResp = dashboardAdminResponseFromJson(json);
+        return castsResp;
+      } else {
+        // Fluttertoast.showToast(msg: (finaldata as Map)['message']);
+        return null;
+      }
+      var castsResp = getRemarkResponseFromJson(json);
+
+      return castsResp;
     } else {
       return null;
     }

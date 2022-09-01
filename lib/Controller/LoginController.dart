@@ -24,6 +24,8 @@ class LoginController extends GetxController {
           SharedPreferenceHelper()
               .setPref(TOKEN, "Bearer ${login.value.data.apiToken}");
           SharedPreferenceHelper().setPref(USERTYPE, (login.value.data.type));
+          SharedPreferenceHelper()
+              .setPref(Userid, (login.value.data.id.toString()));
           RequestCall.createAuthHeader("Bearer ${login.value.data.apiToken}");
 
           if (login.value.data.type == "Admin") {

@@ -44,6 +44,7 @@ class Datum {
     this.city,
     this.iscompleted,
     this.createdAt,
+    this.totalcount,
   });
 
   var id;
@@ -52,6 +53,7 @@ class Datum {
   String errorname;
   String city;
   String iscompleted;
+  var totalcount;
   DateTime createdAt;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -62,6 +64,7 @@ class Datum {
         city: json["city"],
         iscompleted: json["iscompleted"],
         createdAt: DateTime.parse(json["created_at"]),
+        totalcount: json["totalcount"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -72,5 +75,6 @@ class Datum {
         "city": city,
         "iscompleted": iscompleted,
         "created_at": createdAt.toIso8601String(),
+        "totalcount": totalcount,
       };
 }

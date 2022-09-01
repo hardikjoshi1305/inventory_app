@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inventory_management/Controller/UserController.dart';
+import 'package:inventory_management/Views/Dashboard/AdminDashboard.dart';
 import 'package:inventory_management/Views/Dashboard/Dashboard.dart';
 import 'package:inventory_management/Views/Inventory/InventoryHistory.dart';
 import 'package:inventory_management/Views/Inventory/SendInventory.dart';
@@ -122,6 +123,12 @@ Widget UserAppBar() {
 }
 
 Widget UserDrawer() {
+  // var isvisible = "".obs;
+  // SharedPreferenceHelper()
+  //     .getPref(Userid)
+  //     .then((value) => isvisible.value = value.toString());
+
+  // print("isbvisible" + isvisible.toString());
   return Drawer(
     elevation: 4.0,
     child: Container(
@@ -213,6 +220,11 @@ Widget UserDrawer() {
   );
 }
 
+getuserdata() async {
+  var isvisible = await SharedPreferenceHelper().getPref(Userid);
+  return isvisible;
+}
+
 Widget AdminDrawer() {
   return Drawer(
     elevation: 4.0,
@@ -223,10 +235,18 @@ Widget AdminDrawer() {
         children: <Widget>[
           createDrawerHeader(),
           createDrawerBodyItem(
+              icon: Icons.dashboard,
+              text: 'Dashboard',
+              onTap: () {
+                Get.offNamed("/HomeScreen", preventDuplicates: false);
+                // Navigator.of(context).pop();
+                // Navigator.pushNamed(context, pageRoutes.landscape);
+              }),
+          createDrawerBodyItem(
               icon: Icons.pending_actions,
               text: 'Users',
               onTap: () {
-                Get.offNamed("/HomeScreen", preventDuplicates: false);
+                Get.offNamed("/Userlist", preventDuplicates: false);
                 // Navigator.of(context).pop();
                 // Navigator.pushNamed(context, pageRoutes.landscape);
               }),

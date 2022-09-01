@@ -51,14 +51,14 @@ class _InventoryHistoryState extends State<InventoryHistory> {
                         size: 18,
                       ),
                       dropdownSearchDecoration: InputDecoration(
+                        border: OutlineInputBorder(),
                         hintText: 'Enter Inventory Code',
-                        icon: Icon(Icons.filter_list),
+                        prefixIcon: Icon(Icons.search),
                       ),
                       dropdownBuilder: _customDropDownPrograms,
                       popupItemBuilder: _customPopupItemBuilder,
                       onChanged: (Datum object) {
-                        inventoryController
-                            .gethistoryapi(object.code.toString());
+                        inventoryController.gethistoryapi(object.id.toString());
                         // upcomingController.searchdata(object.code);
                         // setState(() {
                         //   if (object != null) {
@@ -110,19 +110,145 @@ class _InventoryHistoryState extends State<InventoryHistory> {
                             Obx(() => inventoryController
                                         .inventoryhistorylist.length >
                                     0
-                                ? ListView.builder(
-                                    shrinkWrap: true,
-                                    padding: EdgeInsets.only(bottom: 16),
-                                    itemCount: inventoryController
-                                        .inventoryhistorylist.length,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemBuilder: (ctx, index) {
-                                      var wallet = inventoryController
-                                          .inventoryhistorylist
-                                          .elementAt(index);
-                                      // return InventoryHistoryWidget(
-                                      //     walletmodel: wallet);
-                                    })
+                                ? Stack(
+                                    children: [
+                                      SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        physics:
+                                            AlwaysScrollableScrollPhysics(),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                toptitle(100.0, "ID"),
+                                                Container(
+                                                  width: 1,
+                                                  color: Colors.white,
+                                                ),
+                                                toptitle(100.0, "UserId"),
+                                                Container(
+                                                  width: 1,
+                                                  color: Colors.white,
+                                                ),
+                                                toptitle(200.0, "History"),
+                                                Container(
+                                                  width: 1,
+                                                  color: Colors.white,
+                                                ),
+                                                toptitle(120.0, "Date"),
+                                                Container(
+                                                  width: 1,
+                                                  color: Colors.white,
+                                                ),
+                                              ],
+                                            ),
+                                            Column(
+                                              children: [
+                                                ...inventoryController
+                                                    .inventoryhistorylist
+                                                    .map((wallet) => Row(
+                                                          children: [
+                                                            bottomtitle(
+                                                                100.0,
+                                                                wallet.id
+                                                                    .toString()),
+                                                            Container(
+                                                              width: 1,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            bottomtitle(
+                                                                100.0,
+                                                                wallet.userid
+                                                                    .toString()),
+                                                            Container(
+                                                              width: 1,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            bottomtitle(
+                                                                200.0,
+                                                                wallet
+                                                                    .invHistory
+                                                                    .toString()),
+                                                            Container(
+                                                              width: 1,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            bottomtitle(
+                                                                120.0,
+                                                                wallet.currDate
+                                                                    .toString()),
+                                                            Container(
+                                                              width: 1,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ],
+                                                        ))
+                                                    .toList()
+                                              ],
+                                            )
+
+                                            // Flexible(
+                                            //     flex: 1,
+                                            //     child: ListView.builder(
+                                            //         shrinkWrap: true,
+                                            //         padding: EdgeInsets.only(
+                                            //             bottom: 16),
+                                            //         itemCount:
+                                            //             inventoryController
+                                            //                 .inventoryhistorylist
+                                            //                 .length,
+                                            //         physics: ScrollPhysics(),
+                                            //         itemBuilder: (ctx, index) {
+                                            //           var wallet =
+                                            //               inventoryController
+                                            //                   .inventoryhistorylist
+                                            //                   .elementAt(index);
+                                            //           return Row(
+                                            //             children: [
+                                            //               bottomtitle(
+                                            //                   100.0,
+                                            //                   wallet.id
+                                            //                       .toString()),
+                                            //               Container(
+                                            //                 width: 1,
+                                            //                 color: Colors.white,
+                                            //               ),
+                                            //               bottomtitle(
+                                            //                   100.0,
+                                            //                   wallet.userid
+                                            //                       .toString()),
+                                            //               Container(
+                                            //                 width: 1,
+                                            //                 color: Colors.white,
+                                            //               ),
+                                            //               bottomtitle(
+                                            //                   200.0,
+                                            //                   wallet.invHistory
+                                            //                       .toString()),
+                                            //               Container(
+                                            //                 width: 1,
+                                            //                 color: Colors.white,
+                                            //               ),
+                                            //               bottomtitle(
+                                            //                   120.0,
+                                            //                   wallet.currDate
+                                            //                       .toString()),
+                                            //               Container(
+                                            //                 width: 1,
+                                            //                 color: Colors.white,
+                                            //               ),
+                                            //             ],
+                                            //           );
+                                            //         }))
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  )
                                 : Text("No Data Found"))
                           ],
                         ),
@@ -167,7 +293,7 @@ class _InventoryHistoryState extends State<InventoryHistory> {
             ),
           )
         : Container(
-            margin: const EdgeInsets.symmetric(horizontal: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 1),
             decoration: !isSelected
                 ? null
                 : BoxDecoration(
@@ -175,14 +301,16 @@ class _InventoryHistoryState extends State<InventoryHistory> {
                     borderRadius: BorderRadius.circular(5),
                     color: Colors.white,
                   ),
-            child: ListTile(
-              title: Text(item.code.toString(),
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Color.fromARGB(255, 102, 100, 100),
-                  )),
-            ),
-          );
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  bottomtitle(120.0, "C :" + item.code),
+                  bottomtitle(130.0, "N :" + item.name),
+                  bottomtitle(120.0, "L :" + item.location),
+                ],
+              ),
+            ));
   }
 
   Widget _customDropDownPrograms(
@@ -193,7 +321,7 @@ class _InventoryHistoryState extends State<InventoryHistory> {
         child: (item == null)
             ? const ListTile(
                 contentPadding: EdgeInsets.all(0),
-                title: Text("Search Programs",
+                title: Text("Search Inventory ",
                     textAlign: TextAlign.start,
                     style: TextStyle(
                         fontSize: 13,

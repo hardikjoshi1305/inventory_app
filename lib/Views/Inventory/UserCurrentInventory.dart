@@ -89,32 +89,14 @@ class _UserCurrentInventoryState extends State<UserCurrentInventory> {
                           width: 1,
                           color: Colors.white,
                         ),
-                        toptitle(200.0, "Serial No."),
-                        Container(
-                          width: 1,
-                          color: Colors.white,
-                        ),
-                        toptitle(100.0, "Px No."),
-                        Container(
-                          width: 1,
-                          color: Colors.white,
-                        ),
+
                         toptitle(100.0, "Machine"),
                         Container(
                           width: 1,
                           color: Colors.white,
                         ),
-                        toptitle(100.0, "Location"),
-                        Container(
-                          width: 1,
-                          color: Colors.white,
-                        ),
+
                         toptitle(100.0, "Remark"),
-                        Container(
-                          width: 1,
-                          color: Colors.white,
-                        ),
-                        toptitle(100.0, "Status"),
                         Container(
                           width: 1,
                           color: Colors.white,
@@ -124,11 +106,11 @@ class _UserCurrentInventoryState extends State<UserCurrentInventory> {
                           width: 1,
                           color: Colors.white,
                         ),
-                        toptitle(130.0, "Photo"),
-                        Container(
-                          width: 1,
-                          color: Colors.white,
-                        ),
+                        // toptitle(130.0, "Photo"),
+                        // Container(
+                        //   width: 1,
+                        //   color: Colors.white,
+                        // ),
                       ],
                     ),
                     Expanded(

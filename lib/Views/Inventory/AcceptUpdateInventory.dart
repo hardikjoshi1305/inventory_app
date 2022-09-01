@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:inventory_management/Controller/InventoryController.dart';
-import 'package:inventory_management/Model/InventorylistResponse.dart';
+import 'package:inventory_management/Model/AdminReturnInventoryResponse.dart';
 import 'package:inventory_management/Utility/CONSTANT.dart';
 import 'package:inventory_management/Utility/SharedPreferenceHelper.dart';
 import 'package:inventory_management/Utility/app_colors.dart';

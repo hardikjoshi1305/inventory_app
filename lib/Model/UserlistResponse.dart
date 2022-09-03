@@ -36,45 +36,52 @@ class UserlistResponse {
 }
 
 class Datum {
-  Datum({
-    this.id,
-    this.userid,
-    this.mobile,
-    this.apiToken,
-    this.type,
-    this.isActive,
-    this.deviceid,
-    this.walletAmount,
-  });
+  Datum(
+      {this.id,
+      this.userid,
+      this.mobile,
+      this.apiToken,
+      this.type,
+      this.isActive,
+      this.deviceid,
+      this.walletAmount,
+      this.pass,
+      this.IsVisible});
 
   var id;
-  String userid;
+  var userid;
   String mobile;
   String apiToken;
   String type;
   String isActive;
   String deviceid;
   String walletAmount;
+  var IsVisible;
+  var pass;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
-        userid: json["userid"],
-        mobile: json["mobile"],
+        userid: json["UserID"],
+        mobile: json["Mobile"],
         apiToken: json["api_token"],
         type: json["type"],
-        isActive: json["is_active"],
-        deviceid: json["deviceid"],
-        walletAmount: json["wallet_amount"],
+        isActive: json["IsActive"],
+        deviceid: json["DeviceId"],
+        walletAmount: json["WalletAmount"],
+        IsVisible: json["IsVisible"],
+        pass: json["pass"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "userid": userid,
-        "mobile": mobile,
+        "UserID": userid,
+        "Mobile": mobile,
         "api_token": apiToken,
         "type": type,
-        "is_active": isActive,
-        "deviceid": deviceid,
-        "wallet_amount": walletAmount,
+        "IsActive": isActive,
+        "DeviceId": deviceid,
+        "WalletAmount": walletAmount,
+        "IsVisible": IsVisible,
+        "pass": pass,
       };
 }

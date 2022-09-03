@@ -188,10 +188,13 @@ class _AddServiceReportState extends State<AddServiceReport> {
                               ),
                             ),
                             onTap: () async {
-                              if (!await launchUrl(Uri.parse(
-                                  "http://pankrutiinfotech.com/inventory_app/public/" +
-                                      tourController.adreportlist[index]
-                                          .serviceReport))) {
+                              print("url " +
+                                  URL_Live +
+                                  tourController
+                                      .adreportlist[index].serviceReport);
+                              if (!await launchUrl(Uri.parse(URL_Live +
+                                  tourController
+                                      .adreportlist[index].serviceReport))) {
                                 throw 'Could not launch ';
                               }
                               // Get.to(() => Imagedisplay(

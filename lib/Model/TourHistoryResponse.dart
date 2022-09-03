@@ -47,7 +47,7 @@ class Datum {
   });
 
   int id;
-  String userId;
+  var userId;
   String tourname;
   String errorname;
   String city;
@@ -56,21 +56,21 @@ class Datum {
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
-        userId: json["user_id"],
-        tourname: json["tourname"],
-        errorname: json["errorname"] == null ? null : json["errorname"],
-        city: json["city"],
-        iscompleted: json["iscompleted"],
-        createdAt: DateTime.parse(json["created_at"]),
+        userId: json["UserId"],
+        tourname: json["TourName"],
+        errorname: json["ErrorName"] == null ? null : json["ErrorName"],
+        city: json["City"],
+        iscompleted: json["IsCompleted"],
+        createdAt: DateTime.parse(json["CreatedAt"]),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "user_id": userId,
-        "tourname": tourname,
-        "errorname": errorname == null ? null : errorname,
-        "city": city,
-        "iscompleted": iscompleted,
-        "created_at": createdAt.toIso8601String(),
+        "UserId": userId,
+        "TourName": tourname,
+        "ErrorName": errorname == null ? null : errorname,
+        "City": city,
+        "IsCompleted": iscompleted,
+        "CreatedAt": createdAt.toIso8601String(),
       };
 }

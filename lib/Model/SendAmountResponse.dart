@@ -37,28 +37,28 @@ class SendAmountResponse {
 
 class Data {
   Data({
-    this.photo,
     this.userId,
     this.amount,
     this.id,
+    this.walletId,
   });
 
-  String photo;
-  String userId;
-  String amount;
+  var userId;
+  var amount;
   int id;
+  var walletId;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        photo: json["photo"],
-        userId: json["user_id"],
-        amount: json["amount"],
+        userId: json["UserId"],
+        amount: json["Amount"],
+        walletId: json["walletId"],
         id: json["id"],
       );
 
   Map<String, dynamic> toJson() => {
-        "photo": photo,
-        "user_id": userId,
-        "amount": amount,
+        "UserId": userId,
+        "Amount": amount,
+        "walletId": walletId,
         "id": id,
       };
 }

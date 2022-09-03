@@ -36,19 +36,18 @@ class AddInventorylResponse {
 }
 
 class Data {
-  Data({
-    this.code,
-    this.name,
-    this.serialNo,
-    this.pxNo,
-    this.machine,
-    this.location,
-    this.remark,
-    this.statusId,
-    this.wherefrom,
-    this.price,
-    this.id,
-  });
+  Data(
+      {this.code,
+      this.name,
+      this.serialNo,
+      this.pxNo,
+      this.machine,
+      this.location,
+      this.remark,
+      this.wherefrom,
+      this.price,
+      this.id,
+      this.StatusDeatils});
 
   String code;
   String name;
@@ -57,36 +56,35 @@ class Data {
   String machine;
   String location;
   String remark;
-  String statusId;
   String wherefrom;
+  var StatusDeatils;
   var price;
   var id;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        code: json["code"],
-        name: json["name"],
-        serialNo: json["serial_no"],
-        pxNo: json["px_no"],
-        machine: json["machine"],
-        location: json["location"],
-        remark: json["remark"],
-        statusId: json["status_id"],
-        wherefrom: json["wherefrom"],
-        price: json["price"],
+        code: json["Code"],
+        name: json["Name"],
+        serialNo: json["SerialNumber"],
+        pxNo: json["PxNo"],
+        machine: json["Machine"],
+        location: json["Location"],
+        remark: json["Remark"],
+        wherefrom: json["WhereFrom"],
+        StatusDeatils: json["StatusDeatils"],
+        price: json["Price"],
         id: json["id"],
       );
 
   Map<String, dynamic> toJson() => {
-        "code": code,
-        "name": name,
-        "serial_no": serialNo,
-        "px_no": pxNo,
-        "machine": machine,
-        "location": location,
-        "remark": remark,
-        "status_id": statusId,
-        "wherefrom": wherefrom,
-        "price": price,
+        "Code": code,
+        "Name": name,
+        "SerialNumber": serialNo,
+        "PxNo": pxNo,
+        "Machine": machine,
+        "Location": location,
+        "Remark": remark,
+        "WhereFrom": wherefrom,
+        "Price": price,
         "id": id,
       };
 }

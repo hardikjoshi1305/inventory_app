@@ -64,7 +64,7 @@ class _AddDailyRemarkState extends State<AddDailyRemark> {
               style: TextStyle(fontSize: 19, color: Colors.black),
             ),
           ),
-          tourController.getremarkdata.value.data != null
+          tourController.getremarkdata != null
               ? TextField(
                   maxLines: 10,
                   style: TextStyle(height: 2.0, color: Colors.black),
@@ -93,10 +93,11 @@ class _AddDailyRemarkState extends State<AddDailyRemark> {
                   if (validation2(remark)) {
                     tourController.createremark(
                         tour_id: widget.itemid,
-                        remarkid: tourController.getremarkdata != null
-                            ? tourController.getremarkdata.value.data.id
-                                .toString()
-                            : "",
+                        remarkid:
+                            tourController.getremarkdata.value.data != null
+                                ? tourController.getremarkdata.value.data.id
+                                    .toString()
+                                : "",
                         dailyremark: remark.toString());
                   }
                 },

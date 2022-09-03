@@ -447,7 +447,7 @@ class _CreateInventoryState extends State<CreateInventory> {
                         remark: te_Remark.value.text,
                         // status_id: dropdownid.value,
                         wherefrom: te_Wherefrom.value.text,
-                        Prize: te_Prize.value.text,
+                        Prize: te_Prize.value.text.toString(),
                         statusdeatils: te_statusdetail.value.text,
                       );
                     }

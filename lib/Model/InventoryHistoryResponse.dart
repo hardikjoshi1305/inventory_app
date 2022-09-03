@@ -44,20 +44,20 @@ class Datum {
   });
 
   int id;
-  String userid;
+  var userid;
   String invHistory;
   String currDate;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
-        userid: json["userid"],
+        userid: json["UserId"],
         invHistory: json["InvHistory"] == null ? null : json["InvHistory"],
         currDate: json["currDate"] == null ? null : json["currDate"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "userid": userid,
+        "UserId": userid,
         "InvHistory": invHistory == null ? null : invHistory,
         "currDate": currDate == null ? null : currDate,
       };

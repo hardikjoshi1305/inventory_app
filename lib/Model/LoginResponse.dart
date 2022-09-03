@@ -47,7 +47,7 @@ class Data {
   });
 
   int id;
-  String userid;
+  var userid;
   String mobile;
   String apiToken;
   String type;
@@ -58,25 +58,25 @@ class Data {
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["id"],
-        userid: json["userid"],
-        mobile: json["mobile"],
+        userid: json["UserID"],
+        mobile: json["Mobile"],
         apiToken: json["api_token"],
         type: json["type"],
-        isActive: json["is_active"],
-        deviceid: json["deviceid"],
-        walletAmount: json["wallet_amount"],
-        is_visible: json["is_visible"],
+        isActive: json["IsActive"],
+        deviceid: json["DeviceId"],
+        walletAmount: json["WalletAmount"],
+        is_visible: json["IsVisible"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "userid": userid,
-        "mobile": mobile,
+        "UserID": userid,
+        "Mobile": mobile,
         "api_token": apiToken,
         "type": type,
-        "is_active": isActive,
-        "deviceid": deviceid,
-        "wallet_amount": walletAmount,
-        "is_visible": is_visible,
+        "IsActive": isActive,
+        "DeviceId": deviceid,
+        "WalletAmount": walletAmount,
+        "IsVisible": is_visible,
       };
 }

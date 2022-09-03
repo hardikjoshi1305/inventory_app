@@ -48,13 +48,13 @@ class Datum {
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
-        statusName: json["status_name"],
-        isActive: json["is_active"],
+        statusName: json["StatusName"],
+        isActive: json["IsActive"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "status_name": statusName,
-        "is_active": isActive,
+        "StatusName": statusName,
+        "IsActive": isActive,
       };
 }

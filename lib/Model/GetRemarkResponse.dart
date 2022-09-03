@@ -44,21 +44,21 @@ class Data {
   });
 
   int id;
-  String tourId;
+  var tourId;
   String dailyremark;
   DateTime createdAt;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["id"],
-        tourId: json["tour_id"],
-        dailyremark: json["dailyremark"],
-        createdAt: DateTime.parse(json["created_at"]),
+        tourId: json["TourId"],
+        dailyremark: json["DailyRemark"],
+        createdAt: DateTime.parse(json["CreatedAt"]),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "tour_id": tourId,
-        "dailyremark": dailyremark,
-        "created_at": createdAt.toIso8601String(),
+        "TourId": tourId,
+        "DailyRemark": dailyremark,
+        "CreatedAt": createdAt.toIso8601String(),
       };
 }

@@ -47,14 +47,14 @@ class Data {
   var id;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        tourId: json["tour_id"],
-        serviceReport: json["service_report"],
+        tourId: json["TourId"],
+        serviceReport: json["ServiceReport"],
         id: json["id"],
       );
 
   Map<String, dynamic> toJson() => {
-        "tour_id": tourId,
-        "service_report": serviceReport,
+        "TourId": tourId,
+        "ServiceReport": serviceReport,
         "id": id,
       };
 }

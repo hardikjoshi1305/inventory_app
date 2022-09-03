@@ -231,7 +231,7 @@ class TourController extends GetxController {
           Fluttertoast.showToast(msg: "Success");
           // Get.to(HomeScreen());
         } else {
-          // Fluttertoast.showToast(msg: getremarkdata.value.message.toString());
+          getremarkdata.value = null;
         }
       }
     } finally {
@@ -249,7 +249,7 @@ class TourController extends GetxController {
           Fluttertoast.showToast(msg: "Success");
           // Get.to(HomeScreen());
         } else {
-          Fluttertoast.showToast(msg: getremarkdata.value.message.toString());
+          // Fluttertoast.showToast(msg: getremarkdata.value.message.toString());
         }
       }
     } finally {

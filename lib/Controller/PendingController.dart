@@ -11,6 +11,7 @@ import 'package:inventory_management/Views/Home/HomeScreen.dart';
 
 import '../Utility/CONSTANT.dart';
 import '../Utility/SharedPreferenceHelper.dart';
+import '../Views/Login/Login.dart';
 
 class PendingController extends GetxController {
   var isLoading = false.obs;
@@ -70,6 +71,10 @@ class PendingController extends GetxController {
         Fluttertoast.showToast(msg: "Data Fetch Successfully");
         // Get.to(HomeScreen());
         // Get.to(HomeScreen());
+      } else {
+        Fluttertoast.showToast(msg: "Invalid Login details");
+        Get.to(() => Login());
+        isLoading(false);
       }
     } finally {
       isLoading(false);

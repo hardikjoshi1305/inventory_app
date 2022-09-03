@@ -57,13 +57,13 @@ class Datum {
   });
 
   int id;
-  String userId;
+  var userId;
   String tourname;
   String errorname;
   String city;
   String iscompleted;
   DateTime createdAt;
-  String userid;
+  var userid;
   String mobile;
   String apiToken;
   String password;
@@ -71,46 +71,46 @@ class Datum {
   String isActive;
   String deviceid;
   String walletAmount;
-  String tourId;
+  var tourId;
   String serviceReport;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
-        userId: json["user_id"],
-        tourname: json["tourname"],
-        errorname: json["errorname"],
-        city: json["city"],
-        iscompleted: json["iscompleted"],
-        createdAt: DateTime.parse(json["created_at"]),
-        userid: json["userid"],
-        mobile: json["mobile"],
+        userId: json["UserId"],
+        tourname: json["TourName"],
+        errorname: json["ErrorName"],
+        city: json["City"],
+        iscompleted: json["IsCompleted"],
+        createdAt: DateTime.parse(json["CreatedAt"]),
+        userid: json["UserID"],
+        mobile: json["Mobile"],
         apiToken: json["api_token"],
         password: json["password"],
         type: json["type"],
-        isActive: json["is_active"],
-        deviceid: json["deviceid"],
-        walletAmount: json["wallet_amount"],
-        tourId: json["tour_id"],
-        serviceReport: json["service_report"],
+        isActive: json["IsActive"],
+        deviceid: json["DeviceId"],
+        walletAmount: json["WalletAmount"],
+        tourId: json["TourId"],
+        serviceReport: json["ServiceReport"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "user_id": userId,
-        "tourname": tourname,
-        "errorname": errorname,
-        "city": city,
-        "iscompleted": iscompleted,
-        "created_at": createdAt.toIso8601String(),
-        "userid": userid,
-        "mobile": mobile,
+        "UserId": userId,
+        "TourName": tourname,
+        "ErrorName": errorname,
+        "City": city,
+        "IsCompleted": iscompleted,
+        "CreatedAt": createdAt.toIso8601String(),
+        "UserID": userid,
+        "Mobile": mobile,
         "api_token": apiToken,
         "password": password,
         "type": type,
-        "is_active": isActive,
-        "deviceid": deviceid,
-        "wallet_amount": walletAmount,
-        "tour_id": tourId,
-        "service_report": serviceReport,
+        "IsActive": isActive,
+        "DeviceId": deviceid,
+        "WalletAmount": walletAmount,
+        "TourId": tourId,
+        "ServiceReport": serviceReport,
       };
 }

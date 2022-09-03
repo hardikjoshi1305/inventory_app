@@ -34,8 +34,6 @@ class LoginController extends GetxController {
           }
           SharedPreferenceHelper()
               .setPref(Useridname, login.value.data.userid.toString());
-          SharedPreferenceHelper()
-              .setPref(Userid, login.value.data.id.toString());
 
           if (login.value.data.type == "Admin") {
             Get.offNamed("/HomeScreen");

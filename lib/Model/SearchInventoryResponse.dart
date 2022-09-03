@@ -36,19 +36,19 @@ class SearchInventoryResponse {
 }
 
 class Datum {
-  Datum({
-    this.id,
-    this.code,
-    this.name,
-    this.serialNo,
-    this.pxNo,
-    this.machine,
-    this.location,
-    this.remark,
-    this.statusId,
-    this.wherefrom,
-    this.price,
-  });
+  Datum(
+      {this.id,
+      this.code,
+      this.name,
+      this.serialNo,
+      this.pxNo,
+      this.machine,
+      this.location,
+      this.remark,
+      this.statusId,
+      this.wherefrom,
+      this.price,
+      this.StatusDeatils});
 
   var id;
   String code;
@@ -61,32 +61,35 @@ class Datum {
   String statusId;
   String wherefrom;
   var price;
+  var StatusDeatils;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
-        code: json["code"],
-        name: json["name"],
-        serialNo: json["serial_no"],
-        pxNo: json["px_no"],
-        machine: json["machine"],
-        location: json["location"],
-        remark: json["remark"],
-        statusId: json["status_id"],
-        wherefrom: json["wherefrom"],
-        price: json["price"],
+        code: json["Code"],
+        name: json["Name"],
+        serialNo: json["SerialNumber"],
+        pxNo: json["PxNo"],
+        machine: json["Machine"],
+        location: json["Location"],
+        remark: json["Remark"],
+        statusId: json["Status"],
+        wherefrom: json["WhereFrom"],
+        price: json["Price"],
+        StatusDeatils: json["StatusDeatils"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "code": code,
-        "name": name,
-        "serial_no": serialNo,
-        "px_no": pxNo,
-        "machine": machine,
-        "location": location,
-        "remark": remark,
-        "status_id": statusId,
-        "wherefrom": wherefrom,
-        "price": price,
+        "Code": code,
+        "Name": name,
+        "SerialNumber": serialNo,
+        "PxNo": pxNo,
+        "Machine": machine,
+        "Location": location,
+        "Remark": remark,
+        "Status": statusId,
+        "WhereFrom": wherefrom,
+        "Price": price,
+        "StatusDeatils": StatusDeatils,
       };
 }

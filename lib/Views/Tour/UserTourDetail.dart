@@ -28,7 +28,6 @@ class _UserTourDetailsState extends State<UserTourDetails> {
     await Future.delayed(Duration.zero);
     tourController.usertourdetail(tourid);
     String userid = await SharedPreferenceHelper().getPref(Userid);
-
     walletController.addexpenselist(userid, tourid);
   }
 

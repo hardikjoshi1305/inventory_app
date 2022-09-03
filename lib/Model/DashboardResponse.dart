@@ -46,7 +46,7 @@ class Datum {
 
   String userwallerAmt;
   var isVisible;
-  String userid;
+  var userid;
   var sendpart;
   List<AdminsendAmt> adminsendAmt;
 
@@ -85,17 +85,17 @@ class AdminsendAmt {
 
   factory AdminsendAmt.fromJson(Map<String, dynamic> json) => AdminsendAmt(
         id: json["id"],
-        userId: json["user_id"],
-        photo: json["photo"] == null ? null : json["photo"],
-        amount: json["amount"],
-        walletId: json["wallet_id"],
+        userId: json["UserId"],
+        photo: json["Photo"] == null ? null : json["Photo"],
+        amount: json["Amount"],
+        walletId: json["walletId"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "user_id": userId,
-        "photo": photo == null ? null : photo,
-        "amount": amount,
-        "wallet_id": walletId,
+        "UserId": userId,
+        "Photo": photo == null ? null : photo,
+        "Amount": amount,
+        "walletId": walletId,
       };
 }

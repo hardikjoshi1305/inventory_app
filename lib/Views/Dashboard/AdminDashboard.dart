@@ -21,8 +21,9 @@ class AdminDashboard extends StatefulWidget {
 class _DashboardBodyState extends State<AdminDashboard> {
   @override
   void initState() {
-    getauthtoken();
     callapi();
+    getauthtoken();
+
     // upcomingController.pendingitem(iscompleted: "0");
     super.initState();
   }
@@ -32,7 +33,7 @@ class _DashboardBodyState extends State<AdminDashboard> {
   callapi() async {
     await Future.delayed(Duration.zero);
     // upcomingController.pendingitem(iscompleted: "0");
-    upcomingController.admindashboardapi();
+    await upcomingController.admindashboardapi();
   }
 
   getauthtoken() async {
@@ -103,7 +104,7 @@ class _DashboardBodyState extends State<AdminDashboard> {
                 : Container(),
             upcomingController.admindashboarddata.value.data != null
                 ? Container(
-                    margin: EdgeInsets.only(top: 7, left: 8, right: 8),
+                    margin: EdgeInsets.only(top: 37, left: 8, right: 8),
                     child: Text(
                       "You Have " +
                           upcomingController
@@ -129,99 +130,115 @@ class _DashboardBodyState extends State<AdminDashboard> {
                     ),
                   )
                 : Container(),
-            upcomingController
-                        .admindashboarddata.value.data[0].adminsendpart.length >
-                    0
-                ? Container(
-                    // height: 400,
-                    child: ListView(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        children: List.generate(
-                            upcomingController.admindashboarddata.value.data[0]
-                                .adminsendpart.length, (index) {
-                          return Container(
-                              child: GestureDetector(
-                                  // onTap: () {
-                                  //   Get.to(() => TourDetailSubmission(),
-                                  //       arguments: upcomingController
-                                  //           .admindashboarddata.value.data[0].adminsendpart[index].id
-                                  //           .toString());
-                                  //   // CreateTourDetail());
-                                  // },
-                                  child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Column(
+            upcomingController.admindashboarddata.value.data != null
+                ? upcomingController.admindashboarddata.value.data[0]
+                            .adminsendpart.length >
+                        0
+                    ? Container(
+                        margin: EdgeInsets.only(top: 80),
+                        alignment: AlignmentDirectional.center,
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    toptitle(130.0, "UserId"),
-                                    Container(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
-                                    toptitle(130.0, "Inventory Name"),
-                                    Container(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
-                                    toptitle(130.0, "Code"),
-                                    Container(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
-                                  ],
+                                toptitle(115.0, "UserId"),
+                                Container(
+                                  width: 1,
+                                  color: Colors.white,
                                 ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    bottomtitle(
-                                        130.0,
-                                        upcomingController
-                                            .admindashboarddata
-                                            .value
-                                            .data[0]
-                                            .adminsendpart[index]
-                                            .userId),
-                                    Container(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
-                                    bottomtitle(
-                                        130.0,
-                                        upcomingController
-                                            .admindashboarddata
-                                            .value
-                                            .data[0]
-                                            .adminsendpart[index]
-                                            .name),
-                                    Container(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
-                                    bottomtitle(
-                                        130.0,
-                                        upcomingController
-                                            .admindashboarddata
-                                            .value
-                                            .data[0]
-                                            .adminsendpart[index]
-                                            .code),
-                                    Container(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
-                                  ],
-                                )
+                                toptitle(130.0, "Inventory Name"),
+                                Container(
+                                  width: 1,
+                                  color: Colors.white,
+                                ),
+                                toptitle(115.0, "Code"),
+                                Container(
+                                  width: 1,
+                                  color: Colors.white,
+                                ),
                               ],
                             ),
-                          )));
-                        })),
-                  )
+                            Container(
+                              // height: 400,
+                              child: ListView(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  children: List.generate(
+                                      upcomingController
+                                          .admindashboarddata
+                                          .value
+                                          .data[0]
+                                          .adminsendpart
+                                          .length, (index) {
+                                    return Container(
+                                        child: GestureDetector(
+                                            // onTap: () {
+                                            //   Get.to(() => TourDetailSubmission(),
+                                            //       arguments: upcomingController
+                                            //           .admindashboarddata.value.data[0].adminsendpart[index].id
+                                            //           .toString());
+                                            //   // CreateTourDetail());
+                                            // },
+                                            child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(0.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    bottomtitle(
+                                                        115.0,
+                                                        upcomingController
+                                                            .admindashboarddata
+                                                            .value
+                                                            .data[0]
+                                                            .adminsendpart[
+                                                                index]
+                                                            .userId),
+                                                    Container(
+                                                      width: 1,
+                                                      color: Colors.white,
+                                                    ),
+                                                    bottomtitle(
+                                                        130.0,
+                                                        upcomingController
+                                                            .admindashboarddata
+                                                            .value
+                                                            .data[0]
+                                                            .adminsendpart[
+                                                                index]
+                                                            .name),
+                                                    Container(
+                                                      width: 1,
+                                                      color: Colors.white,
+                                                    ),
+                                                    bottomtitle(
+                                                        115.0,
+                                                        upcomingController
+                                                            .admindashboarddata
+                                                            .value
+                                                            .data[0]
+                                                            .adminsendpart[
+                                                                index]
+                                                            .code),
+                                                    Container(
+                                                      width: 1,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ],
+                                                ))));
+                                  })),
+                            )
+                          ],
+                        ),
+                      )
+                    : Container(
+                        child: nodatafound(),
+                      )
                 : Container(
                     child: nodatafound(),
-                  ),
+                  )
           ],
         ),
       ),

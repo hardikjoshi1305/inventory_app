@@ -74,17 +74,17 @@ class Adminsendpart {
 
   String code;
   String name;
-  String userId;
+  var userId;
 
   factory Adminsendpart.fromJson(Map<String, dynamic> json) => Adminsendpart(
-        code: json["code"],
-        name: json["name"],
+        code: json["Code"],
+        name: json["Name"],
         userId: json["UserID"],
       );
 
   Map<String, dynamic> toJson() => {
-        "code": code,
-        "name": name,
+        "Code": code,
+        "Name": name,
         "UserID": userId,
       };
 }

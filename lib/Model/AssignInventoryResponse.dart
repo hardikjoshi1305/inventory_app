@@ -36,30 +36,34 @@ class AssignInventoryResponse {
 }
 
 class Datum {
-  Datum({
-    this.id,
-    this.sendPartsId,
-    this.inventoryId,
-    this.status,
-    this.userId,
-    this.tourName,
-    this.photo,
-    this.code,
-    this.name,
-    this.serialNo,
-    this.pxNo,
-    this.machine,
-    this.location,
-    this.remark,
-    this.statusId,
-    this.wherefrom,
-    this.price,
-  });
+  Datum(
+      {this.id,
+      this.sendPartsId,
+      this.inventoryId,
+      this.status,
+      this.InvHistory,
+      this.currDate,
+      this.userId,
+      this.tourName,
+      this.photo,
+      this.code,
+      this.name,
+      this.serialNo,
+      this.pxNo,
+      this.machine,
+      this.location,
+      this.remark,
+      this.statusId,
+      this.wherefrom,
+      this.price,
+      this.StatusDeatils});
 
   var id;
   var sendPartsId;
   var inventoryId;
   var status;
+  var InvHistory;
+  var currDate;
   var userId;
   String tourName;
   String photo;
@@ -73,44 +77,51 @@ class Datum {
   String statusId;
   String wherefrom;
   var price;
+  var StatusDeatils;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
-        sendPartsId: json["send_parts_id"],
-        inventoryId: json["inventory_id"],
-        status: json["status"],
-        userId: json["user_id"],
-        tourName: json["tour_name"],
-        photo: json["photo"],
-        code: json["code"],
-        name: json["name"],
-        serialNo: json["serial_no"],
-        pxNo: json["px_no"],
-        machine: json["machine"],
-        location: json["location"],
-        remark: json["remark"],
+        sendPartsId: json["SendPartId"],
+        inventoryId: json["InvId"],
+        status: json["Status"],
+        InvHistory: json["InvHistory"],
+        currDate: json["currDate"],
+        userId: json["UserId"],
+        tourName: json["TourName"],
+        photo: json["Photo"],
+        code: json["Code"],
+        name: json["Name"],
+        serialNo: json["SerialNumber"],
+        pxNo: json["PxNo"],
+        machine: json["Machine"],
+        location: json["Location"],
+        remark: json["Remark"],
         statusId: json["status_id"],
-        wherefrom: json["wherefrom"],
-        price: json["price"],
+        wherefrom: json["WhereFrom"],
+        price: json["Price"],
+        StatusDeatils: json["StatusDeatils"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "send_parts_id": sendPartsId,
-        "inventory_id": inventoryId,
-        "status": status,
-        "user_id": userId,
-        "tour_name": tourName,
-        "photo": photo,
-        "code": code,
-        "name": name,
-        "serial_no": serialNo,
-        "px_no": pxNo,
-        "machine": machine,
-        "location": location,
-        "remark": remark,
+        "SendPartId": sendPartsId,
+        "InvId": inventoryId,
+        "Status": status,
+        "InvHistory": InvHistory,
+        "currDate": currDate,
+        "UserId": userId,
+        "TourName": tourName,
+        "Photo": photo,
+        "Code": code,
+        "Name": name,
+        "SerialNumber": serialNo,
+        "PxNo": pxNo,
+        "Machine": machine,
+        "Location": location,
+        "Remark": remark,
         "status_id": statusId,
-        "wherefrom": wherefrom,
-        "price": price,
+        "WhereFrom": wherefrom,
+        "Price": price,
+        "StatusDeatils": StatusDeatils,
       };
 }

@@ -73,13 +73,13 @@ class Dailyremark {
   DateTime createdAt;
 
   factory Dailyremark.fromJson(Map<String, dynamic> json) => Dailyremark(
-        dailyremark: json["dailyremark"],
-        createdAt: DateTime.parse(json["created_at"]),
+        dailyremark: json["DailyRemark"],
+        createdAt: DateTime.parse(json["CreatedAt"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "dailyremark": dailyremark,
-        "created_at": createdAt.toIso8601String(),
+        "DailyRemark": dailyremark,
+        "CreatedAt": createdAt.toIso8601String(),
       };
 }
 
@@ -94,12 +94,12 @@ class Finaldignose {
 
   factory Finaldignose.fromJson(Map<String, dynamic> json) => Finaldignose(
         finalDignose: json["FinalDignose"],
-        createdAt: DateTime.parse(json["created_at"]),
+        createdAt: DateTime.parse(json["CreatedAt"]),
       );
 
   Map<String, dynamic> toJson() => {
         "FinalDignose": finalDignose,
-        "created_at": createdAt.toIso8601String(),
+        "CreatedAt": createdAt.toIso8601String(),
       };
 }
 
@@ -111,10 +111,10 @@ class Servicereport {
   String serviceReport;
 
   factory Servicereport.fromJson(Map<String, dynamic> json) => Servicereport(
-        serviceReport: json["service_report"],
+        serviceReport: json["ServiceReport"],
       );
 
   Map<String, dynamic> toJson() => {
-        "service_report": serviceReport,
+        "ServiceReport": serviceReport,
       };
 }

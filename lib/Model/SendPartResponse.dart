@@ -44,7 +44,7 @@ class Datum {
   });
 
   String photo;
-  String userId;
+  var userId;
   String tourName;
   int id;
 

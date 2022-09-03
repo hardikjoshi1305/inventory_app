@@ -38,14 +38,20 @@ class _ImagedisplayState extends State<Imagedisplay> {
               ),
             );
           },
-
           errorBuilder: (context, error, stackTrace) => Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.error,size: 70,color: Colors.red,),
+              Icon(
+                Icons.error,
+                size: 70,
+                color: Colors.red,
+              ),
               Container(
                 margin: EdgeInsets.all(20),
-                child: Text(error.toString(),style: TextStyle(fontSize: 18,color: Colors.red),),
+                child: Text(
+                  error.toString(),
+                  style: TextStyle(fontSize: 18, color: Colors.red),
+                ),
               )
             ],
           ),

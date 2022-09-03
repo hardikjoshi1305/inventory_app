@@ -67,9 +67,15 @@ class _WelcomeSplashScreenState extends State<WelcomeSplashScreen> {
         body: intenet
             ? Center(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
+                    Container(
+                      color: Colors.white,
+                      height: 100,
+                    ),
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: SplashScreen(
                         seconds: 5,
                         navigateAfterSeconds: firstLogin
@@ -78,12 +84,12 @@ class _WelcomeSplashScreenState extends State<WelcomeSplashScreen> {
                                 ? HomeScreen()
                                 : Dashboard(),
                         image: Image(
-                          image: AssetImage("assets/transparent_logo.png"),
+                          image: AssetImage("assets/argon medical.jpeg"),
                         ),
                         photoSize: 150.0,
                         useLoader: false,
                       ),
-                    ),
+                    )
                   ],
                 ),
               )

@@ -5,6 +5,8 @@ import 'package:inventory_management/Utility/CommandMethod.dart';
 
 import '../../Component/InventoryListWidget.dart';
 import '../../Controller/InventoryController.dart';
+import '../../Utility/CONSTANT.dart';
+import '../../Utility/SharedPreferenceHelper.dart';
 import '../../Utility/app_colors.dart';
 
 class UserCurrentInventory extends StatefulWidget {
@@ -14,9 +16,12 @@ class UserCurrentInventory extends StatefulWidget {
   State<UserCurrentInventory> createState() => _UserCurrentInventoryState();
 }
 
+var userisvisible;
 InventoryController inventoryController = Get.put(InventoryController());
 apicall() async {
   await Future.delayed(Duration.zero);
+  userisvisible = await SharedPreferenceHelper().getPref(IsVISIBLE);
+
   inventoryController.fetchuserinventorylist("1");
 }
 
@@ -40,7 +45,7 @@ class _UserCurrentInventoryState extends State<UserCurrentInventory> {
           backgroundColor: Colors.blueGrey[600],
           title: Text('Current Inventory'),
         ),
-        drawer: UserDrawer(),
+        drawer: UserDrawer(userisvisible),
         body: Container(
             child: Obx(() => Stack(
                   fit: StackFit.loose,

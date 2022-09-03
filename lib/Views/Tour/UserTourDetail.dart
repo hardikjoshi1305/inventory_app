@@ -5,6 +5,7 @@ import 'package:inventory_management/Controller/TourController.dart';
 import 'package:inventory_management/Controller/WalletController.dart';
 import 'package:inventory_management/Utility/CommandMethod.dart';
 import 'package:inventory_management/Utility/Imagedisplay.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../Component/ExpenseListWidget.dart';
 import '../../Utility/CONSTANT.dart';
@@ -144,14 +145,24 @@ class _UserTourDetailsState extends State<UserTourDetails> {
                                           ),
                                         ),
                                       ),
-                                      onTap: () {
-                                        Get.to(() => Imagedisplay(
-                                            imgurl: tourController
-                                                .usertourdetails
-                                                .value
-                                                .data
-                                                .servicereport[index]
-                                                .serviceReport));
+                                      onTap: () async {
+                                        if (!await launchUrl(Uri.parse(
+                                            "http://pankrutiinfotech.com/inventory_app/public/" +
+                                                tourController
+                                                    .usertourdetails
+                                                    .value
+                                                    .data
+                                                    .servicereport[index]
+                                                    .serviceReport))) {
+                                          throw 'Could not launch ';
+                                        }
+                                        // Get.to(() => Imagedisplay(
+                                        //     imgurl: tourController
+                                        //         .usertourdetails
+                                        //         .value
+                                        //         .data
+                                        //         .servicereport[index]
+                                        //         .serviceReport));
                                       }),
                                 );
                               },

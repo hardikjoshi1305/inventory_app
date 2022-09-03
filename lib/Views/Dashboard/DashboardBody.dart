@@ -28,21 +28,23 @@ class _DashboardBodyState extends State<DashboardBody> {
   }
 
   PendingController upcomingController = Get.put(PendingController());
-
+  var userisvisible;
   callapi() async {
     await Future.delayed(Duration.zero);
     upcomingController.pendingitem(iscompleted: "0");
-    upcomingController.dashboardapi();
+    await upcomingController.dashboardapi();
   }
 
   getauthtoken() async {
     var token = await SharedPreferenceHelper().getPref(TOKEN);
     print("token" + token.toString());
+    userisvisible = await SharedPreferenceHelper().getPref(IsVISIBLE);
+    print("userisvisible" + userisvisible.toString());
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: UserDrawer(),
+      drawer: UserDrawer(userisvisible),
       appBar: AppBar(
         backgroundColor: Colors.blueGrey[600],
         title: Text('Argon Medical'),

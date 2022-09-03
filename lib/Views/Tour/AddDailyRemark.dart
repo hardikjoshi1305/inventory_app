@@ -31,95 +31,116 @@ class _AddDailyRemarkState extends State<AddDailyRemark> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          physics: ScrollPhysics(),
-          child: Column(children: [
-            Container(
-              height: 30,
-              margin: EdgeInsets.all(10),
-              child: Text(
-                "Enter Daily Remark",
-                style: TextStyle(fontSize: 19, color: Colors.black),
-              ),
-            ),
-            TextField(
-              maxLines: 10,
-              style: TextStyle(height: 2.0, color: Colors.black),
-              controller: te_Remark
-                ..text = tourController.getremarkdata.value.data != null
-                    ? tourController.getremarkdata.value.data.dailyremark
-                    : "",
-              keyboardType: TextInputType.text,
-              onChanged: (value) => remark = value,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-
-                // prefixIcon: Icon(Icons.comment),
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                margin: const EdgeInsets.only(
-                    top: 15, bottom: 15, left: 5, right: 5),
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (validation2(remark)) {
-                      tourController.createremark(
-                          tour_id: widget.itemid,
-                          remarkid:
-                              tourController.getremarkdata.value.data != null
-                                  ? tourController.getremarkdata.value.data.id
-                                      .toString()
-                                  : "",
-                          dailyremark: remark.toString());
-                    }
-                  },
-                  child: const Text('Submit'),
+      child: Obx(() => Stack(
+            alignment: AlignmentDirectional.center,
+            children: <Widget>[
+              Opacity(
+                opacity:
+                    1, // You can reduce this when loading to give different effect
+                child: AbsorbPointer(
+                  absorbing: tourController.isLoading.value,
+                  child: screenbody(),
                 ),
               ),
+              Opacity(
+                opacity: tourController.isLoading.value ? 1.0 : 0,
+                child: CircularProgressIndicator(),
+              ),
+            ],
+          )),
+    );
+  }
+
+  Widget screenbody() {
+    return SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        physics: ScrollPhysics(),
+        child: Column(children: [
+          Container(
+            height: 30,
+            margin: EdgeInsets.all(10),
+            child: Text(
+              "Enter Daily Remark",
+              style: TextStyle(fontSize: 19, color: Colors.black),
             ),
-            Container(
-              padding: EdgeInsets.all(10),
-              child: Text(
-                "Daily Remark",
-                style: TextStyle(color: Colors.black, fontSize: 18),
+          ),
+          tourController.getremarkdata.value.data != null
+              ? TextField(
+                  maxLines: 10,
+                  style: TextStyle(height: 2.0, color: Colors.black),
+                  controller: te_Remark
+                    ..text = tourController.getremarkdata.value.data != null
+                        ? tourController.getremarkdata.value.data.dailyremark
+                            .toString()
+                        : "",
+                  keyboardType: TextInputType.text,
+                  onChanged: (value) => remark = value,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+
+                    // prefixIcon: Icon(Icons.comment),
+                  ),
+                )
+              : Container(),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              margin:
+                  const EdgeInsets.only(top: 15, bottom: 15, left: 5, right: 5),
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  if (validation2(remark)) {
+                    tourController.createremark(
+                        tour_id: widget.itemid,
+                        remarkid: tourController.getremarkdata != null
+                            ? tourController.getremarkdata.value.data.id
+                                .toString()
+                            : "",
+                        dailyremark: remark.toString());
+                  }
+                },
+                child: const Text('Submit'),
               ),
             ),
-            Divider(
-              color: Colors.black,
+          ),
+          Container(
+            padding: EdgeInsets.all(10),
+            child: Text(
+              "Daily Remark",
+              style: TextStyle(color: Colors.black, fontSize: 18),
             ),
-            tourController.addailyremarklist.length > 0
-                ? ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: tourController
-                        .usertourdetails.value.data.dailyremark.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Card(
-                        elevation: 7,
-                        margin: EdgeInsets.only(top: 5, left: 5, right: 5),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(7),
-                        ),
-                        child: GestureDetector(
-                            child: Container(
-                              padding: EdgeInsets.all(0),
-                              child: ListTile(
-                                title: Text(tourController.addailyremarklist
-                                    .value[index].dailyremark),
-                                subtitle: Text(getdateformate(tourController
-                                    .addailyremarklist.value[index].createdAt)),
-                              ),
+          ),
+          Divider(
+            color: Colors.black,
+          ),
+          tourController.addailyremarklist.length > 0
+              ? ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: tourController.addailyremarklist.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Card(
+                      elevation: 7,
+                      margin: EdgeInsets.only(top: 5, left: 5, right: 5),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7),
+                      ),
+                      child: GestureDetector(
+                          child: Container(
+                            padding: EdgeInsets.all(0),
+                            child: ListTile(
+                              title: Text(tourController
+                                  .addailyremarklist[index].dailyremark),
+                              subtitle: Text(getdateformate(tourController
+                                  .addailyremarklist[index].createdAt)),
                             ),
-                            onTap: () {}),
-                      );
-                    },
-                  )
-                : nodatafound(),
-          ])),
-    );
+                          ),
+                          onTap: () {}),
+                    );
+                  },
+                )
+              : nodatafound(),
+        ]));
   }
 
   bool validation2(remark) {
@@ -142,8 +163,9 @@ class _AddDailyRemarkState extends State<AddDailyRemark> {
 
   void getdailyremark() async {
     await Future.delayed(Duration.zero);
-    tourController.getremark(widget.itemid);
     String userid = await SharedPreferenceHelper().getPref(Userid);
     tourController.adddailyremark(userid, widget.itemid);
+    tourController.getremark(widget.itemid);
+    print("getdailyremark");
   }
 }

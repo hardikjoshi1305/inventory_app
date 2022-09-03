@@ -45,9 +45,9 @@ class Datum {
   });
 
   String userwallerAmt;
-  int isVisible;
+  var isVisible;
   String userid;
-  int sendpart;
+  var sendpart;
   List<AdminsendAmt> adminsendAmt;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -77,11 +77,11 @@ class AdminsendAmt {
     this.walletId,
   });
 
-  int id;
-  int userId;
+  var id;
+  var userId;
   String photo;
-  int amount;
-  int walletId;
+  var amount;
+  var walletId;
 
   factory AdminsendAmt.fromJson(Map<String, dynamic> json) => AdminsendAmt(
         id: json["id"],

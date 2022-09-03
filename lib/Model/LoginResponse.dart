@@ -43,6 +43,7 @@ class Data {
     this.isActive,
     this.deviceid,
     this.walletAmount,
+    this.is_visible,
   });
 
   int id;
@@ -53,6 +54,7 @@ class Data {
   String isActive;
   dynamic deviceid;
   dynamic walletAmount;
+  var is_visible;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["id"],
@@ -63,6 +65,7 @@ class Data {
         isActive: json["is_active"],
         deviceid: json["deviceid"],
         walletAmount: json["wallet_amount"],
+        is_visible: json["is_visible"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -74,5 +77,6 @@ class Data {
         "is_active": isActive,
         "deviceid": deviceid,
         "wallet_amount": walletAmount,
+        "is_visible": is_visible,
       };
 }

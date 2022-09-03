@@ -34,14 +34,17 @@ class _PendingState extends State<Pending> {
     upcomingController.pendingitem(iscompleted: "0");
   }
 
+  var userisvisible;
   getauthtoken() async {
     var token = await SharedPreferenceHelper().getPref(TOKEN);
+    userisvisible = await SharedPreferenceHelper().getPref(IsVISIBLE);
+
     print("token" + token.toString());
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: UserDrawer(),
+      drawer: UserDrawer(userisvisible),
       appBar: UserAppBar(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

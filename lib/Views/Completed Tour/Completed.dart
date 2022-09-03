@@ -19,6 +19,7 @@ class Completed extends StatefulWidget {
 }
 
 class _CompletedState extends State<Completed> {
+  var userisvisible;
   @override
   void initState() {
     getauthtoken();
@@ -35,13 +36,13 @@ class _CompletedState extends State<Completed> {
   }
 
   getauthtoken() async {
-    var token = await SharedPreferenceHelper().getPref(TOKEN);
-    print("token" + token.toString());
+    userisvisible = await SharedPreferenceHelper().getPref(IsVISIBLE);
   }
 
   Widget build(BuildContext context) {
+    getauthtoken();
     return Scaffold(
-        drawer: UserDrawer(),
+        drawer: UserDrawer(userisvisible),
         appBar: UserAppBar(),
         body: RefreshIndicator(
           onRefresh: () => callapi(),

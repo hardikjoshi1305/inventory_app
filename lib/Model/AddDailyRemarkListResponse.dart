@@ -53,11 +53,12 @@ class Datum {
     this.deviceid,
     this.walletAmount,
     this.tourId,
+    this.is_visible,
     this.dailyremark,
   });
 
-  int id;
-  int userId;
+  var id;
+  var userId;
   String tourname;
   String errorname;
   String city;
@@ -71,7 +72,8 @@ class Datum {
   String isActive;
   String deviceid;
   String walletAmount;
-  int tourId;
+  var tourId;
+  var is_visible;
   String dailyremark;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -91,6 +93,7 @@ class Datum {
         deviceid: json["deviceid"],
         walletAmount: json["wallet_amount"],
         tourId: json["tour_id"],
+        is_visible: json["is_visible"],
         dailyremark: json["dailyremark"],
       );
 
@@ -111,6 +114,7 @@ class Datum {
         "deviceid": deviceid,
         "wallet_amount": walletAmount,
         "tour_id": tourId,
+        "is_visible": is_visible,
         "dailyremark": dailyremark,
       };
 }

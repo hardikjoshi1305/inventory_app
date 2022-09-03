@@ -14,6 +14,7 @@ import 'Views/Inventory/AdminReturnInventory.dart';
 import 'Views/Inventory/Inventory.dart';
 import 'Views/Inventory/InventoryHistory.dart';
 import 'Views/Inventory/SendInventory.dart';
+import 'Views/Tour/CreatTourDetail.dart';
 import 'Views/Tour/TourList.dart';
 import 'Views/Wallet/ExpenseHistory.dart';
 import 'Views/Wallet/SendAmount.dart';
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: "/AdminReturnInventory", page: () => AdminReturnInventory()),
         GetPage(name: "/Login", page: () => Login()),
+        GetPage(name: "/CreateTourDetail", page: () => CreateTourDetail()),
       ],
     );
   }

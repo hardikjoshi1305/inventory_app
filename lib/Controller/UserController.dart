@@ -12,6 +12,7 @@ import 'package:inventory_management/Utility/CONSTANT.dart';
 import 'package:inventory_management/Utility/SharedPreferenceHelper.dart';
 import 'package:inventory_management/Views/Dashboard/Dashboard.dart';
 import 'package:inventory_management/Views/Home/HomeScreen.dart';
+import 'package:inventory_management/Views/Users/Userlist.dart';
 
 class UserController extends GetxController {
   var isLoading = false.obs;
@@ -63,7 +64,7 @@ class UserController extends GetxController {
           print("rdd" + res.toString());
 
           Fluttertoast.showToast(msg: "User Created Successfully");
-          Get.to(() => HomeScreen());
+          Get.to(() => Userlist());
         } else {
           Fluttertoast.showToast(msg: login.value.message);
         }

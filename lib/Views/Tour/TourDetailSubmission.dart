@@ -27,32 +27,32 @@ class _TourDetailSubmissionState extends State<TourDetailSubmission> {
               width: double.infinity,
               child: ElevatedButton(
                   // style: ElevatedButton.styleFrom(primary: Colors.blue),
-                  onPressed: (() => Get.to(() => CreateTourDetail(),
-                      arguments: [1, tour_id])),
+                  onPressed: (() => Get.offNamed("/CreateTourDetail",
+                      preventDuplicates: false, arguments: [1, tour_id])),
                   child: Text("Expence")),
             ),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                   // style: ElevatedButton.styleFrom(primary: Colors.blue),
-                  onPressed: (() => Get.to(() => CreateTourDetail(),
-                      arguments: [2, tour_id])),
+                  onPressed: (() => Get.offNamed("/CreateTourDetail",
+                      preventDuplicates: false, arguments: [2, tour_id])),
                   child: Text("Daily Remark")),
             ),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                   // style: ElevatedButton.styleFrom(primary: Colors.blue),
-                  onPressed: (() => Get.to(() => CreateTourDetail(),
-                      arguments: [3, tour_id])),
+                  onPressed: (() => Get.offNamed("/CreateTourDetail",
+                      preventDuplicates: false, arguments: [3, tour_id])),
                   child: Text("Service Report")),
             ),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                   // style: ElevatedButton.styleFrom(primary: Colors.blue),
-                  onPressed: (() => Get.to(() => CreateTourDetail(),
-                      arguments: [4, tour_id])),
+                  onPressed: (() => Get.offNamed("/CreateTourDetail",
+                      preventDuplicates: false, arguments: [4, tour_id])),
                   child: Text("Final Dignose")),
             ),
           ],

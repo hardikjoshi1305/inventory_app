@@ -122,7 +122,7 @@ Widget UserAppBar() {
   );
 }
 
-Widget UserDrawer() {
+Widget UserDrawer(userisvisible) {
   // var isvisible = "".obs;
   // SharedPreferenceHelper()
   //     .getPref(Userid)
@@ -181,17 +181,19 @@ Widget UserDrawer() {
               style: TextStyle(color: Colors.grey),
             ),
           ),
-          createDrawerBodyItem(
-              icon: Icons.inventory,
-              text: 'All Inventory',
-              onTap: () {
-                Get.to(() => UserInventory(), preventDuplicates: false);
+          userisvisible == "true"
+              ? createDrawerBodyItem(
+                  icon: Icons.inventory,
+                  text: 'All Inventory',
+                  onTap: () {
+                    Get.to(() => UserInventory(), preventDuplicates: false);
 
-                // Navigator.of(context).pop();
+                    // Navigator.of(context).pop();
 
-                // _permissionStatus?
-                // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
-              }),
+                    // _permissionStatus?
+                    // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
+                  })
+              : Container(),
           createDrawerBodyItem(
               icon: Icons.inventory,
               text: 'My Parts',

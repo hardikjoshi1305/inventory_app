@@ -7,6 +7,7 @@ import 'package:inventory_management/Utility/CONSTANT.dart';
 import 'package:inventory_management/Utility/SharedPreferenceHelper.dart';
 
 import '../../Component/ExpenseListWidget.dart';
+import '../../Component/UserExpenseListWidget.dart';
 import '../../Controller/TourController.dart';
 import '../../Utility/CommandMethod.dart';
 
@@ -68,7 +69,7 @@ class _AddExpenseState extends State<AddExpense> {
                 height: 20,
               ),
               TextField(
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.number,
                 onChanged: (value) => amount = value,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
@@ -219,7 +220,7 @@ class _AddExpenseState extends State<AddExpense> {
                               Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  toptitle(120.0, "Action"),
+                                  toptitle(120.0, "Status"),
                                   Container(
                                     width: 1,
                                     color: Colors.white,
@@ -259,7 +260,7 @@ class _AddExpenseState extends State<AddExpense> {
                                         .indexOf(element);
                                     var wallet = walletController.expensehistory
                                         .elementAt(index);
-                                    return ExpenseListWidget(
+                                    return UserExpenseListWidget(
                                         expenselist: wallet, position: index);
                                   }).toList(growable: true)
                                 ],

@@ -58,8 +58,8 @@ import '../Model/SendAmountResponse.dart';
 
 class RequestCall {
   static var client = http.Client();
-  static var BASEURL = "http://192.168.0.8/inventorymanagement/api/";
-  // static var BASEURL = "http://pankrutiinfotech.com/inventory_app/api/";
+  // static var BASEURL = "http://192.168.0.8/inventorymanagement/api/";
+  static var BASEURL = "http://pankrutiinfotech.com/inventory_app/api/";
   static var apiKey = "a92f28e11a27e8e5938a2020be68ba9c";
   static var authHeader;
 
@@ -78,6 +78,8 @@ class RequestCall {
     });
     var response =
         await client.post(BASEURL + 'login', headers: headers, body: body);
+    print("res" + response.body.toString());
+
     if (response.statusCode == 200) {
       var json = response.body;
       var finaldata = jsonDecode(json);
@@ -889,7 +891,7 @@ class RequestCall {
       var json = response.body;
       print("dadai" + json.toString());
       var finaldata = jsonDecode(json);
-      print("res" + finaldata.toString());
+      // print("res" + finaldata.toString());
       // return null;
       if ((finaldata as Map)['succes']) {
         var castsResp = getRemarkResponseFromJson(json);
@@ -1003,7 +1005,6 @@ class RequestCall {
       "user_id": userid,
       "tour_id": itemid,
     });
-    print("reds" + userid);
 
     var response = await client
         .post(BASEURL + 'usertourdailyremark', headers: authHeader, body: body)
@@ -1013,7 +1014,7 @@ class RequestCall {
 
     if (response.statusCode == 200) {
       var json = response.body;
-      print("reds" + json.toString());
+      print("adddailyremark" + json.toString());
       var castsResp = dailyremarklist.addDailyRemarkListResponseFromJson(json);
       if (castsResp.succes) {
         return castsResp.data;
@@ -1035,7 +1036,7 @@ class RequestCall {
     print("reds" + userid);
 
     var response = await client
-        .post(BASEURL + 'usertourdailyremark', headers: authHeader, body: body)
+        .post(BASEURL + 'userservicereport', headers: authHeader, body: body)
         .catchError((error) {
       Fluttertoast.showToast(msg: error.toString());
     });

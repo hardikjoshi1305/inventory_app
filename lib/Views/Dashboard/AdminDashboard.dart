@@ -129,177 +129,99 @@ class _DashboardBodyState extends State<AdminDashboard> {
                     ),
                   )
                 : Container(),
-            // upcomingController.pending.length > 0
-            //     ? Container(
-            //   // height: 400,
-            //   child: ListView(
-            //       shrinkWrap: true,
-            //       physics: NeverScrollableScrollPhysics(),
-            //       children: List.generate(
-            //           upcomingController.pending.length, (index) {
-            //         return Container(
-            //             child: GestureDetector(
-            //                 onTap: () {
-            //                   Get.to(() => TourDetailSubmission(),
-            //                       arguments: upcomingController
-            //                           .pending[index].id
-            //                           .toString());
-            //                   // CreateTourDetail());
-            //                 },
-            //                 child: Padding(
-            //                   padding: const EdgeInsets.all(10.0),
-            //                   child: Card(
-            //                       elevation: 7,
-            //                       margin: EdgeInsets.only(
-            //                           top: 16, left: 16, right: 16),
-            //                       shape: RoundedRectangleBorder(
-            //                         borderRadius:
-            //                         BorderRadius.circular(10),
-            //                       ),
-            //                       child: Padding(
-            //                           padding: const EdgeInsets.all(17.0),
-            //                           child: Column(
-            //                             children: [
-            //                               Card(
-            //                                 color: Colors.orange,
-            //                                 elevation: 7,
-            //                                 margin: EdgeInsets.only(
-            //                                     top: 16,
-            //                                     left: 16,
-            //                                     right: 16),
-            //                                 shape: RoundedRectangleBorder(
-            //                                   borderRadius:
-            //                                   BorderRadius.circular(
-            //                                       10),
-            //                                 ),
-            //                                 child: Padding(
-            //                                   padding:
-            //                                   const EdgeInsets.all(
-            //                                       8.0),
-            //                                   child: Container(
-            //                                     width: double.infinity,
-            //                                     height: 25,
-            //                                     alignment:
-            //                                     AlignmentDirectional
-            //                                         .center,
-            //                                     child: Text(
-            //                                       "Pending",
-            //                                       style: TextStyle(
-            //                                           fontSize: 20,
-            //                                           color: Colors.white,
-            //                                           fontWeight:
-            //                                           FontWeight
-            //                                               .bold),
-            //                                     ),
-            //                                   ),
-            //                                 ),
-            //                               ),
-            //                               Container(
-            //                                 height: 15,
-            //                               ),
-            //                               Row(
-            //                                 mainAxisAlignment:
-            //                                 MainAxisAlignment.center,
-            //                                 children: [
-            //                                   Column(
-            //                                     crossAxisAlignment:
-            //                                     CrossAxisAlignment
-            //                                         .start,
-            //                                     children: [
-            //                                       Text(
-            //                                         "Tour Name ",
-            //                                         style:
-            //                                         Pendingitemtextstyle,
-            //                                       ),
-            //                                       Text("City ",
-            //                                           style:
-            //                                           Pendingitemtextstyle),
-            //                                       Text("Problem ",
-            //                                           style:
-            //                                           Pendingitemtextstyle),
-            //                                       Text("Date ",
-            //                                           style:
-            //                                           Pendingitemtextstyle),
-            //                                       Text("Total Expense ",
-            //                                           style:
-            //                                           Pendingitemtextstyle)
-            //                                     ],
-            //                                   ),
-            //                                   Column(
-            //                                     children: [
-            //                                       Text("  :  ",
-            //                                           style:
-            //                                           Pendingitemtextstyle),
-            //                                       Text("  :  ",
-            //                                           style:
-            //                                           Pendingitemtextstyle),
-            //                                       Text("  :  ",
-            //                                           style:
-            //                                           Pendingitemtextstyle),
-            //                                       Text("  :  ",
-            //                                           style:
-            //                                           Pendingitemtextstyle),
-            //                                       Text("  :  ",
-            //                                           style:
-            //                                           Pendingitemtextstyle)
-            //                                     ],
-            //                                   ),
-            //                                   Column(
-            //                                     children: [
-            //                                       Text(
-            //                                           upcomingController
-            //                                               .pending[index]
-            //                                               .tourname,
-            //                                           style:
-            //                                           Pendingitemtextstyle),
-            //                                       Text(
-            //                                           upcomingController
-            //                                               .pending[index]
-            //                                               .city,
-            //                                           style:
-            //                                           Pendingitemtextstyle),
-            //                                       Text(
-            //                                           upcomingController
-            //                                               .pending[
-            //                                           index]
-            //                                               .errorname !=
-            //                                               null
-            //                                               ? upcomingController
-            //                                               .pending[
-            //                                           index]
-            //                                               .errorname
-            //                                               : "-",
-            //                                           style:
-            //                                           Pendingitemtextstyle),
-            //                                       Text(
-            //                                           getdateformate(
-            //                                               upcomingController
-            //                                                   .pending[
-            //                                               index]
-            //                                                   .createdAt),
-            //                                           style:
-            //                                           Pendingitemtextstyle),
-            //                                       Text(
-            //                                           upcomingController
-            //                                               .pending[
-            //                                           index]
-            //                                               .totalcount
-            //                                               .toString() +
-            //                                               " \u{20B9}",
-            //                                           style:
-            //                                           Pendingitemtextstyle)
-            //                                     ],
-            //                                   ),
-            //                                 ],
-            //                               ),
-            //                             ],
-            //                           ))),
-            //                 )));
-            //       })),
-            // )
-            //     : Container(
-            //   child: nodatafound(),
-            // ),
+            upcomingController
+                        .admindashboarddata.value.data[0].adminsendpart.length >
+                    0
+                ? Container(
+                    // height: 400,
+                    child: ListView(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        children: List.generate(
+                            upcomingController.admindashboarddata.value.data[0]
+                                .adminsendpart.length, (index) {
+                          return Container(
+                              child: GestureDetector(
+                                  // onTap: () {
+                                  //   Get.to(() => TourDetailSubmission(),
+                                  //       arguments: upcomingController
+                                  //           .admindashboarddata.value.data[0].adminsendpart[index].id
+                                  //           .toString());
+                                  //   // CreateTourDetail());
+                                  // },
+                                  child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    toptitle(130.0, "UserId"),
+                                    Container(
+                                      width: 1,
+                                      color: Colors.white,
+                                    ),
+                                    toptitle(130.0, "Inventory Name"),
+                                    Container(
+                                      width: 1,
+                                      color: Colors.white,
+                                    ),
+                                    toptitle(130.0, "Code"),
+                                    Container(
+                                      width: 1,
+                                      color: Colors.white,
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    bottomtitle(
+                                        130.0,
+                                        upcomingController
+                                            .admindashboarddata
+                                            .value
+                                            .data[0]
+                                            .adminsendpart[index]
+                                            .userId),
+                                    Container(
+                                      width: 1,
+                                      color: Colors.white,
+                                    ),
+                                    bottomtitle(
+                                        130.0,
+                                        upcomingController
+                                            .admindashboarddata
+                                            .value
+                                            .data[0]
+                                            .adminsendpart[index]
+                                            .name),
+                                    Container(
+                                      width: 1,
+                                      color: Colors.white,
+                                    ),
+                                    bottomtitle(
+                                        130.0,
+                                        upcomingController
+                                            .admindashboarddata
+                                            .value
+                                            .data[0]
+                                            .adminsendpart[index]
+                                            .code),
+                                    Container(
+                                      width: 1,
+                                      color: Colors.white,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          )));
+                        })),
+                  )
+                : Container(
+                    child: nodatafound(),
+                  ),
           ],
         ),
       ),

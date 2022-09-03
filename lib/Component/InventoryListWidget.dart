@@ -58,9 +58,9 @@ class InventoryListWidget extends StatelessWidget {
         ),
         bottomtitle(
             100.0,
-            this.UserModel.statusdetail == null
+            this.UserModel.statusdeatils == null
                 ? "-"
-                : this.UserModel.statusdetail),
+                : this.UserModel.statusdeatils.toString()),
         Container(
           width: 1,
           color: Colors.white,

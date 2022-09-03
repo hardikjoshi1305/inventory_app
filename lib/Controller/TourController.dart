@@ -221,7 +221,7 @@ class TourController extends GetxController {
 
   void getremark(String tour_id) async {
     try {
-      // isLoading(true);
+      isLoading(true);
       var res = await RequestCall.getdailyremark(
         tour_id: tour_id,
       );
@@ -231,11 +231,11 @@ class TourController extends GetxController {
           Fluttertoast.showToast(msg: "Success");
           // Get.to(HomeScreen());
         } else {
-          Fluttertoast.showToast(msg: getremarkdata.value.message.toString());
+          // Fluttertoast.showToast(msg: getremarkdata.value.message.toString());
         }
       }
     } finally {
-      // isLoading(false);
+      isLoading(false);
     }
   }
 

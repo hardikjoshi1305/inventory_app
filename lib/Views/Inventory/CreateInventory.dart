@@ -283,7 +283,7 @@ class _CreateInventoryState extends State<CreateInventory> {
           ),
           TextField(
             controller: te_statusdetail
-              ..text = this.usermodel != null ? usermodel.statusdetail : "",
+              ..text = this.usermodel != null ? usermodel.statusdeatils : "",
             keyboardType: TextInputType.text,
             onChanged: (value) => statusdetail = value,
             decoration: const InputDecoration(

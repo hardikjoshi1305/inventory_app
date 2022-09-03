@@ -40,6 +40,7 @@ class _SendInventoryState extends State<SendInventory> {
     allinventory.clear();
     allinventoryname.clear();
     allinventoryimage.clear();
+    Get.delete<SearchController>();
     print("dispose");
     super.dispose();
   }
@@ -239,7 +240,11 @@ class _SendInventoryState extends State<SendInventory> {
                 //   ..text = this.usermodel != null ? usermodel.name : "",
                 keyboardType: TextInputType.text,
                 onChanged: (value) {
-                  upcomingController.searchdata(value);
+                  if (value == "") {
+                    upcomingController.search.clear();
+                  } else {
+                    upcomingController.searchdata(value);
+                  }
                 },
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
@@ -286,66 +291,56 @@ class _SendInventoryState extends State<SendInventory> {
                     height: 20,
                   ),
             allinventoryname.length > 0
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                ? Column(
                     children: [
-                      toptitle(130.0, "Part Name"),
-                      Container(
-                        width: 1,
-                        color: Colors.white,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          toptitle(130.0, "Part Name"),
+                          Container(
+                            width: 1,
+                            color: Colors.white,
+                          ),
+                          // toptitle(100.0, "File"),
+                          // Container(
+                          //   width: 1,
+                          //   color: Colors.white,
+                          // ),
+                          toptitle(100.0, "Action"),
+                          Container(
+                            width: 1,
+                            color: Colors.white,
+                          ),
+                        ],
                       ),
-                      // toptitle(100.0, "File"),
-                      // Container(
-                      //   width: 1,
-                      //   color: Colors.white,
-                      // ),
-                      toptitle(100.0, "Action"),
-                      Container(
-                        width: 1,
-                        color: Colors.white,
-                      ),
+                      ...allinventoryname.map((element) => Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              bottomtitle(130.0, element),
+                              Container(
+                                width: 1,
+                                color: Colors.white,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  var index = allinventoryname.indexOf(element);
+
+                                  return deleteitem(index);
+                                },
+                                child: Container(
+                                  width: 100,
+                                  height: 40,
+                                  color: AppColors.offWhite,
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Icon(Icons.clear, color: Colors.red),
+                                ),
+                              )
+                            ],
+                          )),
                     ],
                   )
                 : Container(),
 
-            ...allinventoryname.map((element) => Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    bottomtitle(130.0, element),
-                    Container(
-                      width: 1,
-                      color: Colors.white,
-                    ),
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     var index = allinventoryname.indexOf(element);
-                    //
-                    //     return choosefile(index);
-                    //   },
-                    //   child: Container(
-                    //     color: AppColors.offWhite,
-                    //     height: 40,
-                    //     width: 100,
-                    //     padding: const EdgeInsets.all(2.0),
-                    //     child: Icon(Icons.image, color: AppColors.darkBlue),
-                    //   ),
-                    // ),
-                    GestureDetector(
-                      onTap: () {
-                        var index = allinventoryname.indexOf(element);
-
-                        return deleteitem(index);
-                      },
-                      child: Container(
-                        width: 100,
-                        height: 40,
-                        color: AppColors.offWhite,
-                        padding: const EdgeInsets.all(5.0),
-                        child: Icon(Icons.clear, color: Colors.red),
-                      ),
-                    )
-                  ],
-                )),
             // Obx(() =>
             // ListView(
             //   scrollDirection: Axis.vertical,

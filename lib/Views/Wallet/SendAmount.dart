@@ -13,8 +13,8 @@ class SendAmount extends StatefulWidget {
   State<SendAmount> createState() => _SendAmountState();
 }
 
-var userid, img_path;
-var code, amountadd = "";
+var userid;
+var code, amountadd, img_path = "";
 // List<String> allinventory = [];
 // List<String> allinventoryname = [];
 // List<String> allinventoryimage = [];

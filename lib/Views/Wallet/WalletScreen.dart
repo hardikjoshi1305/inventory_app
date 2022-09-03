@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:inventory_management/Component/WalletListWidget.dart';
 import 'package:inventory_management/Controller/WalletController.dart';
 import 'package:inventory_management/Views/Dashboard/Dashboard.dart';
+import 'package:inventory_management/Views/Inventory/UserCurrentInventory.dart';
 
 import '../../Utility/CommandMethod.dart';
 
@@ -36,7 +37,7 @@ class _WalletScreenState extends State<WalletScreen> {
         appBar: AppBar(
           title: Text("Wallet"),
         ),
-        drawer: UserDrawer(),
+        drawer: UserDrawer(userisvisible),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           physics: ScrollPhysics(),

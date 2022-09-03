@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inventory_management/Component/UserInventoryListWidget.dart';
+import 'package:inventory_management/Utility/CONSTANT.dart';
 import 'package:inventory_management/Utility/CommandMethod.dart';
+import 'package:inventory_management/Utility/SharedPreferenceHelper.dart';
 
 import '../../Component/InventoryListWidget.dart';
 import '../../Component/UserAllInventoryListWidget.dart';
@@ -16,9 +18,10 @@ class UserInventory extends StatefulWidget {
 }
 
 InventoryController inventoryController = Get.put(InventoryController());
-
+var userisvisible;
 apicall() async {
   await Future.delayed(Duration.zero);
+  userisvisible = await SharedPreferenceHelper().getPref(IsVISIBLE);
   inventoryController.fetchinventorylist("");
 }
 
@@ -42,7 +45,7 @@ class _UserInventoryState extends State<UserInventory> {
           backgroundColor: Colors.blueGrey[600],
           title: Text('All Inventory'),
         ),
-        drawer: UserDrawer(),
+        drawer: UserDrawer(userisvisible),
         body: Container(
             child: Obx(() => inventoryController.isLoading.value
                 ? Center(child: CircularProgressIndicator())

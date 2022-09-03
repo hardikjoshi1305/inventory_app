@@ -27,6 +27,15 @@ class LoginController extends GetxController {
           SharedPreferenceHelper()
               .setPref(Userid, (login.value.data.id.toString()));
           RequestCall.createAuthHeader("Bearer ${login.value.data.apiToken}");
+          if (login.value.data.is_visible.toString() == "0") {
+            SharedPreferenceHelper().setPref(IsVISIBLE, "false");
+          } else {
+            SharedPreferenceHelper().setPref(IsVISIBLE, "true");
+          }
+          SharedPreferenceHelper()
+              .setPref(Useridname, login.value.data.userid.toString());
+          SharedPreferenceHelper()
+              .setPref(Userid, login.value.data.id.toString());
 
           if (login.value.data.type == "Admin") {
             Get.offNamed("/HomeScreen");

@@ -10,9 +10,10 @@ class Imagedisplay extends StatefulWidget {
 }
 
 // String imgurl = Get.arguments as String;
-var url = "http://192.168.0.8/inventorymanagement/public/";
+// var url = "http://192.168.0.8/inventorymanagement/public/";
 
-// var url = "http://pankrutiinfotech.com/inventory_app/public/";
+var url = "http://pankrutiinfotech.com/inventory_app/public/";
+
 class _ImagedisplayState extends State<Imagedisplay> {
   @override
   Widget build(BuildContext context) {

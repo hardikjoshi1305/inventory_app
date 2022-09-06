@@ -17,26 +17,20 @@ class TourListWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              Expanded(
-                  flex: 1,
-                  child: bottomtitle2(
-                      100,
-                      tourhistmodel.tourname == null
-                          ? "-"
-                          : tourhistmodel.tourname,
-                      50.0)),
+              bottomtitle2(
+                  130,
+                  tourhistmodel.tourname == null ? "-" : tourhistmodel.tourname,
+                  50.0),
               Container(
                 width: 1,
                 color: Colors.white,
               ),
-              Expanded(
-                  flex: 1,
-                  child: bottomtitle2(
-                      100,
-                      tourhistmodel.createdAt.toString() == null
-                          ? "-"
-                          : getdateformate(tourhistmodel.createdAt),
-                      50.0)),
+              bottomtitle2(
+                  100,
+                  tourhistmodel.createdAt.toString() == null
+                      ? "-"
+                      : getdateformate(tourhistmodel.createdAt),
+                  50.0),
               Container(
                 width: 1,
                 color: Colors.white,
@@ -53,7 +47,7 @@ class TourListWidget extends StatelessWidget {
                             alignment: AlignmentDirectional.center,
                             child: Text(
                               "Pending",
-                              style: TextStyle(color: Colors.red, fontSize: 17),
+                              style: TextStyle(color: Colors.red, fontSize: 15),
                             ),
                           )
                         : Container(
@@ -64,7 +58,7 @@ class TourListWidget extends StatelessWidget {
                             child: Text(
                               "Completed",
                               style:
-                                  TextStyle(color: Colors.green, fontSize: 17),
+                                  TextStyle(color: Colors.green, fontSize: 15),
                             ),
                           )),
               ),

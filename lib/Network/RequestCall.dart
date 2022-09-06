@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -332,7 +331,7 @@ class RequestCall {
         .catchError((error) {
       Fluttertoast.showToast(msg: error.toString());
     });
-
+    print("ressspos" + response.body.toString());
     // var response = await req.send();
     // var json = await http.Response.fromStream(response);
     if (response.statusCode == 200) {

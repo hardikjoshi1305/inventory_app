@@ -81,7 +81,7 @@ class _CreateTourDetailState extends State<CreateTourDetail> {
                                 maxLines: 10,
                                 style:
                                     TextStyle(height: 2.0, color: Colors.black),
-                                keyboardType: TextInputType.text,
+                                keyboardType: TextInputType.multiline,
                                 onChanged: (value) => final_dignose = value,
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),

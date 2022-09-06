@@ -205,20 +205,18 @@ class _TourListState extends State<TourList> {
                             children: [
                               Row(
                                 children: [
-                                  Expanded(
-                                      flex: 1, child: toptitle(100, "tour")),
+                                  toptitle(130, "tour"),
+                                  Container(
+                                    width: 1,
+                                    color: Colors.white,
+                                  ),
+                                  toptitle(100, "Date"),
                                   Container(
                                     width: 1,
                                     color: Colors.white,
                                   ),
                                   Expanded(
-                                      flex: 1, child: toptitle(100, "Date")),
-                                  Container(
-                                    width: 1,
-                                    color: Colors.white,
-                                  ),
-                                  Expanded(
-                                      flex: 1, child: toptitle(100, "Status")),
+                                      flex: 1, child: toptitle(80, "Status")),
                                   Container(
                                     width: 1,
                                     color: Colors.white,
@@ -236,7 +234,7 @@ class _TourListState extends State<TourList> {
                                         .elementAt(index);
                                     return GestureDetector(
                                       onTap: () => Get.to(
-                                          () => UserTourDetails(),
+                                          () => UserTourDetails("admin", id),
                                           arguments: wallet.id.toString()),
                                       child:
                                           TourListWidget(tourhistmodel: wallet),

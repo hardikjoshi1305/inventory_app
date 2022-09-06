@@ -73,7 +73,7 @@ class _AddDailyRemarkState extends State<AddDailyRemark> {
                         ? tourController.getremarkdata.value.data.dailyremark
                             .toString()
                         : "",
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.multiline,
                   onChanged: (value) => remark = value,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),

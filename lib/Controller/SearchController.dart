@@ -5,7 +5,8 @@ import 'package:inventory_management/Model/SearchInventoryResponse.dart';
 import 'package:inventory_management/Model/SendAmountResponse.dart';
 import 'package:inventory_management/Model/SendPartResponse.dart' as send;
 import 'package:inventory_management/Network/RequestCall.dart';
-
+import 'package:inventory_management/Model/InventoryHistoryResponse.dart'
+    as inventoryhistory;
 import '../Utility/CONSTANT.dart';
 import '../Utility/SharedPreferenceHelper.dart';
 import '../Views/Home/HomeScreen.dart';
@@ -16,6 +17,7 @@ class SearchController extends GetxController {
   var login = send.SendPartResponse().obs;
   var sendamountdata = SendAmountResponse().obs;
   var search = List<Datum>().obs;
+  var inventoryhistorylist = List<inventoryhistory.Datum>().obs;
 
   @override
   void onClose() {
@@ -40,6 +42,27 @@ class SearchController extends GetxController {
   @override
   void dispose() {
     print("dispose");
+  }
+
+  void gethistoryapi(String id) async {
+    try {
+      // isLoading(true);
+      var res = await RequestCall.fetchinventoryhistory(id);
+      if (res != null) {
+        inventoryhistorylist.value = res;
+        if (inventoryhistorylist.length > 0) {
+          Fluttertoast.showToast(msg: "status Retrieve Successfully");
+        } else {
+          Fluttertoast.showToast(msg: "No Data Found");
+        }
+      } else {
+        Fluttertoast.showToast(msg: "No Status Found");
+      }
+    } catch (exception) {
+      print("error :" + exception.toString());
+    } finally {
+      // isLoading(false);
+    }
   }
 
   Future<List<Datum>> searchdata(String query) async {

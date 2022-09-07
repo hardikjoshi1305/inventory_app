@@ -794,7 +794,7 @@ class RequestCall {
       print("reds" + json.toString());
       var castsResp = history.tourHistoryResponseFromJson(json);
       if (castsResp.succes) {
-        return castsResp.data;
+        return castsResp.data.expenselist;
       } else {
         Fluttertoast.showToast(msg: castsResp.message);
         return null;

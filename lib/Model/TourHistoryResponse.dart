@@ -17,60 +17,81 @@ class TourHistoryResponse {
     this.message,
   });
 
-  List<Datum> data;
+  Data data;
   bool succes;
   String message;
 
   factory TourHistoryResponse.fromJson(Map<String, dynamic> json) =>
       TourHistoryResponse(
-        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+        data: Data.fromJson(json["data"]),
         succes: json["succes"],
         message: json["message"],
       );
 
   Map<String, dynamic> toJson() => {
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": data.toJson(),
         "succes": succes,
         "message": message,
       };
 }
 
-class Datum {
-  Datum({
+class Data {
+  Data({
+    this.expenselist,
+    this.totalexpenses,
+  });
+
+  List<Expenselist> expenselist;
+  String totalexpenses;
+
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
+        expenselist: List<Expenselist>.from(
+            json["expenselist"].map((x) => Expenselist.fromJson(x))),
+        totalexpenses: json["totalexpenses"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "expenselist": List<dynamic>.from(expenselist.map((x) => x.toJson())),
+        "totalexpenses": totalexpenses,
+      };
+}
+
+class Expenselist {
+  Expenselist({
     this.id,
     this.userId,
-    this.tourname,
-    this.errorname,
+    this.tourName,
+    this.errorName,
     this.city,
-    this.iscompleted,
+    this.isCompleted,
     this.createdAt,
   });
 
   int id;
-  var userId;
-  String tourname;
-  String errorname;
+  String userId;
+  String tourName;
+  String errorName;
   String city;
-  String iscompleted;
+  String isCompleted;
   DateTime createdAt;
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory Expenselist.fromJson(Map<String, dynamic> json) => Expenselist(
         id: json["id"],
         userId: json["UserId"],
-        tourname: json["TourName"],
-        errorname: json["ErrorName"] == null ? null : json["ErrorName"],
+        tourName: json["TourName"],
+        errorName: json["ErrorName"],
         city: json["City"],
-        iscompleted: json["IsCompleted"],
+        isCompleted: json["IsCompleted"],
         createdAt: DateTime.parse(json["CreatedAt"]),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "UserId": userId,
-        "TourName": tourname,
-        "ErrorName": errorname == null ? null : errorname,
+        "TourName": tourName,
+        "ErrorName": errorName,
         "City": city,
-        "IsCompleted": iscompleted,
+        "IsCompleted": isCompleted,
         "CreatedAt": createdAt.toIso8601String(),
       };
 }

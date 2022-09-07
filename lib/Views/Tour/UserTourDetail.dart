@@ -12,7 +12,9 @@ import '../../Utility/CONSTANT.dart';
 import '../../Utility/SharedPreferenceHelper.dart';
 
 class UserTourDetails extends StatefulWidget {
-  const UserTourDetails({Key key}) : super(key: key);
+  final String FROM;
+  final String USERID;
+  const UserTourDetails(this.FROM, this.USERID, {Key key}) : super(key: key);
 
   @override
   State<UserTourDetails> createState() => _UserTourDetailsState();
@@ -28,11 +30,14 @@ class _UserTourDetailsState extends State<UserTourDetails> {
     await Future.delayed(Duration.zero);
     tourController.usertourdetail(tourid);
     String userid = await SharedPreferenceHelper().getPref(Userid);
-    walletController.addexpenselist(userid, tourid);
+    widget.USERID == ""
+        ? walletController.addexpenselist(userid, tourid)
+        : walletController.addexpenselist(widget.USERID, tourid);
   }
 
   @override
   void initState() {
+    print("tourid" + tourid);
     apicall(tourid);
     super.initState();
   }
@@ -145,14 +150,17 @@ class _UserTourDetailsState extends State<UserTourDetails> {
                                         ),
                                       ),
                                       onTap: () async {
-                                        if (!await launchUrl(Uri.parse(
-                                            "http://pankrutiinfotech.com/inventory_app/public/" +
-                                                tourController
-                                                    .usertourdetails
-                                                    .value
-                                                    .data
-                                                    .servicereport[index]
-                                                    .serviceReport))) {
+                                        if (!await launchUrl(
+                                            Uri.parse(
+                                                "http://pankrutiinfotech.com/inventory_app/public/" +
+                                                    tourController
+                                                        .usertourdetails
+                                                        .value
+                                                        .data
+                                                        .servicereport[index]
+                                                        .serviceReport),
+                                            mode: LaunchMode
+                                                .externalApplication)) {
                                           throw 'Could not launch ';
                                         }
                                         // Get.to(() => Imagedisplay(
@@ -272,7 +280,9 @@ class _UserTourDetailsState extends State<UserTourDetails> {
                                           Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
-                                              toptitle(120.0, "Action"),
+                                              widget.FROM == "admin"
+                                                  ? toptitle(120.0, "Action")
+                                                  : Container(),
                                               Container(
                                                 width: 1,
                                                 color: Colors.white,
@@ -316,7 +326,10 @@ class _UserTourDetailsState extends State<UserTourDetails> {
                                                     .elementAt(index);
                                                 return ExpenseListWidget(
                                                     expenselist: wallet,
-                                                    position: index);
+                                                    position:
+                                                        widget.FROM == "admin"
+                                                            ? index.toString()
+                                                            : "user");
                                               }).toList(growable: true)
                                             ],
                                           ),

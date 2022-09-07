@@ -467,11 +467,14 @@ Widget bottomtitle(double width, String name) {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            name,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontWeight: FontWeight.w400, color: AppColors.darkBlue),
+          Expanded(
+            child: Text(
+              name,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  fontWeight: FontWeight.w400, color: AppColors.darkBlue),
+            ),
           ),
         ],
       ));
@@ -491,6 +494,7 @@ Widget bottomtitle2(double width, String name, double height) {
           Text(
             name,
             textAlign: TextAlign.center,
+            overflow: TextOverflow.visible,
             style: TextStyle(
                 fontWeight: FontWeight.w400, color: AppColors.darkBlue),
           ),

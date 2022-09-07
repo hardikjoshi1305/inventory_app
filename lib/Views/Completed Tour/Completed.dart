@@ -83,7 +83,7 @@ class _CompletedState extends State<Completed> {
               return Container(
                   child: GestureDetector(
                       onTap: () {
-                        Get.to(() => UserTourDetails(),
+                        Get.to(() => UserTourDetails("user", ""),
                             arguments: upcomingController.pending[index].id
                                 .toString());
                       },

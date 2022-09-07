@@ -43,7 +43,7 @@ class Datum {
     this.currDate,
   });
 
-  int id;
+  var id;
   var userid;
   String invHistory;
   String currDate;

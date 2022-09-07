@@ -31,7 +31,7 @@ class TourController extends GetxController {
   var getremarkdata = GetRemarkResponse().obs;
   var finaldignosedata = FinalDignoseResponse().obs;
   var servicereportdata = ServiceReportResponse().obs;
-  var tourhistorydata = List<history.Datum>().obs;
+  var tourhistorydata = List<history.Expenselist>().obs;
   var addailyremarklist = List<dailyremarklist.Datum>().obs;
   var adreportlist = List<reportlist.Datum>().obs;
   @override

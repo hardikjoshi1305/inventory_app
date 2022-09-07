@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -331,15 +330,19 @@ class RequestCall {
         .catchError((error) {
       Fluttertoast.showToast(msg: error.toString());
     });
-
+    print("ressspos" + response.body.toString());
     // var response = await req.send();
     // var json = await http.Response.fromStream(response);
     if (response.statusCode == 200) {
       var json = response.body;
-      var castsResp = createUserResponseFromJson(json);
-      if (castsResp.succes) {
+      var finaldata = jsonDecode(json);
+      print("res" + finaldata.toString());
+      // return null;
+      if ((finaldata as Map)['succes']) {
+        var castsResp = createUserResponseFromJson(json);
         return castsResp;
       } else {
+        Fluttertoast.showToast(msg: (finaldata as Map)['message']);
         return null;
       }
     } else {
@@ -402,7 +405,6 @@ class RequestCall {
       if (response.statusCode == 200) {
         var json = response.body;
         print("res" + json.toString());
-
         var finaldata = jsonDecode(json);
         print("res" + finaldata.toString());
         // return null;
@@ -793,7 +795,7 @@ class RequestCall {
       print("reds" + json.toString());
       var castsResp = history.tourHistoryResponseFromJson(json);
       if (castsResp.succes) {
-        return castsResp.data;
+        return castsResp.data.expenselist;
       } else {
         Fluttertoast.showToast(msg: castsResp.message);
         return null;
@@ -832,12 +834,12 @@ class RequestCall {
       "user_id": userid,
     });
     print("reds" + userid);
-
     var response = await client
         .post(BASEURL + 'expenselist', headers: authHeader, body: body)
         .catchError((error) {
       Fluttertoast.showToast(msg: error.toString());
     });
+    print("reds" + response.body.toString());
 
     if (response.statusCode == 200) {
       var json = response.body;

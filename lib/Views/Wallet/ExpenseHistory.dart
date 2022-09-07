@@ -245,7 +245,8 @@ class _ExpenseHistoryState extends State<ExpenseHistory> {
                                           .expensehistory
                                           .elementAt(index);
                                       return ExpenseListWidget(
-                                          expenselist: wallet, position: index);
+                                          expenselist: wallet,
+                                          position: index.toString());
                                     }).toList(growable: true)
                                   ],
                                 )

@@ -10,8 +10,8 @@ import 'package:inventory_management/Model/AddInventoryResponse.dart'
     as addinventory;
 import 'package:inventory_management/Model/InventoryStatusResponse.dart'
     as status;
-import 'package:inventory_management/Model/InventoryHistoryResponse.dart'
-    as inventoryhistory;
+// import 'package:inventory_management/Model/InventoryHistoryResponse.dart'
+//     as inventoryhistory;
 import 'package:inventory_management/Model/AssignInventoryResponse.dart'
     as assign;
 import 'package:inventory_management/Model/AcceptInventoryResponse.dart'
@@ -36,7 +36,7 @@ class InventoryController extends GetxController {
   var adminreturninventorylist = List<adminreturninventory.Datum>().obs;
   var userinventorylist = List<assign.Datum>().obs;
   var inventorystatuslist = List<status.Datum>().obs;
-  var inventoryhistorylist = List<inventoryhistory.Datum>().obs;
+  // var inventoryhistorylist = List<inventoryhistory.Datum>().obs;
   @override
   void onInit() {
     print("onInit");
@@ -198,27 +198,6 @@ class InventoryController extends GetxController {
       }
     } finally {
       isLoading(false);
-    }
-  }
-
-  void gethistoryapi(String id) async {
-    try {
-      // isLoading(true);
-      var res = await RequestCall.fetchinventoryhistory(id);
-      if (res != null) {
-        inventoryhistorylist.value = res;
-        if (inventoryhistorylist.length > 0) {
-          Fluttertoast.showToast(msg: "status Retrieve Successfully");
-        } else {
-          Fluttertoast.showToast(msg: "No Data Found");
-        }
-      } else {
-        Fluttertoast.showToast(msg: "No Status Found");
-      }
-    } catch (exception) {
-      print("error :" + exception.toString());
-    } finally {
-      // isLoading(false);
     }
   }
 

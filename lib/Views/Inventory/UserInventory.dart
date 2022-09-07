@@ -47,124 +47,165 @@ class _UserInventoryState extends State<UserInventory> {
         ),
         drawer: UserDrawer(userisvisible),
         body: Container(
-            child: Obx(() => inventoryController.isLoading.value
-                ? Center(child: CircularProgressIndicator())
-                : inventoryController.inventorylist != null
-                    ? SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Container(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    toptitle(100.0, "ID"),
-                                    Container(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
-                                    toptitle(120.0, "Code"),
-                                    Container(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
-                                    toptitle(200.0, "Name"),
-                                    Container(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
-                                    toptitle(200.0, "Serial No."),
-                                    Container(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
-                                    toptitle(100.0, "Px No."),
-                                    Container(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
-                                    toptitle(100.0, "Machine"),
-                                    Container(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
-                                    // toptitle(100.0, "Location"),
-                                    // Container(
-                                    //   width: 1,
-                                    //   color: Colors.white,
-                                    // ),
-                                    // toptitle(100.0, "Remark"),
-                                    // Container(
-                                    //   width: 1,
-                                    //   color: Colors.white,
-                                    // ),
-                                    // toptitle(100.0, "Status"),
-                                    // Container(
-                                    //   width: 1,
-                                    //   color: Colors.white,
-                                    // ),
-                                    // toptitle(130.0, "Action"),
-                                    // Container(
-                                    //   width: 1,
-                                    //   color: Colors.white,
-                                    // ),
-                                    // toptitle(130.0, "Photo"),
-                                    // Container(
-                                    //   width: 1,
-                                    //   color: Colors.white,
-                                    // ),
-                                  ],
-                                ),
-                                Expanded(
-                                  child: Obx(() => (inventoryController
-                                          .isLoading.value)
-                                      ? Center(
-                                          child: CircularProgressIndicator())
-                                      : inventoryController
-                                                  .inventorylist.length >
-                                              0
-                                          ? Column(
-                                              children: [
-                                                ...inventoryController
-                                                    .inventorylist
-                                                    .map((element) {
-                                                  print("userlist" +
-                                                      element.name);
-                                                  return UserAllInventoryListWidget(
-                                                    UserModel: element,
-                                                    usertype: "user",
-                                                  );
-                                                }).toList()
-                                              ],
-                                            )
-                                          : Container(
-                                              padding: EdgeInsets.all(20),
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                'No Data Found',
-                                                textAlign: TextAlign.start,
-                                                style: TextStyle(
-                                                  fontSize: 19,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                            )),
-                                ),
+            child: Obx(() => Stack(
+                  fit: StackFit.loose,
+                  alignment: AlignmentDirectional.center,
+                  children: <Widget>[
+                    Opacity(
+                      opacity:
+                          1, // You can reduce this when loading to give different effect
+                      child: AbsorbPointer(
+                        absorbing: inventoryController.isLoading.value,
+                        child: screenbody(),
+                      ),
+                    ),
+                    Opacity(
+                      opacity: inventoryController.isLoading.value ? 1.0 : 0,
+                      child: CircularProgressIndicator(),
+                    ),
+                  ],
+                ))));
+  }
 
-                                // ListView.builder(
-                                //     shrinkWrap: true,
-                                //     padding: EdgeInsets.only(bottom: 16),
-                                //     itemCount: inventoryController.inventorylist.length,
-                                //     itemBuilder: (ctx, index) {
-                                //       var therapy =
-                                //           inventoryController.inventorylist.elementAt(index);
-                                //       return InventoryListWidget(UserModel: therapy);
-                                //     })
-                              ],
-                            ),
-                          ),
-                        ))
-                    : nodatafound())));
+  var searchinventory;
+
+  final ScrollController _horizontal = ScrollController(),
+      _vertical = ScrollController();
+  Widget screenbody() {
+    return inventoryController.inventorylist != null
+        ? SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.all(10),
+                  child: TextField(
+                    keyboardType: TextInputType.visiblePassword,
+                    onChanged: (value) async {
+                      searchinventory = value;
+                      if (value != "") {
+                        await inventoryController.searchdata(value);
+                      } else {
+                        apicall();
+                      }
+                    },
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Search Inventory by code or name',
+                      prefixIcon: Icon(Icons.search),
+                    ),
+                  ),
+                ),
+                inventoryController.inventorylist != null
+                    ? Stack(
+                        children: [
+                          Scrollbar(
+                              isAlwaysShown: true,
+                              controller: _vertical,
+                              child: SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  controller: _vertical,
+                                  physics:
+                                      const AlwaysScrollableScrollPhysics(),
+                                  child: Scrollbar(
+                                    isAlwaysShown: true,
+                                    controller: _horizontal,
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      controller: _horizontal,
+                                      physics: AlwaysScrollableScrollPhysics(),
+                                      child: Container(
+                                        height:
+                                            MediaQuery.of(context).size.height,
+                                        child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Stack(
+                                              children: [
+                                                Column(
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        toptitle(100.0, "ID"),
+                                                        Container(
+                                                          width: 1,
+                                                          color: Colors.white,
+                                                        ),
+                                                        toptitle(120.0, "Code"),
+                                                        Container(
+                                                          width: 1,
+                                                          color: Colors.white,
+                                                        ),
+                                                        toptitle(200.0, "Name"),
+                                                        Container(
+                                                          width: 1,
+                                                          color: Colors.white,
+                                                        ),
+                                                        toptitle(200.0,
+                                                            "Serial No."),
+                                                        Container(
+                                                          width: 1,
+                                                          color: Colors.white,
+                                                        ),
+                                                        toptitle(
+                                                            100.0, "Px No."),
+                                                        Container(
+                                                          width: 1,
+                                                          color: Colors.white,
+                                                        ),
+                                                        toptitle(
+                                                            100.0, "Machine"),
+                                                        Container(
+                                                          width: 1,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Expanded(
+                                                      child: Obx(() =>
+                                                          (inventoryController
+                                                                  .isLoading
+                                                                  .value)
+                                                              ? Center(
+                                                                  child:
+                                                                      CircularProgressIndicator())
+                                                              : Column(
+                                                                  children: [
+                                                                    ...inventoryController
+                                                                        .inventorylist
+                                                                        .map(
+                                                                            (element) {
+                                                                      // print("userlist" + element.name);
+                                                                      return UserAllInventoryListWidget(
+                                                                          UserModel:
+                                                                              element,
+                                                                          usertype:
+                                                                              "user");
+                                                                    }).toList()
+                                                                  ],
+                                                                )),
+                                                    ),
+
+                                                    // ListView.builder(
+                                                    //     shrinkWrap: true,
+                                                    //     padding: EdgeInsets.only(bottom: 16),
+                                                    //     itemCount: inventoryController.inventorylist.length,
+                                                    //     itemBuilder: (ctx, index) {
+                                                    //       var therapy =
+                                                    //           inventoryController.inventorylist.elementAt(index);
+                                                    //       return InventoryListWidget(UserModel: therapy);
+                                                    //     })
+                                                  ],
+                                                )
+                                              ],
+                                            )),
+                                      ),
+                                    ),
+                                  )))
+                        ],
+                      )
+                    : nodatafound()
+              ],
+            ),
+          )
+        : nodatafound();
   }
 }

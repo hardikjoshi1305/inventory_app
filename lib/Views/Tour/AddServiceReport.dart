@@ -192,9 +192,11 @@ class _AddServiceReportState extends State<AddServiceReport> {
                                   URL_Live +
                                   tourController
                                       .adreportlist[index].serviceReport);
-                              if (!await launchUrl(Uri.parse(URL_Live +
-                                  tourController
-                                      .adreportlist[index].serviceReport))) {
+                              if (!await launchUrl(
+                                  Uri.parse(URL_Live +
+                                      tourController
+                                          .adreportlist[index].serviceReport),
+                                  mode: LaunchMode.externalApplication)) {
                                 throw 'Could not launch ';
                               }
                               // Get.to(() => Imagedisplay(

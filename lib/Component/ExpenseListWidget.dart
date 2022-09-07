@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +12,7 @@ import '../Utility/CommandMethod.dart';
 
 class ExpenseListWidget extends StatelessWidget {
   final Datum expenselist;
-  int position;
+  String position;
 
   ExpenseListWidget({this.expenselist, this.position});
 
@@ -35,86 +37,88 @@ class ExpenseListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-            width: 120.0,
-            height: 40,
-            color: AppColors.offWhite,
-            child: expenselist.isApproved == "0"
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Get.defaultDialog(
-                            title: "Alert",
-                            middleText: "Are you Sure You Want to accept " +
-                                expenselist.expensesName +
-                                " expense" +
-                                "?",
-                            actions: [cancelbutton(), confirmbutton("1")],
-                            // textConfirm: "Confirm",
-                            // confirmTextColor: Colors.white,
-                          );
-                        },
-                        child: Container(
-                          color: Colors.green,
-                          margin: EdgeInsets.only(right: 10),
-                          padding: EdgeInsets.all(3),
-                          child: Icon(
-                            Icons.check,
-                            color: Colors.white,
+        this.position != "user"
+            ? Container(
+                width: 120.0,
+                height: 40,
+                color: AppColors.offWhite,
+                child: expenselist.isApproved == "0"
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Get.defaultDialog(
+                                title: "Alert",
+                                middleText: "Are you Sure You Want to accept " +
+                                    expenselist.expensesName +
+                                    " expense" +
+                                    "?",
+                                actions: [cancelbutton(), confirmbutton("1")],
+                                // textConfirm: "Confirm",
+                                // confirmTextColor: Colors.white,
+                              );
+                            },
+                            child: Container(
+                              color: Colors.green,
+                              margin: EdgeInsets.only(right: 10),
+                              padding: EdgeInsets.all(3),
+                              child: Icon(
+                                Icons.check,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Get.defaultDialog(
-                            title: "Alert",
-                            middleText: "Are you Sure You Want to Reject " +
-                                expenselist.expensesName +
-                                " expense" +
-                                "?",
-                            actions: [cancelbutton(), confirmbutton("2")],
-                            // textConfirm: "Confirm",
-                            // confirmTextColor: Colors.white,
-                          );
-                        },
-                        child: Container(
-                          margin: EdgeInsets.only(left: 10),
-                          color: Colors.red,
-                          padding: EdgeInsets.all(3),
-                          child: Icon(
-                            Icons.cancel,
-                            color: Colors.white,
-                          ),
-                        ),
+                          GestureDetector(
+                            onTap: () {
+                              Get.defaultDialog(
+                                title: "Alert",
+                                middleText: "Are you Sure You Want to Reject " +
+                                    expenselist.expensesName +
+                                    " expense" +
+                                    "?",
+                                actions: [cancelbutton(), confirmbutton("2")],
+                                // textConfirm: "Confirm",
+                                // confirmTextColor: Colors.white,
+                              );
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(left: 10),
+                              color: Colors.red,
+                              padding: EdgeInsets.all(3),
+                              child: Icon(
+                                Icons.cancel,
+                                color: Colors.white,
+                              ),
+                            ),
+                          )
+                        ],
                       )
-                    ],
-                  )
-                : expenselist.isApproved == "1"
-                    ? GestureDetector(
-                        child: Container(
-                            alignment: AlignmentDirectional.center,
-                            margin: EdgeInsets.only(right: 10),
-                            padding: EdgeInsets.all(3),
-                            child: Text("Approved",
-                                style: TextStyle(color: Colors.green))),
-                      )
-                    : expenselist.isApproved == "2"
+                    : expenselist.isApproved == "1"
                         ? GestureDetector(
                             child: Container(
                                 alignment: AlignmentDirectional.center,
                                 margin: EdgeInsets.only(right: 10),
                                 padding: EdgeInsets.all(3),
-                                child: Text(
-                                  "Rejected",
-                                  style: TextStyle(color: Colors.red),
-                                )),
+                                child: Text("Approved",
+                                    style: TextStyle(color: Colors.green))),
                           )
-                        : Container(
-                            alignment: AlignmentDirectional.center,
-                            child: Text("-"),
-                          )),
+                        : expenselist.isApproved == "2"
+                            ? GestureDetector(
+                                child: Container(
+                                    alignment: AlignmentDirectional.center,
+                                    margin: EdgeInsets.only(right: 10),
+                                    padding: EdgeInsets.all(3),
+                                    child: Text(
+                                      "Rejected",
+                                      style: TextStyle(color: Colors.red),
+                                    )),
+                              )
+                            : Container(
+                                alignment: AlignmentDirectional.center,
+                                child: Text("-"),
+                              ))
+            : Container(),
         bottomtitle(
             100.0, expenselist.tourname == null ? "-" : expenselist.tourname),
         Container(
@@ -362,6 +366,6 @@ class ExpenseListWidget extends StatelessWidget {
   void acceptrejectorderapi(String is_approved, String expense_id) async {
     WalletController walletController = Get.find();
     await Future.delayed(Duration.zero);
-    walletController.acceptreject(is_approved, expense_id, position);
+    walletController.acceptreject(is_approved, expense_id, int.parse(position));
   }
 }

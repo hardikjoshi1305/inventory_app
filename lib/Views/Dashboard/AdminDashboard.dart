@@ -103,7 +103,9 @@ class _DashboardBodyState extends State<AdminDashboard> {
                     ))
                 : Container(),
             upcomingController.admindashboarddata.value.data != null
-                ? Container(
+                ? upcomingController
+                .admindashboarddata.value.data[0].expensepending.toString() == "0"?Container():
+            Container(
                     margin: EdgeInsets.only(top: 37, left: 8, right: 8),
                     child: Text(
                       "You Have " +
@@ -117,7 +119,9 @@ class _DashboardBodyState extends State<AdminDashboard> {
                   )
                 : Container(),
             upcomingController.admindashboarddata.value.data != null
-                ? Container(
+                ?  upcomingController
+                .admindashboarddata.value.data[0].returnpending.toString() == "0"?Container():
+            Container(
                     margin: EdgeInsets.only(top: 7, left: 8, right: 8),
                     child: Text(
                       "You Have " +

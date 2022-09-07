@@ -5,7 +5,6 @@ import 'package:inventory_management/Controller/TourController.dart';
 import 'package:inventory_management/Views/Tour/AddDailyRemark.dart';
 import 'package:inventory_management/Views/Tour/AddExpense.dart';
 import 'package:inventory_management/Views/Tour/AddServiceReport.dart';
-import 'package:mime/mime.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CreateTourDetail extends StatefulWidget {

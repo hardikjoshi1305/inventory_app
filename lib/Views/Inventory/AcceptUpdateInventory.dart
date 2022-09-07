@@ -6,7 +6,6 @@ import 'package:inventory_management/Model/AdminReturnInventoryResponse.dart';
 import 'package:inventory_management/Utility/CONSTANT.dart';
 import 'package:inventory_management/Utility/SharedPreferenceHelper.dart';
 import 'package:inventory_management/Utility/app_colors.dart';
-import 'package:mime/mime.dart';
 
 class AcceptUpdateInventory extends StatefulWidget {
   const AcceptUpdateInventory({Key key}) : super(key: key);

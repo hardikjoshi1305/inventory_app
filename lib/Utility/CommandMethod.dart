@@ -289,6 +289,15 @@ Widget AdminDrawer() {
                 // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
               }),
           createDrawerBodyItem(
+              icon: Icons.pending_actions,
+              text: 'Pending Inventory',
+              onTap: () {
+                Get.offNamed("/PendingExpense", preventDuplicates: false);
+
+                // _permissionStatus?
+                // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
+              }),
+          createDrawerBodyItem(
               icon: Icons.history,
               text: 'Inventory History',
               onTap: () {

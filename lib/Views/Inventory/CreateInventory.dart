@@ -6,7 +6,6 @@ import 'package:inventory_management/Model/InventorylistResponse.dart';
 import 'package:inventory_management/Utility/CONSTANT.dart';
 import 'package:inventory_management/Utility/SharedPreferenceHelper.dart';
 import 'package:inventory_management/Utility/app_colors.dart';
-import 'package:mime/mime.dart';
 
 class CreateInventory extends StatefulWidget {
   const CreateInventory({Key key}) : super(key: key);

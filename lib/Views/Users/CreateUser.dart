@@ -4,7 +4,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:inventory_management/Controller/UserController.dart';
-import 'package:mime/mime.dart';
 
 class Createuser extends StatefulWidget {
   const Createuser({Key key}) : super(key: key);

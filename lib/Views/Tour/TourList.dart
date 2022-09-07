@@ -2,6 +2,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:inventory_management/Controller/InventoryController.dart';
 import 'package:inventory_management/Controller/TourController.dart';
 import 'package:inventory_management/Controller/UserController.dart';
@@ -27,6 +28,8 @@ class _TourListState extends State<TourList> {
   TourController tourController = Get.put(TourController());
   UserController userController = Get.put(UserController());
   TextEditingController te_userid = TextEditingController();
+  TextEditingController fromdate = TextEditingController();
+  TextEditingController todate = TextEditingController();
 
   apicallusername() async {
     await Future.delayed(Duration.zero);
@@ -38,7 +41,27 @@ class _TourListState extends State<TourList> {
     apicallusername();
     super.initState();
   }
+  datetimepicker(TextEditingController todate)async{
+    DateTime pickedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1950),
+        //DateTime.now() - not to allow to choose before today.
+        lastDate: DateTime(2100));
 
+    if (pickedDate != null) {
+      print(
+          pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+      String formattedDate =
+      DateFormat('yyyy-MM-dd').format(pickedDate);
+      print(
+          formattedDate); //formatted date output using intl package =>  2021-03-16
+      setState(() {
+        todate.text =
+            formattedDate; //set output date to TextField value.
+      });
+    } else {}
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,7 +106,7 @@ class _TourListState extends State<TourList> {
             GestureDetector(
               onTap: () {
                 setState(() {
-                  showlist = true;
+                  showlist = !showlist;
                 });
               },
               child: Container(
@@ -103,6 +126,7 @@ class _TourListState extends State<TourList> {
                 ),
               ),
             ),
+
             showlist
                 ? Card(
                     elevation: 7,
@@ -153,17 +177,61 @@ class _TourListState extends State<TourList> {
                     ),
                   )
                 : Container(),
-
+            Container(
+              margin: EdgeInsets.only(top: 20),
+              child:   GestureDetector(
+                onTap: (){
+                  datetimepicker(fromdate);
+                },
+                child: TextField(
+                  controller: fromdate,
+                  //   ..text = this.usermodel != null ? usermodel.name : "",
+                  enabled: false,
+                  keyboardType: TextInputType.text,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.person),
+                    labelText: 'From Date',
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 20),
+              child:  GestureDetector(
+                onTap: (){
+                  datetimepicker(todate);
+                },
+                child: TextField(
+                  controller: todate,
+                  //   ..text = this.usermodel != null ? usermodel.name : "",
+                  enabled: false,
+                  keyboardType: TextInputType.text,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.person),
+                    labelText: 'To Date',
+                  ),
+                ),
+              ),
+            ),
             Container(
               height: 30,
             ),
             ElevatedButton(
                 onPressed: () {
-                  if (id.toString() != null && id != "") {
-                    apicall(id);
-                  } else {
-                    Fluttertoast.showToast(msg: "Please Enter Valid User ID");
-                  }
+
+                    if(fromdate.text.toString() != null && todate.text.toString() == null){
+                      Fluttertoast.showToast(msg: "To Date Require");
+                    }
+                  else  if(todate.text.toString() != null && fromdate.text.toString() == null){
+                      Fluttertoast.showToast(msg: "From Date Require");
+                    }
+                  else{
+                      apicall(id,fromdate.text.toString(),todate.text.toString());
+                    }
+
+
                 },
                 child: Container(
                     padding: EdgeInsets.all(15),
@@ -266,8 +334,8 @@ class _TourListState extends State<TourList> {
     );
   }
 
-  void apicall(userid) async {
+  void apicall(userid, String fromdate, String todate) async {
     await Future.delayed(Duration.zero);
-    tourController.fetchtourlist(userid.toString());
+    tourController.fetchtourlist(userid.toString(),fromdate,todate);
   }
 }

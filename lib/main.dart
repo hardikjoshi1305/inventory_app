@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:inventory_management/MyHttpOverrides.dart';
 import 'package:inventory_management/Network/RequestCall.dart';
 import 'package:inventory_management/Utility/CommandMethod.dart';
 import 'package:inventory_management/Views/Login/Login.dart';
@@ -22,6 +25,8 @@ import 'Views/Wallet/SendAmount.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   _setupLogging();
+  HttpOverrides.global = MyHttpOverrides();
+
   runApp(const MyApp());
 }
 
@@ -55,6 +60,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/InventoryHistory", page: () => InventoryHistory()),
         GetPage(name: "/TourList", page: () => TourList()),
         GetPage(name: "/ExpenseHistory", page: () => ExpenseHistory()),
+        GetPage(name: "/PendingExpense", page: () => ExpenseHistory()),
         GetPage(
             name: "/AdminReturnInventory", page: () => AdminReturnInventory()),
         GetPage(name: "/Login", page: () => Login()),

@@ -91,10 +91,10 @@ class TourController extends GetxController {
     }
   }
 
-  void fetchtourlist(String userid) async {
+  void fetchtourlist(String userid, String fromdate,String todate) async {
     try {
       isLoading(true);
-      var res = await RequestCall.fetchtourlist(userid);
+      var res = await RequestCall.fetchtourlist(userid,fromdate,todate);
       if (res != null) {
         tourhistorydata.assignAll(res);
         if (tourhistorydata.length > 0) {

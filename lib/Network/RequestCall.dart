@@ -191,8 +191,7 @@ class RequestCall {
     print("cretattt$service_report");
 
     req.fields.addAll({'tour_id': tour_id});
-    req.files.add(
-        await http.MultipartFile.fromPath('service_report', service_report));
+    req.files.add(await http.MultipartFile.fromPath('service_report', service_report));
 
     req.headers.addAll(authHeader);
 
@@ -778,9 +777,11 @@ class RequestCall {
     }
   }
 
-  static fetchtourlist(String userid) async {
+  static fetchtourlist(String userid, String fromdate,String todate) async {
     var body = jsonEncode({
       "user_id": userid,
+      "fromdate": fromdate,
+      "todate": todate,
     });
     var response = await client
         .post(BASEURL + 'tourhistory', headers: authHeader, body: body)

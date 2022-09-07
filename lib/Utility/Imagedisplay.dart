@@ -10,9 +10,9 @@ class Imagedisplay extends StatefulWidget {
 }
 
 // String imgurl = Get.arguments as String;
-var url = "http://192.168.0.8/inventorymanagement/public/";
+// var url = "http://192.168.0.8/inventorymanagement/public/";
 
-// var url = "http://pankrutiinfotech.com/inventory_app/public/";
+ var url = "http://pankrutiinfotech.com/inventory_app/public/";
 class _ImagedisplayState extends State<Imagedisplay> {
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class _ImagedisplayState extends State<Imagedisplay> {
         width: double.infinity,
         height: double.infinity,
         child: Image.network(
-          url + widget.imgurl,
+          "http://pankrutiinfotech.com/inventory_app/public/" + widget.imgurl,
           fit: BoxFit.fill,
           loadingBuilder: (BuildContext context, Widget child,
               ImageChunkEvent loadingProgress) {

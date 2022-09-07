@@ -75,7 +75,16 @@ class _ReturnInventoryState extends State<ReturnInventory> {
                             ),
 
                             Padding(
-                              padding: const EdgeInsets.only(top: 18.0),
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: Text(
+                                "name : " + usermodel.name,
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 18),
+                              ),
+                            ),
+
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
                               child: Text(
                                 "machine : " + usermodel.machine,
                                 style: TextStyle(

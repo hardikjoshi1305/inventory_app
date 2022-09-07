@@ -27,6 +27,8 @@ var code = "";
 List<String> allinventory = [];
 List<String> allinventoryname = [];
 List<String> allinventoryimage = [];
+List<String> allinventorylocation = [];
+List<String> allinventorycode = [];
 
 class _SendInventoryState extends State<SendInventory> {
   @override
@@ -87,6 +89,7 @@ class _SendInventoryState extends State<SendInventory> {
       _vertical = ScrollController();
   var showlist = false;
   var id = "";
+  int index;
   Widget screenbody() {
     return Scrollbar(
         isAlwaysShown: true,
@@ -293,6 +296,11 @@ class _SendInventoryState extends State<SendInventory> {
                                                     .add(element.id.toString());
                                                 allinventoryname.add(
                                                     element.name.toString());
+                                                allinventorycode.add(
+                                                    element.code.toString());
+                                                allinventorylocation.add(element
+                                                    .location
+                                                    .toString());
                                                 allinventoryimage.add("");
                                               } else {
                                                 Fluttertoast.showToast(
@@ -320,32 +328,59 @@ class _SendInventoryState extends State<SendInventory> {
                         height: 20,
                       ),
                 allinventoryname.length > 0
-                    ? Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              toptitle(130.0, "Part Name"),
-                              Container(
-                                width: 1,
-                                color: Colors.white,
-                              ),
-                              // toptitle(100.0, "File"),
-                              // Container(
-                              //   width: 1,
-                              //   color: Colors.white,
-                              // ),
-                              toptitle(100.0, "Action"),
-                              Container(
-                                width: 1,
-                                color: Colors.white,
-                              ),
-                            ],
-                          ),
-                          ...allinventoryname.map((element) => Row(
+                    ? SingleChildScrollView(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                toptitle(130.0, "Code"),
+                                Container(
+                                  width: 1,
+                                  color: Colors.white,
+                                ),
+                                toptitle(130.0, "Part Name"),
+                                Container(
+                                  width: 1,
+                                  color: Colors.white,
+                                ),
+                                toptitle(130.0, "Location"),
+                                Container(
+                                  width: 1,
+                                  color: Colors.white,
+                                ),
+                                // toptitle(100.0, "File"),
+                                // Container(
+                                //   width: 1,
+                                //   color: Colors.white,
+                                // ),
+                                toptitle(100.0, "Action"),
+                                Container(
+                                  width: 1,
+                                  color: Colors.white,
+                                ),
+                              ],
+                            ),
+                            ...allinventoryname.map((element) {
+                              index = allinventoryname.indexOf(element);
+                              return Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
+                                  bottomtitle(130.0,
+                                      allinventorycode[index].toString()),
+                                  Container(
+                                    width: 1,
+                                    color: Colors.white,
+                                  ),
                                   bottomtitle(130.0, element),
+                                  Container(
+                                    width: 1,
+                                    color: Colors.white,
+                                  ),
+                                  bottomtitle(130.0,
+                                      allinventorylocation[index].toString()),
                                   Container(
                                     width: 1,
                                     color: Colors.white,
@@ -354,7 +389,6 @@ class _SendInventoryState extends State<SendInventory> {
                                     onTap: () {
                                       var index =
                                           allinventoryname.indexOf(element);
-
                                       return deleteitem(index);
                                     },
                                     child: Container(
@@ -367,8 +401,10 @@ class _SendInventoryState extends State<SendInventory> {
                                     ),
                                   )
                                 ],
-                              )),
-                        ],
+                              );
+                            }),
+                          ],
+                        ),
                       )
                     : Container(),
 
@@ -529,6 +565,8 @@ class _SendInventoryState extends State<SendInventory> {
         allinventory.removeAt(index);
         allinventoryimage.removeAt(index);
         allinventoryname.removeAt(index);
+        allinventorycode.removeAt(index);
+        allinventorylocation.removeAt(index);
       });
     } catch (exception) {
       print("object" + exception.toString());

@@ -336,10 +336,14 @@ class RequestCall {
     // var json = await http.Response.fromStream(response);
     if (response.statusCode == 200) {
       var json = response.body;
-      var castsResp = createUserResponseFromJson(json);
-      if (castsResp.succes) {
+      var finaldata = jsonDecode(json);
+      print("res" + finaldata.toString());
+      // return null;
+      if ((finaldata as Map)['succes']) {
+        var castsResp = createUserResponseFromJson(json);
         return castsResp;
       } else {
+        Fluttertoast.showToast(msg: (finaldata as Map)['message']);
         return null;
       }
     } else {
@@ -402,7 +406,6 @@ class RequestCall {
       if (response.statusCode == 200) {
         var json = response.body;
         print("res" + json.toString());
-
         var finaldata = jsonDecode(json);
         print("res" + finaldata.toString());
         // return null;
@@ -830,12 +833,12 @@ class RequestCall {
       "user_id": userid,
     });
     print("reds" + userid);
-
     var response = await client
         .post(BASEURL + 'expenselist', headers: authHeader, body: body)
         .catchError((error) {
       Fluttertoast.showToast(msg: error.toString());
     });
+    print("reds" + response.body.toString());
 
     if (response.statusCode == 200) {
       var json = response.body;

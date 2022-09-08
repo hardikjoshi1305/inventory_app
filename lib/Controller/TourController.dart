@@ -15,6 +15,7 @@ import 'package:inventory_management/Model/AddServiceReportResponse.dart'
     as reportlist;
 import 'package:inventory_management/Model/CreateUserResponse.dart';
 import 'package:inventory_management/Model/UserTourDetailsResponse.dart';
+import 'package:inventory_management/Model/ErrorResponse.dart' as error;
 import 'package:inventory_management/Model/casts.dart';
 import 'package:inventory_management/Network/RequestCall.dart';
 import 'package:inventory_management/Views/Dashboard/Dashboard.dart';
@@ -31,9 +32,11 @@ class TourController extends GetxController {
   var getremarkdata = GetRemarkResponse().obs;
   var finaldignosedata = FinalDignoseResponse().obs;
   var servicereportdata = ServiceReportResponse().obs;
-  var tourhistorydata = List<history.Expenselist>().obs;
+  // var tourhistorydata = List<history.Expenselist>().obs;
+  var tourhistorydata = history.TourHistoryResponse().obs;
   var addailyremarklist = List<dailyremarklist.Datum>().obs;
   var adreportlist = List<reportlist.Datum>().obs;
+  var errorlist = List<error.Datum>().obs;
   @override
   void onClose() {
     Get.delete<TourController>();
@@ -91,13 +94,13 @@ class TourController extends GetxController {
     }
   }
 
-  void fetchtourlist(String userid, String fromdate,String todate) async {
+  void fetchtourlist(String userid, String fromdate, String todate) async {
     try {
       isLoading(true);
-      var res = await RequestCall.fetchtourlist(userid,fromdate,todate);
+      var res = await RequestCall.fetchtourlist(userid, fromdate, todate);
       if (res != null) {
-        tourhistorydata.assignAll(res);
-        if (tourhistorydata.length > 0) {
+        tourhistorydata.value = res;
+        if (tourhistorydata.value.data.expenselist.length > 0) {
           Fluttertoast.showToast(msg: "Success");
           isLoading(false);
         } else {
@@ -272,6 +275,23 @@ class TourController extends GetxController {
       }
     } finally {
       // isLoading(false);
+    }
+  }
+
+  searcherror(String value) async {
+    try {
+      isLoading(true);
+      var res = await RequestCall.searcherror(value);
+      if (res != null) {
+        errorlist.assignAll(res);
+        if (errorlist.length > 0) {
+          Fluttertoast.showToast(msg: "inventorylist Retrieve Successfully");
+        } else {
+          Fluttertoast.showToast(msg: "No Data Found");
+        }
+      }
+    } finally {
+      isLoading(false);
     }
   }
 }

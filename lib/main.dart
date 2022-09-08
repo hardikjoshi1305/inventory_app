@@ -6,6 +6,7 @@ import 'package:inventory_management/MyHttpOverrides.dart';
 import 'package:inventory_management/Network/RequestCall.dart';
 import 'package:inventory_management/Utility/CommandMethod.dart';
 import 'package:inventory_management/Views/Login/Login.dart';
+import 'package:inventory_management/Views/Pending/PendingExpense.dart';
 import 'package:inventory_management/Views/SplashScreen.dart';
 import 'package:inventory_management/Views/Users/Userlist.dart';
 import 'package:logging/logging.dart';
@@ -60,7 +61,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/InventoryHistory", page: () => InventoryHistory()),
         GetPage(name: "/TourList", page: () => TourList()),
         GetPage(name: "/ExpenseHistory", page: () => ExpenseHistory()),
-        GetPage(name: "/PendingExpense", page: () => ExpenseHistory()),
+        GetPage(name: "/PendingExpense", page: () => PendingExpense()),
         GetPage(
             name: "/AdminReturnInventory", page: () => AdminReturnInventory()),
         GetPage(name: "/Login", page: () => Login()),

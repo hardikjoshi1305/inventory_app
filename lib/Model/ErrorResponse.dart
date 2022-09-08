@@ -1,19 +1,16 @@
 // To parse this JSON data, do
 //
-//     final expenseListDetailsResponse = expenseListDetailsResponseFromJson(jsonString);
+//     final errorResponse = errorResponseFromJson(jsonString);
 
 import 'dart:convert';
 
-import 'package:get/get.dart';
+ErrorResponse errorResponseFromJson(String str) =>
+    ErrorResponse.fromJson(json.decode(str));
 
-ExpenseListDetailsResponse expenseListDetailsResponseFromJson(String str) =>
-    ExpenseListDetailsResponse.fromJson(json.decode(str));
+String errorResponseToJson(ErrorResponse data) => json.encode(data.toJson());
 
-String expenseListDetailsResponseToJson(ExpenseListDetailsResponse data) =>
-    json.encode(data.toJson());
-
-class ExpenseListDetailsResponse {
-  ExpenseListDetailsResponse({
+class ErrorResponse {
+  ErrorResponse({
     this.data,
     this.succes,
     this.message,
@@ -23,8 +20,7 @@ class ExpenseListDetailsResponse {
   bool succes;
   String message;
 
-  factory ExpenseListDetailsResponse.fromJson(Map<String, dynamic> json) =>
-      ExpenseListDetailsResponse(
+  factory ErrorResponse.fromJson(Map<String, dynamic> json) => ErrorResponse(
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
         succes: json["succes"],
         message: json["message"],
@@ -40,43 +36,51 @@ class ExpenseListDetailsResponse {
 class Datum {
   Datum({
     this.id,
-    this.UserID,
+    this.userId,
     this.tourname,
-    this.expensesName,
+    this.expName,
     this.amount,
     this.photo,
-    this.isApproved,
+    this.IsCompleted,
+    this.FinalDignose,
+    this.ErrorName,
     this.createdAt,
   });
 
   var id;
-  var UserID;
+  var userId;
   String tourname;
-  String expensesName;
+  String expName;
   String amount;
   String photo;
-  var isApproved;
+  String IsCompleted;
+  String FinalDignose;
+  String ErrorName;
   DateTime createdAt;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
+        userId: json["UserID"],
         tourname: json["tourname"],
-        UserID: json["UserID"],
-        expensesName: json["ExpName"],
+        expName: json["ExpName"],
         amount: json["amount"],
-        photo: json["photo"],
-        isApproved: json["IsApproved"],
+        photo: json["photo"] == null ? null : json["photo"],
+        IsCompleted: json["IsCompleted"],
+        FinalDignose: json["FinalDignose"],
+        ErrorName: json["ErrorName"],
         createdAt: DateTime.parse(json["CreatedAt"]),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        "UserID": userId,
         "tourname": tourname,
-        "UserID": UserID,
-        "ExpName": expensesName,
+        "ExpName": expName,
         "amount": amount,
-        "photo": photo,
-        "IsApproved": isApproved,
+        "photo": photo == null ? null : photo,
+        "IsCompleted": IsCompleted,
+        "FinalDignose": FinalDignose,
+        "ErrorName": ErrorName,
         "CreatedAt": createdAt.toIso8601String(),
       };
 }

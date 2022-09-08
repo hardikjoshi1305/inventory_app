@@ -46,10 +46,10 @@ class WalletController extends GetxController {
     }
   }
 
-  void expenselist(String userid) async {
+  void expenselist(String userid, String fromdate, String todate) async {
     try {
       isLoading(true);
-      var res = await RequestCall.expenselist(userid);
+      var res = await RequestCall.expenselist(userid, fromdate, todate);
       if (res != null) {
         expensehistory.assignAll(res);
         Fluttertoast.showToast(msg: "Data Fetch Successfully");

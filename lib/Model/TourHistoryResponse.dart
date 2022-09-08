@@ -42,7 +42,7 @@ class Data {
   });
 
   List<Expenselist> expenselist;
-  String totalexpenses;
+  var totalexpenses;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         expenselist: List<Expenselist>.from(
@@ -63,6 +63,7 @@ class Expenselist {
     this.tourName,
     this.errorName,
     this.city,
+    this.amount,
     this.isCompleted,
     this.createdAt,
   });
@@ -73,14 +74,16 @@ class Expenselist {
   String errorName;
   String city;
   String isCompleted;
+  var amount;
   DateTime createdAt;
 
   factory Expenselist.fromJson(Map<String, dynamic> json) => Expenselist(
         id: json["id"],
-        userId: json["UserId"],
-        tourName: json["TourName"],
+        userId: json["UserID"],
+        tourName: json["tourname"],
         errorName: json["ErrorName"],
-        city: json["City"],
+        city: json["city"],
+        amount: json["Amount"],
         isCompleted: json["IsCompleted"],
         createdAt: DateTime.parse(json["CreatedAt"]),
       );
@@ -88,9 +91,10 @@ class Expenselist {
   Map<String, dynamic> toJson() => {
         "id": id,
         "UserId": userId,
-        "TourName": tourName,
+        "tourname": tourName,
         "ErrorName": errorName,
-        "City": city,
+        "city": city,
+        "Amount": amount,
         "IsCompleted": isCompleted,
         "CreatedAt": createdAt.toIso8601String(),
       };

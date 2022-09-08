@@ -6,6 +6,7 @@ import 'package:inventory_management/Views/Dashboard/Dashboard.dart';
 import 'package:inventory_management/Views/Inventory/InventoryHistory.dart';
 import 'package:inventory_management/Views/Inventory/SendInventory.dart';
 import 'package:inventory_management/Views/Pending/Pending.dart';
+import 'package:inventory_management/Views/Tour/ErrorList.dart';
 import 'package:inventory_management/Views/Tour/TourList.dart';
 // import 'package:intl/intl.dart';
 
@@ -165,6 +166,17 @@ Widget UserDrawer(userisvisible) {
                 // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
               }),
           createDrawerBodyItem(
+              icon: Icons.error,
+              text: 'Problem List',
+              onTap: () {
+                Get.to(() => ErrorList(), preventDuplicates: false);
+
+                // Navigator.of(context).pop();
+
+                // _permissionStatus?
+                // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
+              }),
+          createDrawerBodyItem(
               icon: Icons.wallet,
               text: 'Wallet',
               onTap: () {
@@ -290,7 +302,7 @@ Widget AdminDrawer() {
               }),
           createDrawerBodyItem(
               icon: Icons.pending_actions,
-              text: 'Pending Inventory',
+              text: 'Pending Expense',
               onTap: () {
                 Get.offNamed("/PendingExpense", preventDuplicates: false);
 

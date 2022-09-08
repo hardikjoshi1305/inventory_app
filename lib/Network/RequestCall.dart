@@ -52,7 +52,9 @@ import 'package:inventory_management/Utility/SharedPreferenceHelper.dart';
 import 'package:inventory_management/Views/Users/CreateUser.dart';
 
 import '../Model/AddInventoryResponse.dart';
+import '../Model/ErrorResponse.dart';
 import '../Model/GetRemarkResponse.dart';
+import '../Model/PendingExpenseResponse.dart';
 import '../Model/SendAmountResponse.dart';
 
 class RequestCall {
@@ -190,7 +192,8 @@ class RequestCall {
     print("cretattt$service_report");
 
     req.fields.addAll({'tour_id': tour_id});
-    req.files.add(await http.MultipartFile.fromPath('service_report', service_report));
+    req.files.add(
+        await http.MultipartFile.fromPath('service_report', service_report));
 
     req.headers.addAll(authHeader);
 
@@ -779,11 +782,11 @@ class RequestCall {
     }
   }
 
-  static fetchtourlist(String userid, String fromdate,String todate) async {
+  static fetchtourlist(String userid, String fromdate, String todate) async {
     var body = jsonEncode({
       "user_id": userid,
-      "fromdate": fromdate,
-      "todate": todate,
+      "startDate": fromdate,
+      "endDate": todate,
     });
     var response = await client
         .post(BASEURL + 'tourhistory', headers: authHeader, body: body)
@@ -795,7 +798,7 @@ class RequestCall {
       print("reds" + json.toString());
       var castsResp = history.tourHistoryResponseFromJson(json);
       if (castsResp.succes) {
-        return castsResp.data.expenselist;
+        return castsResp;
       } else {
         Fluttertoast.showToast(msg: castsResp.message);
         return null;
@@ -829,9 +832,12 @@ class RequestCall {
     }
   }
 
-  static Future<List<expense.Datum>> expenselist(String userid) async {
+  static Future<List<expense.Datum>> expenselist(
+      String userid, String fromdate, String todate) async {
     var body = jsonEncode({
       "user_id": userid,
+      "startDate": fromdate,
+      "endDate": todate,
     });
     print("reds" + userid);
     var response = await client
@@ -1095,7 +1101,7 @@ class RequestCall {
         .catchError((error) {
       Fluttertoast.showToast(msg: error.toString());
     });
-
+    print("errrr" + response.body.toString());
     if (response.statusCode == 200) {
       var json = response.body;
       var finaldata = jsonDecode(json);
@@ -1103,6 +1109,61 @@ class RequestCall {
       if ((finaldata as Map)['succes']) {
         var castsResp = dashboardAdminResponseFromJson(json);
         return castsResp;
+      } else {
+        // Fluttertoast.showToast(msg: (finaldata as Map)['message']);
+        return null;
+      }
+      var castsResp = getRemarkResponseFromJson(json);
+
+      return castsResp;
+    } else {
+      return null;
+    }
+  }
+
+  static pendingexpense() async {
+    var response = await client
+        .post(BASEURL + "pendingexpense", headers: authHeader)
+        .catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
+
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var finaldata = jsonDecode(json);
+      // return null;
+      if ((finaldata as Map)['succes']) {
+        var castsResp = pendingExpenseResponseFromJson(json);
+        return castsResp.data;
+      } else {
+        // Fluttertoast.showToast(msg: (finaldata as Map)['message']);
+        return null;
+      }
+      var castsResp = getRemarkResponseFromJson(json);
+
+      return castsResp;
+    } else {
+      return null;
+    }
+  }
+
+  static searcherror(String value) async {
+    var body = jsonEncode({
+      "error": value,
+    });
+    var response = await client
+        .post(BASEURL + "errorlist", headers: authHeader, body: body)
+        .catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
+    print("errorlist" + response.body);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var finaldata = jsonDecode(json);
+      // return null;
+      if ((finaldata as Map)['succes']) {
+        var castsResp = errorResponseFromJson(json);
+        return castsResp.data;
       } else {
         // Fluttertoast.showToast(msg: (finaldata as Map)['message']);
         return null;

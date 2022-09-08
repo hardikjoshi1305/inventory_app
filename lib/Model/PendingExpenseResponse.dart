@@ -1,19 +1,17 @@
 // To parse this JSON data, do
 //
-//     final expenseListDetailsResponse = expenseListDetailsResponseFromJson(jsonString);
+//     final pendingExpenseResponse = pendingExpenseResponseFromJson(jsonString);
 
 import 'dart:convert';
 
-import 'package:get/get.dart';
+PendingExpenseResponse pendingExpenseResponseFromJson(String str) =>
+    PendingExpenseResponse.fromJson(json.decode(str));
 
-ExpenseListDetailsResponse expenseListDetailsResponseFromJson(String str) =>
-    ExpenseListDetailsResponse.fromJson(json.decode(str));
-
-String expenseListDetailsResponseToJson(ExpenseListDetailsResponse data) =>
+String pendingExpenseResponseToJson(PendingExpenseResponse data) =>
     json.encode(data.toJson());
 
-class ExpenseListDetailsResponse {
-  ExpenseListDetailsResponse({
+class PendingExpenseResponse {
+  PendingExpenseResponse({
     this.data,
     this.succes,
     this.message,
@@ -23,8 +21,8 @@ class ExpenseListDetailsResponse {
   bool succes;
   String message;
 
-  factory ExpenseListDetailsResponse.fromJson(Map<String, dynamic> json) =>
-      ExpenseListDetailsResponse(
+  factory PendingExpenseResponse.fromJson(Map<String, dynamic> json) =>
+      PendingExpenseResponse(
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
         succes: json["succes"],
         message: json["message"],
@@ -40,29 +38,29 @@ class ExpenseListDetailsResponse {
 class Datum {
   Datum({
     this.id,
-    this.UserID,
+    this.userId,
     this.tourname,
-    this.expensesName,
+    this.expName,
     this.amount,
     this.photo,
     this.isApproved,
     this.createdAt,
   });
 
-  var id;
-  var UserID;
+  int id;
+  String userId;
   String tourname;
-  String expensesName;
+  String expName;
   String amount;
-  String photo;
-  var isApproved;
+  dynamic photo;
+  String isApproved;
   DateTime createdAt;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
+        userId: json["UserID"],
         tourname: json["tourname"],
-        UserID: json["UserID"],
-        expensesName: json["ExpName"],
+        expName: json["ExpName"],
         amount: json["amount"],
         photo: json["photo"],
         isApproved: json["IsApproved"],
@@ -71,9 +69,9 @@ class Datum {
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        "UserID": userId,
         "tourname": tourname,
-        "UserID": UserID,
-        "ExpName": expensesName,
+        "ExpName": expName,
         "amount": amount,
         "photo": photo,
         "IsApproved": isApproved,

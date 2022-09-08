@@ -16,10 +16,27 @@ class TourListWidget extends StatelessWidget {
       child: Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               bottomtitle2(
                   130,
+                  tourhistmodel.userId == null ? "-" : tourhistmodel.userId,
+                  50.0),
+              Container(
+                width: 1,
+                color: Colors.white,
+              ),
+              bottomtitle2(
+                  130,
                   tourhistmodel.tourName == null ? "-" : tourhistmodel.tourName,
+                  50.0),
+              Container(
+                width: 1,
+                color: Colors.white,
+              ),
+              bottomtitle2(
+                  130,
+                  tourhistmodel.amount == null ? "-" : tourhistmodel.amount,
                   50.0),
               Container(
                 width: 1,

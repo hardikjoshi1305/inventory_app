@@ -57,6 +57,8 @@ class __AcceptUpdateInventoryStateState extends State<AcceptUpdateInventory> {
     te_Remark..text = this.usermodel != null ? usermodel.remark : "";
     te_Wherefrom..text = this.usermodel != null ? usermodel.wherefrom : "";
     te_Prize..text = this.usermodel != null ? usermodel.price.toString() : "";
+    te_username
+      ..text = this.usermodel != null ? usermodel.username.toString() : "";
     super.initState();
   }
 
@@ -71,6 +73,7 @@ class __AcceptUpdateInventoryStateState extends State<AcceptUpdateInventory> {
   TextEditingController te_Prize = TextEditingController();
   TextEditingController te_statusdetail = TextEditingController();
   TextEditingController te_historydetail = TextEditingController();
+  TextEditingController te_username = TextEditingController();
 
   // getstatuslist() {
   //   inventoryController.inventorystatuslist.map((element) {
@@ -98,6 +101,18 @@ class __AcceptUpdateInventoryStateState extends State<AcceptUpdateInventory> {
               padding: const EdgeInsets.all(12.0),
               child: Column(
                 children: [
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    child: Text("Code : " + te_username.text),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    child: Text("Name : " + te_name.text),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    child: Text("Machine : " + te_machine.text),
+                  ),
                   Container(
                     height: 20,
                   ),
@@ -153,7 +168,7 @@ class __AcceptUpdateInventoryStateState extends State<AcceptUpdateInventory> {
                         width: 300,
                         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                         child: ElevatedButton(
-                          child: const Text('CreateW'),
+                          child: const Text('Create'),
                           onPressed: () {
                             print('pressed');
                             if (Validateinventory(

@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:inventory_management/Controller/PendingController.dart';
 import 'package:inventory_management/Controller/WalletController.dart';
 import 'package:inventory_management/Model/PendingExpenseResponse.dart';
 import 'package:inventory_management/Utility/Imagedisplay.dart';
@@ -370,8 +371,9 @@ class PendingExpenseListWidget extends StatelessWidget {
   }
 
   void acceptrejectorderapi(String is_approved, String expense_id) async {
-    WalletController walletController = Get.find();
+    PendingController walletController = Get.find();
     await Future.delayed(Duration.zero);
-    walletController.acceptreject(is_approved, expense_id, int.parse(position));
+    walletController.acceptrejectfrompending(
+        is_approved, expense_id, int.parse(position));
   }
 }

@@ -793,6 +793,8 @@ class RequestCall {
         .catchError((error) {
       Fluttertoast.showToast(msg: error.toString());
     });
+    print("reds" + response.body.toString());
+
     if (response.statusCode == 200) {
       var json = response.body;
       print("reds" + json.toString());
@@ -929,6 +931,8 @@ class RequestCall {
       print("error" + error.toString());
       Fluttertoast.showToast(msg: error.toString());
     });
+    print("dadad" + response.body.toString());
+
     if (response.statusCode == 200) {
       var json = response.body;
       print("dadad" + response.body.toString());
@@ -1075,7 +1079,7 @@ class RequestCall {
         .catchError((error) {
       Fluttertoast.showToast(msg: error.toString());
     });
-
+    print("dashboard" + response.body.toString());
     if (response.statusCode == 200) {
       var json = response.body;
       var finaldata = jsonDecode(json);

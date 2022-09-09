@@ -36,7 +36,9 @@ class TourListWidget extends StatelessWidget {
               ),
               bottomtitle2(
                   130,
-                  tourhistmodel.amount == null ? "-" : tourhistmodel.amount,
+                  tourhistmodel.totalexpense == null
+                      ? "-"
+                      : tourhistmodel.totalexpense + " \u{20B9}",
                   50.0),
               Container(
                 width: 1,

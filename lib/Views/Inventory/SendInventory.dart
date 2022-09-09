@@ -34,6 +34,11 @@ class _SendInventoryState extends State<SendInventory> {
   @override
   void initState() {
     apicallusername();
+    allinventory.clear();
+    allinventoryname.clear();
+    allinventoryimage.clear();
+    allinventorylocation.clear();
+    allinventorycode.clear();
     super.initState();
   }
 
@@ -42,6 +47,8 @@ class _SendInventoryState extends State<SendInventory> {
     allinventory.clear();
     allinventoryname.clear();
     allinventoryimage.clear();
+    allinventorylocation.clear();
+    allinventorycode.clear();
     Get.delete<SearchController>();
     print("dispose");
     super.dispose();

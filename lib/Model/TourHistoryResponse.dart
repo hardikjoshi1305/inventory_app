@@ -63,7 +63,7 @@ class Expenselist {
     this.tourName,
     this.errorName,
     this.city,
-    this.amount,
+    this.totalexpense,
     this.isCompleted,
     this.createdAt,
   });
@@ -74,7 +74,7 @@ class Expenselist {
   String errorName;
   String city;
   String isCompleted;
-  var amount;
+  var totalexpense;
   DateTime createdAt;
 
   factory Expenselist.fromJson(Map<String, dynamic> json) => Expenselist(
@@ -83,7 +83,7 @@ class Expenselist {
         tourName: json["tourname"],
         errorName: json["ErrorName"],
         city: json["city"],
-        amount: json["Amount"],
+        totalexpense: json["totalexpense"],
         isCompleted: json["IsCompleted"],
         createdAt: DateTime.parse(json["CreatedAt"]),
       );
@@ -94,7 +94,7 @@ class Expenselist {
         "tourname": tourName,
         "ErrorName": errorName,
         "city": city,
-        "Amount": amount,
+        "Amount": totalexpense,
         "IsCompleted": isCompleted,
         "CreatedAt": createdAt.toIso8601String(),
       };

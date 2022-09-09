@@ -212,6 +212,8 @@ class InventoryController extends GetxController {
         } else {
           Fluttertoast.showToast(msg: "No Data Found");
         }
+      } else {
+        adminreturninventorylist.clear();
       }
     } finally {
       isLoading(false);

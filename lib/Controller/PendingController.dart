@@ -98,4 +98,20 @@ class PendingController extends GetxController {
       isLoading(false);
     }
   }
+
+  void acceptrejectfrompending(
+      String is_approved, String expense_id, int position) async {
+    try {
+      isLoading(true);
+      var res = await RequestCall.acceptreject(is_approved, expense_id);
+      if (res != null) {
+        Fluttertoast.showToast(msg: "Done");
+        pendingexpenselist.value[position].isApproved = is_approved;
+        // Get.to(()=>ExpenseHistory());
+        // Get.to(HomeScreen());
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
 }

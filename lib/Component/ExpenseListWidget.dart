@@ -119,6 +119,12 @@ class ExpenseListWidget extends StatelessWidget {
                                 child: Text("-"),
                               ))
             : Container(),
+        bottomtitle(100.0,
+            expenselist.UserID == null ? "-" : expenselist.UserID.toString()),
+        Container(
+          width: 1,
+          color: Colors.white,
+        ),
         bottomtitle(
             100.0, expenselist.tourname == null ? "-" : expenselist.tourname),
         Container(

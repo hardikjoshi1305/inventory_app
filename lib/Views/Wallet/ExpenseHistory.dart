@@ -268,13 +268,18 @@ class _ExpenseHistoryState extends State<ExpenseHistory> {
                           scrollDirection: Axis.horizontal,
                           physics: AlwaysScrollableScrollPhysics(),
                           child: Container(
-                            width: 700,
+                            width: 800,
                             child: Column(
                               children: [
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     toptitle(120.0, "Action"),
+                                    Container(
+                                      width: 1,
+                                      color: Colors.white,
+                                    ),
+                                    toptitle(100.0, "User"),
                                     Container(
                                       width: 1,
                                       color: Colors.white,

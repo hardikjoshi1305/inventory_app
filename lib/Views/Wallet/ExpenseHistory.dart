@@ -21,10 +21,9 @@ var showlist = false;
 
 class _ExpenseHistoryState extends State<ExpenseHistory> {
   WalletController walletController = Get.put(WalletController());
-  UserController userController = Get.put(UserController());
   apicallusername() async {
     await Future.delayed(Duration.zero);
-    userController.fetchusernamelist();
+    walletController.fetchusernamelist();
   }
 
   @override
@@ -138,7 +137,7 @@ class _ExpenseHistoryState extends State<ExpenseHistory> {
                             scrollDirection: Axis.vertical,
                             child: Column(
                               children: [
-                                ...userController.usernamelist.value
+                                ...walletController.usernamelist.value
                                     .map((e) => GestureDetector(
                                           onTap: () {
                                             te_userid..text = e.userid;

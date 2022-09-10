@@ -75,13 +75,13 @@ class ErrorListWidget extends StatelessWidget {
         GestureDetector(
           onTap: () {
             Get.defaultDialog(
-              title: "Detail",
-              middleText: "Error : " +
-                  this.UserModel.ErrorName +
-                  "\n" +
-                  "\n" +
-                  "Final Dignose :  " +
-                  this.UserModel.FinalDignose,
+              title: this.UserModel.ErrorName != null
+                  ? "Error : " + this.UserModel.ErrorName
+                  : "-",
+              middleText: this.UserModel.FinalDignose != null
+                  ? "Final Dignose : " + this.UserModel.FinalDignose.toString()
+                  : "-",
+
               // textConfirm: "Confirm",
               // confirmTextColor: Colors.white,
             );

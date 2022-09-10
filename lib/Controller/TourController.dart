@@ -40,6 +40,7 @@ class TourController extends GetxController {
   @override
   void onClose() {
     Get.delete<TourController>();
+
     super.onClose();
   }
 

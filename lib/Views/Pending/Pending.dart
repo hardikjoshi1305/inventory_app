@@ -164,41 +164,53 @@ class _PendingState extends State<Pending> {
                                                 style: Pendingitemtextstyle)
                                           ],
                                         ),
-                                        Column(
-                                          children: [
-                                            Text(
-                                                upcomingController
-                                                    .pending[index].tourname,
-                                                style: Pendingitemtextstyle),
-                                            Text(
-                                                upcomingController
-                                                    .pending[index].city,
-                                                style: Pendingitemtextstyle),
-                                            Text(
-                                                upcomingController
-                                                            .pending[index]
-                                                            .errorname !=
-                                                        null
-                                                    ? upcomingController
-                                                        .pending[index]
-                                                        .errorname
-                                                    : "-",
-                                                style: Pendingitemtextstyle),
-                                            Text(
-                                                getdateformate(
+                                        Expanded(
+                                            flex: 1,
+                                            child: Column(
+                                              children: [
+                                                Text(
+                                                  upcomingController
+                                                      .pending[index].tourname,
+                                                  style: Pendingitemtextstyle,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                                Text(
                                                     upcomingController
-                                                        .pending[index]
-                                                        .createdAt),
-                                                style: Pendingitemtextstyle),
-                                            Text(
-                                                upcomingController
-                                                        .pending[index]
-                                                        .totalcount
-                                                        .toString() +
-                                                    " \u{20B9}",
-                                                style: Pendingitemtextstyle)
-                                          ],
-                                        ),
+                                                        .pending[index].city,
+                                                    style: Pendingitemtextstyle,
+                                                    overflow:
+                                                        TextOverflow.ellipsis),
+                                                Text(
+                                                    upcomingController
+                                                                .pending[index]
+                                                                .errorname !=
+                                                            null
+                                                        ? upcomingController
+                                                            .pending[index]
+                                                            .errorname
+                                                        : "-",
+                                                    style: Pendingitemtextstyle,
+                                                    overflow:
+                                                        TextOverflow.ellipsis),
+                                                Text(
+                                                    getdateformate(
+                                                        upcomingController
+                                                            .pending[index]
+                                                            .createdAt),
+                                                    style:
+                                                        Pendingitemtextstyle),
+                                                Text(
+                                                    upcomingController
+                                                            .pending[index]
+                                                            .totalcount
+                                                            .toString() +
+                                                        " \u{20B9}",
+                                                    style: Pendingitemtextstyle,
+                                                    overflow:
+                                                        TextOverflow.ellipsis)
+                                              ],
+                                            )),
                                       ],
                                     ),
                                   ],

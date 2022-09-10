@@ -31,6 +31,13 @@ class _ErrorListState extends State<ErrorList> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    Get.delete<TourController>();
+    print("dispose");
+    super.dispose();
+  }
+
   TourController tourController = Get.put(TourController());
   @override
   Widget build(BuildContext context) {

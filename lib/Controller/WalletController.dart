@@ -8,6 +8,7 @@ import 'package:inventory_management/Model/ExpenseListDetailsResponse.dart'
 import 'package:inventory_management/Network/RequestCall.dart';
 import 'package:inventory_management/Views/Home/HomeScreen.dart';
 import 'package:inventory_management/Views/Wallet/ExpenseHistory.dart';
+import 'package:inventory_management/Model/UserNameList.dart' as namelist;
 
 import '../Utility/CONSTANT.dart';
 import '../Utility/SharedPreferenceHelper.dart';
@@ -19,11 +20,31 @@ class WalletController extends GetxController {
   var expensehistory = List<ecpense.Datum>().obs;
   var accrej = AcceptRejectResponse().obs;
   var refreshscreen = false.obs;
+  var usernamelist = List<namelist.Datum>().obs;
+
   @override
   void onInit() {
     print("onInit");
     getauthtoken();
     super.onInit();
+  }
+
+  void fetchusernamelist() async {
+    try {
+      isLoading(true);
+      var res = await RequestCall.fetchusernamelist();
+      if (res != null) {
+        usernamelist.assignAll(res);
+        if (usernamelist.length > 0) {
+          Fluttertoast.showToast(msg: "Users Retrieve Successfully");
+          isLoading(false);
+        } else {
+          Fluttertoast.showToast(msg: "No User Found");
+        }
+      }
+    } finally {
+      isLoading(false);
+    }
   }
 
   getauthtoken() async {

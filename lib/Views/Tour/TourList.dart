@@ -25,12 +25,12 @@ var userid;
 
 class _TourListState extends State<TourList> {
   // SearchController upcomingController = Get.put(SearchController());
-  TourController tourController = Get.put(TourController());
-  UserController userController = Get.put(UserController());
+
   TextEditingController te_userid = TextEditingController();
   TextEditingController fromdate = TextEditingController();
   TextEditingController todate = TextEditingController();
-
+  UserController userController = Get.put(UserController());
+  TourController tourController;
   apicallusername() async {
     await Future.delayed(Duration.zero);
     userController.fetchusernamelist();
@@ -39,6 +39,8 @@ class _TourListState extends State<TourList> {
   @override
   void initState() {
     apicallusername();
+    // Get.delete<TourController>();
+    // tourController = Get.put(TourController());
     super.initState();
   }
 
@@ -62,7 +64,14 @@ class _TourListState extends State<TourList> {
   }
 
   @override
+  void dispose() {
+    Get.delete<TourController>();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    tourController = Get.put(TourController());
     return Scaffold(
       appBar: AppBar(
         title: Text("Tour History"),
@@ -143,42 +152,47 @@ class _TourListState extends State<TourList> {
                           height: 200,
                           child: SingleChildScrollView(
                             scrollDirection: Axis.vertical,
-                            child: Column(
-                              children: [
-                                ...userController.usernamelist.value
-                                    .map((e) => GestureDetector(
-                                          onTap: () {
-                                            te_userid..text = e.userid;
-                                            setState(() {
-                                              showlist = false;
-                                              id = e.id.toString();
-                                            });
-                                          },
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                  width: double.infinity,
-                                                  color: Colors.white,
-                                                  alignment:
-                                                      AlignmentDirectional
-                                                          .center,
-                                                  padding: EdgeInsets.only(
-                                                      top: 15, bottom: 15),
-                                                  child: Text(
-                                                    e.userid,
-                                                    style: TextStyle(
-                                                        fontSize: 16,
-                                                        color: Colors.black),
-                                                  )),
-                                              Divider(
-                                                color: Colors.black,
-                                                height: 1,
-                                              )
-                                            ],
-                                          ),
-                                        ))
-                              ],
-                            ),
+                            child: userController.usernamelist.value != null
+                                ? Column(
+                                    children: [
+                                      ...userController.usernamelist.value
+                                          .map((e) => GestureDetector(
+                                                onTap: () {
+                                                  te_userid..text = e.userid;
+                                                  setState(() {
+                                                    showlist = false;
+                                                    id = e.id.toString();
+                                                  });
+                                                },
+                                                child: Column(
+                                                  children: [
+                                                    Container(
+                                                        width: double.infinity,
+                                                        color: Colors.white,
+                                                        alignment:
+                                                            AlignmentDirectional
+                                                                .center,
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                top: 15,
+                                                                bottom: 15),
+                                                        child: Text(
+                                                          e.userid,
+                                                          style: TextStyle(
+                                                              fontSize: 16,
+                                                              color:
+                                                                  Colors.black),
+                                                        )),
+                                                    Divider(
+                                                      color: Colors.black,
+                                                      height: 1,
+                                                    )
+                                                  ],
+                                                ),
+                                              ))
+                                    ],
+                                  )
+                                : Container(),
                           ),
                         ),
                       )
@@ -267,108 +281,124 @@ class _TourListState extends State<TourList> {
                   ),
                 ),
                 tourController.tourhistorydata.value.data != null
-                    ? Container(
-                        padding: EdgeInsets.all(12),
-                        child: Text(
-                          "Total Amount : " +
-                              tourController
-                                  .tourhistorydata.value.data.totalexpenses
-                                  .toString() +
-                              " \u{20B9}",
-                          style: TextStyle(color: Colors.green, fontSize: 18),
-                        ),
-                      )
+                    ? tourController
+                                .tourhistorydata.value.data.expenselist.length >
+                            0
+                        ? Container(
+                            padding: EdgeInsets.all(12),
+                            child: Text(
+                              "Total Amount : " +
+                                  tourController
+                                      .tourhistorydata.value.data.totalexpenses
+                                      .toString() +
+                                  " \u{20B9}",
+                              style:
+                                  TextStyle(color: Colors.green, fontSize: 18),
+                            ),
+                          )
+                        : Container()
                     : Container(),
                 tourController.tourhistorydata.value.data != null
-                    ? Scrollbar(
-                        controller: _horizontal,
-                        isAlwaysShown: true,
-                        child: SingleChildScrollView(
-                          controller: _horizontal,
-                          scrollDirection: Axis.horizontal,
-                          physics: AlwaysScrollableScrollPhysics(),
-                          child: Container(
-                            width: 600,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Row(
+                    ? tourController
+                                .tourhistorydata.value.data.expenselist.length >
+                            0
+                        ? Scrollbar(
+                            controller: _horizontal,
+                            isAlwaysShown: true,
+                            child: SingleChildScrollView(
+                              controller: _horizontal,
+                              scrollDirection: Axis.horizontal,
+                              physics: AlwaysScrollableScrollPhysics(),
+                              child: Container(
+                                width: 600,
+                                child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    toptitle(130, "UserName"),
-                                    Container(
-                                      width: 1,
-                                      color: Colors.white,
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        toptitle(130, "UserName"),
+                                        Container(
+                                          width: 1,
+                                          color: Colors.white,
+                                        ),
+                                        toptitle(130, "tour"),
+                                        Container(
+                                          width: 1,
+                                          color: Colors.white,
+                                        ),
+                                        toptitle(130, "tour expense"),
+                                        Container(
+                                          width: 1,
+                                          color: Colors.white,
+                                        ),
+                                        toptitle(100, "Date"),
+                                        Container(
+                                          width: 1,
+                                          color: Colors.white,
+                                        ),
+                                        Expanded(
+                                            flex: 1,
+                                            child: toptitle(80, "Status")),
+                                        Container(
+                                          width: 1,
+                                          color: Colors.white,
+                                        ),
+                                      ],
                                     ),
-                                    toptitle(130, "tour"),
-                                    Container(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
-                                    toptitle(130, "tour expense"),
-                                    Container(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
-                                    toptitle(100, "Date"),
-                                    Container(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
-                                    Expanded(
-                                        flex: 1, child: toptitle(80, "Status")),
-                                    Container(
-                                      width: 1,
-                                      color: Colors.white,
-                                    ),
+                                    Column(
+                                      children: [
+                                        ...tourController.tourhistorydata.value
+                                            .data.expenselist
+                                            .map((element) {
+                                          var index = tourController
+                                              .tourhistorydata
+                                              .value
+                                              .data
+                                              .expenselist
+                                              .indexOf(element);
+                                          var wallet = tourController
+                                              .tourhistorydata
+                                              .value
+                                              .data
+                                              .expenselist
+                                              .elementAt(index);
+                                          return GestureDetector(
+                                            onTap: () => Get.to(
+                                                () => UserTourDetails(
+                                                    "admin", id),
+                                                arguments:
+                                                    wallet.id.toString()),
+                                            child: TourListWidget(
+                                                tourhistmodel: wallet),
+                                          );
+                                        }).toList()
+                                      ],
+                                    )
+                                    // ListView.builder(
+                                    //     shrinkWrap: true,
+                                    //     padding: EdgeInsets.only(bottom: 16),
+                                    //     itemCount:
+                                    //     tourController.tourhistorydata.length,
+                                    //     physics: NeverScrollableScrollPhysics(),
+                                    //     itemBuilder: (ctx, index) {
+                                    //       var wallet = tourController.tourhistorydata
+                                    //           .elementAt(index);
+                                    //       return GestureDetector(
+                                    //         onTap: () => Get.to(
+                                    //                 () => UserTourDetails("admin", id),
+                                    //             arguments: wallet.id.toString()),
+                                    //         child:
+                                    //         TourListWidget(tourhistmodel: wallet),
+                                    //       );
+                                    //     })
                                   ],
                                 ),
-                                Column(
-                                  children: [
-                                    ...tourController
-                                        .tourhistorydata.value.data.expenselist
-                                        .map((element) {
-                                      var index = tourController.tourhistorydata
-                                          .value.data.expenselist
-                                          .indexOf(element);
-                                      var wallet = tourController
-                                          .tourhistorydata
-                                          .value
-                                          .data
-                                          .expenselist
-                                          .elementAt(index);
-                                      return GestureDetector(
-                                        onTap: () => Get.to(
-                                            () => UserTourDetails("admin", id),
-                                            arguments: wallet.id.toString()),
-                                        child: TourListWidget(
-                                            tourhistmodel: wallet),
-                                      );
-                                    }).toList()
-                                  ],
-                                )
-                                // ListView.builder(
-                                //     shrinkWrap: true,
-                                //     padding: EdgeInsets.only(bottom: 16),
-                                //     itemCount:
-                                //     tourController.tourhistorydata.length,
-                                //     physics: NeverScrollableScrollPhysics(),
-                                //     itemBuilder: (ctx, index) {
-                                //       var wallet = tourController.tourhistorydata
-                                //           .elementAt(index);
-                                //       return GestureDetector(
-                                //         onTap: () => Get.to(
-                                //                 () => UserTourDetails("admin", id),
-                                //             arguments: wallet.id.toString()),
-                                //         child:
-                                //         TourListWidget(tourhistmodel: wallet),
-                                //       );
-                                //     })
-                              ],
-                            ),
-                          ),
-                        ))
-                    : Text("No Data Found"),
+                              ),
+                            ))
+                        : Text("No Data Found")
+                    : Container(),
                 // Obx(() =>
                 // ListView(
                 //   scrollDirection: Axis.vertical,

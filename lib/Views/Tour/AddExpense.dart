@@ -28,6 +28,7 @@ class _AddExpenseState extends State<AddExpense> {
   @override
   void dispose() {
     te_imgpath.dispose();
+    Get.delete<WalletController>();
     print("dispose");
     super.dispose();
   }

@@ -55,12 +55,12 @@ class _SendInventoryState extends State<SendInventory> {
   }
 
   SearchController upcomingController = Get.put(SearchController());
-  UserController userController = Get.put(UserController());
+  // UserController userController = Get.put(UserController());
   TextEditingController te_userid = TextEditingController();
 
   apicallusername() async {
     await Future.delayed(Duration.zero);
-    userController.fetchusernamelist();
+    upcomingController.fetchusernamelist();
   }
 
   @override
@@ -148,7 +148,7 @@ class _SendInventoryState extends State<SendInventory> {
                             scrollDirection: Axis.vertical,
                             child: Column(
                               children: [
-                                ...userController.usernamelist.value
+                                ...upcomingController.usernamelist.value
                                     .map((e) => GestureDetector(
                                           onTap: () {
                                             te_userid..text = e.userid;

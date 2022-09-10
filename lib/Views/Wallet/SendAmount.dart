@@ -27,14 +27,14 @@ class _SendAmountState extends State<SendAmount> {
   }
 
   SearchController upcomingController = Get.put(SearchController());
-  UserController userController = Get.put(UserController());
+  // UserController userController = Get.put(UserController());
   TextEditingController te_userid = TextEditingController();
   TextEditingController te_wallet = TextEditingController();
   TextEditingController te_imgpath = TextEditingController();
 
   apicallusername() async {
     await Future.delayed(Duration.zero);
-    userController.fetchusernamelist();
+    upcomingController.fetchusernamelist();
   }
 
   @override
@@ -124,7 +124,7 @@ class _SendAmountState extends State<SendAmount> {
                         scrollDirection: Axis.vertical,
                         child: Column(
                           children: [
-                            ...userController.usernamelist.value
+                            ...upcomingController.usernamelist.value
                                 .map((e) => GestureDetector(
                                       onTap: () {
                                         te_userid..text = e.userid;

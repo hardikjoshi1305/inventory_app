@@ -762,6 +762,8 @@ class RequestCall {
   }
 
   static fetchinventoryhistory(String id) async {
+    print("id" + id.toString());
+
     var body = jsonEncode({
       "id": id,
     });
@@ -841,7 +843,7 @@ class RequestCall {
       "startDate": fromdate,
       "endDate": todate,
     });
-    print("reds" + userid);
+    print("expenselist" + userid);
     var response = await client
         .post(BASEURL + 'expenselist', headers: authHeader, body: body)
         .catchError((error) {
@@ -994,12 +996,14 @@ class RequestCall {
     });
     print("user_id" + userid);
     print("tour_id" + tourid);
+    print("userexpenselist");
 
     var response = await client
         .post(BASEURL + 'userexpenselist', headers: authHeader, body: body)
         .catchError((error) {
       Fluttertoast.showToast(msg: error.toString());
     });
+    print("reds" + response.body.toString());
 
     if (response.statusCode == 200) {
       var json = response.body;

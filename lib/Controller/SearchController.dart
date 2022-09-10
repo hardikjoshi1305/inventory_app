@@ -10,6 +10,7 @@ import 'package:inventory_management/Model/InventoryHistoryResponse.dart'
 import '../Utility/CONSTANT.dart';
 import '../Utility/SharedPreferenceHelper.dart';
 import '../Views/Home/HomeScreen.dart';
+import 'package:inventory_management/Model/UserNameList.dart' as namelist;
 
 class SearchController extends GetxController {
   var isLoading = false.obs;
@@ -18,6 +19,7 @@ class SearchController extends GetxController {
   var sendamountdata = SendAmountResponse().obs;
   var search = List<Datum>().obs;
   var inventoryhistorylist = List<inventoryhistory.Datum>().obs;
+  var usernamelist = List<namelist.Datum>().obs;
 
   @override
   void onClose() {
@@ -42,6 +44,24 @@ class SearchController extends GetxController {
   @override
   void dispose() {
     print("dispose");
+  }
+
+  void fetchusernamelist() async {
+    try {
+      isLoading(true);
+      var res = await RequestCall.fetchusernamelist();
+      if (res != null) {
+        usernamelist.assignAll(res);
+        if (usernamelist.length > 0) {
+          Fluttertoast.showToast(msg: "Users Retrieve Successfully");
+          isLoading(false);
+        } else {
+          Fluttertoast.showToast(msg: "No User Found");
+        }
+      }
+    } finally {
+      isLoading(false);
+    }
   }
 
   void gethistoryapi(String id) async {

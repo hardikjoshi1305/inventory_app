@@ -12,16 +12,22 @@ import 'package:inventory_management/Views/Users/Userlist.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
+import 'Views/Completed Tour/Completed.dart';
 import 'Views/Dashboard/Dashboard.dart';
 import 'Views/Home/HomeScreen.dart';
 import 'Views/Inventory/AdminReturnInventory.dart';
 import 'Views/Inventory/Inventory.dart';
 import 'Views/Inventory/InventoryHistory.dart';
 import 'Views/Inventory/SendInventory.dart';
+import 'Views/Inventory/UserCurrentInventory.dart';
+import 'Views/Inventory/UserInventory.dart';
+import 'Views/Pending/Pending.dart';
 import 'Views/Tour/CreatTourDetail.dart';
+import 'Views/Tour/ErrorList.dart';
 import 'Views/Tour/TourList.dart';
 import 'Views/Wallet/ExpenseHistory.dart';
 import 'Views/Wallet/SendAmount.dart';
+import 'Views/Wallet/WalletScreen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -66,6 +72,14 @@ class MyApp extends StatelessWidget {
             name: "/AdminReturnInventory", page: () => AdminReturnInventory()),
         GetPage(name: "/Login", page: () => Login()),
         GetPage(name: "/CreateTourDetail", page: () => CreateTourDetail()),
+        GetPage(name: "/ErrorList", page: () => ErrorList()),
+        GetPage(name: "/WalletScreen", page: () => WalletScreen()),
+        GetPage(name: "/UserInventory", page: () => UserInventory()),
+        GetPage(
+            name: "/UserCurrentInventory", page: () => UserCurrentInventory()),
+        GetPage(name: "/CreateTourDetail", page: () => CreateTourDetail()),
+        GetPage(name: "/Completed", page: () => Completed()),
+        GetPage(name: "/Pending", page: () => Pending()),
       ],
     );
   }

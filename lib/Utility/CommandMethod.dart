@@ -142,7 +142,8 @@ Widget UserDrawer(userisvisible) {
               icon: Icons.dashboard,
               text: 'Dashboard',
               onTap: () {
-                Get.to(() => Dashboard(), preventDuplicates: false);
+                Get.offNamed("/Dashboard", preventDuplicates: false);
+
                 // Navigator.of(context).pop();
                 // Navigator.pushNamed(context, pageRoutes.landscape);
               }),
@@ -150,7 +151,8 @@ Widget UserDrawer(userisvisible) {
               icon: Icons.pending_actions,
               text: 'Pending Tour',
               onTap: () {
-                Get.to(() => Pending(), preventDuplicates: false);
+                Get.offNamed("/Pending", preventDuplicates: false);
+
                 // Navigator.of(context).pop();
                 // Navigator.pushNamed(context, pageRoutes.landscape);
               }),
@@ -158,7 +160,7 @@ Widget UserDrawer(userisvisible) {
               icon: Icons.cloud_done_rounded,
               text: 'Completed Tour',
               onTap: () {
-                Get.to(() => Completed(), preventDuplicates: false);
+                Get.offNamed("/Completed", preventDuplicates: false);
 
                 // Navigator.of(context).pop();
 
@@ -169,7 +171,7 @@ Widget UserDrawer(userisvisible) {
               icon: Icons.error,
               text: 'Problem List',
               onTap: () {
-                Get.to(() => ErrorList(), preventDuplicates: false);
+                Get.offNamed("/ErrorList", preventDuplicates: false);
 
                 // Navigator.of(context).pop();
 
@@ -180,7 +182,7 @@ Widget UserDrawer(userisvisible) {
               icon: Icons.wallet,
               text: 'Wallet',
               onTap: () {
-                Get.to(() => WalletScreen(), preventDuplicates: false);
+                Get.offNamed("/WalletScreen", preventDuplicates: false);
 
                 // _permissionStatus?
                 // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
@@ -198,7 +200,7 @@ Widget UserDrawer(userisvisible) {
                   icon: Icons.inventory,
                   text: 'All Inventory',
                   onTap: () {
-                    Get.to(() => UserInventory(), preventDuplicates: false);
+                    Get.offNamed("/UserInventory", preventDuplicates: false);
 
                     // Navigator.of(context).pop();
 
@@ -210,7 +212,7 @@ Widget UserDrawer(userisvisible) {
               icon: Icons.inventory,
               text: 'My Parts',
               onTap: () {
-                Get.to(() => UserCurrentInventory(), preventDuplicates: false);
+                Get.offNamed("/UserCurrentInventory", preventDuplicates: false);
 
                 // Navigator.of(context).pop();
 

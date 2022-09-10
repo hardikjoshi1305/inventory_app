@@ -287,6 +287,11 @@ class _UserTourDetailsState extends State<UserTourDetails> {
                                                 width: 1,
                                                 color: Colors.white,
                                               ),
+                                              toptitle(100.0, "User"),
+                                              Container(
+                                                width: 1,
+                                                color: Colors.white,
+                                              ),
                                               toptitle(100.0, "Tour"),
                                               Container(
                                                 width: 1,

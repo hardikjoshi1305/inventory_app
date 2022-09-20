@@ -157,6 +157,24 @@ class _UserInventoryState extends State<UserInventory> {
                                                           width: 1,
                                                           color: Colors.white,
                                                         ),
+                                                        toptitle(
+                                                            100.0, "Location"),
+                                                        Container(
+                                                          width: 1,
+                                                          color: Colors.white,
+                                                        ),
+                                                        toptitle(
+                                                            100.0, "Status"),
+                                                        Container(
+                                                          width: 1,
+                                                          color: Colors.white,
+                                                        ),
+                                                        toptitle(
+                                                            180.0, "Remark"),
+                                                        Container(
+                                                          width: 1,
+                                                          color: Colors.white,
+                                                        ),
                                                       ],
                                                     ),
                                                     Expanded(

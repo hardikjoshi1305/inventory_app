@@ -112,6 +112,11 @@ class _UserlistState extends State<Userlist> {
                             width: 1,
                             color: Colors.white,
                           ),
+                          toptitle(130.0, "Action"),
+                          Container(
+                            width: 1,
+                            color: Colors.white,
+                          ),
                         ],
                       ),
                       Expanded(

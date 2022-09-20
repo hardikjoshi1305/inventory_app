@@ -1183,4 +1183,47 @@ class RequestCall {
       return null;
     }
   }
+
+  static updateuser(
+      {String id,
+      String name,
+      String phone,
+      String password,
+      String deviceid,
+      String wallet_amount,
+      String isvisibleid,
+      String isactive}) async {
+    var body = jsonEncode({
+      "id": id,
+      "userid": name,
+      "mobile": phone,
+      "password": password,
+      "deviceid": deviceid,
+      "wallet_amount": wallet_amount,
+      "is_active": isactive,
+      "is_visible": isvisibleid,
+    });
+    var response = await client
+        .post(BASEURL + "UpdateUser", headers: authHeader, body: body)
+        .catchError((error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
+    print("UpdateUser" + response.body);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var finaldata = jsonDecode(json);
+      // return null;
+      if ((finaldata as Map)['succes']) {
+        return "success";
+      } else {
+        Fluttertoast.showToast(msg: (finaldata as Map)['message']);
+        return null;
+      }
+      var castsResp = getRemarkResponseFromJson(json);
+
+      return castsResp;
+    } else {
+      return null;
+    }
+  }
 }

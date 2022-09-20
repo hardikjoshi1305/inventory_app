@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:inventory_management/Model/UserlistResponse.dart';
+import 'package:inventory_management/Views/Users/EditUser.dart';
 
 import '../Utility/CommandMethod.dart';
 import '../Utility/app_colors.dart';
@@ -49,6 +51,27 @@ class UserListWidget extends StatelessWidget {
           width: 1,
           color: Colors.white,
         ),
+        Container(
+            width: 130,
+            height: 40,
+            alignment: AlignmentDirectional.center,
+            color: AppColors.offWhite,
+            padding: const EdgeInsets.all(1.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: IconButton(
+                    onPressed: () =>
+                        Get.to(EditUser(), arguments: this.UserModel),
+                    icon: Icon(Icons.edit_calendar,
+                        color: AppColors.darkBlue, size: 25),
+                  ),
+                ),
+              ],
+            )),
       ],
     );
     // Card(

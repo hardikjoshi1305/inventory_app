@@ -111,4 +111,36 @@ class UserController extends GetxController {
       isLoading(false);
     }
   }
+
+  void edituser(
+      {String id,
+      String name,
+      String phone,
+      String password,
+      String deviceid,
+      String wallet_amount,
+      String isvisibleid,
+      String isactive}) async {
+    try {
+      isLoading(true);
+      var res = await RequestCall.updateuser(
+        id: id,
+        name: name,
+        phone: phone,
+        password: password,
+        deviceid: deviceid,
+        wallet_amount: wallet_amount,
+        isvisibleid: isvisibleid,
+        isactive: isactive,
+        // photo: photo
+      );
+      print("rdd" + res.toString());
+      if (res != null) {
+        Fluttertoast.showToast(msg: "User Updated Successfully");
+        Get.to(() => Userlist());
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
 }

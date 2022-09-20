@@ -51,29 +51,29 @@ class UserAllInventoryListWidget extends StatelessWidget {
           width: 1,
           color: Colors.white,
         ),
-        // bottomtitle(100.0, this.UserModel.location.toString()),
-        // Container(
-        //   width: 1,
-        //   color: Colors.white,
-        // ),
-        // bottomtitle(
-        //     100.0,
-        //     this.UserModel.statusdetail == null
-        //         ? "-"
-        //         : this.UserModel.statusdetail),
-        // Container(
-        //   width: 1,
-        //   color: Colors.white,
-        // ),
-        // bottomtitle(
-        //     180.0,
-        //     this.UserModel.status_name != null
-        //         ? this.UserModel.status_name
-        //         : "-"),
-        // Container(
-        //   width: 1,
-        //   color: Colors.white,
-        // ),
+        bottomtitle(100.0, this.UserModel.location.toString()),
+        Container(
+          width: 1,
+          color: Colors.white,
+        ),
+        bottomtitle(
+            100.0,
+            this.UserModel.statusdeatils == null
+                ? "-"
+                : this.UserModel.statusdeatils),
+        Container(
+          width: 1,
+          color: Colors.white,
+        ),
+        bottomtitle(
+            180.0,
+            this.UserModel.status_name != null
+                ? this.UserModel.status_name
+                : "-"),
+        Container(
+          width: 1,
+          color: Colors.white,
+        ),
         // bottomtitle(
         //     100.0,
         //     this.UserModel.price == null

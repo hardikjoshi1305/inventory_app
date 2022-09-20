@@ -1,0 +1,344 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:get/state_manager.dart';
+import 'package:inventory_management/Controller/UserController.dart';
+import 'package:inventory_management/Model/UserlistResponse.dart';
+
+class EditUser extends StatefulWidget {
+  const EditUser({Key key}) : super(key: key);
+
+  @override
+  State<EditUser> createState() => _EditUserState();
+}
+
+class _EditUserState extends State<EditUser> {
+  String name,
+      email,
+      password,
+      status,
+      deviceid,
+      photo,
+      wallet_amount,
+      phone = " ";
+  var isvisible = false;
+  var isvisible2 = true;
+  var isactive = false;
+  var isactive2 = true;
+  var isvisibleid;
+  var isactiveid;
+  Datum usermodel;
+
+  UserController userController = Get.put(UserController());
+  @override
+  void initState() {
+    usermodel = Get.arguments as Datum;
+    isvisibleid = usermodel.IsVisible.toString();
+    isactiveid = usermodel.isActive.toString();
+    super.initState();
+  }
+
+  TextEditingController te_email = TextEditingController();
+  TextEditingController te_name = TextEditingController();
+  TextEditingController te_phone = TextEditingController();
+  TextEditingController te_password = TextEditingController();
+  TextEditingController te_status = TextEditingController();
+  TextEditingController te_wallet = TextEditingController();
+
+  @override
+  void dispose() {
+    te_email.dispose();
+    te_name.dispose();
+    te_phone.dispose();
+    te_password.dispose();
+    te_status.dispose();
+    te_wallet.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Create User"),
+        ),
+        body: Container(
+          child: Obx(() => Stack(
+                alignment: AlignmentDirectional.center,
+                children: <Widget>[
+                  Opacity(
+                    opacity:
+                        1, // You can reduce this when loading to give different effect
+                    child: AbsorbPointer(
+                      absorbing: userController.isLoading.value,
+                      child: SingleChildScrollView(
+                        child: Container(
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 20,
+                                ),
+                                TextField(
+                                  controller: te_name
+                                    ..text = usermodel.userid.toString(),
+                                  keyboardType: TextInputType.text,
+                                  onChanged: (value) => name = value,
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: 'User ID',
+                                    prefixIcon: Icon(Icons.person),
+                                  ),
+                                ),
+                                Container(
+                                  height: 20,
+                                ),
+                                Container(
+                                  child: TextField(
+                                    controller: te_phone
+                                      ..text = usermodel.mobile,
+                                    keyboardType: TextInputType.phone,
+                                    inputFormatters: [
+                                      LengthLimitingTextInputFormatter(10),
+                                    ],
+                                    onChanged: (value) {
+                                      phone = value;
+                                    },
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      prefix: Text('+91'),
+                                      prefixIcon: Icon(Icons.phone_android),
+                                      labelText: 'Mobile Number',
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  height: 20,
+                                ),
+                                // TextField(
+                                //   keyboardType: TextInputType.emailAddress,
+                                //   onChanged: (value) => email = value,
+                                //   decoration: const InputDecoration(
+                                //     border: OutlineInputBorder(),
+                                //     labelText: 'Email',
+                                //     prefixIcon: Icon(Icons.email),
+                                //   ),
+                                // ),
+                                // Container(
+                                //   height: 20,
+                                // ),
+                                TextField(
+                                  controller: te_password
+                                    ..text = usermodel.pass.toString(),
+                                  keyboardType: TextInputType.visiblePassword,
+                                  obscureText: true,
+                                  onChanged: (value) => password = value,
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: 'Password',
+                                    prefixIcon: Icon(Icons.lock),
+                                  ),
+                                ),
+                                Container(
+                                  height: 20,
+                                ),
+                                // TextField(
+                                //   keyboardType: TextInputType.visiblePassword,
+                                //   onChanged: (value) => deviceid = value,
+                                //   decoration: const InputDecoration(
+                                //     border: OutlineInputBorder(),
+                                //     labelText: 'Device ID',
+                                //     prefixIcon: Icon(Icons.location_on),
+                                //   ),
+                                // ),
+                                // Container(
+                                //   height: 20,
+                                // ),
+                                TextField(
+                                  controller: te_wallet
+                                    ..text = usermodel.walletAmount,
+                                  keyboardType:
+                                      TextInputType.numberWithOptions(),
+                                  onChanged: (value) =>
+                                      wallet_amount = value.toString(),
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: 'Wallet Amount',
+                                    prefixIcon: Icon(Icons.wallet),
+                                  ),
+                                ),
+                                Container(
+                                  height: 20,
+                                ),
+                                usermodel.IsVisible.toString() == "1"
+                                    ? CheckboxListTile(
+                                        title:
+                                            Text("Inventory visible to user ?"),
+                                        value: isvisible2,
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            isvisible2 = newValue;
+                                            isvisibleid = newValue ? "1" : "0";
+                                            print("isvisible" +
+                                                isvisibleid.toString());
+                                          });
+                                        },
+                                        controlAffinity: ListTileControlAffinity
+                                            .trailing, //  <-- leading Checkbox
+                                      )
+                                    : CheckboxListTile(
+                                        title:
+                                            Text("Inventory visible to user ?"),
+                                        value: isvisible,
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            isvisible = newValue;
+                                            isvisibleid = newValue ? "1" : "0";
+                                            print("isvisible" +
+                                                isvisibleid.toString());
+                                          });
+                                        },
+                                        controlAffinity: ListTileControlAffinity
+                                            .trailing, //  <-- leading Checkbox
+                                      ),
+                                Container(
+                                  height: 10,
+                                ),
+                                usermodel.isActive.toString() == "1"
+                                    ? CheckboxListTile(
+                                        title: Text("User Active ?"),
+                                        value: isactive2,
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            isactive2 = newValue;
+                                            isactiveid = newValue ? "1" : "0";
+                                            print("isvisible" +
+                                                isactiveid.toString());
+                                          });
+                                        },
+                                        controlAffinity: ListTileControlAffinity
+                                            .trailing, //  <-- leading Checkbox
+                                      )
+                                    : CheckboxListTile(
+                                        title: Text("User Active ?"),
+                                        value: isactive,
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            isactive = newValue;
+                                            isactiveid = newValue ? "1" : "0";
+                                            print("isvisible" +
+                                                isactiveid.toString());
+                                          });
+                                        },
+                                        controlAffinity: ListTileControlAffinity
+                                            .trailing, //  <-- leading Checkbox
+                                      ),
+                                Container(
+                                  height: 20,
+                                ),
+                                // ElevatedButton(
+                                //     onPressed: () async {
+                                //       // 1. Pick an image file
+                                //       final filePicked = await FilePicker.platform.pickFiles();
+                                //       if (filePicked != null) {
+                                //         final file = filePicked.files.single; // PlatformFile
+                                //         final mimeType = lookupMimeType(file.name) ?? '';
+                                //
+                                //         /// 2. Get presigned data somewhere
+                                //         // const url = 'https://s3.amazonaws.com/......';
+                                //         // final fields = {
+                                //         //   'bucket': '...',
+                                //         //   'X-Amz-Algorithm': 'AWS4-HMAC-SHA256',
+                                //         //   'X-Amz-Credential': '...',
+                                //         //   'X-Amz-Date': '...',
+                                //         //   'Policy': '...',
+                                //         //   'X-Amz-Signature': '...',
+                                //         //   'x-amz-meta-userid': '...',
+                                //         //   'Content-Type': mimeType,
+                                //         //   'file': dio.MultipartFile.fromBytes(file.bytes ?? []),
+                                //         // };
+                                //
+                                //         /// 3. Send file to AWS s3
+                                //         // final formData = dio.FormData.fromMap(fields);
+                                //         // await dio.Dio().post(url, data: formData);
+                                //       }
+                                //     },
+                                //     child: Text("Upload Image")),
+                                // TextField(
+                                //   keyboardType: TextInputType.text,
+                                //   onChanged: (value) => photo = value,
+                                //   onTap:
+                                //   decoration: const InputDecoration(
+                                //     border: OutlineInputBorder(),
+                                //     labelText: 'Photo',
+                                //     prefixIcon: Icon(Icons.image),
+                                //   ),
+                                // ),
+                                Padding(
+                                  padding: const EdgeInsets.all(28.0),
+                                  child: Container(
+                                      height: 50,
+                                      width: 300,
+                                      padding: const EdgeInsets.fromLTRB(
+                                          10, 0, 10, 0),
+                                      child: ElevatedButton(
+                                        child: const Text('Update'),
+                                        onPressed: () {
+                                          print('pressed');
+                                          if (validatetourdetail(
+                                              te_name.text,
+                                              te_phone.text,
+                                              te_password.text,
+                                              deviceid,
+                                              te_wallet.text,
+                                              isvisibleid,
+                                              isactiveid)) {
+                                            userController.edituser(
+                                              id: usermodel.id.toString(),
+                                              name: te_name.text,
+                                              phone: te_phone.text,
+                                              password: te_password.text,
+                                              deviceid: deviceid.toString(),
+                                              wallet_amount:
+                                                  te_wallet.text.toString(),
+                                              isvisibleid:
+                                                  isvisibleid.toString(),
+                                              isactive: isactiveid.toString(),
+                                              // photo: photo.toString()
+                                            );
+                                          }
+                                        },
+                                      )),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Opacity(
+                    opacity: userController.isLoading.value ? 1.0 : 0,
+                    child: CircularProgressIndicator(),
+                  ),
+                ],
+              )),
+        ));
+  }
+
+  bool validatetourdetail(name, phone, password, deviceid, wallet_amount,
+      String isvisibleid, String isactiveid) {
+    if (name.toString().isEmpty ||
+        phone.toString().isEmpty ||
+        password.toString().isEmpty) {
+      Fluttertoast.showToast(msg: "Please fill all the require Details");
+      return false;
+    } else {
+      print("isvisibleid  " + isvisibleid);
+      print("isactirve  " + isactiveid);
+      return true;
+    }
+  }
+}

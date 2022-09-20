@@ -271,7 +271,6 @@ Widget AdminDrawer() {
               text: 'Inventory',
               onTap: () {
                 Get.offNamed("/Inventory", preventDuplicates: false);
-
                 // _permissionStatus?
                 // Navigator.pushNamed(context, pageRoutes.video): _listenForPermissionStatus();
               }),

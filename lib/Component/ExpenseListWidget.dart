@@ -370,7 +370,7 @@ class ExpenseListWidget extends StatelessWidget {
   }
 
   void acceptrejectorderapi(String is_approved, String expense_id) async {
-    WalletController walletController = Get.find();
+    WalletController walletController = Get.put(WalletController());
     await Future.delayed(Duration.zero);
     walletController.acceptreject(is_approved, expense_id, int.parse(position));
   }

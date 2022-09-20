@@ -14,7 +14,7 @@ class SendAmount extends StatefulWidget {
 }
 
 var userid;
-var code, amountadd, img_path = "";
+var code, amountadd, img_path, remark = "";
 // List<String> allinventory = [];
 // List<String> allinventoryname = [];
 // List<String> allinventoryimage = [];
@@ -194,6 +194,24 @@ class _SendAmountState extends State<SendAmount> {
               ),
             ),
             Container(
+              height: 30,
+            ),
+            Container(
+              child: TextField(
+                // controller: te_name
+                //   ..text = this.usermodel != null ? usermodel.name : "",
+                keyboardType: TextInputType.numberWithOptions(),
+                onChanged: (value) {
+                  remark = value;
+                },
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.note_alt_rounded),
+                  labelText: 'Remark',
+                ),
+              ),
+            ),
+            Container(
               height: 4,
             ),
             Container(
@@ -276,8 +294,7 @@ class _SendAmountState extends State<SendAmount> {
                     // print("allinventorylist  " + allinventory.toString());
                     // print("allinventoryimagelist  " +)
                     if (checkvalidation(id, amountadd.toString())) {
-                      upcomingController.sendamount(
-                          id, amountadd, img_path.toString());
+                      upcomingController.sendamount(id, amountadd,remark, img_path.toString());
                     }
 
                     // callgetinventory(code);

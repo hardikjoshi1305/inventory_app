@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:inventory_management/Views/Pending/PendingDetailScreen.dart';
 
 import '../../Component/PendingExpenseListWidget.dart';
 import '../../Controller/PendingController.dart';
 import '../../Utility/CONSTANT.dart';
 import '../../Utility/CommandMethod.dart';
 import '../../Utility/SharedPreferenceHelper.dart';
+import '../Tour/DetailsScreen.dart';
 
 class PendingExpense extends StatefulWidget {
   const PendingExpense({Key key}) : super(key: key);
@@ -114,8 +116,13 @@ class _PendingExpenseState extends State<PendingExpense> {
                           .indexOf(element);
                       var wallet = upcomingController.pendingexpenselist
                           .elementAt(index);
-                      return PendingExpenseListWidget(
-                          expenselist: wallet, position: index.toString());
+                      return GestureDetector(
+                        onTap: () => Get.to(
+                            () => PendingDetailScreen(index.toString()),
+                            arguments: wallet),
+                        child: PendingExpenseListWidget(
+                            expenselist: wallet, position: index.toString()),
+                      );
                     }).toList(growable: true)
                   ],
                 )

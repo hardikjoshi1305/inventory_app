@@ -31,6 +31,8 @@ class _WalletScreenState extends State<WalletScreen> {
     upcomingController.wallethistorydata();
   }
 
+  final ScrollController _horizontal = ScrollController(),
+      _vertical = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,179 +40,213 @@ class _WalletScreenState extends State<WalletScreen> {
           title: Text("Wallet"),
         ),
         drawer: UserDrawer(userisvisible),
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          physics: ScrollPhysics(),
-          child: Container(
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                      width: double.infinity,
-                      color: Colors.blueGrey[900],
-                      height: 120,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.wallet,
-                            color: Colors.white,
-                          ),
-                          Container(
-                            width: 10,
-                            height: 0,
-                          ),
-                          Text(
-                            " Balance :",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white),
-                          ),
-                          Container(
-                            width: 10,
-                            height: 0,
-                          ),
-                          Obx(
-                            () => upcomingController.wallethistory.length > 0
-                                ? Text(
-                                    "${upcomingController.wallethistory[0].walletBalance} \u{20B9}",
-                                    style: TextStyle(
-                                        fontSize: 27,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.green),
-                                  )
-                                : Text(
-                                    "0 \u{20B9}",
-                                    style: TextStyle(
-                                        fontSize: 27,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.green),
-                                  ),
-                          ),
-                        ],
-                      )),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 0.0),
-                    child: Container(
-                        child: Container(
-                      child: Column(
-                        children: [
-                          Divider(
-                            color: Colors.black,
-                            height: 3,
-                          ),
-                          Container(
-                            height: 10,
-                            width: 0,
-                          ),
-                          Container(
-                            alignment: AlignmentDirectional.topStart,
-                            child: Text(
-                              "    Transcation History",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 16),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: Divider(
-                              color: Colors.grey,
+        body: Container(
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                    width: double.infinity,
+                    color: Colors.blueGrey[900],
+                    height: 120,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.wallet,
+                          color: Colors.white,
+                        ),
+                        Container(
+                          width: 10,
+                          height: 0,
+                        ),
+                        Text(
+                          " Balance :",
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white),
+                        ),
+                        Container(
+                          width: 10,
+                          height: 0,
+                        ),
+                        Obx(
+                          () => upcomingController.wallethistory.length > 0
+                              ? Text(
+                                  "${upcomingController.wallethistory[0].walletBalance} \u{20B9}",
+                                  style: TextStyle(
+                                      fontSize: 27,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.green),
+                                )
+                              : Text(
+                                  "0 \u{20B9}",
+                                  style: TextStyle(
+                                      fontSize: 27,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.green),
+                                ),
+                        ),
+                      ],
+                    )),
+                Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 0.0),
+                      child: Container(
+                          child: Container(
+                        child: Column(
+                          children: [
+                            Divider(
+                              color: Colors.black,
                               height: 3,
                             ),
-                          ),
-                          Obx(() => upcomingController.wallethistory.length > 0
-                              ? SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  physics: AlwaysScrollableScrollPhysics(),
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.vertical,
-                                    physics: AlwaysScrollableScrollPhysics(),
-                                    child: Container(
-                                      height:
-                                          MediaQuery.of(context).size.height,
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              toptitle(120.0, "Credit"),
-                                              Container(
-                                                width: 1,
-                                                color: Colors.white,
-                                              ),
-                                              toptitle(120.0, "Debit"),
-                                              Container(
-                                                width: 1,
-                                                color: Colors.white,
-                                              ),
-                                              toptitle(150.0, "Detail"),
-                                              Container(
-                                                width: 1,
-                                                color: Colors.white,
-                                              ),
-                                              toptitle(150.0, "Status"),
-                                              Container(
-                                                width: 1,
-                                                color: Colors.white,
-                                              ),
-                                              toptitle(160.0, "Date"),
-                                              Container(
-                                                width: 1,
-                                                color: Colors.white,
-                                              ),
-                                              toptitle(100.0, "Image"),
-                                              Container(
-                                                width: 1,
-                                                color: Colors.white,
-                                              ),
-                                            ],
-                                          ),
+                            Container(
+                              height: 10,
+                              width: 0,
+                            ),
+                            Container(
+                              alignment: AlignmentDirectional.topStart,
+                              child: Text(
+                                "    Transcation History",
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 16),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Divider(
+                                color: Colors.grey,
+                                height: 3,
+                              ),
+                            ),
+                            Obx(() => upcomingController.wallethistory.length >
+                                    0
+                                ? Scrollbar(
+                                    isAlwaysShown: true,
+                                    controller: _vertical,
+                                    child: SingleChildScrollView(
+                                        scrollDirection: Axis.vertical,
+                                        physics:
+                                            AlwaysScrollableScrollPhysics(),
+                                        child: Expanded(
+                                          flex: 1,
+                                          child: Scrollbar(
+                                            isAlwaysShown: true,
+                                            controller: _horizontal,
+                                            child: SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              physics:
+                                                  AlwaysScrollableScrollPhysics(),
+                                              child: Stack(
+                                                children: [
+                                                  Container(
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .height,
+                                                    child: Column(
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            toptitle(120.0,
+                                                                "Credit"),
+                                                            Container(
+                                                              width: 1,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            toptitle(
+                                                                120.0, "Debit"),
+                                                            Container(
+                                                              width: 1,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            toptitle(150.0,
+                                                                "Detail"),
+                                                            Container(
+                                                              width: 1,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            toptitle(150.0,
+                                                                "Status"),
+                                                            Container(
+                                                              width: 1,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            toptitle(
+                                                                160.0, "Date"),
+                                                            Container(
+                                                              width: 1,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            toptitle(
+                                                                100.0, "Image"),
+                                                            Container(
+                                                              width: 1,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ],
+                                                        ),
 
-                                          Column(
-                                            children: [
-                                              ...upcomingController
-                                                  .wallethistory
-                                                  .map((element) {
-                                                var index = upcomingController
-                                                    .wallethistory
-                                                    .indexOf(element);
-                                                var wallet = upcomingController
-                                                    .wallethistory
-                                                    .elementAt(index);
-                                                return WalletListWidget(
-                                                    walletmodel: wallet);
-                                              }).toList()
-                                            ],
-                                          )
-                                          // ListView.builder(
-                                          //     shrinkWrap: true,
-                                          //     padding:
-                                          //         EdgeInsets.only(bottom: 16),
-                                          //     itemCount: upcomingController
-                                          //         .wallethistory.length,
-                                          //     physics:
-                                          //         NeverScrollableScrollPhysics(),
-                                          //     itemBuilder: (ctx, index) {
-                                          //       var wallet = upcomingController
-                                          //           .wallethistory
-                                          //           .elementAt(index);
-                                          //       return WalletListWidget(
-                                          //           walletmodel: wallet);
-                                          //     })
-                                        ],
-                                      ),
-                                    ),
-                                  ))
-                              : Text("No Data Found"))
-                        ],
-                      ),
-                    )),
-                  )
-                ],
-              )),
-        ));
+                                                        Column(
+                                                          children: [
+                                                            ...upcomingController
+                                                                .wallethistory
+                                                                .map((element) {
+                                                              var index =
+                                                                  upcomingController
+                                                                      .wallethistory
+                                                                      .indexOf(
+                                                                          element);
+                                                              var wallet =
+                                                                  upcomingController
+                                                                      .wallethistory
+                                                                      .elementAt(
+                                                                          index);
+                                                              return WalletListWidget(
+                                                                  walletmodel:
+                                                                      wallet);
+                                                            }).toList()
+                                                          ],
+                                                        )
+                                                        // ListView.builder(
+                                                        //     shrinkWrap: true,
+                                                        //     padding:
+                                                        //         EdgeInsets.only(bottom: 16),
+                                                        //     itemCount: upcomingController
+                                                        //         .wallethistory.length,
+                                                        //     physics:
+                                                        //         NeverScrollableScrollPhysics(),
+                                                        //     itemBuilder: (ctx, index) {
+                                                        //       var wallet = upcomingController
+                                                        //           .wallethistory
+                                                        //           .elementAt(index);
+                                                        //       return WalletListWidget(
+                                                        //           walletmodel: wallet);
+                                                        //     })
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        )))
+                                : Text("No Data Found"))
+                          ],
+                        ),
+                      )),
+                    ))
+              ],
+            )));
   }
 }

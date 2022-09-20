@@ -144,10 +144,11 @@ class SearchController extends GetxController {
     }
   }
 
-  void sendamount(String id, String amountadd, String img) async {
+  void sendamount(
+      String id, String amountadd, String remark, String img) async {
     try {
       isLoading(true);
-      var res = await RequestCall.sendamount(id, amountadd, img
+      var res = await RequestCall.sendamount(id, amountadd, remark, img
           // photo: photo
           );
       if (res != null) {

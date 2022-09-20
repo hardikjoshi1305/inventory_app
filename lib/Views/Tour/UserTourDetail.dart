@@ -5,6 +5,7 @@ import 'package:inventory_management/Controller/TourController.dart';
 import 'package:inventory_management/Controller/WalletController.dart';
 import 'package:inventory_management/Utility/CommandMethod.dart';
 import 'package:inventory_management/Utility/Imagedisplay.dart';
+import 'package:inventory_management/Views/Tour/DetailsScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../Component/ExpenseListWidget.dart';
@@ -329,12 +330,23 @@ class _UserTourDetailsState extends State<UserTourDetails> {
                                                 var wallet = walletController
                                                     .expensehistory
                                                     .elementAt(index);
-                                                return ExpenseListWidget(
-                                                    expenselist: wallet,
-                                                    position:
-                                                        widget.FROM == "admin"
-                                                            ? index.toString()
-                                                            : "user");
+                                                return GestureDetector(
+                                                  onTap: () => Get.to(
+                                                      () => DetailsScreen(
+                                                          widget.FROM == "admin"
+                                                              ? index.toString()
+                                                              : "user",
+                                                          "usertour",
+                                                          widget.USERID,
+                                                          tourid),
+                                                      arguments: wallet),
+                                                  child: ExpenseListWidget(
+                                                      expenselist: wallet,
+                                                      position:
+                                                          widget.FROM == "admin"
+                                                              ? index.toString()
+                                                              : "user"),
+                                                );
                                               }).toList(growable: true)
                                             ],
                                           ),

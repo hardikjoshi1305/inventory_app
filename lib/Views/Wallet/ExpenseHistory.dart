@@ -7,6 +7,7 @@ import 'package:inventory_management/Controller/WalletController.dart';
 
 import '../../Component/ExpenseListWidget.dart';
 import '../../Utility/CommandMethod.dart';
+import '../Tour/DetailsScreen.dart';
 
 class ExpenseHistory extends StatefulWidget {
   const ExpenseHistory({Key key}) : super(key: key);
@@ -320,12 +321,22 @@ class _ExpenseHistoryState extends State<ExpenseHistory> {
                                       var wallet = walletController
                                           .expensehistory
                                           .elementAt(index);
-                                      return ExpenseListWidget(
-                                          expenselist: wallet,
-                                          position: index.toString());
+                                      return GestureDetector(
+                                        onTap: () => Get.to(
+                                            () => DetailsScreen(
+                                                index.toString(),
+                                                "expense",
+                                                "",
+                                                ""),
+                                            arguments: wallet),
+                                        child: ExpenseListWidget(
+                                            expenselist: wallet,
+                                            position: index.toString()),
+                                      );
                                     }).toList(growable: true)
                                   ],
                                 )
+
                                 // ListView.builder(
                                 //     shrinkWrap: true,
                                 //     padding: EdgeInsets.only(bottom: 16),

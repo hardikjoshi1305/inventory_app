@@ -952,7 +952,7 @@ class RequestCall {
     }
   }
 
-  static sendamount(String id, String amountadd, String img) async {
+  static sendamount(String id, String amountadd, String remark,String img) async {
     var req =
         http.MultipartRequest("POST", Uri.parse('${BASEURL}adminsendamt'));
 // print("cretattt$req");
@@ -960,6 +960,7 @@ class RequestCall {
     req.fields.addAll({
       'userid': id,
       'amount': amountadd,
+      // 'remark': remark,
     });
     if (img != "") {
       req.files.add(await http.MultipartFile.fromPath('photo', img));

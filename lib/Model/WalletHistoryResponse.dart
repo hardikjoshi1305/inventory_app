@@ -47,6 +47,7 @@ class Datum {
     this.expensesName,
     this.amount,
     this.tourname,
+    this.adminremark,
     this.photo,
     this.is_approved,
   });
@@ -61,6 +62,7 @@ class Datum {
   String expensesName;
   String amount;
   String tourname;
+  String adminremark;
   var photo;
   var is_approved;
 
@@ -76,6 +78,7 @@ class Datum {
         expensesName: json["ExpName"] == null ? null : json["ExpName"],
         amount: json["Amount"] == null ? null : json["Amount"],
         tourname: json["TourName"] == null ? null : json["TourName"],
+        adminremark: json["adminremark"] == null ? null : json["adminremark"],
         photo: json["Photo"] == null ? null : json["Photo"],
         is_approved: json["IsApproved"] == null ? null : json["IsApproved"],
       );
@@ -91,6 +94,7 @@ class Datum {
         "ExpName": expensesName == null ? null : expensesName,
         "Amount": amount == null ? null : amount,
         "TourName": tourname == null ? null : tourname,
+        "adminremark": adminremark == null ? null : adminremark,
         "Photo": photo == null ? null : photo,
         "IsApproved": is_approved == null ? null : is_approved,
       };

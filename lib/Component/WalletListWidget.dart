@@ -69,7 +69,9 @@ class WalletListWidget extends StatelessWidget {
           bottomtitle(
               150.0,
               walletmodel.expenseId == null
-                  ? "Admin"
+                  ? walletmodel.adminremark != null
+                      ? walletmodel.adminremark
+                      : "Admin"
                   : walletmodel.creditAmount != null
                       ? walletmodel.expensesName
                       : walletmodel.expensesName.toString()),

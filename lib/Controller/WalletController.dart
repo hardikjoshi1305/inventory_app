@@ -12,6 +12,8 @@ import 'package:inventory_management/Model/UserNameList.dart' as namelist;
 
 import '../Utility/CONSTANT.dart';
 import '../Utility/SharedPreferenceHelper.dart';
+import 'package:inventory_management/Model/SendAmountListResponse.dart'
+    as amountlist;
 
 class WalletController extends GetxController {
   var isLoading = false.obs;
@@ -21,6 +23,7 @@ class WalletController extends GetxController {
   var accrej = AcceptRejectResponse().obs;
   var refreshscreen = false.obs;
   var usernamelist = List<namelist.Datum>().obs;
+  var sendamountlist = List<amountlist.Datum>.empty(growable: true).obs;
 
   @override
   void onInit() {
@@ -40,6 +43,24 @@ class WalletController extends GetxController {
           isLoading(false);
         } else {
           Fluttertoast.showToast(msg: "No User Found");
+        }
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  void fetchsendamountlist() async {
+    try {
+      isLoading(true);
+      var res = await RequestCall.fetchamountlist();
+      if (res != null) {
+        if (sendamountlist.length > 0) {
+          sendamountlist.assignAll(res);
+          // Fluttertoast.showToast(msg: "Users Retrieve Successfully");
+          isLoading(false);
+        } else {
+          // Fluttertoast.showToast(msg: "No User Found");
         }
       }
     } finally {

@@ -11,6 +11,8 @@ import '../Utility/CONSTANT.dart';
 import '../Utility/SharedPreferenceHelper.dart';
 import '../Views/Home/HomeScreen.dart';
 import 'package:inventory_management/Model/UserNameList.dart' as namelist;
+import 'package:inventory_management/Model/SendAmountListResponse.dart'
+    as amountlist;
 
 class SearchController extends GetxController {
   var isLoading = false.obs;
@@ -20,6 +22,7 @@ class SearchController extends GetxController {
   var search = List<Datum>().obs;
   var inventoryhistorylist = List<inventoryhistory.Datum>().obs;
   var usernamelist = List<namelist.Datum>().obs;
+  var sendamountlist = List<amountlist.Datum>().obs;
 
   @override
   void onClose() {
@@ -27,6 +30,25 @@ class SearchController extends GetxController {
     print("onClose");
 
     super.onClose();
+  }
+
+  void fetchsendamountlist() async {
+    try {
+      isLoading(true);
+      var res = await RequestCall.fetchamountlist();
+      if (res != null) {
+        sendamountlist.assignAll(res);
+
+        if (sendamountlist.length > 0) {
+          // Fluttertoast.showToast(msg: "Users Retrieve Successfully");
+          isLoading(false);
+        } else {
+          // Fluttertoast.showToast(msg: "No User Found");
+        }
+      }
+    } finally {
+      isLoading(false);
+    }
   }
 
   @override
@@ -146,6 +168,7 @@ class SearchController extends GetxController {
 
   void sendamount(
       String id, String amountadd, String remark, String img) async {
+    print("dad" + img);
     try {
       isLoading(true);
       var res = await RequestCall.sendamount(id, amountadd, remark, img

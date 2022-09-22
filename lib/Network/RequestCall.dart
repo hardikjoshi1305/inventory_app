@@ -26,6 +26,8 @@ import 'package:inventory_management/Model/TourRemarkResponse.dart';
 import 'package:inventory_management/Model/UserTourDetailsResponse.dart';
 import 'package:inventory_management/Model/UserlistResponse.dart' as user;
 import 'package:inventory_management/Model/UserNameList.dart' as name;
+import 'package:inventory_management/Model/SendAmountListResponse.dart'
+    as amountlist;
 import 'package:inventory_management/Model/PendingResponse.dart' as pending;
 import 'package:inventory_management/Model/AssignInventoryResponse.dart'
     as assign;
@@ -952,7 +954,8 @@ class RequestCall {
     }
   }
 
-  static sendamount(String id, String amountadd, String remark,String img) async {
+  static sendamount(
+      String id, String amountadd, String remark, String img) async {
     var req =
         http.MultipartRequest("POST", Uri.parse('${BASEURL}adminsendamt'));
 // print("cretattt$req");
@@ -960,9 +963,9 @@ class RequestCall {
     req.fields.addAll({
       'userid': id,
       'amount': amountadd,
-      // 'remark': remark,
+      'remark': remark,
     });
-    if (img != "") {
+    if (img != "null") {
       req.files.add(await http.MultipartFile.fromPath('photo', img));
     }
     // req.files.add(
@@ -1223,6 +1226,29 @@ class RequestCall {
       var castsResp = getRemarkResponseFromJson(json);
 
       return castsResp;
+    } else {
+      return null;
+    }
+  }
+
+  static fetchamountlist() async {
+    var response = await client
+        .post(BASEURL + 'adminsendamtlist', headers: authHeader)
+        .catchError((error) {
+      print("error" + error.toString());
+      Fluttertoast.showToast(msg: error.toString());
+    });
+    if (response.statusCode == 200) {
+      var json = response.body;
+      print("adminsendamtlist" + response.body.toString());
+      var castsResp = amountlist.sendAmountListResponseFromJson(json);
+      if (castsResp.succes) {
+        return castsResp.data;
+      } else {
+        Fluttertoast.showToast(
+            msg: castsResp.message, toastLength: Toast.LENGTH_LONG);
+        return null;
+      }
     } else {
       return null;
     }

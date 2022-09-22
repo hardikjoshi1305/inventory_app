@@ -4,7 +4,11 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:inventory_management/Controller/SearchController.dart';
 import 'package:inventory_management/Controller/UserController.dart';
+import 'package:inventory_management/Controller/WalletController.dart';
 import 'package:inventory_management/Utility/CommandMethod.dart';
+
+import '../../Component/SendAmountListWidget.dart';
+import '../../Component/UserExpenseListWidget.dart';
 
 class SendAmount extends StatefulWidget {
   const SendAmount({Key key}) : super(key: key);
@@ -14,7 +18,7 @@ class SendAmount extends StatefulWidget {
 }
 
 var userid;
-var code, amountadd, img_path, remark = "";
+String code, amountadd, img_path, remark = "";
 // List<String> allinventory = [];
 // List<String> allinventoryname = [];
 // List<String> allinventoryimage = [];
@@ -27,6 +31,7 @@ class _SendAmountState extends State<SendAmount> {
   }
 
   SearchController upcomingController = Get.put(SearchController());
+  // WalletController walletController = Get.put(WalletController());
   // UserController userController = Get.put(UserController());
   TextEditingController te_userid = TextEditingController();
   TextEditingController te_wallet = TextEditingController();
@@ -34,6 +39,8 @@ class _SendAmountState extends State<SendAmount> {
 
   apicallusername() async {
     await Future.delayed(Duration.zero);
+    upcomingController.fetchsendamountlist();
+
     upcomingController.fetchusernamelist();
   }
 
@@ -200,7 +207,7 @@ class _SendAmountState extends State<SendAmount> {
               child: TextField(
                 // controller: te_name
                 //   ..text = this.usermodel != null ? usermodel.name : "",
-                keyboardType: TextInputType.numberWithOptions(),
+                keyboardType: TextInputType.text,
                 onChanged: (value) {
                   remark = value;
                 },
@@ -281,11 +288,8 @@ class _SendAmountState extends State<SendAmount> {
             //   children: [...allinventory.map((element) => Text(element))],
             // ),
             //     ),
-            Container(
-              height: 20,
-            ),
             Align(
-              alignment: Alignment.bottomCenter,
+              alignment: Alignment.center,
               child: Container(
                 margin: const EdgeInsets.all(5),
                 width: double.infinity,
@@ -294,7 +298,8 @@ class _SendAmountState extends State<SendAmount> {
                     // print("allinventorylist  " + allinventory.toString());
                     // print("allinventoryimagelist  " +)
                     if (checkvalidation(id, amountadd.toString())) {
-                      upcomingController.sendamount(id, amountadd,remark, img_path.toString());
+                      upcomingController.sendamount(
+                          id, amountadd, remark, img_path.toString());
                     }
 
                     // callgetinventory(code);
@@ -303,6 +308,77 @@ class _SendAmountState extends State<SendAmount> {
                 ),
               ),
             ),
+
+            Container(
+              height: 20,
+            ),
+            upcomingController.sendamountlist.length > 0
+                ? SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    physics: ScrollPhysics(),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            toptitle(120.0, "User"),
+                            Container(
+                              width: 1,
+                              color: Colors.white,
+                            ),
+                            toptitle(100.0, "remark"),
+                            Container(
+                              width: 1,
+                              color: Colors.white,
+                            ),
+                            toptitle(100.0, "Amount"),
+                            Container(
+                              width: 1,
+                              color: Colors.white,
+                            ),
+                            toptitle(100.0, "Image"),
+                            Container(
+                              width: 1,
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            ...upcomingController.sendamountlist.map((element) {
+                              var index = upcomingController.sendamountlist
+                                  .indexOf(element);
+                              var wallet = upcomingController.sendamountlist
+                                  .elementAt(index);
+                              return SendAmountListWidget(
+                                  expenselist: wallet, position: index);
+                            }).toList(growable: true)
+                          ],
+                        ),
+
+                        // ListView.builder(
+                        //     shrinkWrap: true,
+                        //     padding: EdgeInsets.only(bottom: 16),
+                        //     itemCount:
+                        //     walletController.expensehistory.length,
+                        //     physics: NeverScrollableScrollPhysics(),
+                        //     itemBuilder: (ctx, index) {
+                        //       var wallet = walletController
+                        //           .expensehistory
+                        //           .elementAt(index);
+                        //       return GestureDetector(
+                        //         // onTap: () => Get.to(
+                        //         //     () => UserTourDetails(),
+                        //         //     arguments: wallet.id.toString()),
+                        //         child: ExpenseListWidget(
+                        //             expenselist: wallet,
+                        //             position: index),
+                        //       );
+                        //     }),
+                      ],
+                    ),
+                  )
+                : Text("No Data Found")
           ],
         ),
       ),

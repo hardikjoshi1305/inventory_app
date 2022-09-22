@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:inventory_management/Controller/InventoryController.dart';
+import 'package:inventory_management/Views/Inventory/INVHistDetailScreen.dart';
 
 import '../../Component/InventoryHistoryWidget.dart';
 import '../../Controller/SearchController.dart';
@@ -258,48 +259,56 @@ class _InventoryHistoryState extends State<InventoryHistory> {
                                               children: [
                                                 ...upcomingController
                                                     .inventoryhistorylist
-                                                    .map((wallet) => Row(
-                                                          children: [
-                                                            bottomtitle(
-                                                                100.0,
-                                                                wallet.id
+                                                    .map((wallet) {
+                                                  var index = upcomingController
+                                                      .inventoryhistorylist
+                                                      .indexOf(wallet);
+
+                                                  return GestureDetector(
+                                                    child: Row(
+                                                      children: [
+                                                        bottomtitle(
+                                                            100.0,
+                                                            wallet.id
+                                                                .toString()),
+                                                        Container(
+                                                          width: 1,
+                                                          color: Colors.white,
+                                                        ),
+                                                        bottomtitle(
+                                                            100.0,
+                                                            wallet.userid
+                                                                .toString()),
+                                                        Container(
+                                                          width: 1,
+                                                          color: Colors.white,
+                                                        ),
+                                                        bottomtitle(
+                                                            200.0,
+                                                            wallet.invHistory
+                                                                .toString()),
+                                                        Container(
+                                                          width: 1,
+                                                          color: Colors.white,
+                                                        ),
+                                                        bottomtitle(
+                                                            120.0,
+                                                            wallet.currDate
+                                                                .toString()),
+                                                        Container(
+                                                          width: 1,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    onTap: () => Get.to(
+                                                        () =>
+                                                            INVHistDetailScreen(
+                                                                index
                                                                     .toString()),
-                                                            Container(
-                                                              width: 1,
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
-                                                            bottomtitle(
-                                                                100.0,
-                                                                wallet.userid
-                                                                    .toString()),
-                                                            Container(
-                                                              width: 1,
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
-                                                            bottomtitle(
-                                                                200.0,
-                                                                wallet
-                                                                    .invHistory
-                                                                    .toString()),
-                                                            Container(
-                                                              width: 1,
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
-                                                            bottomtitle(
-                                                                120.0,
-                                                                wallet.currDate
-                                                                    .toString()),
-                                                            Container(
-                                                              width: 1,
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
-                                                          ],
-                                                        ))
-                                                    .toList()
+                                                        arguments: wallet),
+                                                  );
+                                                }).toList()
                                               ],
                                             )
 
